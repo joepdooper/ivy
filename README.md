@@ -1,5 +1,5 @@
-<div style="max-width: 100px;">
-  <img src="https://dooper.io/ivy/logo.svg" alt="SVG Image" width="100">
+<div style="max-height:48px;width:auto;">
+  <img src="https://dooper.io/ivy/logo.svg" alt="ivy logo" height="48">
 </div>
 
 # ivy
