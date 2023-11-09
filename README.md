@@ -2,5 +2,4 @@
   <img src="https://dooper.io/ivy/logo.svg" alt="ivy logo" height="48">
 </div>
 
-# ivy
 Yet another sleek simple fast PHP framework with an effortless template and plugin environment
