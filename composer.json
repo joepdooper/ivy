@@ -29,11 +29,5 @@
     "npmInstall": [
       "npm install"
     ]
-  },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/joepdooper/ivy"
-    }
-  ]
+  }
 }
