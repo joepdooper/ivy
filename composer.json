@@ -21,5 +21,13 @@
         "bramus/router": "^1.6",
         "bainternet/php-hooks": "^1.0",
         "spatie/schema-org": "^3.4"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@npmInstall"
+        ],
+        "npmInstall": [
+            "npm install"
+        ]
     }
 }
