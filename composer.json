@@ -8,7 +8,7 @@
             "name": "Joep Dooper"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
         "php": "^7.3",
         "ezyang/htmlpurifier": "^4.13",
