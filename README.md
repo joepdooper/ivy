@@ -7,5 +7,5 @@
 ## Install
 
 ```bash
-composer require joepdooper/ivy
+composer create-project joepdooper/ivy
 ```
