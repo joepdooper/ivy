@@ -20,6 +20,7 @@
     "php-curl-class/php-curl-class": "^9.18",
     "bramus/router": "^1.6",
     "bainternet/php-hooks": "^1.0",
+    "vlucas/phpdotenv": "^5.5",
     "spatie/schema-org": "^3.4"
   },
   "scripts": {
