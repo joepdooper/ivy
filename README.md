@@ -27,7 +27,7 @@ composer create-project joepdooper/ivy
 Create a database for **ivy** and import the provided `ivy.sql` file:
 
 ```bash
-mysql -u your_database_username -p your_database_name < ivy.sql
+mysql -u your_database_username -p your_database_name < ivy/ivy.sql
 ```
 
 Rename the `example.env` file to `.env` and update it with your database credentials.
