@@ -318,7 +318,7 @@ LOCK TABLES `template` WRITE;
 INSERT INTO `template` (`id`, `type`, `value`)
 VALUES
 	(1,'base','base'),
-	(2,'sub','ivy');
+	(2,'sub','DEMO');
 
 /*!40000 ALTER TABLE `template` ENABLE KEYS */;
 UNLOCK TABLES;
