@@ -37,7 +37,7 @@ $router->before('GET|POST', '/plugin/.*', function() {
 
 // ROUTING
 
-$router->get('/admin/(\w+)', function($id) use($db, $auth, $page, $button) {
+$router->get('/admin/(\w+)?(/.*)?(/.*)', function($id, $selector = null, $token = null) use($db, $auth, $page, $button) {
   if(in_array($id,['info','logout','media','option','plugin','profile','template','user'])){
     $page->route = "admin";
     $page->id = htmlentities($id);

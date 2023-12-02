@@ -1,10 +1,11 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
+
 // Confirm Email
-if (isset($_GET['selector']) && isset($_GET['token'])){
+if (isset($selector) && isset($token)){
   try {
-      $auth->confirmEmail($_GET['selector'], $_GET['token']);
-      \Ivy\Message::add('Email address has been verified');
+      $auth->confirmEmail($selector, $token);
+      \Ivy\Message::add('Email address has been verified',_BASE_PATH . 'admin/login');
   }
   catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {
     \Ivy\Message::add('Invalid token');
