@@ -3,7 +3,6 @@ namespace Ivy;
 
 use HTMLPurifier_Config;
 use HTMLPurifier;
-use Mail;
 
 class User {
 
@@ -19,10 +18,10 @@ class User {
       $purifier = new HTMLPurifier($config);
 
       try {
-        $userId = $auth->register($purifier->purify($_POST['email']), $purifier->purify($_POST['password']), $purifier->purify($_POST['username']), function ($selector, $token) {
+        $userId = $auth->register($purifier->purify($_POST['email']), $purifier->purify($_POST['password']), $purifier->purify($_POST['username']), function ($selector, $token) use ($purifier) {
           $url = _BASE_PATH . 'admin/login&selector=' . \urlencode($selector) . '&token=' . \urlencode($token);
           // send email
-          $mail = new Mail();
+          $mail = new \Ivy\Mail();
           $mail->Address = $purifier->purify($_POST['email']);
           $mail->Name    = $purifier->purify($_POST['username']);
           $mail->Subject = 'Activate account';

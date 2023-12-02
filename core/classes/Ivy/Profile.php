@@ -68,14 +68,14 @@ class Profile {
         if(!empty($name) && !empty($email)){
 
           if(isset($_POST['userimage']) && $_POST['userimage'] == 'delete'){
-            (new Image)->delete($this->image);
+            (new \Image)->delete($this->image);
             $db->update('profiles',['users_image' => ''],['user_id' => $_SESSION['auth_user_id']]);
           }
 
           if($_FILES){
             $db->update(
               'profiles',
-              ['users_image' => (new Image)->upload($_FILES['userimage'])],
+              ['users_image' => (new \Image)->upload($_FILES['userimage'])],
               ['user_id' => $_SESSION['auth_user_id']]
             );
           }
