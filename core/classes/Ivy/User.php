@@ -19,7 +19,7 @@ class User {
 
       try {
         $userId = $auth->register($purifier->purify($_POST['email']), $purifier->purify($_POST['password']), $purifier->purify($_POST['username']), function ($selector, $token) use ($purifier) {
-          $url = _BASE_PATH . 'admin/login&selector=' . \urlencode($selector) . '&token=' . \urlencode($token);
+          $url = _BASE_PATH . 'admin/login/' . \urlencode($selector) . '/' . \urlencode($token);
           // send email
           $mail = new \Ivy\Mail();
           $mail->Address = $purifier->purify($_POST['email']);
@@ -130,7 +130,7 @@ class User {
 
         try {
           $auth->forgotPassword($purifier->purify($_POST['email']), function ($selector, $token) {
-            $url = _BASE_PATH . 'admin/reset' . '&selector=' . \urlencode($selector) . '&token=' . \urlencode($token);
+            $url = _BASE_PATH . 'admin/reset/' . \urlencode($selector) . '/' . \urlencode($token);
             // send email
             $mail = new Mail();
             $mail->Address = $purifier->purify($_POST['email']);
