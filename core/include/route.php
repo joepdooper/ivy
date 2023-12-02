@@ -47,7 +47,7 @@ $router->get('/admin/(\w+)', function($id) use($db, $auth, $page, $button) {
       exit;
     }
   }
-  if(in_array($id,['info','media','option','plugin','register','reset','template','user'])){
+  if($auth->isLoggedIn() && in_array($id,['info','media','option','plugin','register','reset','template','user'])){
     if (!canEditAsAdmin($auth)){
       header('location:' . _BASE_PATH . 'admin/profile');
       exit;
