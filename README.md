@@ -11,12 +11,12 @@
 Open terminal and navigate to your project folder:
 
 ```bash
-cd path/to/your/project
+cd path/to/your/ivy/project
 ```
 
 #### 2. Download ivy files
 
-Use Composer to create a new project with **ivy**:
+Use [Composer](https://getcomposer.org/) to create a new project with **ivy**:
 
 ```bash
 composer create-project joepdooper/ivy .
@@ -34,7 +34,7 @@ Rename the `example.env` file to `.env` and update it with your database credent
 
 #### 4. Install packages
 
-Install the necessary dependencies to kickstart your project:
+Install the necessary dependencies with [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) or [yarn](https://yarnpkg.com/) to kickstart your project:
 
 ```bash
 npm install
