@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+  <name>DEMO</name>
+  <url>DEMO</url>
+  <version>1.0.0</version>
+  <image></image>
+  <description>demo subtemplate</description>
+</template>

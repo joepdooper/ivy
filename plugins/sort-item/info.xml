@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+  <name>Sort items</name>
+  <url>sort-item</url>
+  <version>1.0.0</version>
+  <image></image>
+  <settings></settings>
+  <description>Sort items by drag and drop</description>
+  <type>template</type>
+</plugin>

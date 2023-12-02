@@ -1,0 +1,36 @@
+#status .inner {
+    white-space: nowrap;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+#status .inner::-webkit-scrollbar {
+ display: none;
+}
+.users-image {
+  position: relative;
+  overflow: unset;
+}
+.online.users-image:after {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  content: ' ';
+  display: block;
+  width: 8px;
+  height: 8px;
+  background-color: lawngreen;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+.online.user {
+  display: inline-block;
+}
+.online.user a {
+  background-color: #fff;
+  padding: 5px;
+  border-top-left-radius: 50em;
+  border-bottom-left-radius: 50em;
+  border-top-right-radius: 50em;
+  border-bottom-right-radius: 50em;
+}

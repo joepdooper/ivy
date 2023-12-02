@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+  <name>Style items</name>
+  <url>style-item</url>
+  <version>1.0.0</version>
+  <image></image>
+  <settings></settings>
+  <description>Style items</description>
+  <type>template</type>
+</plugin>
