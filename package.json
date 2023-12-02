@@ -5,6 +5,7 @@
     "linkifyjs": "^4.0.2",
     "macy": "^2.5.1",
     "petite-vue": "^0.4.1",
-    "sortablejs": "^1.15.0"
+    "sortablejs": "^1.15.0",
+    "vanilla-cookieconsent": "^2.8.8"
   }
 }
