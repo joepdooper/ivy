@@ -45,3 +45,9 @@ or
 ```bash
 yarn install
 ```
+
+#### 5. Login and update your profile
+
+To access your account, navigate to `yourserver.com/admin/login` and use the credentials `admin@localhost.test` and `00000`. Upon successful login, you will be directed to your profile page, where you can modify your email address.
+
+To change your password, open the `.env` file and update it with your email credentials. After making the changes, proceed to `yourserver.com/admin/logout` to log out, and then go to `yourserver.com/admin/reset` to initiate the password reset process.
