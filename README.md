@@ -14,7 +14,7 @@ Open terminal and navigate to your parent project folder:
 cd path/to/your/project
 ```
 
-#### Download ivy files
+#### 2. Download ivy files
 
 Use Composer to create a new project with **ivy**:
 
@@ -22,7 +22,7 @@ Use Composer to create a new project with **ivy**:
 composer create-project joepdooper/ivy
 ```
 
-#### Set up the database
+#### 3. Set up the database
 
 Create a database for **ivy** and import the provided `ivy.sql` file:
 
@@ -32,7 +32,7 @@ mysql -u your_database_username -p your_database_name < ivy.sql
 
 Rename the `example.env` file to `.env` and update it with your database credentials.
 
-#### Install packages
+#### 4. Install packages
 
 Install the necessary dependencies to kickstart your project:
 
