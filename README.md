@@ -8,7 +8,7 @@
 
 #### 1. Navigate to your project folder
 
-Open terminal and navigate to your parent project folder:
+Open terminal and navigate to your project folder:
 
 ```bash
 cd path/to/your/project
@@ -19,7 +19,7 @@ cd path/to/your/project
 Use Composer to create a new project with **ivy**:
 
 ```bash
-composer create-project joepdooper/ivy
+composer create-project joepdooper/ivy .
 ```
 
 #### 3. Set up the database
@@ -27,7 +27,7 @@ composer create-project joepdooper/ivy
 Create a database for **ivy** and import the provided `ivy.sql` file:
 
 ```bash
-mysql -u your_database_username -p your_database_name < ivy/ivy.sql
+mysql -u your_database_username -p your_database_name < ivy.sql
 ```
 
 Rename the `example.env` file to `.env` and update it with your database credentials.
