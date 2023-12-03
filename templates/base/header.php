@@ -1,8 +1,7 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-
 if(isset($_SESSION['auth_user_id'])):
-	$profile = new \Ivy\Profile($_SESSION['auth_user_id']);
+	$profile = (new \Ivy\Profile)->where('id',$_SESSION['auth_user_id'])->getRow()->data();
 endif;
 ?>
 
@@ -27,9 +26,9 @@ endif;
 		<ul class="clearfix">
 			<?php if($auth->isLoggedIn()): ?>
 				<li>
-					<?php if($profile->image): ?>
+					<?php if($profile->users_image): ?>
 						<a href="<?php print _BASE_PATH . 'admin/profile'; ?>" aria-label="Profile" title="Profile">
-							<div class="users-image" style="background-image:url(<?php print _BASE_PATH . 'media/item/thumb/' . $profile->image; ?>)"></div>
+							<div class="users-image" style="background-image:url(<?php print _BASE_PATH . 'media/item/thumb/' . $profile->users_image; ?>)"></div>
 						</a>
 					<?php else: ?>
 						<?php $button->link(_BASE_PATH . 'admin/profile',null,'feather/user.svg','Profile'); ?>

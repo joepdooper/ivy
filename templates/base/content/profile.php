@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$profile = new \Ivy\Profile($id);
+$profile = (new \Ivy\Profile)->where('id',$id)->getRow()->data();
 ?>
 
 <div class="profile clearfix">

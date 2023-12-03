@@ -1,7 +1,7 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../../index.php');
 if(isset($_SESSION['auth_user_id'])):
-  $profile = new \Ivy\Profile($_SESSION['auth_user_id']);
+  $profile = (new \Ivy\Profile)->where('id',$_SESSION['auth_user_id'])->getRow()->data();
 endif;
 ?>
 
@@ -26,36 +26,38 @@ endif;
     <div class="inner">
 
       <div class="form-group">
-        <?php if ($profile->image):?>
+        <?php if ($profile->users_image):?>
 
-          <div class="users-image" style="background-image:url(<?php print _BASE_PATH . 'media/item/thumb/' . $profile->image; ?>)">
+          <div class="users-image" style="background-image:url(<?php print _BASE_PATH . 'media/item/thumb/' . $profile->users_image; ?>)">
             <div class="editImageButton">
-              <?php $button->delete('userimage','delete'); ?>
+              <?php $button->delete('users_image','delete'); ?>
             </div>
           </div>
 
         <?php else: ?>
 
-          <div class="users-image" id="userImagePreview">
+          <div class="users-image" id="usersImagePreview">
             <div class="editImageButton">
-              <?php $button->upload('userimage','upload'); ?>
+              <?php $button->upload('users_image','upload'); ?>
             </div>
           </div>
           <script>
           window.addEventListener('DOMContentLoaded', (event) => {
-            previewImage("userimage","userImagePreview","background");
+            previewImage("users_image","usersImagePreview","background");
           });
           </script>
 
         <?php endif; ?>
       </div>
 
+      <input name="users[id]" type="hidden" value="<?php print $profile->user_id; ?>">
+
       <div class="form-group">
-        <input name="name" type="text" placeholder="name" value="<?php print $auth->getUsername(); ?>">
+        <input name="users[username]" type="text" placeholder="name" value="<?php print $auth->getUsername(); ?>">
       </div>
 
       <div class="form-group">
-        <input name="email" type="email" placeholder="email" value="<?php print $auth->getEmail(); ?>">
+        <input name="users[email]" type="email" placeholder="email" value="<?php print $auth->getEmail(); ?>">
       </div>
 
       <!-- <div class="form-group">
