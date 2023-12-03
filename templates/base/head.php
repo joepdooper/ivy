@@ -4,6 +4,7 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
 <!-- <meta charset="utf-8"> -->
 <meta http-equiv="Content-type" content="text/html;charset=ENCODING">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0">
+<!-- <meta http-equiv="Content-Security-Policy" content="script-src 'none'"> -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="<?php $info['name']->value; ?>">
@@ -27,9 +28,9 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
 <meta name="twitter:image" content="<?php !isset($info['image']->value) ?: print $info['image']->value; ?>">
 
 <!-- link rel="manifest" href="manifest.json" -->
-<link rel="shortcut icon" type="image/x-icon" href="media/favicon/favicon.ico">
-<link rel="shortcut icon" type="image/gif" href="media/favicon/favicon.gif">
-<link rel="shortcut icon" type="image/png" href="media/favicon/favicon.png">
+<link rel="shortcut icon" type="image/x-icon" href="<?php print _BASE_PATH . _MEDIA_PATH; ?>favicon/favicon.ico">
+<link rel="shortcut icon" type="image/gif" href="<?php print _BASE_PATH . _MEDIA_PATH; ?>favicon/favicon.gif">
+<link rel="shortcut icon" type="image/png" href="<?php print _BASE_PATH . _MEDIA_PATH; ?>favicon/favicon.png">
 <!-- <link rel="icon" type="image/png" href="media/favicon/favicon-16x16.png" sizes="16x16" />
 <link rel="icon" type="image/png" href="media/favicon/favicon-32x32.png" sizes="32x32" />
 <link rel="icon" type="image/png" href="media/favicon/favicon-48x48.png" sizes="48x48" />
