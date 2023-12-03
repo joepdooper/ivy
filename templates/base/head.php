@@ -27,11 +27,10 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
 <meta name="twitter:image" content="<?php !isset($info['image']->value) ?: print $info['image']->value; ?>">
 
 <!-- link rel="manifest" href="manifest.json" -->
-<!--
 <link rel="shortcut icon" type="image/x-icon" href="media/favicon/favicon.ico">
 <link rel="shortcut icon" type="image/gif" href="media/favicon/favicon.gif">
 <link rel="shortcut icon" type="image/png" href="media/favicon/favicon.png">
-<link rel="icon" type="image/png" href="media/favicon/favicon-16x16.png" sizes="16x16" />
+<!-- <link rel="icon" type="image/png" href="media/favicon/favicon-16x16.png" sizes="16x16" />
 <link rel="icon" type="image/png" href="media/favicon/favicon-32x32.png" sizes="32x32" />
 <link rel="icon" type="image/png" href="media/favicon/favicon-48x48.png" sizes="48x48" />
 <link rel="apple-touch-icon-precomposed" sizes="72x72" href="media/favicon/apple-touch-icon-72x72.png" />
@@ -40,8 +39,7 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
 <link rel="apple-touch-icon-precomposed" sizes="152x152" href="media/favicon/apple-touch-icon-152x152.png">
 <link rel="apple-touch-icon-precomposed" sizes="167x167" href="media/favicon/apple-touch-icon-167x167.png">
 <link rel="apple-touch-icon-precomposed" sizes="180x180" href="media/favicon/apple-touch-icon-180x180.png">
-<link rel="apple-touch-icon-precomposed" sizes="196x196" href="media/favicon/apple-touch-icon-196x196.png">
--->
+<link rel="apple-touch-icon-precomposed" sizes="196x196" href="media/favicon/apple-touch-icon-196x196.png"> -->
 
 <title><?php print $info['title']->value; ?></title>
 
