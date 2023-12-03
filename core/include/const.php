@@ -16,7 +16,8 @@ define('_DOMAIN', _PROTOCOL . '://' . $_SERVER['SERVER_NAME']);
 // current page
 define('_CURRENT_PAGE', _PROTOCOL . '://' .$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 // base url of blog
-define('_BASE_PATH', _DOMAIN . ':8888' . _SUBFOLDER);
+$serverPort = ($_SERVER['SERVER_PORT'] != 80) ? (":" . $_SERVER['SERVER_PORT']) : '';
+define('_BASE_PATH', _DOMAIN . $serverPort . _SUBFOLDER);
 // root server
 define('_PUBLIC_PATH', _ROOT . _SUBFOLDER);
 // main upload folder images
