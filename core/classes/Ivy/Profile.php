@@ -4,124 +4,106 @@ namespace Ivy;
 use HTMLPurifier_Config;
 use HTMLPurifier;
 
-class Profile {
+class Profile extends Model {
 
-  public $user_id, $username, $roles, $image, $last_login;
+  protected $table = 'profiles';
+  protected $path = _BASE_PATH . 'admin/profile';
 
-  public function __construct($user_id = null) {
+  public $id, $user_id, $username, $roles, $users_image, $last_login;
 
-    $user_id = !$user_id ? $_SESSION['auth_user_id'] : $user_id;
-
-    global $db;
-    $profile = $db->selectRow(
-      '
-      SELECT `profiles`.`user_id`, `profiles`.`users_image`, `users`.`email`, `users`.`username`, `users`.`status`, `users`.`roles_mask`, `users`.`last_login` FROM `profiles`
-      INNER JOIN `users` ON `users`.`id` = `profiles`.`user_id`
-      WHERE `user_id` = :user_id
-      ', [$user_id]
-    );
-
-    $this->user_id = $user_id;
-    $this->username = $profile ? $profile['username'] : '';
-    $this->roles = $profile ? $profile['roles_mask'] : '';
-    $this->image = $profile ? $profile['users_image'] : '';
-
-    $seconds_ago = $profile ? (time() - $profile['last_login']) : '';
-
-    if ($seconds_ago >= 31536000) {
-      $this->last_login = "seen " . intval($seconds_ago / 31536000) . " years ago";
-    } elseif ($seconds_ago >= 2419200) {
-      $this->last_login = "seen " . intval($seconds_ago / 2419200) . " months ago";
-    } elseif ($seconds_ago >= 86400) {
-      $this->last_login = "seen " . intval($seconds_ago / 86400) . " days ago";
-    } elseif ($seconds_ago >= 3600) {
-      $this->last_login = "seen " . intval($seconds_ago / 3600) . " hours ago";
-    } elseif ($seconds_ago >= 60) {
-      $this->last_login = "seen " . intval($seconds_ago / 60) . " minutes ago";
-    } else {
-      $this->last_login = "seen less than a minute ago";
-    }
-
+  public function __construct() {
+    $this->query = "
+    SELECT `profiles`.`id`, `profiles`.`user_id`, `profiles`.`users_image`, `users`.`email`, `users`.`username`, `users`.`status`, `users`.`roles_mask`, `users`.`last_login` FROM `profiles`
+    INNER JOIN `users` ON `users`.`id` = `profiles`.`user_id`
+    ";
   }
 
-  function post() {
+  public function post() {
+    global $auth, $db;
 
-    global $db, $auth;
-
-    if($_SERVER['REQUEST_METHOD'] === 'POST' && $auth->isLoggedIn()){
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $auth->isLoggedIn()) {
 
       $config = HTMLPurifier_Config::createDefault();
       $purifier = new HTMLPurifier($config);
 
       try {
 
-        $name = trim($purifier->purify($_POST['name']));
-        $email = trim($purifier->purify($_POST['email']));
-
-        if(empty($name)){
-          Message::add('Please enter name');
-        }
-        if(empty($email)){
-          Message::add('Please enter email');
-        }
+        $name = $purifier->purify($_POST['users']['username']);
+        $email = $purifier->purify($_POST['users']['email']);
 
         if(!empty($name) && !empty($email)){
 
-          if(isset($_POST['userimage']) && $_POST['userimage'] == 'delete'){
-            (new \Image)->delete($this->image);
-            $db->update('profiles',['users_image' => ''],['user_id' => $_SESSION['auth_user_id']]);
+          if($auth->getUsername() != $name){
+            $this->table = 'users';
+            $this->save(['id' => $auth->getUserId(),'username' => $name]);
+            $_SESSION[\Delight\Auth\UserManager::SESSION_FIELD_USERNAME] = $name;
+          }
+
+          if($auth->getEmail() != $email) {
+            try {
+              $auth->changeEmail($_POST['users']['email'], function ($selector, $token) use ($purifier)  {
+                $url = _BASE_PATH . 'admin/profile/' . \urlencode($selector) . '/' . \urlencode($token);
+                // send email
+                $mail = new Mail();
+                $mail->Address = $purifier->purify($email);
+                $mail->Name    = $purifier->purify($name);
+                $mail->Subject = 'Reset email address';
+                $mail->Body    = 'Reset your email address with this link: ' . $url;
+                $mail->AltBody = 'Reset your email address with this link: ' . $url;
+                $mail->send();
+              });
+              Message::add('The change will take effect as soon as the new email address has been confirmed');
+            }
+            catch (\Delight\Auth\InvalidEmailException $e) {
+              Message::add('Invalid email address');
+            }
+            catch (\Delight\Auth\UserAlreadyExistsException $e) {
+              Message::add('Email address already exists');
+            }
+            catch (\Delight\Auth\EmailNotVerifiedException $e) {
+              Message::add('Account not verified');
+            }
+            catch (\Delight\Auth\NotLoggedInException $e) {
+              Message::add('Not logged in');
+            }
+            catch (\Delight\Auth\TooManyRequestsException $e) {
+              Message::add('Too many requests');
+            }
+          }
+
+          if(isset($_POST['users_image']) && $_POST['users_image'] == 'delete'){
+            $this->table = 'profiles';
+            $this->save(['id' => $this->id,'user_id' => $auth->getUserId(),'users_image' => '']);
+            (new \Image)->delete($this->users_image);
           }
 
           if($_FILES){
+            $this->table = 'profiles';
             $db->update(
               'profiles',
-              ['users_image' => (new \Image)->upload($_FILES['userimage'])],
+              ['users_image' => (new \Image)->upload($_FILES['users_image'])],
               ['user_id' => $_SESSION['auth_user_id']]
             );
           }
 
-          if($auth->getUsername() != $name){
-            $db->update('users',['username' => $name],['id' => $_SESSION['auth_user_id']]);
-            $_SESSION[\Delight\Auth\UserManager::SESSION_FIELD_USERNAME] = $name;
+          $message = 'Update succesfully';
+        } else {
+          if(empty($email)){
+            $message = 'Please enter email';
           }
-
-          if($_SESSION['auth_email'] != $email) {
-            try {
-              if ($auth->reconfirmPassword($_POST['password'])) {
-                $auth->changeEmail($_POST['newEmail'], function ($selector, $token) {
-                  echo 'Send ' . $selector . ' and ' . $token . ' to the user (e.g. via email to the *new* address)';
-                });
-
-                echo 'The change will take effect as soon as the new email address has been confirmed';
-              }
-              else {
-                echo 'We can\'t say if the user is who they claim to be';
-              }
-            }
-            catch (\Delight\Auth\InvalidEmailException $e) {
-              die('Invalid email address');
-            }
-            catch (\Delight\Auth\UserAlreadyExistsException $e) {
-              die('Email address already exists');
-            }
-            catch (\Delight\Auth\EmailNotVerifiedException $e) {
-              die('Account not verified');
-            }
-            catch (\Delight\Auth\NotLoggedInException $e) {
-              die('Not logged in');
-            }
-            catch (\Delight\Auth\TooManyRequestsException $e) {
-              die('Too many requests');
-            }
-
+          if(empty($name)){
+            $message = 'Please enter name';
           }
-          Message::add('Update succesfully',_BASE_PATH . 'admin/profile');
         }
       } catch (Exception $e) {
-        Message::add('Something went wrong',_BASE_PATH . 'admin/profile');
+        $message = 'Something went wrong';
       }
-    }
 
+      Message::add($message, $this->path);
+
+      // Call the parent post method from the Model class
+      // parent::post();
+    }
   }
 
 }

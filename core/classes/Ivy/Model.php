@@ -158,7 +158,6 @@ class Model {
   // -- save
   public function save($array)
   {
-    // print_r($array);die;
     if(isset($array["delete"])){
       $this->bindings = ["id" => $array["id"]];
       $lastInsertId = $this->delete();
