@@ -5,6 +5,9 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
 if (isset($selector) && isset($token)){
   try {
       $auth->confirmEmail($selector, $token);
+      if ($auth->isLoggedIn()) {
+        $auth->logOut();
+      }
       \Ivy\Message::add('Email address has been verified',_BASE_PATH . 'admin/login');
   }
   catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {

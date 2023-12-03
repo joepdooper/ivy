@@ -21,7 +21,7 @@ class User {
         $userId = $auth->register($purifier->purify($_POST['email']), $purifier->purify($_POST['password']), $purifier->purify($_POST['username']), function ($selector, $token) use ($purifier) {
           $url = _BASE_PATH . 'admin/login/' . \urlencode($selector) . '/' . \urlencode($token);
           // send email
-          $mail = new \Ivy\Mail();
+          $mail = new Mail();
           $mail->Address = $purifier->purify($_POST['email']);
           $mail->Name    = $purifier->purify($_POST['username']);
           $mail->Subject = 'Activate account';
@@ -49,7 +49,7 @@ class User {
 
       $db->insert('profiles',['user_id' => $userId]);
 
-      Message::add('An email to ' . $_POST['email'] . ' has been sent with a link to activate your account', _BASE_PATH . 'admin/login');
+      Message::add('An email has been sent to ' . $_POST['email'] . ' with a link to activate your account', _BASE_PATH . 'admin/login');
 
     }
 

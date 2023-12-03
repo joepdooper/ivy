@@ -53,6 +53,11 @@ $router->get('/admin/(\w+)?(/.*)?(/.*)', function($id, $selector = null, $token 
       exit;
     }
   }
+  if($id === 'profile' && $selector && $token){
+    if ($auth->isLoggedIn()) {
+      include _PUBLIC_PATH . 'core/include/login.php';
+    }
+  }
   if($id === 'login'){
     if ($auth->isLoggedIn()) {
       header('location: ' . _BASE_PATH);

@@ -41,18 +41,18 @@ class Profile extends Model {
 
           if($auth->getEmail() != $email) {
             try {
-              $auth->changeEmail($_POST['users']['email'], function ($selector, $token) use ($purifier)  {
+              $auth->changeEmail($purifier->purify($_POST['users']['email']), function ($selector, $token) use ($purifier)  {
                 $url = _BASE_PATH . 'admin/profile/' . \urlencode($selector) . '/' . \urlencode($token);
                 // send email
                 $mail = new Mail();
-                $mail->Address = $purifier->purify($email);
-                $mail->Name    = $purifier->purify($name);
+                $mail->Address = $purifier->purify($_POST['users']['email']);
+                $mail->Name    = $purifier->purify($_POST['users']['username']);
                 $mail->Subject = 'Reset email address';
                 $mail->Body    = 'Reset your email address with this link: ' . $url;
                 $mail->AltBody = 'Reset your email address with this link: ' . $url;
                 $mail->send();
               });
-              Message::add('The change will take effect as soon as the new email address has been confirmed');
+              Message::add('An email has been sent to ' . $email . ' with a link to confirm the email address');
             }
             catch (\Delight\Auth\InvalidEmailException $e) {
               Message::add('Invalid email address');
