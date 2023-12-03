@@ -31,7 +31,7 @@ $article = (new Article)->where('id', $item->table_id)->getRow()->data();
 						<!-- Author -->
 						<div class="inner">
 							<?php
-							$author = new \Ivy\Profile($item->user_id);
+							$author = (new \Ivy\Profile)->where('id',$item->user_id)->getRow()->data();
 							$date = $item->date;
 							include $page->setTemplateFile('content/author/author.php');
 							?>
