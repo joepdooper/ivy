@@ -59,7 +59,6 @@ $router->get('/admin/(\w+)(/[^/]+)?(/[^/]+)?', function($id, $selector = null, $
     }
   }
   if($id === 'login'){
-    print $selector;
     if ($auth->isLoggedIn()) {
       header('location: ' . _BASE_PATH);
       exit;

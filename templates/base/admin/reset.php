@@ -15,6 +15,8 @@ defined('_BASE_PATH') ?: header('location: ../../../index.php');
     <div class="outer">
       <div class="inner">
         <div class="form-group">
+          <input type="hidden" name="selector" value="<?php print $selector; ?>">
+          <input type="hidden" name="token" value="<?php print $token; ?>">
           <input type="password" name="password" placeholder="password">
         </div>
       </div>

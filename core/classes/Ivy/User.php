@@ -160,7 +160,7 @@ class User {
 
       if(isset($_POST['password'])){
         try {
-          $auth->resetPassword($selector, $token, $_POST['password']);
+          $auth->resetPassword($_POST['selector'], $_POST['token'], $_POST['password']);
           Message::add('Password has been reset', _BASE_PATH . 'admin/login');
         }
         catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {
