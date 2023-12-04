@@ -35,8 +35,9 @@ $router->get('/profile/(\d+)', function($id) use($db, $auth, $page, $button) {
 
 <!-- ADMIN -->
 <?php
-$router->get('/admin/(\w+)', function($id) use($db, $auth, $page, $button) {
+$router->get('/admin/(\w+)(/[^/]+)?(/[^/]+)?', function($id, $selector = null, $token = null) use($db, $auth, $page, $button) {
   if(canEditAsAdmin($auth) || (!canEditAsAdmin($auth) && in_array($id,['register','login','logout','reset','profile']))):
+    print $selector;
     $form = new \stdClass;
     $form->action = _BASE_PATH . 'post/' . $id;
     $form->content = $page->setTemplateFile('admin/' . $id . '.php');

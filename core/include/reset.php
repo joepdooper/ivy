@@ -2,9 +2,9 @@
 defined('_BASE_PATH') ?: header('location: ../../index.php');
 
 // Confirm Email
-if (isset($_GET['selector']) && isset($_GET['token']) ){
+if (isset($selector) && isset($token)){
   try {
-    $auth->canResetPasswordOrThrow($_GET['selector'], $_GET['token']);
+    $auth->canResetPasswordOrThrow($selector, $token);
     \Ivy\Message::add('Create a new secure password');
   }
   catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {

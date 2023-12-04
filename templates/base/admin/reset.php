@@ -10,7 +10,7 @@ defined('_BASE_PATH') ?: header('location: ../../../index.php');
     </div>
   </div>
 
-  <?php if(isset($_GET['selector']) && isset($_GET['token'])): ?>
+  <?php if($selector && $token): ?>
 
     <div class="outer">
       <div class="inner">

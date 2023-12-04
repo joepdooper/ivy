@@ -129,12 +129,12 @@ class User {
       if(isset($_POST['email'])){
 
         try {
-          $auth->forgotPassword($purifier->purify($_POST['email']), function ($selector, $token) {
+          $auth->forgotPassword($purifier->purify($_POST['email']), function ($selector, $token) use ($purifier) {
             $url = _BASE_PATH . 'admin/reset/' . \urlencode($selector) . '/' . \urlencode($token);
             // send email
             $mail = new Mail();
             $mail->Address = $purifier->purify($_POST['email']);
-            $mail->Name    = $purifier->purify($_POST['username']);
+            $mail->Name    = '';
             $mail->Subject = 'Reset password';
             $mail->Body    = 'Reset password with this link: ' . $url;
             $mail->AltBody = 'Reset password with this link: ' . $url;
@@ -142,41 +142,41 @@ class User {
           });
         }
         catch (\Delight\Auth\InvalidEmailException $e) {
-          die('Invalid email address');
+          Message::add('Invalid email address', _BASE_PATH . 'admin/reset');
         }
         catch (\Delight\Auth\EmailNotVerifiedException $e) {
-          die('Email not verified');
+          Message::add('Email not verified', _BASE_PATH . 'admin/reset');
         }
         catch (\Delight\Auth\ResetDisabledException $e) {
-          die('Password reset is disabled');
+          Message::add('Password reset is disabled', _BASE_PATH . 'admin/reset');
         }
         catch (\Delight\Auth\TooManyRequestsException $e) {
-          die('Too many requests');
+          Message::add('Too many requests', _BASE_PATH . 'admin/reset');
         }
 
-        Message::add('An email to ' . $_POST['email'] . ' has been sent with a link to reset your password', _BASE_PATH . 'admin/reset');
+        Message::add('An email has been sent to ' . $_POST['email'] . ' with a link to reset your password', _BASE_PATH . 'admin/reset');
 
       }
 
       if(isset($_POST['password'])){
         try {
-          $auth->resetPassword($_GET['selector'], $_GET['token'], $_POST['password']);
+          $auth->resetPassword($selector, $token, $_POST['password']);
           Message::add('Password has been reset', _BASE_PATH . 'admin/login');
         }
         catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {
-          die('Invalid token');
+          Message::add('Invalid token', _BASE_PATH . 'admin/reset');
         }
         catch (\Delight\Auth\TokenExpiredException $e) {
-          die('Token expired');
+          Message::add('Token expired', _BASE_PATH . 'admin/reset');
         }
         catch (\Delight\Auth\ResetDisabledException $e) {
-          die('Password reset is disabled');
+          Message::add('Password reset is disabled', _BASE_PATH . 'admin/reset');
         }
         catch (\Delight\Auth\InvalidPasswordException $e) {
-          die('Invalid password');
+          Message::add('Invalid password', _BASE_PATH . 'admin/reset');
         }
         catch (\Delight\Auth\TooManyRequestsException $e) {
-          die('Too many requests');
+          Message::add('Too many requests', _BASE_PATH . 'admin/reset');
         }
       }
 
