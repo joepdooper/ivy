@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../../index.php');
-$allUsers = $db->select('SELECT `id`, `email`, `username`, `status`, `verified`, `roles_mask`, `registered`, `last_login` FROM `users`');
+$users = (new Ivy\User)->get()->data();
 ?>
 
 <div class="outer">
@@ -23,34 +23,34 @@ $allUsers = $db->select('SELECT `id`, `email`, `username`, `status`, `verified`,
         </tr>
       </thead>
       <tbody>
-        <?php foreach($allUsers as $row):?>
+        <?php foreach($users as $user):?>
           <tr>
-            <td><strong><?php echo $row['username']; ?></strong></td>
-            <td><?php echo $row['email']; ?></td>
+            <td><strong><?php echo $user->username; ?></strong></td>
+            <td><?php echo $user->email; ?></td>
             <td>
               <?php
               $button->switch(
-                'users[' . $row['id'] . '][super_admin]',
-                $auth->admin()->doesUserHaveRole($row['id'], \Delight\Auth\Role::SUPER_ADMIN)
+                'users[' . $user->id . '][super_admin]',
+                $auth->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::SUPER_ADMIN)
               );
               ?>
             </td>
             <td>
               <?php
               $button->switch(
-                'users[' . $row['id'] . '][admin]',
-                $auth->admin()->doesUserHaveRole($row['id'], \Delight\Auth\Role::ADMIN),
+                'users[' . $user->id . '][admin]',
+                $auth->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::ADMIN),
               );
               ?>
             </td>
             <td>
               <?php $button->switch(
-                'users[' . $row['id'] . '][editor]',
-                $auth->admin()->doesUserHaveRole($row['id'], \Delight\Auth\Role::EDITOR)
+                'users[' . $user->id . '][editor]',
+                $auth->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::EDITOR)
               );
               ?>
             </td>
-            <td><?php $button->delete('delete',$row['id']); ?></td>
+            <td><?php $button->delete("users[" . $user->id . "][delete]","users_" . $user->id); ?></td>
           </tr>
         <?php endforeach;?>
       </tbody>

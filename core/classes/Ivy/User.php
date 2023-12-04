@@ -4,7 +4,10 @@ namespace Ivy;
 use HTMLPurifier_Config;
 use HTMLPurifier;
 
-class User {
+class User extends Model {
+
+  protected $table = 'users';
+  protected $path = _BASE_PATH . 'admin/user';
 
   // Register
 
@@ -178,6 +181,55 @@ class User {
         catch (\Delight\Auth\TooManyRequestsException $e) {
           Message::add('Too many requests', _BASE_PATH . 'admin/reset');
         }
+      }
+
+    }
+
+  }
+
+  function post() {
+
+    global $auth;
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && $auth->isLoggedIn()){
+
+      try {
+
+        $users = isset($_POST['users']) ? $_POST['users'] : '';
+
+        // Update users
+        if(!empty($users)){
+          foreach($users as $key => $row){
+            if($row['delete']){
+              try {
+                $auth->admin()->deleteUserById($key);
+              }
+              catch (\Delight\Auth\UnknownIdException $e) {
+                die('Unknown ID');
+              }
+            } else {
+              if($row['editor']){
+                $auth->admin()->addRoleForUserById($key, \Delight\Auth\Role::EDITOR);
+              } else {
+                $auth->admin()->removeRoleForUserById($key, \Delight\Auth\Role::EDITOR);
+              }
+              if($row['admin']){
+                $auth->admin()->addRoleForUserById($key, \Delight\Auth\Role::ADMIN);
+              } else {
+                $auth->admin()->removeRoleForUserById($key, \Delight\Auth\Role::ADMIN);
+              }
+              if($row['super_admin']){
+                $auth->admin()->addRoleForUserById($key, \Delight\Auth\Role::SUPER_ADMIN);
+              } else {
+                $auth->admin()->removeRoleForUserById($key, \Delight\Auth\Role::SUPER_ADMIN);
+              }
+            }
+          }
+        }
+
+        \Ivy\Message::add('Update succesfully',_BASE_PATH . 'admin/user');
+      } catch (Exception $e) {
+        \Ivy\Message::add('Something went wrong',_BASE_PATH . 'admin/user');
       }
 
     }
