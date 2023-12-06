@@ -43,6 +43,7 @@ endif;
 <?php
 function add_footer_js(){
 	global $page;
+	$page->addJS("templates/base/js/helper.js");
 	$page->addJS("node_modules/axios/dist/axios.min.js");
 	$page->addJS("node_modules/macy/dist/macy.js");
 	$page->addJS("node_modules/sortablejs/Sortable.min.js");
