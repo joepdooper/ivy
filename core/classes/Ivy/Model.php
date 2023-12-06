@@ -130,8 +130,7 @@ class Model {
   {
     global $db;
 
-    $config = HTMLPurifier_Config::createDefault();
-    $purifier = new HTMLPurifier($config);
+    $set = $this->purify($set);
 
     $db->update(
       $this->table,
@@ -158,6 +157,7 @@ class Model {
   // -- save
   public function save($array)
   {
+
     if(isset($array["delete"])){
       $this->bindings = ["id" => $array["id"]];
       $lastInsertId = $this->delete();
@@ -193,6 +193,17 @@ class Model {
         Message::add('Something went wrong', $this->path);
       }
     }
+  }
+
+  public function purify($array) {
+    $config = HTMLPurifier_Config::createDefault();
+    $purifier = new HTMLPurifier($config);
+    foreach ($array as $key => $value) {
+      if($value){
+        $array[$key] = $purifier->purify($value);
+      }
+    }
+    return $array;
   }
 
 }
