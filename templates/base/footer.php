@@ -44,11 +44,8 @@ endif;
 function add_footer_js(){
 	global $page;
 	$page->addJS("templates/base/js/helper.js");
+	$page->addJS("templates/base/js/template.js");
 	$page->addJS("node_modules/axios/dist/axios.min.js");
-	$page->addJS("node_modules/macy/dist/macy.js");
-	$page->addJS("node_modules/sortablejs/Sortable.min.js");
-	$page->addJS("node_modules/linkifyjs/dist/linkify.min.js");
-	$page->addJS("node_modules/linkify-html/dist/linkify-html.min.js");
 }
 
 $hooks->add_action('add_js_action','add_footer_js','1');

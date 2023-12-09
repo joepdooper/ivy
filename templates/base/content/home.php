@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$items = (new \Ivy\Item)->where('parent',null)->orderBy('id','desc')->get()->data();
+$items = (new \Ivy\Item)->where('parent',null)->orderBy(['sort', 'date', 'id'],'asc')->get()->data();
 ?>
 
 <?php if($items): ?>
