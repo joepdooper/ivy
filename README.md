@@ -60,6 +60,6 @@ To access the "backend" for the first time, follow these steps:
 
 Open the `.env` file and update it with your email credentials. If you've modified the `.env` file, follow these steps:
 
-1. After logging in, change and submit the email address on the profile page to initiate the email address change process
+1. Upon login, on the profile page, modify and submit your email address to initiate the email change process.
 2. After successfully changing your email address, go to `yourserver.com/admin/logout` to log out (logout icon)
 3. Finally, navigate to `yourserver.com/admin/reset` to initiate the password reset process
