@@ -48,7 +48,7 @@ yarn install
 
 ## Login
 
-#### 1. Accessing the backend
+#### Accessing the backend
 
 To access the "backend" for the first time, follow these steps:
 
