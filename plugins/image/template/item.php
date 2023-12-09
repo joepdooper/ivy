@@ -21,6 +21,11 @@ $image = (new Image)->where('id', $item->table_id)->getRow()->data();
 							<?php $button->delete('delete_image','single_image_' . $item->id,'delete_image_'.$item->id); ?>
 						<?php else: ?>
 							<?php $button->upload('upload_image','single_image_' . $item->id,'upload_image_'.$item->id); ?>
+							<script>
+							window.addEventListener('DOMContentLoaded', (event) => {
+							  previewImage("<?php print 'upload_image_'.$item->id; ?>","<?php print 'upload_image_'.$item->id; ?>Preview","src");
+							});
+							</script>
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>
