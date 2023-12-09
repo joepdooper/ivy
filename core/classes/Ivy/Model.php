@@ -48,9 +48,17 @@ class Model {
   }
 
   // -- order by
-  public function orderBy($column, $direction = 'asc')
+  public function orderBy($columns, $direction = 'asc')
   {
-    $this->query .= " ORDER BY `{$this->table}`.`{$column}` {$direction}";
+    if (is_array($columns)) {
+        $orderByString = implode(', ', array_map(function ($column) use ($direction) {
+            return "`{$this->table}`.`{$column}` {$direction}";
+        }, $columns));
+    } else {
+        $orderByString = "`{$this->table}`.`{$columns}` {$direction}";
+    }
+
+    $this->query .= " ORDER BY {$orderByString}";
 
     return $this;
   }
@@ -116,6 +124,8 @@ class Model {
   public function insert($set)
   {
     global $db;
+
+    $set = $this->purify($set);
 
     $db->insert(
       $this->table,
