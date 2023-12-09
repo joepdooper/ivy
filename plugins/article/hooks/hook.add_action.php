@@ -24,7 +24,7 @@ function article_insert_update_delete_route(){
         case 'update':
         $item->where('id', $id)->getRow();
         $article->where('id', $item->data->table_id)->getRow();
-        $item->update(['published' => $_POST['publish_item']]);
+        $item->update(['published' => $_POST['publish_item'], 'date' => $_POST['datetime']]);
         require_once _PUBLIC_PATH . _PLUGIN_PATH . 'article/posts/update.php';
         $article->update(['title' => $title, 'subtitle' => $subtitle, 'subject' => $subject, 'image' => $image]);
         \Ivy\Message::add('Article updated', $redirect);

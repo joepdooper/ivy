@@ -3,7 +3,7 @@ $db->exec(
   '
   CREATE TABLE `text` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `text` varchar(255) NOT NULL,
+    `text` TEXT NOT NULL,
     `token` int(11) DEFAULT NULL,
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;

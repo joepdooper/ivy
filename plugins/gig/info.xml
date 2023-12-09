@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+  <name>Gig</name>
+  <url>gig</url>
+  <version>1.0.0</version>
+  <image></image>
+  <description>Gig item</description>
+  <type>item</type>
+  <database>
+    <install>db/install.db.php</install>
+    <uninstall>db/uninstall.db.php</uninstall>
+  </database>
+</plugin>

@@ -12,10 +12,7 @@ class Text extends Ivy\Model {
 
   public function purify($array) {
     $config = HTMLPurifier_Config::createDefault();
-    $config->set('HTML.Nofollow', true);
-    $config->set('HTML.TargetBlank', true);
-    $config->set('HTML.AllowedAttributes', 'a.href');
-    $config->set('HTML.AllowedAttributes', 'a.href');
+    $config->set('HTML.AllowedElements', array('br', 'ul', 'ol', 'li', 'b', 'i'));
     $purifier = new HTMLPurifier($config);
     foreach ($array as $key => $value) {
       if($value){

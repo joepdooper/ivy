@@ -7,6 +7,11 @@ class Image extends Ivy\Model {
   public $id, $file, $token;
   protected $table = 'image';
 
+  public static function set($name,$value,$id = null) {
+    global $page;
+    include(_PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'image/template/input.TypeImage.php'));
+  }
+
   public function upload($image) {
     $file = new File();
     $file->name = bin2hex(random_bytes(16));
@@ -30,11 +35,6 @@ class Image extends Ivy\Model {
       unlink(_PUBLIC_PATH . 'media/item/' . $size->name . '/' . $image);
       unlink(_PUBLIC_PATH . 'media/item/' . $size->name . '/' . pathinfo($image)['filename'] . '.webp');
     }
-  }
-
-  public static function set($name,$value,$id = null) {
-    global $page;
-    include(_PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'image/template/input.TypeImage.php'));
   }
 
 }
