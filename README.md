@@ -46,9 +46,9 @@ or
 yarn install
 ```
 
-#### 5. Login and update your profile
+## Login
 
-**Accessing the backend**
+#### 1. Accessing the backend
 
 To access the "backend" for the first time, follow these steps:
 
@@ -56,13 +56,10 @@ To access the "backend" for the first time, follow these steps:
 2. Use the credentials `admin@localhost.test` and `00000`
 3. Upon successful login, you will be directed to the profile page with *super_admin* rights
 
-**Changing email and password**
+#### Changing email and password
 
-To change your password and email, open the `.env` file and update it with your email credentials.
+Open the `.env` file and update it with your email credentials. If you've modified the `.env` file, follow these steps:
 
-If you've modified the .env file, follow these additional steps:
-
-1. Proceed to `yourserver.com/admin/profile` (user icon)
-2. Change the default email address to your preferred one to initiate the email address change process
-3. After successfully changing your email address, go to `yourserver.com/admin/logout` to log out (logout icon)
-4. Finally, navigate to `yourserver.com/admin/reset` to initiate the password reset process
+1. After logging in, change and submit the email address on the profile page to initiate the email address change process
+2. After successfully changing your email address, go to `yourserver.com/admin/logout` to log out (logout icon)
+3. Finally, navigate to `yourserver.com/admin/reset` to initiate the password reset process
