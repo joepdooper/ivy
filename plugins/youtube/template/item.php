@@ -15,7 +15,7 @@ $youtube = (new Youtube)->where('id', $item->table_id)->getRow()->data();
     <?php if($item->author): ?>
       <form action="<?php print _BASE_PATH . 'youtube/update/' . $item->id . $page->url; ?>" method="POST" enctype="multipart/form-data">
         <input type="text" placeholder="Youtube video id" name="youtube_video_id" value="<?php print $youtube->youtube_video_id; ?>">
-        <?php include $page->setTemplateFile('content/item_admin_buttons.php'); ?>
+        <?php include $page->setTemplateFile('buttons/item_admin_buttons.php'); ?>
       </form>
     <?php endif; ?>
 

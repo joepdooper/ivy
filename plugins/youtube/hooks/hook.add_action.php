@@ -25,39 +25,38 @@ $hooks->add_action('add_js_action','add_youtube_js');
 if($auth->isLoggedIn()){
 
   function youtube_insert_update_delete_route(){
-    global $router, $auth;
-    if($auth->isLoggedIn()){
-      $router->post('/youtube/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) {
+    global $router;
 
-        $item = new \Ivy\Item();
-        $youtube = new Youtube();
+    $router->post('/youtube/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) {
 
-        $redirect = _BASE_PATH . (isset($page_id) ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
+      $item = new \Ivy\Item();
+      $youtube = new Youtube();
 
-        switch ($action) {
-          case 'insert':
-          $youtube->insert(['youtube_video_id' => 'aKydtOXW8mI']);
-          $item->insert(['template' => $id, 'parent' => $page_id]);
-          \Ivy\Message::add('Youtube inserted', $redirect);
-          break;
-          case 'update':
-          $item->where('id', $id)->getRow();
-          $youtube->where('id', $item->data->table_id)->getRow();
-          $item->update(['published' => $_POST['publish_item']]);
-          $youtube->update(['youtube_video_id' => $_POST['youtube_video_id']]);
-          \Ivy\Message::add('Youtube updated', $redirect);
-          break;
-          case 'delete':
-          $item->where('id', $id)->getRow();
-          $youtube->where('id', $item->data->table_id)->getRow();
-          $item->delete();
-          $youtube->delete();
-          \Ivy\Message::add('Youtube deleted', $redirect);
-          break;
-        }
+      $redirect = _BASE_PATH . (isset($page_id) ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
 
-      });
-    }
+      switch ($action) {
+        case 'insert':
+        $youtube->insert(['youtube_video_id' => 'aKydtOXW8mI']);
+        $item->insert(['template' => $id, 'parent' => $page_id]);
+        \Ivy\Message::add('Youtube inserted', $redirect);
+        break;
+        case 'update':
+        $item->where('id', $id)->getRow();
+        $youtube->where('id', $item->data->table_id)->getRow();
+        $item->update(['published' => $_POST['publish_item']]);
+        $youtube->update(['youtube_video_id' => $_POST['youtube_video_id']]);
+        \Ivy\Message::add('Youtube updated', $redirect);
+        break;
+        case 'delete':
+        $item->where('id', $id)->getRow();
+        $youtube->where('id', $item->data->table_id)->getRow();
+        $item->delete();
+        $youtube->delete();
+        \Ivy\Message::add('Youtube deleted', $redirect);
+        break;
+      }
+
+    });
   }
 
   $hooks->add_action('start_router_action','youtube_insert_update_delete_route');

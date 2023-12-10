@@ -60,7 +60,7 @@ $docs = (new Docs)->where('id', $item->table_id)->getRow()->data();
 
 					<?php
 					if ($auth->isLoggedIn()):
-						include $page->setTemplateFile('content/item_admin_buttons.php');
+						include $page->setTemplateFile('buttons/item_admin_buttons.php');
 					endif;
 					?>
 

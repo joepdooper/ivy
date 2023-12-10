@@ -31,7 +31,7 @@ $image = (new Image)->where('id', $item->table_id)->getRow()->data();
 				<?php endif; ?>
 			</div>
 
-			<?php include $page->setTemplateFile('content/item_admin_buttons.php'); ?>
+			<?php include $page->setTemplateFile('buttons/item_admin_buttons.php'); ?>
 
 		</form>
 

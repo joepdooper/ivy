@@ -14,7 +14,7 @@ $text = (new Text)->where('id', $item->table_id)->getRow()->data();
         <p><?php print $text->text; ?></p>
       <?php endif; ?>
 
-      <?php include $page->setTemplateFile('content/item_admin_buttons.php'); ?>
+      <?php include $page->setTemplateFile('buttons/item_admin_buttons.php'); ?>
 
     </form>
 

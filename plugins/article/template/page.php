@@ -42,7 +42,7 @@ $article = (new Article)->where('id', $item->table_id)->getRow()->data();
 					<?php if($item->author): ?>
 						<?php $page->setDateTime('datetime',date('Y-m-d H:i:s',strtotime($date))); ?>
 					<?php else: ?>
-						<?php include $page->setTemplateFile('content/author/author.php'); ?>
+						<?php include $page->setTemplateFile('content/author.php'); ?>
 					<?php endif; ?>
 				</div>
 

@@ -27,7 +27,7 @@ $docs = (new Docs)->where('id', $item->table_id)->getRow()->data();
 							<?php
 							$author = (new \Ivy\Profile)->where('id',$item->user_id)->getRow()->data();
 							$date = $item->date;
-							include $page->setTemplateFile('content/author/author.php');
+							include $page->setTemplateFile('content/author.php');
 							?>
 						</div>
 					</div>
@@ -39,7 +39,7 @@ $docs = (new Docs)->where('id', $item->table_id)->getRow()->data();
 		<form action="<?php print _BASE_PATH . 'docs/update/' . $item->id; ?>" method="POST" enctype="multipart/form-data">
 			<?php
 			if ($auth->isLoggedIn()):
-				include $page->setTemplateFile('content/item_admin_buttons.php');
+				include $page->setTemplateFile('buttons/item_admin_buttons.php');
 			endif;
 			?>
 		</form>
