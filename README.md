@@ -65,6 +65,6 @@ Open the `.env` file and update it with your email credentials. If you've modifi
 3. Finally, navigate to `yourserver.com/admin/reset` to initiate the password reset process
 
 
-## Dokumentation
+## Documentation
 
 [Documentation](https://dooper.io/ivy) coming up
