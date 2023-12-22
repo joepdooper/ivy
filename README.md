@@ -63,3 +63,8 @@ Open the `.env` file and update it with your email credentials. If you've modifi
 1. Upon login, on the profile page, modify and submit your email address to initiate the email change process
 2. After successfully changing your email address, go to `yourserver.com/admin/logout` to log out (logout icon)
 3. Finally, navigate to `yourserver.com/admin/reset` to initiate the password reset process
+
+
+## Dokumentation
+
+[Documentation](https://dooper.io/ivy) coming up
