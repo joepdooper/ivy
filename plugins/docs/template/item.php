@@ -3,7 +3,7 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
 $docs = (new Docs)->where('id', $item->table_id)->getRow()->data();
 ?>
 
-<div class="<?php if($item->class): print $item->class; else:?>item item-docs col-12 col-md-6 col-lg-4<?php endif;?>" id="item-<?php print $item->id; ?>">
+<div class="item item-docs col-12 <?php if(!$item->parent): ?>col-md-6 col-lg-4<?php endif;?>" id="item-<?php print $item->id; ?>">
 	<div class="inner">
 		<a class="item-wrap" href="<?php print _BASE_PATH . 'docs/' . $item->id; ?>">
 
@@ -21,14 +21,6 @@ $docs = (new Docs)->where('id', $item->table_id)->getRow()->data();
 						<div class="inner">
 							<h1><?php print $docs->title; ?></h1>
 							<h2><?php print $docs->subtitle; ?></h2>
-						</div>
-						<!-- Author -->
-						<div class="inner">
-							<?php
-							$author = (new \Ivy\Profile)->where('id',$item->user_id)->getRow()->data();
-							$date = $item->date;
-							include $page->setTemplateFile('content/author.php');
-							?>
 						</div>
 					</div>
 				</article>

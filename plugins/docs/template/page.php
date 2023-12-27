@@ -11,20 +11,21 @@ $docs = (new Docs)->where('id', $item->table_id)->getRow()->data();
 				<ul>
 					<?php foreach ((new Tag)->get()->data() as $tag): ?>
 						<li>
-							<label class="tag">
+							<input id="tag-<?php print $tag->id; ?>" class="visually-hidden tag-radio" type="radio" name="tag" <?php if($docs->subject === $tag->id): ?>checked<?php endif; ?>>
+							<label class="tag<?php if($docs->subject === $tag->id): ?> active<?php endif; ?>" for="tag-<?php print $tag->id; ?>">
 								<div class="inner">
 									<?php print $tag->value; ?>
 								</div>
 							</label>
 							<ul>
 								<?php foreach ((new Docs)->where('subject',$tag->id)->get()->data() as $link): ?>
-									<li>
+									<?php if((new \Ivy\Item)->where('id',$link->item_id)->getRow()->data->published): ?>
+									<li class="<?php if($link->item_id === $item->id): ?>active<?php endif; ?>">
 										<a href="<?php print _BASE_PATH . 'docs/' . $link->item_id; ?>">
-											<div class="inner">
-												<strong><?php print $link->title; ?></strong>
-											</div>
+											<div class="inner"><?php print $link->title; ?></div>
 										</a>
 									</li>
+								<?php endif; ?>
 								<?php endforeach; ?>
 							</ul>
 						</li>
@@ -52,24 +53,23 @@ $docs = (new Docs)->where('id', $item->table_id)->getRow()->data();
 
 						<!-- Titles -->
 						<div class="inner">
-							<h1><?php $item->author ? Text::set('title',$docs->title,'title') : print $docs->title; ?></h1>
-							<h2><?php $item->author ? Text::set('subtitle',$docs->subtitle,'subtitle') : print $docs->subtitle; ?></h2>
+							<h1><?php $item->author ? text\Item::set('title',$docs->title,'title') : print $docs->title; ?></h1>
+							<h2><?php $item->author ? text\Item::set('subtitle',$docs->subtitle,'subtitle') : print $docs->subtitle; ?></h2>
+							<?php
+							if ($auth->isLoggedIn()):
+								include $page->setTemplateFile('buttons/item_admin_buttons.php');
+							endif;
+							?>
 						</div>
 
 					</div>
-
-					<?php
-					if ($auth->isLoggedIn()):
-						include $page->setTemplateFile('buttons/item_admin_buttons.php');
-					endif;
-					?>
 
 					<?php if($item->author): ?>
 					</form>
 				<?php endif; ?>
 
 				<div class="outer">
-					<?php $items = (new \Ivy\Item)->where('parent',$item->id)->orderBy('id','asc')->get()->data();?>
+					<?php $items = (new \Ivy\Item)->where('parent',$item->id)->orderBy(['sort', 'date', 'id'],'asc')->get()->data(); ?>
 					<?php if($items): ?>
 						<?php foreach($items as $item):?>
 							<?php if($item->published || $item->author): ?>

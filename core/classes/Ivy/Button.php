@@ -4,7 +4,6 @@ namespace Ivy;
 class Button extends Page {
 
   public function delete($name = null, $value = null, $id = null, $formaction = null) {
-    include(_PUBLIC_PATH . 'core/inputs/input.delete.php');
     include $this->setTemplateFile('buttons/button.delete.php');
     include $this->setTemplateFile('buttons/button.confirm.php');
   }
@@ -34,17 +33,14 @@ class Button extends Page {
   }
 
   public function upload($name = null, $value = null, $id = null) {
-    include(_PUBLIC_PATH . 'core/inputs/input.upload.php');
     include $this->setTemplateFile('buttons/button.upload.php');
   }
 
   public function switch($name = null, $value = null, $id = null) {
-    include _PUBLIC_PATH . 'core/inputs/input.checkbox.php';
     include $this->setTemplateFile('buttons/button.switch.php');
   }
 
   public function visible($name = null, $value = null, $id = null) {
-    include(_PUBLIC_PATH . 'core/inputs/input.checkbox.php');
     include $this->setTemplateFile('buttons/button.visible.php');
   }
 

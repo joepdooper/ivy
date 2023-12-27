@@ -18,7 +18,7 @@ class Model {
   }
 
   // -- where
-  public function where($column, $value)
+  public function where($column, $value = null, $operator = '=')
   {
 
     if (is_null($value)) {
@@ -29,9 +29,9 @@ class Model {
         }
     } else {
         if (strpos($this->query, 'WHERE') === false) {
-            $this->query .= " WHERE `{$this->table}`.`{$column}` = :{$column}";
+            $this->query .= " WHERE `{$this->table}`.`{$column}` {$operator} :{$column}";
         } else {
-            $this->query .= " AND `{$this->table}`.`{$column}` = :{$column}";
+            $this->query .= " AND `{$this->table}`.`{$column}` {$operator} :{$column}";
         }
         $this->bindings[$column] = $value;
     }

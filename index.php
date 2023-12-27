@@ -13,6 +13,7 @@ require 'core/include/const.php';
 
 // Include start
 require 'core/include/init.php';
+
 $hooks->do_action('add_start_action');
 
 // create router instance
@@ -51,7 +52,7 @@ $router->run();
 <body>
   <?php $hooks->do_action('start_body_action'); ?>
 
-  <div class="wrapper theme-container">
+  <div class="wrapper theme-container bg-light">
     <?php $hooks->do_action('start_wrapper_action'); ?>
 
     <?php
@@ -99,10 +100,6 @@ $router->run();
   		<script src="<?php print _BASE_PATH . $page->setTemplateFile($jsfile); ?>"></script>
   	<?php endforeach; ?>
   <?php endif; ?>
-
-  <?php $hooks->do_action('start_script_action'); ?>
-  <?php include_once $page->setTemplateFile('content/script.php'); ?>
-  <?php $hooks->do_action('end_script_action'); ?>
 
   <?php $hooks->do_action('end_body_action'); ?>
 

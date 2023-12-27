@@ -5,6 +5,8 @@ function add_article_object(){
   include_once _PUBLIC_PATH . _PLUGIN_PATH . 'article/classes/class.Article.php';
 }
 
+$hooks->add_action('add_start_action','add_article_object');
+
 function article_insert_update_delete_route(){
   global $router, $db, $auth;
   if($auth->isLoggedIn()){
@@ -52,7 +54,6 @@ function article_show_page(){
   });
 }
 
-$hooks->add_action('add_start_action','add_article_object');
 $hooks->add_action('start_router_action','article_insert_update_delete_route');
 $hooks->add_action('start_container_action','article_show_page');
 ?>

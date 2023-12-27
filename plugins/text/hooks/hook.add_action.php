@@ -1,10 +1,6 @@
 <?php
 defined('_BASE_PATH') or die('Something went wrong');
 
-function add_text_object(){
-  include_once _PUBLIC_PATH . _PLUGIN_PATH . 'text/classes/class.Text.php';
-}
-
 function add_text_js(){
   global $page;
   $page->addJS("node_modules/linkifyjs/dist/linkify.min.js");
@@ -13,7 +9,6 @@ function add_text_js(){
 }
 
 $hooks->add_action('add_js_action','add_text_js');
-$hooks->add_action('add_start_action','add_text_object');
 
 // -- admin
 if($auth->isLoggedIn()){
@@ -23,7 +18,7 @@ if($auth->isLoggedIn()){
     $router->post('/text/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) {
 
       $item = new \Ivy\Item();
-      $text = new Text();
+      $text = new \text\Item();
 
       $redirect = _BASE_PATH . (isset($page_id) ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
 

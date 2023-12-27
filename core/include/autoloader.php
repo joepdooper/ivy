@@ -1,18 +1,19 @@
 <?php
-spl_autoload_register(function ($className) {
+spl_autoload_register(function ($classname) {
+  $classname = str_replace('\\', DIRECTORY_SEPARATOR, $classname);
+  $namespace = dirname(str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $classname));
 
-  $nameSpace = '';
+  $directories = [
+    _PUBLIC_PATH . 'core' . DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR,
+    _PUBLIC_PATH . 'plugins' . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR,
+  ];
 
-  $len = strlen($nameSpace);
-  if (strncmp($className, $nameSpace, $len) === 0) {
-    $className = substr($className, $len);
-    $className = str_replace('\\', DIRECTORY_SEPARATOR, $className);
-  }
-
-  $classFile = _PUBLIC_PATH . 'core/classes/' . $className . '.php';
-
-  if (file_exists($classFile)) {
-    require_once($classFile);
+  foreach ($directories as $directory) {
+    $filePath = $directory . basename($classname) . '.php';
+    if (file_exists($filePath)) {
+      require_once($filePath);
+      return;
+    }
   }
 });
 ?>

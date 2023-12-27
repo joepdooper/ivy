@@ -42,7 +42,7 @@ $gig = (new Gig)->where('id', $item->table_id)->getRow()->data();
 						<div class="inner">
 							<div class="gigvenue">
 								<?php if($item->author): ?>
-									<?php Text::set('venue',$gig->venue,'venue'.$item->id)?>
+									<?php text\Item::set('venue',$gig->venue,'venue'.$item->id)?>
 								<?php else: ?>
 									<p>
 										<?php print $gig->venue; ?>
@@ -51,7 +51,7 @@ $gig = (new Gig)->where('id', $item->table_id)->getRow()->data();
 							</div>
 							<div class="gigaddress">
 								<?php if($item->author): ?>
-									<?php Text::set('address',$gig->address,'address'.$item->id)?>
+									<?php text\Item::set('address',$gig->address,'address'.$item->id)?>
 								<?php else: ?>
 									<p>
 										<?php print $gig->address; ?>

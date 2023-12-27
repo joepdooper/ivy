@@ -9,7 +9,7 @@ class Profile extends Model {
   protected $table = 'profiles';
   protected $path = _BASE_PATH . 'admin/profile';
 
-  public $id, $user_id, $username, $roles, $users_image, $last_login;
+  public $id, $user_id, $username, $roles, $users_image, $last_login, $last_seen;
 
   public function __construct() {
     $this->query = "
@@ -101,8 +101,25 @@ class Profile extends Model {
 
       Message::add($message, $this->path);
 
-      // Call the parent post method from the Model class
-      // parent::post();
+    }
+  }
+
+  private function setLastSeen() {
+    if($this->data->last_login){
+      $seconds_ago = time() - $this->data->last_login;
+      if ($seconds_ago >= 31536000) {
+        return "seen " . intval($seconds_ago / 31536000) . " years ago";
+      } elseif ($seconds_ago >= 2419200) {
+        return "seen " . intval($seconds_ago / 2419200) . " months ago";
+      } elseif ($seconds_ago >= 86400) {
+        return "seen " . intval($seconds_ago / 86400) . " days ago";
+      } elseif ($seconds_ago >= 3600) {
+        return "seen " . intval($seconds_ago / 3600) . " hours ago";
+      } elseif ($seconds_ago >= 60) {
+        return "seen " . intval($seconds_ago / 60) . " minutes ago";
+      } else {
+        return "seen less than a minute ago";
+      }
     }
   }
 

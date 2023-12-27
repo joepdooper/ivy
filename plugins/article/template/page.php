@@ -29,14 +29,14 @@ $article = (new Article)->where('id', $item->table_id)->getRow()->data();
 
 				<!-- Titles -->
 				<div class="inner">
-					<h1><?php $item->author ? Text::set('title',$article->title,'title') : print $article->title; ?></h1>
-					<h2><?php $item->author ? Text::set('subtitle',$article->subtitle,'subtitle') : print $article->subtitle; ?></h2>
+					<h1><?php $item->author ? text\Item::set('title',$article->title,'title') : print $article->title; ?></h1>
+					<h2><?php $item->author ? text\Item::set('subtitle',$article->subtitle,'subtitle') : print $article->subtitle; ?></h2>
 				</div>
 
 				<!-- Author -->
 				<div class="inner">
 					<?php
-					$author = (new \Ivy\Profile)->where('id',$item->user_id)->getRow()->data(); 
+					$author = (new \Ivy\Profile)->where('id',$item->user_id)->getRow()->data();
 					$date = $item->date;
 					?>
 					<?php if($item->author): ?>
@@ -75,7 +75,7 @@ $article = (new Article)->where('id', $item->table_id)->getRow()->data();
 		<?php endif; ?>
 
 		<div class="outer">
-			<?php $items = (new \Ivy\Item)->where('parent',$item->id)->orderBy('id','asc')->get()->data();?>
+			<?php $items = (new \Ivy\Item)->where('parent',$item->id)->orderBy(['sort', 'date', 'id'],'asc')->get()->data(); ?>
 			<?php if($items): ?>
 				<?php foreach($items as $item):?>
 					<?php if($item->published || $item->author): ?>

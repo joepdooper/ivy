@@ -5,9 +5,29 @@ function add_docs_object(){
   include_once _PUBLIC_PATH . _PLUGIN_PATH . 'docs/classes/class.Docs.php';
 }
 
-function docs_insert_update_delete_route(){
-  global $router, $db, $auth;
-  if($auth->isLoggedIn()){
+function add_docs_css(){
+  global $page;
+  $page->addCSS("plugins/docs/css/docs.css");
+}
+
+function docs_show_page(){
+  global $router, $db, $auth, $page, $button;
+  $router->get('/docs/(\d+)', function($id) use($db, $auth, $page, $button) {
+    $item = (new \Ivy\Item)->where('id',$id)->getRow()->data();
+    $page->content = $page->setTemplateFile(_PLUGIN_PATH . $item->plugin . '/template/' . $item->page_template_file);
+    include $page->setTemplateFile('main.php');
+  });
+}
+
+$hooks->add_action('add_start_action','add_docs_object');
+$hooks->add_action('add_css_action','add_docs_css');
+$hooks->add_action('start_container_action','docs_show_page');
+
+
+if($auth->isLoggedIn()){
+
+  function docs_insert_update_delete_route(){
+    global $router, $db, $auth;
     $router->post('/docs/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) use($db, $auth) {
 
       $item = new \Ivy\Item();
@@ -42,18 +62,8 @@ function docs_insert_update_delete_route(){
 
     });
   }
-}
 
-function docs_show_page(){
-  global $router, $db, $auth, $page, $button;
-  $router->get('/docs/(\d+)', function($id) use($db, $auth, $page, $button) {
-    $item = (new \Ivy\Item)->where('id',$id)->getRow()->data();
-    $page->content = $page->setTemplateFile(_PLUGIN_PATH . $item->plugin . '/template/' . $item->page_template_file);
-    include $page->setTemplateFile('main.php');
-  });
-}
+  $hooks->add_action('start_router_action','docs_insert_update_delete_route');
 
-$hooks->add_action('add_start_action','add_docs_object');
-$hooks->add_action('start_router_action','docs_insert_update_delete_route');
-$hooks->add_action('start_container_action','docs_show_page');
+}
 ?>

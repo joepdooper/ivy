@@ -134,6 +134,14 @@ body  {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+pre {
+  background-color: var(--c-light-shadow-color);
+  color: var(--c-darkest-color);
+  font-size: var(--c-font-size-xs);
+}
+code {
+  font-family: monospace;
+}
 img, picture {
   display:block;
   border: 0;
@@ -469,6 +477,10 @@ a#logo {
   background-color: var(--c-neutral);
   min-height: 300px;
 }
+.no-audio {
+  background-color: var(--c-neutral);
+  min-height: 40px;
+}
 
 .outer {
   padding:20px;
@@ -615,13 +627,13 @@ ul.itemlist li button {
   transition: .3s;
   border-radius: 50%;
 }
-.checkbox:checked ~ .switch .slider {
+.form-check-input:checked ~ .switch .slider {
   background-color: var(--c-background-negative);
 }
 .editButton .switch {
   margin: 5px;
 }
-.checkbox:checked ~ .switch .slider:before {
+.form-check-input:checked ~ .switch .slider:before {
   -webkit-transform: translateX(15px);
   -ms-transform: translateX(15px);
   transform: translateX(15px);
