@@ -74,14 +74,14 @@ class Profile extends Model {
           if(isset($_POST['users_image']) && $_POST['users_image'] == 'delete'){
             $this->table = 'profiles';
             $this->save(['id' => $this->id,'user_id' => $auth->getUserId(),'users_image' => '']);
-            (new \Image)->delete($this->users_image);
+            (new image\Item)->delete($this->users_image);
           }
 
           if($_FILES){
             $this->table = 'profiles';
             $db->update(
               'profiles',
-              ['users_image' => (new \Image)->upload($_FILES['users_image'])],
+              ['users_image' => (new image\Item)->upload($_FILES['users_image'])],
               ['user_id' => $_SESSION['auth_user_id']]
             );
           }
