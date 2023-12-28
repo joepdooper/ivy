@@ -1,5 +1,11 @@
 <?php
-class Code extends Ivy\Model {
+namespace code;
+
+use Ivy\Model;
+use HTMLPurifier_Config;
+use HTMLPurifier;
+
+class Item extends Model {
 
   public $id, $text, $token;
   protected $table = "code";

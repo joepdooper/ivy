@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$gig = (new Gig)->where('id', $item->table_id)->getRow()->data();
+$gig = (new gig\Item)->where('id', $item->table_id)->getRow()->data();
 ?>
 
 <div class="<?php if($item->class): print $item->class; else:?>item item-gig col-12 col-md-6 col-lg-4<?php endif;?>" id="item-<?php print $item->id; ?>">
@@ -15,7 +15,7 @@ $gig = (new Gig)->where('id', $item->table_id)->getRow()->data();
 						<?php if(isset($gig->subject)): ?>
 							<div class="inner">
 								<div class="tag">
-									<?php $tag = (new Tag)->where('id', $gig->subject)->getRow()->data();?>
+									<?php $tag = (new tag\Item)->where('id', $gig->subject)->getRow()->data();?>
 									<?php include _PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'tag/template/tag.php'); ?>
 								</div>
 							</div>

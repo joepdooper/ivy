@@ -1,6 +1,9 @@
 <?php
+namespace article;
 
-class Article extends Ivy\Model {
+use Ivy\Model;
+
+class Item extends Model {
 
   public $id, $title, $subtitle, $subject, $image, $token;
   protected $table = "article";

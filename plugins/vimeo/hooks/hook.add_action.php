@@ -1,10 +1,6 @@
 <?php
 defined('_BASE_PATH') or die('Something went wrong');
 
-function add_vimeo_object(){
-  include_once _PUBLIC_PATH . _PLUGIN_PATH . 'vimeo/classes/class.Vimeo.php';
-}
-
 function add_vimeo_player(){
   if (!in_array("IframeManager", $_SESSION['plugins_active'])):
     if(isset($_COOKIE['cc_cookie'])):
@@ -19,7 +15,6 @@ function add_vimeo_player(){
   endif;
 }
 
-$hooks->add_action('add_start_action','add_vimeo_object');
 $hooks->add_action('add_js_action','add_vimeo_player');
 
 if($auth->isLoggedIn()){
@@ -29,7 +24,7 @@ if($auth->isLoggedIn()){
     $router->post('/vimeo/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) {
 
       $item = new \Ivy\Item();
-      $vimeo = new Vimeo();
+      $vimeo = new vimeo\Item();
 
       $redirect = _BASE_PATH . (isset($page_id) ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
 
@@ -59,7 +54,5 @@ if($auth->isLoggedIn()){
   }
 
   $hooks->add_action('start_router_action','vimeo_insert_update_delete_route');
-
 }
-
 ?>

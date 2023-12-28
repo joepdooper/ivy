@@ -1,13 +1,6 @@
 <?php
 defined('_BASE_PATH') or die('Something went wrong');
 
-function add_image_object(){
-  include_once _PUBLIC_PATH . _PLUGIN_PATH . 'image/classes/class.Image.php';
-  include_once _PUBLIC_PATH . _PLUGIN_PATH . 'image/classes/class.ImageSizes.php';
-}
-
-$hooks->add_action('add_start_action','add_image_object');
-
 // -- admin
 if($auth->isLoggedIn()){
 
@@ -17,7 +10,7 @@ if($auth->isLoggedIn()){
       $router->post('/image/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) {
 
         $item = (new \Ivy\Item)->where('id', $id)->getRow();
-        $image = (new Image)->where('id', $item->data->table_id)->getRow();
+        $image = (new image\Item)->where('id', $item->data->table_id)->getRow();
 
         $redirect = _BASE_PATH . (isset($page_id) ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
 
@@ -56,14 +49,14 @@ if($auth->isLoggedIn()){
   function image_post_route(){
     global $router, $db, $auth, $page, $button;
     $router->post('/image/post', function() use($db, $auth, $page, $button) {
-      (new Image)->post();
+      (new image\Item)->post();
     });
   }
 
   function image_sizes_post_route(){
     global $router, $db, $auth, $page, $button;
     $router->post('/image_sizes/post', function() use($db, $auth, $page, $button) {
-      (new ImageSizes)->post();
+      (new image\Settings)->post();
     });
   }
 

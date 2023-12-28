@@ -1,7 +1,9 @@
 <?php
-#[\AllowDynamicProperties]
+namespace image;
 
-class ImageSizes extends Ivy\Model {
+use Ivy\Model;
+
+class Settings extends Model {
 
   protected $table = 'image_sizes';
   protected $path = _BASE_PATH . 'plugin/image';

@@ -2,6 +2,8 @@
 namespace text;
 
 use Ivy\Model;
+use HTMLPurifier_Config;
+use HTMLPurifier;
 
 class Item extends Model {
 
@@ -14,9 +16,9 @@ class Item extends Model {
   }
 
   public function purify($array) {
-    $config = \HTMLPurifier_Config::createDefault();
+    $config = HTMLPurifier_Config::createDefault();
     $config->set('HTML.AllowedElements', array('br', 'ul', 'ol', 'li', 'b', 'i'));
-    $purifier = new \HTMLPurifier($config);
+    $purifier = new HTMLPurifier($config);
     foreach ($array as $key => $value) {
       if($value){
         $array[$key] = $purifier->purify($value);

@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$article = (new Article)->where('id', $item->table_id)->getRow()->data();
+$article = (new article\Item)->where('id', $item->table_id)->getRow()->data();
 ?>
 
 <div class="<?php if($item->class): print $item->class; else:?>item item-article col-12 col-md-6 col-lg-4<?php endif;?>" id="item-<?php print $item->id; ?>">
@@ -9,7 +9,7 @@ $article = (new Article)->where('id', $item->table_id)->getRow()->data();
 
 			<?php if(!empty($article->image)): ?>
 				<div class="clmn">
-					<?php Image::set('image', $article->image); ?>
+					<?php image\Item::set('image', $article->image); ?>
 				</div>
 			<?php endif; ?>
 
@@ -18,7 +18,7 @@ $article = (new Article)->where('id', $item->table_id)->getRow()->data();
 					<div class="outer">
 						<!-- Subject -->
 						<div class="inner">
-							<?php $tag = (new Tag)->where('id', $article->subject)->getRow()->data(); ?>
+							<?php $tag = (new tag\Item)->where('id', $article->subject)->getRow()->data(); ?>
 							<div class="tag">
 								<?php print $tag->value; ?>
 							</div>

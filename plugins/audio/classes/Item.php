@@ -1,8 +1,11 @@
 <?php
-use Verot\Upload\Upload;
-use Ivy\File;
+namespace audio;
 
-class Audio extends Ivy\Model {
+use Ivy\Model;
+use Ivy\File;
+use Verot\Upload\Upload;
+
+class Item extends Model {
 
   public $id, $file, $token;
   protected $table = 'audio';

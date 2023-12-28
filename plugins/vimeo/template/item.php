@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$vimeo = (new Vimeo)->where('id', $item->table_id)->getRow()->data();
+$vimeo = (new vimeo\Item)->where('id', $item->table_id)->getRow()->data();
 ?>
 
 <div class="<?php if($item->class): print $item->class; else:?>item item-vimeo col-12 col-md-6 col-lg-4<?php endif;?>" id="item-<?php print $item->id; ?>">

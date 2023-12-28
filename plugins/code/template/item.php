@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$code = (new Code)->where('id', $item->table_id)->getRow()->data();
+$code = (new code\Item)->where('id', $item->table_id)->getRow()->data();
 $languages = ['css','php','javascript','shell','sql']
 ?>
 

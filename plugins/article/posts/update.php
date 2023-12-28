@@ -9,11 +9,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $auth->isLoggedIn()){
   $image = isset($_POST['delete_image']) ? NULL : (isset($_POST['image']) ? trim($_POST['image']) : $article->data->image);
 
   if (isset($_POST['delete_image'])) {
-    (new Image)->unlink($_POST['image']);
+    (new image\Item)->unlink($_POST['image']);
   }
 
   if(!empty($_FILES['upload_image']['name'])){
-    $image = (new Image)->upload($_FILES['upload_image']);
+    $image = (new image\Item)->upload($_FILES['upload_image']);
   }
 
 }

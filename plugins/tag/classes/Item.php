@@ -1,7 +1,9 @@
 <?php
-#[\AllowDynamicProperties]
+namespace tag;
 
-class Tag extends Ivy\Model {
+use Ivy\Model;
+
+class Item extends Model {
 
   protected $table = 'tag';
   protected $path = _BASE_PATH . 'plugin/tag';

@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$tags = new Tag();
+$tags = (new tag\Item)->get()->data();
 ?>
 
 <form action="<?php print _BASE_PATH . 'tag/post'; ?>" method="POST" enctype="multipart/form-data">
@@ -22,7 +22,7 @@ $tags = new Tag();
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($tags->get()->data() as $row): ?>
+          <?php foreach ($tags as $row): ?>
             <tr>
               <td><input type="text" name="tag[<?php echo $row->id; ?>][value]" value="<?php echo $row->value; ?>"></td>
               <td>

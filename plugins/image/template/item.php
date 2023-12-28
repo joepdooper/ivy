@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$image = (new Image)->where('id', $item->table_id)->getRow()->data();
+$image = (new image\Item)->where('id', $item->table_id)->getRow()->data();
 ?>
 
 <div class="item item-image col-12 col-md-6 col-lg-4" id="item-<?php print $item->id; ?>">
@@ -9,7 +9,7 @@ $image = (new Image)->where('id', $item->table_id)->getRow()->data();
 		<form action="<?php print _BASE_PATH . 'image/update/' . $item->id . $page->url; ?>" method="POST" enctype="multipart/form-data">
 
 			<div class="clmn">
-				<?php Image::set('image',$image->file); ?>
+				<?php image\Item::set('image',$image->file); ?>
 				<?php if($item->author): ?>
 					<?php if(!$image->file): ?>
 						<div class="no-image">

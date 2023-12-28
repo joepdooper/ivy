@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$docs = (new Docs)->where('id', $item->table_id)->getRow()->data();
+$docs = (new docs\Item)->where('id', $item->table_id)->getRow()->data();
 ?>
 
 <div class="docs">
@@ -9,7 +9,7 @@ $docs = (new Docs)->where('id', $item->table_id)->getRow()->data();
 		<div class="col-12 col-md-3">
 			<div class="outer">
 				<ul>
-					<?php foreach ((new Tag)->get()->data() as $tag): ?>
+					<?php foreach ((new tag\Item)->get()->data() as $tag): ?>
 						<li>
 							<input id="tag-<?php print $tag->id; ?>" class="visually-hidden tag-radio" type="radio" name="tag" <?php if($docs->subject === $tag->id): ?>checked<?php endif; ?>>
 							<label class="tag<?php if($docs->subject === $tag->id): ?> active<?php endif; ?>" for="tag-<?php print $tag->id; ?>">
@@ -18,7 +18,7 @@ $docs = (new Docs)->where('id', $item->table_id)->getRow()->data();
 								</div>
 							</label>
 							<ul>
-								<?php foreach ((new Docs)->where('subject',$tag->id)->get()->data() as $link): ?>
+								<?php foreach ((new docs\Item)->where('subject',$tag->id)->get()->data() as $link): ?>
 									<?php if((new \Ivy\Item)->where('id',$link->item_id)->getRow()->data->published): ?>
 									<li class="<?php if($link->item_id === $item->id): ?>active<?php endif; ?>">
 										<a href="<?php print _BASE_PATH . 'docs/' . $link->item_id; ?>">
@@ -46,7 +46,7 @@ $docs = (new Docs)->where('id', $item->table_id)->getRow()->data();
 						<?php if(isset($docs->subject)): ?>
 							<!-- Subject -->
 							<div class="inner">
-								<?php $tag = (new Tag)->where('id', $docs->subject)->getRow()->data();?>
+								<?php $tag = (new tag\Item)->where('id', $docs->subject)->getRow()->data();?>
 								<?php include _PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'tag/template/tag.php'); ?>
 							</div>
 						<?php endif; ?>

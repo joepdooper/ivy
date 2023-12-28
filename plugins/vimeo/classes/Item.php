@@ -1,5 +1,9 @@
 <?php
-class Vimeo extends Ivy\Model {
+namespace vimeo;
+
+use Ivy\Model;
+
+class Item extends Model {
 
   public $id, $vimeo_video_id, $token;
   protected $table = "vimeo";

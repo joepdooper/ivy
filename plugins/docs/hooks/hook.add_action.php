@@ -1,10 +1,6 @@
 <?php
 defined('_BASE_PATH') or die('Something went wrong');
 
-function add_docs_object(){
-  include_once _PUBLIC_PATH . _PLUGIN_PATH . 'docs/classes/class.Docs.php';
-}
-
 function add_docs_css(){
   global $page;
   $page->addCSS("plugins/docs/css/docs.css");
@@ -19,7 +15,6 @@ function docs_show_page(){
   });
 }
 
-$hooks->add_action('add_start_action','add_docs_object');
 $hooks->add_action('add_css_action','add_docs_css');
 $hooks->add_action('start_container_action','docs_show_page');
 
@@ -31,7 +26,7 @@ if($auth->isLoggedIn()){
     $router->post('/docs/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) use($db, $auth) {
 
       $item = new \Ivy\Item();
-      $docs = new Docs();
+      $docs = new docs\Item();
 
       $redirect = _BASE_PATH . (isset($page_id) ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
 

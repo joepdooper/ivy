@@ -1,10 +1,6 @@
 <?php
 defined('_BASE_PATH') or die('Something went wrong');
 
-function add_code_object(){
-  include_once _PUBLIC_PATH . _PLUGIN_PATH . 'code/classes/class.Code.php';
-}
-
 function add_code_css(){
   global $page;
   $page->addCSS("plugins/code/css/code.css");
@@ -15,7 +11,6 @@ function add_code_js(){
   $page->addJS("plugins/code/js/rainbow.min.js");
 }
 
-$hooks->add_action('add_start_action','add_code_object');
 $hooks->add_action('add_css_action','add_code_css');
 $hooks->add_action('add_js_action','add_code_js');
 
@@ -27,7 +22,7 @@ if($auth->isLoggedIn()){
     $router->post('/code/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) {
 
       $item = new \Ivy\Item();
-      $code = new Code();
+      $code = new code\Item();
 
       $redirect = _BASE_PATH . (isset($page_id) ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
 

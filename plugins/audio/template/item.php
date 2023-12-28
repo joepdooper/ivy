@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$audio = (new Audio)->where('id', $item->table_id)->getRow()->data();
+$audio = (new audio\Item)->where('id', $item->table_id)->getRow()->data();
 ?>
 
 <div class="item item-audio col-12 col-md-6 col-lg-4" id="item-<?php print $item->id; ?>">
@@ -14,7 +14,7 @@ $audio = (new Audio)->where('id', $item->table_id)->getRow()->data();
 						<div id="upload_audio_<?php print $item->id; ?>Preview">no audio</div>
 					</div>
 				<?php else: ?>
-					<?php Audio::set('audio', _BASE_PATH . _MEDIA_PATH . 'item/audio/' . $audio->file); ?>
+					<?php audio\Item::set('audio', _BASE_PATH . _MEDIA_PATH . 'item/audio/' . $audio->file); ?>
 				<?php endif; ?>
 				<?php if($item->author): ?>
 					<div class="editImageButton">

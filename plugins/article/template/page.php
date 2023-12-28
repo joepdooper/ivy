@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$article = (new Article)->where('id', $item->table_id)->getRow()->data();
+$article = (new article\Item)->where('id', $item->table_id)->getRow()->data();
 ?>
 
 <div class="article">
@@ -22,7 +22,7 @@ $article = (new Article)->where('id', $item->table_id)->getRow()->data();
 				<?php if(isset($article->subject)): ?>
 					<!-- Subject -->
 					<div class="inner">
-						<?php $tag = (new Tag)->where('id', $article->subject)->getRow()->data();?>
+						<?php $tag = (new tag\Item)->where('id', $article->subject)->getRow()->data();?>
 						<?php include _PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'tag/template/tag.php'); ?>
 					</div>
 				<?php endif; ?>
@@ -50,7 +50,7 @@ $article = (new Article)->where('id', $item->table_id)->getRow()->data();
 
 			<!-- Main image -->
 			<div class="main-image">
-				<?php Image::set('image', $article->image); ?>
+				<?php image\Item::set('image', $article->image); ?>
 				<?php if($item->author): ?>
 					<?php if(!$article->image): ?>
 						<div class="no-image">

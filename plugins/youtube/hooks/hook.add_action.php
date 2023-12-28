@@ -1,10 +1,6 @@
 <?php
 defined('_BASE_PATH') or die('Something went wrong');
 
-function add_youtube_object(){
-  include_once _PUBLIC_PATH . _PLUGIN_PATH . 'youtube/classes/class.Youtube.php';
-}
-
 function add_youtube_css(){
   global $page;
   $page->addCSS("plugins/youtube/css/youtube.css");
@@ -17,10 +13,8 @@ function add_youtube_js(){
   endif;
 }
 
-$hooks->add_action('add_start_action','add_youtube_object');
 $hooks->add_action('add_css_action','add_youtube_css');
 $hooks->add_action('add_js_action','add_youtube_js');
-
 
 if($auth->isLoggedIn()){
 
@@ -30,7 +24,7 @@ if($auth->isLoggedIn()){
     $router->post('/youtube/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) {
 
       $item = new \Ivy\Item();
-      $youtube = new Youtube();
+      $youtube = new youtube\Item();
 
       $redirect = _BASE_PATH . (isset($page_id) ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
 

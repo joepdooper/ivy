@@ -1,12 +1,6 @@
 <?php
 defined('_BASE_PATH') or die('Something went wrong');
 
-function add_audio_object(){
-  include_once _PUBLIC_PATH . _PLUGIN_PATH . 'audio/classes/class.Audio.php';
-}
-
-$hooks->add_action('add_start_action','add_audio_object');
-
 if($auth->isLoggedIn()){
 
   function audio_insert_update_delete_route(){
@@ -14,7 +8,7 @@ if($auth->isLoggedIn()){
     $router->post('/audio/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) {
 
       $item = (new \Ivy\Item)->where('id', $id)->getRow();
-      $audio = (new Audio)->where('id', $item->data->table_id)->getRow();
+      $audio = (new audio\Item)->where('id', $item->data->table_id)->getRow();
 
       $redirect = _BASE_PATH . (isset($page_id) ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
 

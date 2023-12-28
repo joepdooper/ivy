@@ -1,8 +1,11 @@
 <?php
-use Verot\Upload\Upload;
-use Ivy\File;
+namespace image;
 
-class Image extends Ivy\Model {
+use Ivy\Model;
+use Ivy\File;
+use Verot\Upload\Upload;
+
+class Item extends Model {
 
   public $id, $file, $token;
   protected $table = 'image';
@@ -16,7 +19,7 @@ class Image extends Ivy\Model {
     $file = new File();
     $file->name = bin2hex(random_bytes(16));
     $file->allowed = array('image/*');
-    $image_sizes = new ImageSizes();
+    $image_sizes = new \image\Settings();
     foreach ($image_sizes->get()->data() as $size){
       $file->width = $size->value;
       $file->directory = _PUBLIC_PATH . '/media/item/' . $size->name;
@@ -30,7 +33,7 @@ class Image extends Ivy\Model {
 
   public function unlink($file = null) {
     $image = isset($file) ? $file : $this->data->file;
-    $image_sizes = new ImageSizes();
+    $image_sizes = new \image\Settings();
     foreach ($image_sizes->get()->data() as $size){
       unlink(_PUBLIC_PATH . 'media/item/' . $size->name . '/' . $image);
       unlink(_PUBLIC_PATH . 'media/item/' . $size->name . '/' . pathinfo($image)['filename'] . '.webp');

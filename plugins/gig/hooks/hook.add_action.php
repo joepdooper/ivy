@@ -1,17 +1,14 @@
 <?php
 defined('_BASE_PATH') or die('Something went wrong');
 
-function add_gig_object(){
-  include_once _PUBLIC_PATH . _PLUGIN_PATH . 'gig/classes/class.Gig.php';
-}
+if($auth->isLoggedIn()){
 
-function gig_insert_update_delete_route(){
-  global $router, $db, $auth;
-  if($auth->isLoggedIn()){
+  function gig_insert_update_delete_route(){
+    global $router, $db, $auth;
     $router->post('/gig/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) use($db, $auth) {
 
       $item = new \Ivy\Item();
-      $gig = new Gig();
+      $gig = new gig\Item();
 
       $redirect = _BASE_PATH . (isset($page_id) ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
 
@@ -40,8 +37,7 @@ function gig_insert_update_delete_route(){
 
     });
   }
-}
 
-$hooks->add_action('add_start_action','add_gig_object');
-$hooks->add_action('start_router_action','gig_insert_update_delete_route');
+  $hooks->add_action('start_router_action','gig_insert_update_delete_route');
+}
 ?>
