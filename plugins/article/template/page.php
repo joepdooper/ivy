@@ -43,14 +43,14 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 
 			<!-- Main image -->
 			<div class="main-image">
+				<?php if(!$article->image): ?>
+					<div class="no-image">
+						<img id="upload_image_<?php print $item->table_id; ?>Preview" src="#" alt="no image" />
+					</div>
+				<?php else: ?>
+					<?php \Image\Item::set('image', $article->image); ?>
+				<?php endif; ?>
 				<?php if($item->author): ?>
-					<?php if(!$article->image): ?>
-						<div class="no-image">
-							<img id="upload_image_<?php print $item->table_id; ?>Preview" src="#" alt="no image" />
-						</div>
-					<?php else: ?>
-						<?php \Image\Item::set('image', $article->image); ?>
-					<?php endif; ?>
 					<div class="editImageButton">
 						<?php if($article->image): ?>
 							<?php $button->delete('delete_image','main_article_image_' . $item->id, 'delete_image_' . $item->table_id); ?>
