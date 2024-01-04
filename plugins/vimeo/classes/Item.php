@@ -1,5 +1,5 @@
 <?php
-namespace vimeo;
+namespace Vimeo;
 
 use Ivy\Model;
 

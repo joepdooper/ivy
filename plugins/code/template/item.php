@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$code = (new code\Item)->where('id', $item->table_id)->getRow()->data();
+$code = (new \Code\Item)->where('id', $item->table_id)->getRow()->data();
 $languages = ['css','php','javascript','shell','sql']
 ?>
 
@@ -14,7 +14,7 @@ $languages = ['css','php','javascript','shell','sql']
             <option <?php if($code->language == $language):?>selected<?php endif; ?> value="<?php print $language; ?>"><?php print $language; ?></option>
           <?php endforeach; ?>
         </select>
-        <textarea name="code"><?php print $code->code; ?></textarea>
+        <textarea class="bg-secondary" name="code"><?php print $code->code; ?></textarea>
         <?php include $page->setTemplateFile('buttons/item_admin_buttons.php'); ?>
       </form>
     <?php else: ?>

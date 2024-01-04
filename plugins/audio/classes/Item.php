@@ -1,5 +1,5 @@
 <?php
-namespace audio;
+namespace Audio;
 
 use Ivy\Model;
 use Ivy\File;

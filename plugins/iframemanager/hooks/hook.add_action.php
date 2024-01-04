@@ -2,12 +2,13 @@
 defined('_BASE_PATH') or die('Something went wrong');
 
 function add_iframemanager_css(){
-  print "<link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/orestbida/iframemanager@1.2.5/dist/iframemanager.css'>";
+  global $page;
+  $page->addCSS("node_modules/@orestbida/iframemanager/dist/iframemanager.css");
 }
 
 function add_iframemanager_js(){
-  print "<script src='https://cdn.jsdelivr.net/gh/orestbida/iframemanager@1.2.5/dist/iframemanager.js'></script>";
   global $page;
+  $page->addJS("node_modules/@orestbida/iframemanager/dist/iframemanager.js");
   $page->addJS("plugins/iframemanager/js/iframemanager-init.js");
 }
 

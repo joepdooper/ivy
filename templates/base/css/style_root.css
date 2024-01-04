@@ -1,11 +1,15 @@
 :root {
+  /* Brand colors */
+  --c-primary-color: #FF4400;
+  --c-secondary-color: #0020FF;
+  --c-tertiary-color: #FFDF00;
   /* Dark colors */
-  --c-darkest-color: #222;
+  --c-darkest-color: #222222;
   --c-dark-color: #292929;
   --c-dark-shadow-color: #202020;
   --c-dark-neutral-color: #3f3f3f;
   /* Light colors */
-  --c-lightest-color: #fff;
+  --c-lightest-color: #ffffff;
   --c-light-color: #f9f9f9;
   --c-light-shadow-color: #f0f0f0;
   --c-light-neutral-color: #dfdfdf;
@@ -17,4 +21,15 @@
   --c-font-size-l: 30px;
   --c-font-size-xl: 60px;
   --c-font-size-xxl: 100px;
+}
+
+/* Define colors */
+.theme-container {
+  --c-text: var(--c-darkest-color);
+  --c-text-negative: var(--c-lightest-color);
+  --c-background: var(--c-light-color);
+  --c-background-negative: var(--c-darkest-color);
+  --c-background-secondary: var(--c-lightest-color);
+  --c-shadows: var(--c-light-shadow-color);
+  --c-neutral: var(--c-light-neutral-color);
 }

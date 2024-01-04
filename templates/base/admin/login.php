@@ -2,7 +2,7 @@
 defined('_BASE_PATH') ?: header('location: ../../../index.php');
 ?>
 
-<div class="maxwidth">
+<div class="admin-container">
 
   <div class="outer">
     <div class="inner">

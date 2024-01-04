@@ -21,11 +21,11 @@ $db->exec(
     'item_template',
     [
       // set
-      'plugin' => 'gig',
+      'name' => 'Gig',
       'table' => 'gig',
-      'name' => 'gig item',
-      'item_template_file' => 'item.php',
-      'page_template_file' => '',
+      'plugin_url' => 'Gig',
+      'route' => 'gig',
+      'file' => 'item.php',
     ]
   );
 

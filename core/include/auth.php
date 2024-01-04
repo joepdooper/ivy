@@ -1,6 +1,6 @@
 <?php
 
-function canEditArticle(\Delight\Auth\Auth $auth) {
+function canEditAsEditor(\Delight\Auth\Auth $auth) {
     return $auth->hasAnyRole(
       \Delight\Auth\Role::EDITOR,
       \Delight\Auth\Role::ADMIN,

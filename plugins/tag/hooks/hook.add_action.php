@@ -1,12 +1,10 @@
 <?php
 defined('_BASE_PATH') or die('Something went wrong');
 
-function tag_post_route(){
-  global $router, $db, $auth, $page, $button;
-  $router->post('/tag/post', function() use($db, $auth, $page, $button) {
-    (new tag\Item)->post();
-  });
+function add_tag_css(){
+  global $page;
+  $page->addCSS("plugins/Tag/css/tag.css");
 }
 
-$hooks->add_action('start_router_action','tag_post_route');
+$hooks->add_action('add_css_action','add_tag_css');
 ?>

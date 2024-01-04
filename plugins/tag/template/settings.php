@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$tags = (new tag\Item)->get()->data();
+$tags = (new \Tag\Item)->get()->data();
 ?>
 
 <form action="<?php print _BASE_PATH . 'tag/post'; ?>" method="POST" enctype="multipart/form-data">

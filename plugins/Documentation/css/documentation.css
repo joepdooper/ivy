@@ -1,0 +1,7 @@
+.documentation ul li a {
+  font-size: var(--c-font-size-s);
+}
+.documentation ul li.active a .inner {
+  position: relative;
+  font-weight: bold;
+}

@@ -1,5 +1,5 @@
 <?php
-namespace youtube;
+namespace Youtube;
 
 use Ivy\Model;
 

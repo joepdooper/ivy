@@ -5,30 +5,28 @@ if(isset($_SESSION['auth_user_id'])):
 endif;
 ?>
 
-<header id="header">
+<header id="header" class="bg-secondary position-relative">
 	<?php if (isset($page->id)):?>
-		<div class="return">
+		<div class="float-start">
 			<?php $button->link(_BASE_PATH,null,'feather/arrow-left.svg','Back'); ?>
 		</div>
 	<?php endif;?>
-	<div class="logo">
+	<div class="float-start">
 		<a id="logo" href="<?php echo _BASE_PATH;?>" title="<?php print $info['name']->value; ?>">
 			<?php print $info['name']->value; ?>
 		</a>
 	</div>
-	<label class="dark-mode-label" for="dark-mode" title="Toggle light/dark mode">
-		<?php
-		echo file_get_contents(_BASE_PATH . 'media/icon/' . "feather/sun.svg");
-		echo file_get_contents(_BASE_PATH . 'media/icon/' . "feather/moon.svg");
-		?>
-	</label>
-	<nav class="menu" id="main">
+	<?php
+	// Hook from DarkMode plugin
+	$hooks->do_action('dark_mode_buttons');
+	?>
+	<nav class="menu float-end">
 		<ul class="clearfix">
 			<?php if($auth->isLoggedIn()): ?>
 				<li>
 					<?php if($profile->users_image): ?>
 						<a href="<?php print _BASE_PATH . 'admin/profile'; ?>" aria-label="Profile" title="Profile">
-							<div class="users-image" style="background-image:url(<?php print _BASE_PATH . 'media/item/thumb/' . $profile->users_image; ?>)"></div>
+							<div class="float-start users-image" style="background-image:url(<?php print _BASE_PATH . 'media/item/thumb/' . $profile->users_image; ?>)"></div>
 						</a>
 					<?php else: ?>
 						<?php $button->link(_BASE_PATH . 'admin/profile',null,'feather/user.svg','Profile'); ?>

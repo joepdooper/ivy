@@ -1,5 +1,5 @@
 <?php
-namespace tag;
+namespace Tag;
 
 use Ivy\Model;
 

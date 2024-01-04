@@ -5,7 +5,7 @@ if(isset($_SESSION['auth_user_id'])):
 endif;
 ?>
 
-<div class="maxwidth">
+<div class="admin-container">
 
   <div class="outer">
     <div class="inner">
@@ -17,8 +17,8 @@ endif;
 
     <div class="inner">
       <?php foreach($auth->getRoles() as $key => $value): ?>
-        <div class="role">
-          <strong><?php print $value; ?></strong>
+        <div class="badge">
+          <small><strong><?php print $value; ?></strong></small>
         </div>
       <?php endforeach; ?>
     </div>
@@ -28,7 +28,7 @@ endif;
       <div class="form-group">
         <?php if ($profile->users_image):?>
 
-          <div class="users-image" style="background-image:url(<?php print _BASE_PATH . 'media/item/thumb/' . $profile->users_image; ?>)">
+          <div class="float-start users-image" style="background-image:url(<?php print _BASE_PATH . 'media/item/thumb/' . $profile->users_image; ?>)">
             <div class="editImageButton">
               <?php $button->delete('users_image','delete'); ?>
             </div>
@@ -36,7 +36,7 @@ endif;
 
         <?php else: ?>
 
-          <div class="users-image" id="usersImagePreview">
+          <div class="float-start users-image" id="usersImagePreview">
             <div class="editImageButton">
               <?php $button->upload('users_image','upload'); ?>
             </div>

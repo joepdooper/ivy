@@ -3,7 +3,7 @@ $db->delete(
   'item_template',
   [
     // where
-    'plugin' => 'youtube'
+    'plugin_url' => 'Youtube'
   ]
 );
 $db->exec(

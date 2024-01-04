@@ -1,74 +1,10 @@
 <?php
 defined('_BASE_PATH') or die('Something went wrong');
 
-// -- admin
-if($auth->isLoggedIn()){
-
-  function image_insert_update_delete_route(){
-    global $router, $db, $auth;
-    if($auth->isLoggedIn()){
-      $router->post('/image/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) {
-
-        $item = (new \Ivy\Item)->where('id', $id)->getRow();
-        $image = (new image\Item)->where('id', $item->data->table_id)->getRow();
-
-        $redirect = _BASE_PATH . (isset($page_id) ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
-
-        switch ($action) {
-          case 'insert':
-          $image->insert(['file' => null]);
-          $item->insert(['template' => $id, 'parent' => $page_id]);
-          \Ivy\Message::add('Image inserted', $redirect);
-          break;
-          case 'update':
-          if (isset($_POST['delete_image'])) {
-            $image->unlink();
-          }
-          $image->data->file = isset($_POST['delete_image']) ? NULL : (isset($_POST['image']) ? trim($_POST['image']) : $image->data->file);
-          if(!empty($_FILES['upload_image']['name'])){
-            $image->data->file = $image->upload($_FILES['upload_image']);
-          }
-          $item->update(['published' => $_POST['publish_item']]);
-          $image->update(['file' => $image->data->file]);
-          \Ivy\Message::add('Image updated', $redirect);
-          break;
-          case 'delete':
-          if (!empty($image->data->file)) {
-            $image->unlink();
-          }
-          $image->delete();
-          $item->delete();
-          \Ivy\Message::add('Image deleted', $redirect);
-          break;
-        }
-
-      });
-    }
-  }
-
-  function image_post_route(){
-    global $router, $db, $auth, $page, $button;
-    $router->post('/image/post', function() use($db, $auth, $page, $button) {
-      (new image\Item)->post();
-    });
-  }
-
-  function image_sizes_post_route(){
-    global $router, $db, $auth, $page, $button;
-    $router->post('/image_sizes/post', function() use($db, $auth, $page, $button) {
-      (new image\Settings)->post();
-    });
-  }
-
-  function add_image_admin_js(){
-    global $page;
-    $page->addJS("plugins/image/js/image_admin.js");
-  }
-
-  $hooks->add_action('start_router_action','image_insert_update_delete_route');
-  $hooks->add_action('start_router_action','image_post_route');
-  $hooks->add_action('start_router_action','image_sizes_post_route');
-  $hooks->add_action('add_js_action','add_image_admin_js');
-
+function add_image_css(){
+  global $page;
+  $page->addCSS("plugins/Image/css/image.css");
 }
+
+$hooks->add_action('add_css_action','add_image_css');
 ?>

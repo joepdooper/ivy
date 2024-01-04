@@ -21,11 +21,6 @@ require_once _PUBLIC_PATH . 'core/include/auth.php';
 // core autoload
 require_once _PUBLIC_PATH . 'core/include/autoloader.php';
 
-// template
-$sql = 'SELECT `value` FROM `template` WHERE `type` = :type';
-define('_TEMPLATE_BASE', _TEMPLATES_PATH . $db->selectValue($sql, ['base']) . DIRECTORY_SEPARATOR);
-define('_TEMPLATE_SUB', _TEMPLATES_PATH . $db->selectValue($sql, ['sub']) . DIRECTORY_SEPARATOR);
-
 // hooks
 require_once _PUBLIC_PATH . 'vendor/bainternet/php-hooks/php-hooks.php';
 $hooks = new Hooks();
@@ -35,6 +30,22 @@ $option = (new \Ivy\Option)->get()->setKeyBy('name')->data();
 $info = (new \Ivy\Info)->get()->setKeyBy('name')->data();
 $page = new \Ivy\Page();
 $button = new \Ivy\Button();
+
+// template
+$sql = 'SELECT `value` FROM `template` WHERE `type` = :type';
+define('_TEMPLATE_BASE', _TEMPLATES_PATH . $db->selectValue($sql, ['base']) . DIRECTORY_SEPARATOR);
+define('_TEMPLATE_SUB', _TEMPLATES_PATH . $db->selectValue($sql, ['sub']) . DIRECTORY_SEPARATOR);
+
+// template hooks
+include $page->setTemplateFile('hooks/hook.basic.php');
+$hook_template_editor = $page->setTemplateFile('hooks/hook.editor.php');
+if (file_exists($hook_template_editor )) {
+  include $hook_template_editor;
+}
+$hook_template_admin = $page->setTemplateFile('hooks/hook.admin.php');
+if (file_exists($hook_template_admin )) {
+  include $hook_template_admin;
+}
 
 // core JS
 $page->addJS("core/js/helper.js");
@@ -46,7 +57,24 @@ if($plugins):
   foreach($plugins as $plugin):
     if($plugin['active'] == '1'):
       $_SESSION['plugins_active'][] = $plugin['name'];
-      include _PUBLIC_PATH . _PLUGIN_PATH.$plugin['folder'].'/hooks/hook.add_action.php';
+      $hook_file_basic = _PUBLIC_PATH . _PLUGIN_PATH . $plugin['url'] . '/hooks/hook.add_action.php';
+      if (file_exists($hook_file_basic)) {
+        include $hook_file_basic;
+      }
+      if($auth->isLoggedIn()){
+        if(canEditAsEditor($auth)){
+          $hook_file_editor = _PUBLIC_PATH . _PLUGIN_PATH . $plugin['url'] . '/hooks/hook.editor.php';
+          if (file_exists($hook_file_editor)) {
+            include $hook_file_editor;
+          }
+        }
+        if(canEditAsAdmin($auth)){
+          $hook_file_admin = _PUBLIC_PATH . _PLUGIN_PATH . $plugin['url'] . '/hooks/hook.admin.php';
+          if (file_exists($hook_file_admin)) {
+            include $hook_file_admin;
+          }
+        }
+      }
     endif;
   endforeach;
 endif;

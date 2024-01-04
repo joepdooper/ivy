@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
   <name>Tag</name>
-  <url>tag</url>
+  <url>Tag</url>
   <version>1.0.0</version>
   <image></image>
   <settings>true</settings>

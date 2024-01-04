@@ -11,16 +11,16 @@ class Item extends Model {
   {
     $this->query = "SELECT
     `items`.*,
-    `item_template`.`plugin`,
-    `item_template`.`table`,
     `item_template`.`name`,
-    `item_template`.`item_template_file`,
-    `item_template`.`page_template_file`,
-    `plugin`.`folder`,
+    `item_template`.`plugin_url`,
+    `item_template`.`route`,
+    `item_template`.`table`,
+    `item_template`.`file`,
+    `plugin`.`url`,
     `plugin`.`active`
     FROM `items`, `item_template`, `plugin`
     WHERE `item_template`.`id` = `items`.`template`
-    AND `plugin`.`folder` = `item_template`.`plugin`
+    AND `plugin`.`url` = `item_template`.`plugin_url`
     AND `plugin`.`active` != '0'
     ";
   }
@@ -42,7 +42,7 @@ class Item extends Model {
   {
     parent::getRow();
 
-    $this->data->author = isset($_SESSION['auth_user_id']) ? (($this->data->user_id == $_SESSION['auth_user_id']) ? true : false) : false;
+    $this->data->author = isset($_SESSION['auth_user_id']) ? (isset($this->data->user_id) && ($this->data->user_id == $_SESSION['auth_user_id']) ? true : false) : false;
 
     return $this;
   }

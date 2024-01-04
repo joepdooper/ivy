@@ -44,10 +44,6 @@ class Button extends Page {
     include $this->setTemplateFile('buttons/button.visible.php');
   }
 
-  public function select($name = null, $options = null) {
-    include $this->setTemplateFile('buttons/select.php');
-  }
-
   public function toolbar() {
     include $this->setTemplateFile('buttons/toolbar.php');
   }

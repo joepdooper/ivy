@@ -167,6 +167,7 @@ class Model {
   // -- save
   public function save($array)
   {
+    $lastInsertId = null;
 
     if(isset($array["delete"])){
       $this->bindings = ["id" => $array["id"]];

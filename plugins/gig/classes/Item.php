@@ -1,5 +1,5 @@
 <?php
-namespace gig;
+namespace Gig;
 
 use Ivy\Model;
 

@@ -1,0 +1,10 @@
+.item-gig h2 input {
+  margin: 0;
+}
+.gigvenue,
+.gigtime {
+  font-weight: bolder;
+}
+.gigvenue .editor {
+  border-bottom: 0;
+}

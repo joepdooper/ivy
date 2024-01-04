@@ -1,5 +1,5 @@
 <?php
-namespace text;
+namespace Text;
 
 use Ivy\Model;
 use HTMLPurifier_Config;
@@ -12,7 +12,7 @@ class Item extends Model {
 
   public static function set($name,$value,$id = null) {
     global $page;
-    include(_PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'text/template/input.TypeText.php'));
+    include(_PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'Text/template/input.TypeText.php'));
   }
 
   public function purify($array) {

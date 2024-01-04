@@ -42,14 +42,14 @@ $plugins = new Ivy\Plugin();
               <div class="editButton clearfix">
                 <?php $button->delete('delete[' . $row->id . ']',$row->id); ?>
                 <?php if (!empty($row->settings)):?>
-                  <a class="button" href="<?php echo _BASE_PATH; ?>plugin/<?php echo $row->folder; ?>">
+                  <a class="button" href="<?php echo _BASE_PATH; ?>plugin/<?php echo $row->url; ?>">
                     <?php print file_get_contents(_BASE_PATH . "media/icon/" . "feather/settings.svg"); ?>
                   </a>
                 <?php endif; ?>
               </div>
             </td>
           </tr>
-          <?php array_push($installed,$row->folder); ?>
+          <?php array_push($installed,$row->url); ?>
         <?php endforeach;?>
       </tbody>
     </table>

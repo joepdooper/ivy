@@ -7,12 +7,14 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
 <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'none'"> -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="<?php $info['name']->value; ?>">
+<meta name="apple-mobile-web-app-title" content="<?php print $info['name']->value; ?>">
 <meta name="theme-color" content="#ffffff">
 <meta name="description" content="<?php print $info['description']->value; ?>">
 <meta name="keywords" content="<?php print $info['keywords']->value; ?>">
 <meta name="author" content="<?php print $info['author']->value; ?>">
-<meta name="content_origin"  content="<?php print $info['date']->value; ?>">
+<meta name="date.created"  content="<?php print $info['created']->value; ?>">
+<meta name="date.available"  content="<?php print $info['available']->value; ?>">
+<meta name="date.updated"  content="<?php print $info['updated']->value; ?>">
 <meta name="robots" content="index, follow">
 <meta name="revisit-after" content="3 days">
 <meta property="og:title" content="<?php print $info['title']->value; ?>">
@@ -20,14 +22,13 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
 <meta property="og:url" content="<?php isset($info['url']->value) ? print $info['url']->value : print _BASE_PATH; ?>">
 <meta property="og:description" content="<?php print $info['description']->value; ?>">
 <meta property="og:type" content="website">
-<meta property="og:locale" content="nl_NL" />
+<meta property="og:locale" content="<?php echo $info['language']->value; ?>" />
 <meta property="og:image" content="<?php !isset($info['image']->value) ?: print $info['image']->value; ?>" />
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="<?php print $info['title']->value; ?>">
 <meta name="twitter:description" content="<?php print $info['description']->value; ?>">
 <meta name="twitter:image" content="<?php !isset($info['image']->value) ?: print $info['image']->value; ?>">
 
-<!-- link rel="manifest" href="manifest.json" -->
 <link rel="shortcut icon" type="image/x-icon" href="<?php print _BASE_PATH . _MEDIA_PATH; ?>favicon/favicon.ico">
 <link rel="shortcut icon" type="image/gif" href="<?php print _BASE_PATH . _MEDIA_PATH; ?>favicon/favicon.gif">
 <link rel="shortcut icon" type="image/png" href="<?php print _BASE_PATH . _MEDIA_PATH; ?>favicon/favicon.png">
@@ -43,16 +44,3 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
 <link rel="apple-touch-icon-precomposed" sizes="196x196" href="media/favicon/apple-touch-icon-196x196.png"> -->
 
 <title><?php print $info['title']->value; ?></title>
-
-<?php
-function add_head_css(){
-	global $page;
-	$page->addCSS('css/normalize.css');
-	$page->addCSS('css/simple-grid.css');
-	$page->addCSS('css/style_root.css');
-	$page->addCSS('css/style.css');
-	$page->addCSS('css/style_sub.css');
-}
-
-$hooks->add_action('add_css_action','add_head_css','1');
-?>

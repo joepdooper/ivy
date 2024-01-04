@@ -43,7 +43,7 @@ class Plugin extends Model {
             'name' => $info->name,
             'version' => $info->version,
             'desc' => $info->description,
-            'folder' => $info->url,
+            'url' => $info->url,
             'type' => $info->type,
             // 'image' => $info->image
             'settings' => (!empty($info->settings) ? '1' : '0')
@@ -56,8 +56,8 @@ class Plugin extends Model {
         // -- deinstall plugin
         if(!empty($deletes)){
           foreach ($deletes as $key => $value) {
-            $folder = $db->selectValue(
-              'SELECT folder FROM plugin WHERE id = :id',
+            $url = $db->selectValue(
+              'SELECT url FROM plugin WHERE id = :id',
               [
                 $value
               ]
@@ -70,8 +70,8 @@ class Plugin extends Model {
               ]
             );
             // -- remove plugin database
-            $info = simplexml_load_file(_PUBLIC_PATH . _PLUGIN_PATH . $folder . '/info.xml');
-            empty($info->database->uninstall) ?: require_once _PUBLIC_PATH . _PLUGIN_PATH . $folder . '/' . $info->database->uninstall;
+            $info = simplexml_load_file(_PUBLIC_PATH . _PLUGIN_PATH . $url . '/info.xml');
+            empty($info->database->uninstall) ?: require_once _PUBLIC_PATH . _PLUGIN_PATH . $url . '/' . $info->database->uninstall;
           }
         }
 

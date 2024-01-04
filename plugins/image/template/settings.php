@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$image_sizes = new image\Settings();
+$image_sizes = (new \Image\Settings)->get()->data();
 ?>
 
 <form action="<?php print _BASE_PATH . 'image_sizes/post'; ?>" method="POST" enctype="multipart/form-data">
@@ -24,7 +24,7 @@ $image_sizes = new image\Settings();
           </tr>
         </thead>
         <tbody>
-              <?php foreach($image_sizes->get()->data() as $row):?>
+              <?php foreach($image_sizes as $row):?>
                 <tr>
                   <td>
                     <?php

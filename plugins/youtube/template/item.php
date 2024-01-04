@@ -1,6 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$youtube = (new youtube\Item)->where('id', $item->table_id)->getRow()->data();
+$youtube = (new \Youtube\Item)->where('id', $item->table_id)->getRow()->data();
 ?>
 
 <div class="<?php if($item->class): print $item->class; else:?>item item-youtube col-12 col-md-6 col-lg-4<?php endif;?>" id="item-<?php print $item->id; ?>">

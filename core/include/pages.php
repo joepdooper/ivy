@@ -1,40 +1,25 @@
-<!-- START -->
 <?php
+// -- START
 $router->get('/', function() use($db, $auth, $page, $button){
-  $page->content = $page->setTemplateFile('content/home.php');
+  $page->content = $page->setTemplateFile('include/start.php');
   include $page->setTemplateFile('main.php');
 });
-?>
 
-<!-- ITEM -->
-<?php
-$router->get('/item/(\d+)', function($id) use($db, $auth, $page, $button) {
-  $item = (new \Ivy\Item)->where('id',$id)->getRow()->data();
-  $page->content = $page->setTemplateFile(_PLUGIN_PATH . $item->plugin . '/template/' . $item->page_template_file);
-  include $page->setTemplateFile('main.php');
-});
-?>
-
-<!-- PLUGIN -->
-<?php
+// -- PLUGIN
 $router->get('/plugin/(\w+)', function($id) use($db, $auth, $page, $button, $msg) {
   if(canEditAsSuperAdmin($auth)):
     $page->content = $page->setTemplateFile(_PLUGIN_PATH . $id . '/template/' . 'settings.php');
     include $page->setTemplateFile('main.php');
   endif;
 });
-?>
 
-<!-- PROFILE -->
-<?php
+// -- PROFILE
 $router->get('/profile/(\d+)', function($id) use($db, $auth, $page, $button) {
-  $page->content = $page->setTemplateFile('content/profile.php');
+  $page->content = $page->setTemplateFile('include/profile.php');
   include $page->setTemplateFile('main.php');
 });
-?>
 
-<!-- ADMIN -->
-<?php
+// -- ADMIN
 $router->get('/admin/(\w+)(/[^/]+)?(/[^/]+)?', function($id, $selector = null, $token = null) use($db, $auth, $page, $button) {
   if(canEditAsAdmin($auth) || (!canEditAsAdmin($auth) && in_array($id,['register','login','logout','reset','profile']))):
     $form = new \stdClass;

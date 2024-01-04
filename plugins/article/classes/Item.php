@@ -1,5 +1,5 @@
 <?php
-namespace article;
+namespace Article;
 
 use Ivy\Model;
 

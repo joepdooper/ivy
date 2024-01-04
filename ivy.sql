@@ -1,3 +1,16 @@
+# ************************************************************
+# Sequel Pro SQL dump
+# Version 4541
+#
+# http://www.sequelpro.com/
+# https://github.com/sequelpro/sequelpro
+#
+# Host: 127.0.0.1 (MySQL 5.7.44)
+# Datenbank: blog
+# Erstellt am: 2024-01-04 21:19:43 +0000
+# ************************************************************
+
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -38,17 +51,53 @@ CREATE TABLE `audio` (
 
 
 
-# Export von Tabelle docs
+# Export von Tabelle code
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `docs`;
+DROP TABLE IF EXISTS `code`;
 
-CREATE TABLE `docs` (
+CREATE TABLE `code` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` text NOT NULL,
+  `language` varchar(255) DEFAULT NULL,
+  `token` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Export von Tabelle documentation
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `documentation`;
+
+CREATE TABLE `documentation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `item_id` int(11) DEFAULT NULL,
   `item_template_id` int(11) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   `subtitle` varchar(255) NOT NULL,
+  `subject` int(11) NOT NULL,
+  `token` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Export von Tabelle gig
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `gig`;
+
+CREATE TABLE `gig` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `datetime` datetime DEFAULT CURRENT_TIMESTAMP,
+  `venue` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `latitude` int(11) DEFAULT NULL,
+  `longitude` int(11) DEFAULT NULL,
+  `price` decimal(8,2) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
   `subject` int(11) NOT NULL,
   `token` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -119,13 +168,15 @@ LOCK TABLES `info` WRITE;
 INSERT INTO `info` (`id`, `name`, `bool`, `value`, `info`)
 VALUES
 	(1,'Name',1,'ivy',NULL),
-	(2,'Description',1,'Blogging system',NULL),
-	(3,'Keywords',1,'CMS, blog',NULL),
-	(4,'Language',1,'nl',NULL),
+	(2,'Description',1,'Yet another sleek simple fast CMS with an effortless template and plugin environment',NULL),
+	(3,'Keywords',1,'fast, CMS, design, build, simple, slim, clean, easy, quick, cms-framework, content-management-system, google-page-speed, easy-to-deploy ',NULL),
+	(4,'Language',1,'en_GB',NULL),
 	(5,'Url',1,'http://localhost:8888/blog/',NULL),
 	(6,'Title',1,'ivy',NULL),
-	(7,'Date',1,'',NULL),
-	(8,'Author',1,'Name',NULL);
+	(8,'Author',1,'Joep Dooper',NULL),
+	(9,'Created',1,'2024-01-01',NULL),
+	(10,'Available',1,'2024-01-01',NULL),
+	(11,'Updated',1,'2024-01-01',NULL);
 
 /*!40000 ALTER TABLE `info` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -138,26 +189,28 @@ DROP TABLE IF EXISTS `item_template`;
 
 CREATE TABLE `item_template` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `plugin` varchar(255) DEFAULT NULL,
-  `table` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `item_template_file` varchar(255) DEFAULT NULL,
-  `page_template_file` varchar(255) DEFAULT NULL,
+  `table` varchar(255) DEFAULT NULL,
+  `plugin_url` varchar(255) DEFAULT NULL,
+  `route` varchar(255) DEFAULT NULL,
+  `file` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `item_template` WRITE;
 /*!40000 ALTER TABLE `item_template` DISABLE KEYS */;
 
-INSERT INTO `item_template` (`id`, `plugin`, `table`, `name`, `item_template_file`, `page_template_file`)
+INSERT INTO `item_template` (`id`, `name`, `table`, `plugin_url`, `route`, `file`)
 VALUES
-	(1,'image','image','image item','item.php',''),
-	(2,'text','text','text item','item.php',''),
-	(3,'article','article','article item','item.php','page.php'),
-	(4,'audio','audio','audio item','item.php',''),
-	(5,'docs','docs','docs item','item.php','page.php'),
-	(6,'youtube','youtube','youtube item','item.php',''),
-	(7,'vimeo','vimeo','vimeo item','item.php','');
+	(39,'Audio','audio','Audio','audio','item.php'),
+	(40,'Image','image','Image','image','item.php'),
+	(41,'Text','text','Text','text','item.php'),
+	(42,'Code','code','Code','code','item.php'),
+	(43,'Article','article','Article','article','item.php'),
+	(44,'Documentation','documentation','Documentation','documentation','item.php'),
+	(45,'Gig','gig','Gig','gig','item.php'),
+	(50,'Vimeo','vimeo','Vimeo','vimeo','item.php'),
+	(51,'Youtube','youtube','Youtube','youtube','item.php');
 
 /*!40000 ALTER TABLE `item_template` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -223,9 +276,9 @@ DROP TABLE IF EXISTS `plugin`;
 CREATE TABLE `plugin` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
+  `url` varchar(255) NOT NULL,
   `version` varchar(11) NOT NULL DEFAULT '',
   `desc` varchar(255) DEFAULT NULL,
-  `folder` varchar(255) NOT NULL DEFAULT '',
   `type` varchar(255) DEFAULT NULL,
   `active` tinyint(1) DEFAULT '0',
   `settings` tinyint(11) DEFAULT NULL,
@@ -235,18 +288,22 @@ CREATE TABLE `plugin` (
 LOCK TABLES `plugin` WRITE;
 /*!40000 ALTER TABLE `plugin` DISABLE KEYS */;
 
-INSERT INTO `plugin` (`id`, `name`, `version`, `desc`, `folder`, `type`, `active`, `settings`)
+INSERT INTO `plugin` (`id`, `name`, `url`, `version`, `desc`, `type`, `active`, `settings`)
 VALUES
-	(81,'Overlay mode','1.0.0','Overlay mode','mode-overlay','template',1,0),
-	(82,'Dark mode','1.0.0','Dark mode','mode-dark','template',1,0),
-	(84,'Tag','1.0.0','Create tags for items','tag','filter',1,1),
-	(85,'Image','1.0.0','Image item','image','item',1,1),
-	(86,'Text','1.0.0','Text item','text','item',1,0),
-	(87,'Article','1.0.0','Article item','article','item',1,0),
-	(88,'Audio','1.0.0','Audio item','audio','item',1,0),
-	(91,'Docs','1.0.0','Docs item','docs','item',1,0),
-	(94,'Youtube','1.0.0','Youtube player','youtube','item',0,0),
-	(95,'Vimeo','1.0.0','Vimeo SDK','vimeo','item',0,0);
+	(160,'Audio','Audio','1.0.0','Audio item','item',1,0),
+	(161,'Image','Image','1.0.0','Image item','item',1,1),
+	(162,'Text','Text','1.0.0','Text item','item',1,0),
+	(163,'Code','Code','1.0.0','Code item','item',1,0),
+	(164,'Tag','Tag','1.0.0','Create tags for items','filter',1,1),
+	(165,'Article','Article','1.0.0','Article item','item',1,0),
+	(166,'Documentation','Documentation','1.0.0','Documentation item','item',1,0),
+	(167,'Gig','Gig','1.0.0','Gig item','item',1,0),
+	(168,'IframeManager','iframemanager','1.0.0','IframeManager from Orest Bida','utility',1,0),
+	(169,'Macy','macy','1.0.0','Use macy.js','javascript',1,0),
+	(172,'Sort item','SortItem','1.0.0','Sort items by drag and drop','template',1,0),
+	(180,'Vimeo','Vimeo','1.0.0','Vimeo SDK','item',1,0),
+	(181,'Youtube','Youtube','1.0.0','Youtube player','item',1,0),
+	(182,'Dark mode','DarkMode','1.0.0','Dark mode','template',1,0);
 
 /*!40000 ALTER TABLE `plugin` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -261,15 +318,16 @@ CREATE TABLE `profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `users_image` varchar(255) DEFAULT NULL,
+  `last_activity` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `profiles` WRITE;
 /*!40000 ALTER TABLE `profiles` DISABLE KEYS */;
 
-INSERT INTO `profiles` (`id`, `user_id`, `users_image`)
+INSERT INTO `profiles` (`id`, `user_id`, `users_image`, `last_activity`)
 VALUES
-	(1,1,NULL);
+	(1,1,NULL,'2023-12-11 16:07:52');
 
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -282,7 +340,7 @@ DROP TABLE IF EXISTS `tag`;
 
 CREATE TABLE `tag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `value` varchar(255) NOT NULL DEFAULT '',
+  `value` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -291,10 +349,8 @@ LOCK TABLES `tag` WRITE;
 
 INSERT INTO `tag` (`id`, `value`)
 VALUES
-	(1,'Getting started'),
-	(2,'The basics'),
-	(3,'Database'),
-	(4,'Packages');
+	(1,'Article'),
+	(2,'Documentation');
 
 /*!40000 ALTER TABLE `tag` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -331,7 +387,7 @@ DROP TABLE IF EXISTS `text`;
 
 CREATE TABLE `text` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `text` varchar(255) NOT NULL,
+  `text` text NOT NULL,
   `token` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

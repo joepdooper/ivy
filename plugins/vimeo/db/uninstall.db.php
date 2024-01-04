@@ -3,7 +3,7 @@ $db->delete(
   'item_template',
   [
     // where
-    'plugin' => 'vimeo'
+    'plugin_url' => 'Vimeo'
   ]
 );
 $db->exec(

@@ -1,5 +1,5 @@
 <?php
-namespace image;
+namespace Image;
 
 use Ivy\Model;
 

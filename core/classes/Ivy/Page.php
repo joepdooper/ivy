@@ -20,20 +20,6 @@ class Page {
     include(_PUBLIC_PATH . 'core/inputs/input.TypeDateTime.php');
   }
 
-  function setOptions($arrays,$optionKey,$optionValue) {
-    foreach ($arrays as $array) {
-      foreach ($array as $key => $value) {
-        if($key == $optionKey) {
-          $k = $value;
-        }
-        if($key == $optionValue) {
-          $option[$k] = $value;
-        }
-      }
-    }
-    return $option;
-  }
-
   function setTemplateFile($file) {
     if (file_exists(_TEMPLATE_SUB . $file)) {
       return _TEMPLATE_SUB . $file;
@@ -52,13 +38,6 @@ class Page {
 
   function addJS($file) {
     array_push($this->js, $file);
-  }
-
-  public static function define_browser() {
-    $IE11orOlderBrowser = preg_match('~MSIE|Internet Explorer~i', $_SERVER['HTTP_USER_AGENT']) || preg_match('~Trident/7.0(.*)?; rv:11.0~', $_SERVER['HTTP_USER_AGENT']);
-    if ($IE11orOlderBrowser) {
-      Message::add('Please use a more modern browser');
-    }
   }
 
 }

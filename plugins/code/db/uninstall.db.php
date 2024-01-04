@@ -3,7 +3,7 @@ $db->delete(
   'item_template',
   [
     // where
-    'plugin' => 'code'
+    'plugin_url' => 'Code'
   ]
 );
 $db->exec(

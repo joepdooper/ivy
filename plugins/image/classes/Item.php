@@ -1,5 +1,5 @@
 <?php
-namespace image;
+namespace Image;
 
 use Ivy\Model;
 use Ivy\File;
@@ -12,14 +12,14 @@ class Item extends Model {
 
   public static function set($name,$value,$id = null) {
     global $page;
-    include(_PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'image/template/input.TypeImage.php'));
+    include(_PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'Image/template/input.TypeImage.php'));
   }
 
   public function upload($image) {
     $file = new File();
     $file->name = bin2hex(random_bytes(16));
     $file->allowed = array('image/*');
-    $image_sizes = new \image\Settings();
+    $image_sizes = new \Image\Settings();
     foreach ($image_sizes->get()->data() as $size){
       $file->width = $size->value;
       $file->directory = _PUBLIC_PATH . '/media/item/' . $size->name;
@@ -33,7 +33,7 @@ class Item extends Model {
 
   public function unlink($file = null) {
     $image = isset($file) ? $file : $this->data->file;
-    $image_sizes = new \image\Settings();
+    $image_sizes = new \Image\Settings();
     foreach ($image_sizes->get()->data() as $size){
       unlink(_PUBLIC_PATH . 'media/item/' . $size->name . '/' . $image);
       unlink(_PUBLIC_PATH . 'media/item/' . $size->name . '/' . pathinfo($image)['filename'] . '.webp');
