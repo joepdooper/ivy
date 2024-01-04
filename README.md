@@ -32,20 +32,6 @@ mysql -u your_database_username -p your_database_name < ivy.sql
 
 Rename the `example.env` file to `.env` and update it with your database credentials.
 
-#### 4. Install packages
-
-Install the necessary dependencies with [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) or [yarn](https://yarnpkg.com/) to kickstart your project:
-
-```bash
-npm install
-```
-
-or
-
-```bash
-yarn install
-```
-
 ## Login
 
 #### Accessing the backend
