@@ -75,7 +75,7 @@ function activateToolbar(e) {
     toolbar.style.position = 'absolute';
     toolbar.style.top = (rect.top + window.pageYOffset - 50) + 'px';
     toolbar.style.left = (rect.left - 60 + centerselection) + 'px';
-    document.body.appendChild(toolbar);
+    // document.body.appendChild(toolbar);
     // this.parentNode.appendChild(toolbar);
     toolbar.style.display = '';
     hideToolbar = window.setTimeout(function() {

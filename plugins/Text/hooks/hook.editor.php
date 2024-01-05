@@ -39,8 +39,8 @@ if($auth->isLoggedIn()){
     }
 
     function add_text_toolbar(){
-      global $button;
-      $button->toolbar();
+      global $page;
+      include $page->setTemplateFile(_PLUGIN_PATH . 'Text/template/toolbar.php');
     }
 
     function add_text_admin_js(){
@@ -49,7 +49,7 @@ if($auth->isLoggedIn()){
     }
 
     $hooks->add_action('start_router_action','text_insert_update_delete_route');
-    $hooks->add_action('start_body_action','add_text_toolbar');
+    $hooks->add_action('end_wrapper_action','add_text_toolbar');
     $hooks->add_action('add_js_action','add_text_admin_js');
 
   }
