@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+  <name>Code</name>
+  <url>Code</url>
+  <version>1.0.0</version>
+  <image></image>
+  <settings></settings>
+  <description>Code item</description>
+  <type>item</type>
+  <database>
+    <install>db/install.db.php</install>
+    <uninstall>db/uninstall.db.php</uninstall>
+  </database>
+</plugin>

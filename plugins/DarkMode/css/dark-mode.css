@@ -1,0 +1,31 @@
+/* Override the default theme */
+.dark-mode-checkbox:checked ~ .theme-container {
+  --c-text: var(--c-lightest-color);
+  --c-text-negative: var(--c-darkest-color);
+  --c-background: var(--c-darkest-color);
+  --c-background-negative: var(--c-lightest-color);
+  --c-background-secondary: var(--c-dark-color);
+  --c-shadows: var(--c-dark-shadow-color);
+  --c-neutral: var(--c-dark-neutral-color);
+}
+
+.dark-mode-label {
+  padding: 10px;
+  display: block;
+  float:right;
+}
+@media only screen and (max-width: 480px) {
+  .dark-mode-label {
+    padding: 15px 10px;
+  }
+}
+
+/* Toggle between icons */
+.theme-container .dark-mode-label svg:nth-of-type(1),
+.dark-mode-checkbox:checked ~ .theme-container .dark-mode-label svg:nth-of-type(2) {
+  display: none;
+}
+.dark-mode-checkbox:checked ~ .theme-container .dark-mode-label svg:nth-of-type(1),
+.theme-container .dark-mode-label svg:nth-of-type(2) {
+  display: block;
+}

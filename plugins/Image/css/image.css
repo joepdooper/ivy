@@ -1,0 +1,8 @@
+.no-image {
+  background-color: var(--c-neutral);
+  min-height: 300px;
+}
+.item-image img {
+  width: 100%;
+  height: auto;
+}

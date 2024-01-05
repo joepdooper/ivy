@@ -1,0 +1,10 @@
+a.tag,
+.tag,
+select[name="tag"] {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: lowercase;
+  font-variant: small-caps;
+  /* font-feature-settings: "smcp" 1; */
+  font-size: var(--c-font-size-xs);
+}
