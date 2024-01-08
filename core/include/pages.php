@@ -6,7 +6,7 @@ $router->get('/', function() use($db, $auth, $page, $button){
 });
 
 // -- PLUGIN
-$router->get('/plugin/(\w+)', function($id) use($db, $auth, $page, $button, $msg) {
+$router->get('/plugin/(\w+)', function($id) use($db, $auth, $page, $button) {
   if(canEditAsSuperAdmin($auth)):
     $page->content = $page->setTemplateFile(_PLUGIN_PATH . $id . '/template/' . 'settings.php');
     include $page->setTemplateFile('main.php');

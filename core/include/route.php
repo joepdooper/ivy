@@ -15,24 +15,26 @@ $router->before('GET', '/.*', function() {
 
 $router->before('GET|POST', '/admin/([a-z0-9_-]+)', function($id) {
   global $auth;
-  if($auth->isLoggedIn()):
-    if(!canEditAsAdmin($auth) && !in_array($id,['register','login','logout','reset','profile'])):
+  if($auth->isLoggedIn()){
+    if(!canEditAsAdmin($auth) && !in_array($id,['register','login','logout','reset','profile'])){
       header('location:' . _BASE_PATH);
       exit();
-    endif;
-  endif;
+    }
+  } else {
+    header('location:' . _BASE_PATH . 'admin/login');
+  }
 });
 
 $router->before('GET|POST', '/plugin/.*', function() {
   global $auth;
-  if($auth->isLoggedIn()):
-    if(!canEditAsSuperAdmin($auth)):
+  if($auth->isLoggedIn()){
+    if(!canEditAsSuperAdmin($auth)){
       header('location:' . _BASE_PATH);
       exit();
-    endif;
-  else:
+    }
+  } else {
     header('location:' . _BASE_PATH . 'admin/login');
-  endif;
+  }
 });
 
 // ROUTING
