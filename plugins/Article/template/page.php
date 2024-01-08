@@ -16,7 +16,7 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 					<!-- Subject -->
 					<div class="inner">
 						<?php $tag = (new \Tag\Item)->where('id', $article->subject)->getRow()->data();?>
-						<?php include _PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'tag/template/tag.php'); ?>
+						<?php include _PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'Tag/template/tag.php'); ?>
 					</div>
 				<?php endif; ?>
 

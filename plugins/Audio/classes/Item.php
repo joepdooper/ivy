@@ -20,7 +20,7 @@ class Item extends Model {
   }
 
   public function unlink($file = null) {
-    $audio = isset($file) ? $file : $this->file;
+    $audio = isset($file) ? $file : $this->data->file;
     unlink(_PUBLIC_PATH . _MEDIA_PATH . 'item/' . self::_AUDIO_PATH . $audio);
   }
 

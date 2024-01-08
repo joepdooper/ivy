@@ -47,7 +47,7 @@ $documentation = (new \Documentation\Item)->where('id', $item->table_id)->getRow
 							<!-- Subject -->
 							<div class="inner">
 								<?php $tag = (new \Tag\Item)->where('id', $documentation->subject)->getRow()->data();?>
-								<?php include _PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'tag/template/tag.php'); ?>
+								<?php include _PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'Tag/template/tag.php'); ?>
 							</div>
 						<?php endif; ?>
 
