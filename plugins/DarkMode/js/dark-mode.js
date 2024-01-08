@@ -1,7 +1,17 @@
-// document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
   const checkbox = document.querySelector('.dark-mode-checkbox');
   checkbox.checked = localStorage.getItem('darkMode') === 'true';
   checkbox.addEventListener('change', function (event) {
-    localStorage.setItem('darkMode', event.currentTarget.checked);
+    let darkMode = event.currentTarget.checked;
+    axios
+    .post(_SUBFOLDER + 'darkmode/toggle/', {
+      darkMode: darkMode
+    })
+    .then(response => {
+      localStorage.setItem('darkMode', darkMode);
+    })
+    .catch(error =>{
+      console.log(error);
+    });
   });
-// });
+});

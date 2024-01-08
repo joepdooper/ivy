@@ -38,6 +38,10 @@ $router->run();
   $hooks->do_action('end_head_action');
   ?>
 
+  <script>
+  const _SUBFOLDER = <?php print _SUBFOLDER; ?>;
+  </script>
+
   <link rel="manifest" href="<?php print _BASE_PATH; ?>manifest.json" crossorigin="use-credentials">
 
   <?php $hooks->do_action('add_css_action');?>

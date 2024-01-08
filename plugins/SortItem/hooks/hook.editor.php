@@ -15,6 +15,7 @@ if($auth->isLoggedIn()){
           $item->where('id',$value)->update(['sort' => $key]);
         };
         echo json_encode('success');
+        exit;
       });
     }
 
