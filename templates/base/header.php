@@ -1,7 +1,7 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
 if(isset($_SESSION['auth_user_id'])):
-	$profile = (new \Ivy\Profile)->where('id',$_SESSION['auth_user_id'])->getRow()->data();
+	$profile = (new \Ivy\Profile)->where('user_id',$_SESSION['auth_user_id'])->getRow()->data();
 endif;
 ?>
 
