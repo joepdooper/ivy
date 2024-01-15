@@ -7,17 +7,17 @@ if($auth->isLoggedIn()){
     function image_insert_update_delete_route(){
       global $router, $db, $auth;
       if($auth->isLoggedIn()){
-        $router->post('/image/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) {
+        $router->post('/image/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $template_route = null, $template_id = null) {
 
           $item = new \Ivy\Item();
           $image = new \Image\Item();
 
-          $redirect = _BASE_PATH . (isset($page_id) && $action != 'delete' ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
+          $redirect = _BASE_PATH . (isset($template_id) && $action != 'delete' ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($template_id) : "");
 
           switch ($action) {
             case 'insert':
             $image->insert(['file' => null]);
-            $item->insert(['template' => $id, 'parent' => $page_id]);
+            $item->insert(['template' => $id, 'parent' => $template_id]);
             \Ivy\Message::add('Image inserted', $redirect);
             break;
             case 'update':
@@ -51,22 +51,22 @@ if($auth->isLoggedIn()){
     }
 
     function image_post_route(){
-      global $router, $db, $auth, $page, $button;
-      $router->post('/image/post', function() use($db, $auth, $page, $button) {
+      global $router, $db, $auth, $template, $button;
+      $router->post('/image/post', function() use($db, $auth, $template, $button) {
         (new \Image\Item)->post();
       });
     }
 
     function image_sizes_post_route(){
-      global $router, $db, $auth, $page, $button;
-      $router->post('/image_sizes/post', function() use($db, $auth, $page, $button) {
+      global $router, $db, $auth, $template, $button;
+      $router->post('/image_sizes/post', function() use($db, $auth, $template, $button) {
         (new \Image\Settings)->post();
       });
     }
 
     function add_image_admin_js(){
-      global $page;
-      $page->addJS("plugins/Image/js/image_admin.js");
+      global $template;
+      $template->addJS("plugins/Image/js/image_admin.js");
     }
 
     $hooks->add_action('start_router_action','image_insert_update_delete_route');

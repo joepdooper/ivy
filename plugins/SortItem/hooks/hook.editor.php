@@ -20,14 +20,14 @@ if($auth->isLoggedIn()){
     }
 
     function add_sort_item_css(){
-      global $page;
-      $page->addCSS("plugins/SortItem/css/sort.css");
+      global $template;
+      $template->addCSS("plugins/SortItem/css/sort.css");
     }
 
     function add_sort_item_js(){
-      global $page;
-      $page->addJS("node_modules/sortablejs/Sortable.min.js");
-      $page->addJS("plugins/SortItem/js/SortItem.js");
+      global $template;
+      $template->addJS("node_modules/sortablejs/Sortable.min.js");
+      $template->addJS("plugins/SortItem/js/SortItem.js");
     }
 
     $hooks->add_action('start_router_action','sort_item_route');

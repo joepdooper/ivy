@@ -4,8 +4,8 @@
 // BEFORE MIDDLEWARE
 
 $router->before('GET', '/.*', function() {
-  global $auth, $option;
-  if(!$auth->isLoggedIn() && $option['private']->bool){
+  global $auth, $setting;
+  if(!$auth->isLoggedIn() && $setting['private']->bool){
     if(_CURRENT_PAGE != _BASE_PATH . 'admin/login'){
       header('location:' . _BASE_PATH . 'admin/login');
       exit;
@@ -37,17 +37,39 @@ $router->before('GET|POST', '/plugin/.*', function() {
 
 // ROUTING
 
-$router->get('/admin/(\w+)(/[^/]+)?(/[^/]+)?', function($id, $selector = null, $token = null) use($db, $auth, $page, $button) {
-  if(in_array($id,['info','logout','media','option','plugin','profile','template','user'])){
-    $page->route = "admin";
-    $page->id = htmlentities($id);
-    $page->url = DIRECTORY_SEPARATOR . htmlentities("admin") . DIRECTORY_SEPARATOR . htmlentities($id);
+// $router->mount('/admin', function() use ($router, $db, $auth, $template, $button) {
+//
+//     $router->get('/', function() {
+//       header('location:' . _BASE_PATH . 'admin/login');
+//       exit;
+//     });
+//
+//     $router->get('/(\w+)', function($id) use ($db, $auth, $template, $button) {
+//
+//       if (!$auth->isLoggedIn() && !in_array($id,['login','reset','register'])) {
+//         header('location:' . _BASE_PATH . 'admin/login');
+//         exit;
+//       }
+//
+//       $template->route = "admin";
+//       $template->id = htmlentities($id);
+//       $template->url = DIRECTORY_SEPARATOR . htmlentities("admin") . DIRECTORY_SEPARATOR . htmlentities($id);
+//
+//     });
+//
+// });
+
+$router->get('/admin/(\w+)(/[^/]+)?(/[^/]+)?', function($id, $selector = null, $token = null) use($db, $auth, $template, $button) {
+  if(in_array($id,['setting','logout','media','plugin','profile','template','user'])){
+    $template->route = "admin";
+    $template->id = htmlentities($id);
+    $template->url = DIRECTORY_SEPARATOR . htmlentities("admin") . DIRECTORY_SEPARATOR . htmlentities($id);
     if (!$auth->isLoggedIn()) {
       header('location:' . _BASE_PATH . 'admin/login');
       exit;
     }
   }
-  if($auth->isLoggedIn() && in_array($id,['info','media','option','plugin','register','reset','template','user'])){
+  if($auth->isLoggedIn() && in_array($id,['setting','media','plugin','register','reset','template','user'])){
     if (!canEditAsAdmin($auth)){
       header('location:' . _BASE_PATH . 'admin/profile');
       exit;
@@ -94,16 +116,16 @@ $router->post('/post/(\w+)', function($id) use($db, $auth) {
 });
 
 $router->get('/([a-z0-9_-]+)/(\w+)', function($route,$id) {
-  global $page;
-  $page->route = htmlentities($route);
-  $page->id = htmlentities($id);
-  $page->url = DIRECTORY_SEPARATOR . htmlentities($route) . DIRECTORY_SEPARATOR . htmlentities($id);
+  global $template;
+  $template->route = htmlentities($route);
+  $template->id = htmlentities($id);
+  $template->url = DIRECTORY_SEPARATOR . htmlentities($route) . DIRECTORY_SEPARATOR . htmlentities($id);
 });
 
 $router->get('/', function() {
-  global $page;
-  $page->route = "start";
-  $page->url = "";
+  global $template;
+  $template->route = "start";
+  $template->url = "";
 });
 
 $router->set404(function() {

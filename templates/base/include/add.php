@@ -9,7 +9,7 @@
 					<?php
 					(new \Ivy\Button)->close('close',"overlay-mode");
 					?>
-					<?php include $page->setTemplateFile('include/item_template_list.php'); ?>
+					<?php include $template->setTemplateFile('include/item_template_list.php'); ?>
 				</div>
 			</div>
 		</div>

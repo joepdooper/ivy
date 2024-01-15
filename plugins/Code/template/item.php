@@ -8,14 +8,14 @@ $languages = ['css','php','javascript','shell','sql']
   <div class="inner">
 
     <?php if($item->author): ?>
-      <form action="<?php print _BASE_PATH . 'code/update/' . $item->id . $page->url; ?>" method="POST" enctype="multipart/form-data">
+      <form action="<?php print _BASE_PATH . 'code/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
         <select name="language">
           <?php foreach ($languages as $language): ?>
             <option <?php if($code->language == $language):?>selected<?php endif; ?> value="<?php print $language; ?>"><?php print $language; ?></option>
           <?php endforeach; ?>
         </select>
         <textarea class="bg-secondary" name="code"><?php print $code->code; ?></textarea>
-        <?php include $page->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+        <?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
       </form>
     <?php else: ?>
       <pre><code data-language="<?php print $code->language; ?>"><?php print $code->code; ?></code></pre>

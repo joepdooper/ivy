@@ -28,7 +28,7 @@ $documentation = (new \Documentation\Item)->where('id', $item->table_id)->getRow
 		<form action="<?php print _BASE_PATH . 'documentation/update/' . $item->id; ?>" method="POST" enctype="multipart/form-data">
 			<?php
 			if ($auth->isLoggedIn()):
-				include $page->setTemplateFile('buttons/item_admin_buttons.php');
+				include $template->setTemplateFile('buttons/item_admin_buttons.php');
 			endif;
 			?>
 		</form>

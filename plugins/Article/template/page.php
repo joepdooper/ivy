@@ -7,7 +7,7 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 	<article>
 
 		<?php if ($item->author): ?>
-			<form action="<?php print _BASE_PATH . 'article/update/' . $item->id . $page->url; ?>" method="POST" enctype="multipart/form-data">
+			<form action="<?php print _BASE_PATH . 'article/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
 			<?php endif; ?>
 
 			<div class="outer">
@@ -16,7 +16,7 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 					<!-- Subject -->
 					<div class="inner">
 						<?php $tag = (new \Tag\Item)->where('id', $article->subject)->getRow()->data();?>
-						<?php include _PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'Tag/template/tag.php'); ?>
+						<?php include _PUBLIC_PATH . $template->setTemplateFile(_PLUGIN_PATH . 'Tag/template/tag.php'); ?>
 					</div>
 				<?php endif; ?>
 
@@ -33,9 +33,9 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 					$date = $item->date;
 					?>
 					<?php if($item->author): ?>
-						<?php $page->setDateTime('datetime',date('Y-m-d H:i:s',strtotime($date))); ?>
+						<input class="editor form-control" type="datetime" id="datetime_<?php echo $item->id; ?>" name="datetime" value="<?php echo date('Y-m-d H:i:s',strtotime($date)); ?>">
 					<?php else: ?>
-						<?php include $page->setTemplateFile('include/author.php'); ?>
+						<?php include $template->setTemplateFile('include/author.php'); ?>
 					<?php endif; ?>
 				</div>
 
@@ -69,7 +69,7 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 			<?php if($item->author): ?>
 				<div class="outer">
 					<div class="inner">
-						<?php include $page->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+						<?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
 					</div>
 				</div>
 			</form>
@@ -80,13 +80,13 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 			<?php if($items): ?>
 				<?php foreach($items as $item):?>
 					<?php if($item->published || $item->author): ?>
-						<?php include _PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . $item->plugin_url. '/template/' . $item->file); ?>
+						<?php include _PUBLIC_PATH . $template->setTemplateFile(_PLUGIN_PATH . $item->plugin_url. '/template/' . $item->file); ?>
 					<?php endif; ?>
 				<?php endforeach;?>
 			<?php endif; ?>
 		</div>
 
-		<?php include $page->setTemplateFile('include/add.php'); ?>
+		<?php include $template->setTemplateFile('include/add.php'); ?>
 
 	</article>
 </div>

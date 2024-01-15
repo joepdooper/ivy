@@ -29,7 +29,7 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 						<?php
 						$author = (new \Ivy\Profile)->where('id',$item->user_id)->getRow()->data();
 						$date = $item->date;
-						include $page->setTemplateFile('include/author.php');
+						include $template->setTemplateFile('include/author.php');
 						?>
 					</div>
 				</div>
@@ -39,7 +39,7 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 		<form action="<?php print _BASE_PATH . 'article/update/' . $item->id; ?>" method="POST" enctype="multipart/form-data">
 			<?php
 			if ($auth->isLoggedIn()):
-				include $page->setTemplateFile('buttons/item_admin_buttons.php');
+				include $template->setTemplateFile('buttons/item_admin_buttons.php');
 			endif;
 			?>
 		</form>

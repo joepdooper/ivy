@@ -1,7 +1,7 @@
 {
   "name": "joepdooper/ivy",
   "description": "another sleek simple fast PHP framework with an effortless template and plugin environment",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "project",
   "license": "MIT",
   "authors": [

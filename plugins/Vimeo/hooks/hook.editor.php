@@ -6,17 +6,17 @@ if($auth->isLoggedIn()){
 
     function vimeo_insert_update_delete_route(){
       global $router;
-      $router->post('/vimeo/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) {
+      $router->post('/vimeo/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $template_route = null, $template_id = null) {
 
         $item = new \Ivy\Item();
         $vimeo = new \Vimeo\Item();
 
-        $redirect = _BASE_PATH . (isset($page_id) && $action != 'delete' ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
+        $redirect = _BASE_PATH . (isset($template_id) && $action != 'delete' ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($template_id) : "");
 
         switch ($action) {
           case 'insert':
           $vimeo->insert(['vimeo_video_id' => '876176995']);
-          $item->insert(['template' => $id, 'parent' => $page_id]);
+          $item->insert(['template' => $id, 'parent' => $template_id]);
           \Ivy\Message::add('Vimeo inserted', $redirect);
           break;
           case 'update':

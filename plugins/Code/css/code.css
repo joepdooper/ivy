@@ -73,10 +73,18 @@ pre [class^="lang"].rainbow-show {
 pre {
   position: relative;
   word-wrap: break-word;
-  margin: 0;
+}
+
+code {
+  background-color: var(--c-neutral);
+  padding: 0.25rem;
+}
+
+pre code {
+  display: block;
+  border-radius: 0.25rem;
   padding: 1rem;
   line-height: 1.33;
-  border-radius: 0.25rem;
 }
 
 /* Styles for loading animation preloader */
@@ -139,7 +147,7 @@ pre .preloader div {
 /* Styles for comments in code */
 pre .comment,
 code .comment {
-  color: #888;
+  color: var(--c-neutral);
 }
 
 /* Styles for keywords, selectors, modules, classes, and functions in code */

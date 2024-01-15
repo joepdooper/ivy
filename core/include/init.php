@@ -26,9 +26,8 @@ require_once _PUBLIC_PATH . 'vendor/bainternet/php-hooks/php-hooks.php';
 $hooks = new Hooks();
 
 // globals
-$option = (new \Ivy\Option)->get()->setKeyBy('name')->data();
-$info = (new \Ivy\Info)->get()->setKeyBy('name')->data();
-$page = new \Ivy\Page();
+$setting = (new \Ivy\Setting)->get()->setKeyBy('name')->data();
+$template = new \Ivy\Template();
 $button = new \Ivy\Button();
 
 // template
@@ -37,18 +36,18 @@ define('_TEMPLATE_BASE', _TEMPLATES_PATH . $db->selectValue($sql, ['base']) . DI
 define('_TEMPLATE_SUB', _TEMPLATES_PATH . $db->selectValue($sql, ['sub']) . DIRECTORY_SEPARATOR);
 
 // template hooks
-include $page->setTemplateFile('hooks/hook.basic.php');
-$hook_template_editor = $page->setTemplateFile('hooks/hook.editor.php');
+include $template->setTemplateFile('hooks/hook.basic.php');
+$hook_template_editor = $template->setTemplateFile('hooks/hook.editor.php');
 if (file_exists($hook_template_editor )) {
   include $hook_template_editor;
 }
-$hook_template_admin = $page->setTemplateFile('hooks/hook.admin.php');
+$hook_template_admin = $template->setTemplateFile('hooks/hook.admin.php');
 if (file_exists($hook_template_admin )) {
   include $hook_template_admin;
 }
 
 // core JS
-$page->addJS("core/js/helper.js");
+$template->addJS("core/js/helper.js");
 
 // Loop through hooks from plugin
 $plugins = $db->select('SELECT * FROM `plugin`');
@@ -83,21 +82,21 @@ endif;
 use MatthiasMullie\Minify;
 
 function minify_css_files(){
-  global $option, $page;
+  global $setting, $template;
 
   $minify = new Minify\CSS();
 
-  if($option['minify_css']->bool){
-    if(!file_exists($page->setTemplateFile('css/minified.css'))){
-      foreach($page->css as $cssfile){
-        $sourcePath = $page->setTemplateFile($cssfile);
+  if($setting['minify_css']->bool){
+    if(!file_exists($template->setTemplateFile('css/minified.css'))){
+      foreach($template->css as $cssfile){
+        $sourcePath = $template->setTemplateFile($cssfile);
         $minify->add($sourcePath);
       }
       $minify->minify(_PUBLIC_PATH . _TEMPLATE_SUB . 'css/minified.css');
     }
   } else {
-    if(file_exists($page->setTemplateFile('css/minified.css'))){
-      unlink($page->setTemplateFile('css/minified.css'));
+    if(file_exists($template->setTemplateFile('css/minified.css'))){
+      unlink($template->setTemplateFile('css/minified.css'));
     }
   }
 
@@ -106,21 +105,21 @@ function minify_css_files(){
 $hooks->add_action('add_css_action','minify_css_files','9999');
 
 function minify_js_files(){
-  global $option, $page;
+  global $setting, $template;
 
   $minify = new Minify\JS();
 
-  if($option['minify_js']->bool){
-    if(!file_exists($page->setTemplateFile('js/minified.js'))){
-      foreach($page->js as $jsfile){
-        $sourcePath = $page->setTemplateFile($jsfile);
+  if($setting['minify_js']->bool){
+    if(!file_exists($template->setTemplateFile('js/minified.js'))){
+      foreach($template->js as $jsfile){
+        $sourcePath = $template->setTemplateFile($jsfile);
         $minify->add($sourcePath);
       }
       $minify->minify(_PUBLIC_PATH . _TEMPLATE_SUB . 'js/minified.js');
     }
   } else {
-    if(file_exists($page->setTemplateFile('js/minified.js'))){
-      unlink($page->setTemplateFile('js/minified.js'));
+    if(file_exists($template->setTemplateFile('js/minified.js'))){
+      unlink($template->setTemplateFile('js/minified.js'));
     }
   }
 

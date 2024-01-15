@@ -6,17 +6,11 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
   <?php if(canEditAsAdmin($auth)): ?>
     <nav class="menu">
       <ul>
-        <!-- <li>
-        <?php $button->link(_BASE_PATH . 'plugin/mailer',null,'feather/send.svg','Mailer'); ?>
-      </li> -->
       <!-- <li>
       <?php $button->link(_BASE_PATH . 'admin/media',null,'feather/folder.svg','Media'); ?>
     </li> -->
     <li>
-      <?php $button->link(_BASE_PATH . 'admin/info',null,'feather/info.svg','Infos'); ?>
-    </li>
-    <li>
-      <?php $button->link(_BASE_PATH . 'admin/option',null,'feather/sliders.svg','Options'); ?>
+      <?php $button->link(_BASE_PATH . 'admin/setting',null,'feather/sliders.svg','Settings'); ?>
     </li>
     <li>
       <?php $button->link(_BASE_PATH . 'admin/template',null,'feather/layout.svg','Templates'); ?>
@@ -29,7 +23,7 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
     </li>
     <?php if (in_array("Tag", $_SESSION['plugins_active'])):?>
       <li>
-        <?php $button->link(_BASE_PATH . 'plugin/tag',null,'feather/tag.svg','Tags'); ?>
+        <?php $button->link(_BASE_PATH . 'plugin/Tag',null,'feather/tag.svg','Tags'); ?>
       </li>
     <?php endif;?>
   </ul>

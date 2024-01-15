@@ -6,17 +6,17 @@ if($auth->isLoggedIn()){
 
     function article_insert_update_delete_route(){
       global $router, $db, $auth;
-      $router->post('/article/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) use($db,$auth) {
+      $router->post('/article/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $template_route = null, $template_id = null) use($db,$auth) {
 
         $item = new \Ivy\Item();
         $article = new \Article\Item();
 
-        $redirect = _BASE_PATH . (isset($page_id) && $action != 'delete' ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
+        $redirect = _BASE_PATH . (isset($template_id) && $action != 'delete' ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($template_id) : "");
 
         switch ($action) {
           case 'insert':
           $article->insert(['title' => 'Title', 'subtitle' => 'Subtitle', 'subject' => $db->selectValue('SELECT `id` FROM `tag` LIMIT 0, 1',[])]);
-          $item->insert(['template' => $id, 'parent' => $page_id]);
+          $item->insert(['template' => $id, 'parent' => $template_id]);
           \Ivy\Message::add('Article inserted', $redirect);
           break;
           case 'update':

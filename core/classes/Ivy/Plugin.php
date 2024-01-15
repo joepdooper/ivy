@@ -30,27 +30,27 @@ class Plugin extends Model {
 
         // -- install plugin
         if(!empty($plugout)){
-          $info = simplexml_load_file(_PUBLIC_PATH . _PLUGIN_PATH . $plugout . '/info.xml');
+          $setting = simplexml_load_file(_PUBLIC_PATH . _PLUGIN_PATH . $plugout . '/info.xml');
 
           // -- check dependencies
-          if (isset($info->dependencies) && !empty($missing = $this->checkDependencies((array)$info->dependencies->dependency))) {
+          if (isset($setting->dependencies) && !empty($missing = $this->checkDependencies((array)$setting->dependencies->dependency))) {
             $count = count($missing);
             $message = "This plugin has " . ($count > 1 ? "dependencies" : "dependency") . ". Please install the " . ($count > 1 ? "plugins" : "plugin") . " " . implode(", ", $missing);
             Message::add($message, _BASE_PATH . 'admin/plugin');
           }
 
           $plugin->insert([
-            'name' => $info->name,
-            'version' => $info->version,
-            'desc' => $info->description,
-            'url' => $info->url,
-            'type' => $info->type,
-            // 'image' => $info->image
-            'settings' => (!empty($info->settings) ? '1' : '0')
+            'name' => $setting->name,
+            'version' => $setting->version,
+            'desc' => $setting->description,
+            'url' => $setting->url,
+            'type' => $setting->type,
+            // 'image' => $setting->image
+            'settings' => (!empty($setting->settings) ? '1' : '0')
           ]);
 
           // -- install plugin database
-          empty($info->database->install) ?: require_once _PUBLIC_PATH . _PLUGIN_PATH . $plugout . '/' . $info->database->install;
+          empty($setting->database->install) ?: require_once _PUBLIC_PATH . _PLUGIN_PATH . $plugout . '/' . $setting->database->install;
         }
 
         // -- deinstall plugin
@@ -70,8 +70,8 @@ class Plugin extends Model {
               ]
             );
             // -- remove plugin database
-            $info = simplexml_load_file(_PUBLIC_PATH . _PLUGIN_PATH . $url . '/info.xml');
-            empty($info->database->uninstall) ?: require_once _PUBLIC_PATH . _PLUGIN_PATH . $url . '/' . $info->database->uninstall;
+            $setting = simplexml_load_file(_PUBLIC_PATH . _PLUGIN_PATH . $url . '/info.xml');
+            empty($setting->database->uninstall) ?: require_once _PUBLIC_PATH . _PLUGIN_PATH . $url . '/' . $setting->database->uninstall;
           }
         }
 

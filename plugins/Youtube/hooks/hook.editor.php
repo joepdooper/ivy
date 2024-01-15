@@ -7,17 +7,17 @@ if($auth->isLoggedIn()){
     function youtube_insert_update_delete_route(){
       global $router;
 
-      $router->post('/youtube/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) {
+      $router->post('/youtube/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $template_route = null, $template_id = null) {
 
         $item = new \Ivy\Item();
         $youtube = new \Youtube\Item();
 
-        $redirect = _BASE_PATH . (isset($page_id) && $action != 'delete' ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
+        $redirect = _BASE_PATH . (isset($template_id) && $action != 'delete' ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($template_id) : "");
 
         switch ($action) {
           case 'insert':
           $youtube->insert(['youtube_video_id' => 'aKydtOXW8mI']);
-          $item->insert(['template' => $id, 'parent' => $page_id]);
+          $item->insert(['template' => $id, 'parent' => $template_id]);
           \Ivy\Message::add('Youtube inserted', $redirect);
           break;
           case 'update':

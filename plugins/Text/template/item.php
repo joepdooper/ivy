@@ -7,9 +7,9 @@ $text = (new \Text\Item)->where('id', $item->table_id)->getRow()->data();
   <div class="inner">
 
     <?php if($item->author): ?>
-      <form action="<?php print _BASE_PATH . 'text/update/' . $item->id . $page->url; ?>" method="POST" enctype="multipart/form-data">
+      <form action="<?php print _BASE_PATH . 'text/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
         <?php \Text\Item::set('text', $text->text, $text->id); ?>
-        <?php include $page->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+        <?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
       </form>
     <?php else: ?>
       <p><?php print $text->text; ?></p>

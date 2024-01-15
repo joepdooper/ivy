@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.44)
 # Datenbank: blog
-# Erstellt am: 2024-01-04 21:19:43 +0000
+# Erstellt am: 2024-01-15 13:24:33 +0000
 # ************************************************************
 
 
@@ -148,40 +148,6 @@ VALUES
 UNLOCK TABLES;
 
 
-# Export von Tabelle info
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `info`;
-
-CREATE TABLE `info` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `bool` tinyint(1) DEFAULT '0',
-  `value` varchar(255) DEFAULT NULL,
-  `info` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-LOCK TABLES `info` WRITE;
-/*!40000 ALTER TABLE `info` DISABLE KEYS */;
-
-INSERT INTO `info` (`id`, `name`, `bool`, `value`, `info`)
-VALUES
-	(1,'Name',1,'ivy',NULL),
-	(2,'Description',1,'Yet another sleek simple fast CMS with an effortless template and plugin environment',NULL),
-	(3,'Keywords',1,'fast, CMS, design, build, simple, slim, clean, easy, quick, cms-framework, content-management-system, google-page-speed, easy-to-deploy ',NULL),
-	(4,'Language',1,'en_GB',NULL),
-	(5,'Url',1,'http://localhost:8888/blog/',NULL),
-	(6,'Title',1,'ivy',NULL),
-	(8,'Author',1,'Joep Dooper',NULL),
-	(9,'Created',1,'2024-01-01',NULL),
-	(10,'Available',1,'2024-01-01',NULL),
-	(11,'Updated',1,'2024-01-01',NULL);
-
-/*!40000 ALTER TABLE `info` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 # Export von Tabelle item_template
 # ------------------------------------------------------------
 
@@ -202,15 +168,15 @@ LOCK TABLES `item_template` WRITE;
 
 INSERT INTO `item_template` (`id`, `name`, `table`, `plugin_url`, `route`, `file`)
 VALUES
-	(39,'Audio','audio','Audio','audio','item.php'),
-	(40,'Image','image','Image','image','item.php'),
-	(41,'Text','text','Text','text','item.php'),
-	(42,'Code','code','Code','code','item.php'),
-	(43,'Article','article','Article','article','item.php'),
-	(44,'Documentation','documentation','Documentation','documentation','item.php'),
-	(45,'Gig','gig','Gig','gig','item.php'),
-	(50,'Vimeo','vimeo','Vimeo','vimeo','item.php'),
-	(51,'Youtube','youtube','Youtube','youtube','item.php');
+	(1,'Text','text','Text','text','item.php'),
+	(2,'Image','image','Image','image','item.php'),
+	(3,'Article','article','Article','article','item.php'),
+	(4,'Documentation','documentation','Documentation','documentation','item.php'),
+	(5,'Audio','audio','Audio','audio','item.php'),
+	(6,'Code','code','Code','code','item.php'),
+	(7,'Youtube','youtube','Youtube','youtube','item.php'),
+	(8,'Vimeo','vimeo','Vimeo','vimeo','item.php'),
+	(9,'Gig','gig','Gig','gig','item.php');
 
 /*!40000 ALTER TABLE `item_template` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -239,35 +205,6 @@ CREATE TABLE `items` (
 
 
 
-# Export von Tabelle option
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `option`;
-
-CREATE TABLE `option` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `bool` tinyint(1) DEFAULT '0',
-  `value` varchar(255) DEFAULT NULL,
-  `info` varchar(255) DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-LOCK TABLES `option` WRITE;
-/*!40000 ALTER TABLE `option` DISABLE KEYS */;
-
-INSERT INTO `option` (`id`, `name`, `bool`, `value`, `info`, `type`)
-VALUES
-	(1,'Private',0,NULL,'Website only accessible on login','options'),
-	(2,'Role registration',0,NULL,'On registration user can set role \'editor\' (coming up)','options'),
-	(3,'Minify CSS',0,NULL,'CSS template files as a single minified file','options'),
-	(4,'Minify JS',0,NULL,'JS template files as a single minified file','options');
-
-/*!40000 ALTER TABLE `option` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 # Export von Tabelle plugin
 # ------------------------------------------------------------
 
@@ -290,20 +227,20 @@ LOCK TABLES `plugin` WRITE;
 
 INSERT INTO `plugin` (`id`, `name`, `url`, `version`, `desc`, `type`, `active`, `settings`)
 VALUES
-	(160,'Audio','Audio','1.0.0','Audio item','item',1,0),
-	(161,'Image','Image','1.0.0','Image item','item',1,1),
-	(162,'Text','Text','1.0.0','Text item','item',1,0),
-	(163,'Code','Code','1.0.0','Code item','item',1,0),
-	(164,'Tag','Tag','1.0.0','Create tags for items','filter',1,1),
-	(165,'Article','Article','1.0.0','Article item','item',1,0),
-	(166,'Documentation','Documentation','1.0.0','Documentation item','item',1,0),
-	(167,'Gig','Gig','1.0.0','Gig item','item',1,0),
-	(168,'IframeManager','iframemanager','1.0.0','IframeManager from Orest Bida','utility',1,0),
-	(169,'Macy','macy','1.0.0','Use macy.js','javascript',1,0),
-	(172,'Sort item','SortItem','1.0.0','Sort items by drag and drop','template',1,0),
-	(180,'Vimeo','Vimeo','1.0.0','Vimeo SDK','item',1,0),
-	(181,'Youtube','Youtube','1.0.0','Youtube player','item',1,0),
-	(182,'Dark mode','DarkMode','1.0.0','Dark mode','template',1,0);
+	(1,'Text','Text','1.0.0','Text item','item',1,0),
+	(2,'Image','Image','1.0.0','Image item','item',1,1),
+	(3,'Tag','Tag','1.0.0','Create tags for items','filter',1,1),
+	(4,'Dark mode','DarkMode','1.0.0','Dark mode','template',1,0),
+	(5,'Sort item','SortItem','1.0.0','Sort items by drag and drop','template',1,0),
+	(6,'IframeManager','iframemanager','1.0.0','IframeManager from Orest Bida','utility',1,0),
+	(7,'Article','Article','1.0.0','Article item','item',1,0),
+	(8,'Documentation','Documentation','1.0.0','Documentation item','item',1,0),
+	(9,'Audio','Audio','1.0.0','Audio item','item',1,0),
+	(10,'Code','Code','1.0.0','Code item','item',1,0),
+	(11,'Youtube','Youtube','1.0.0','Youtube player','item',1,0),
+	(12,'Vimeo','Vimeo','1.0.0','Vimeo SDK','item',1,0),
+	(13,'Gig','Gig','1.0.0','Gig item','item',1,0),
+	(14,'Macy','macy','1.0.0','Use macy.js','javascript',1,0);
 
 /*!40000 ALTER TABLE `plugin` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -327,9 +264,47 @@ LOCK TABLES `profiles` WRITE;
 
 INSERT INTO `profiles` (`id`, `user_id`, `users_image`, `last_activity`)
 VALUES
-	(1,1,NULL,'2023-12-11 16:07:52');
+	(1,1,NULL,'2024-01-15 12:00:00');
 
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Export von Tabelle setting
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `setting`;
+
+CREATE TABLE `setting` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `bool` tinyint(1) NOT NULL DEFAULT '0',
+  `value` varchar(255) DEFAULT NULL,
+  `info` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `setting` WRITE;
+/*!40000 ALTER TABLE `setting` DISABLE KEYS */;
+
+INSERT INTO `setting` (`id`, `name`, `bool`, `value`, `info`)
+VALUES
+	(1,'Private',0,'','Website only accessible on login'),
+	(2,'Minify CSS',0,'','CSS template files as a single minified file'),
+	(3,'Minify JS',0,'','JS template files as a single minified file'),
+	(4,'Registration role',1,'EDITOR','Set automatic role after user registration'),
+	(5,'Name',1,'ivy','Meta name'),
+	(6,'Title',1,'ivy','Meta title'),
+	(7,'Description',1,'Yet another sleek simple fast CMS with an effortless template and plugin environment','Meta description'),
+	(8,'Keywords',1,'fast, CMS, design, build, simple, slim, clean, easy, quick, cms-framework, content-management-system, google-page-speed, easy-to-deploy ','Meta keywords'),
+	(9,'Url',1,'http://localhost:8888/blog/','Meta url'),
+	(10,'Language',1,'en_GB','Meta language'),
+	(11,'Author',1,'Joep Dooper','Meta author'),
+	(12,'Created',1,'2024-01-01','Meta created'),
+	(13,'Available',1,'2024-01-01','Meta available'),
+	(14,'Updated',1,'2024-01-01','Meta updated');
+
+/*!40000 ALTER TABLE `setting` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -344,16 +319,6 @@ CREATE TABLE `tag` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `tag` WRITE;
-/*!40000 ALTER TABLE `tag` DISABLE KEYS */;
-
-INSERT INTO `tag` (`id`, `value`)
-VALUES
-	(1,'Article'),
-	(2,'Documentation');
-
-/*!40000 ALTER TABLE `tag` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Export von Tabelle template

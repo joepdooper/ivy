@@ -11,8 +11,8 @@ class Item extends Model {
   protected $table = "text";
 
   public static function set($name,$value,$id = null) {
-    global $page;
-    include(_PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'Text/template/input.TypeText.php'));
+    global $template;
+    include(_PUBLIC_PATH . $template->setTemplateFile(_PLUGIN_PATH . 'Text/template/input.TypeText.php'));
   }
 
   public function purify($array) {

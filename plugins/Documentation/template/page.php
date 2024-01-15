@@ -21,7 +21,7 @@ $documentation = (new \Documentation\Item)->where('id', $item->table_id)->getRow
 								<?php foreach ((new \Documentation\Item)->where('subject',$tag->id)->get()->data() as $link): ?>
 									<?php if((new \Ivy\Item)->where('id',$link->item_id)->getRow()->data->published): ?>
 									<li class="<?php if($link->item_id === $item->id): ?>active<?php endif; ?>">
-										<a href="<?php print _BASE_PATH . 'docs/' . $link->item_id; ?>">
+										<a href="<?php print _BASE_PATH . 'documentation/' . $link->item_id; ?>">
 											<div class="inner"><?php print $link->title; ?></div>
 										</a>
 									</li>
@@ -38,7 +38,7 @@ $documentation = (new \Documentation\Item)->where('id', $item->table_id)->getRow
 			<article>
 
 				<?php if ($item->author): ?>
-					<form action="<?php print _BASE_PATH . 'documentation/update/' . $item->id . $page->url; ?>" method="POST" enctype="multipart/form-data">
+					<form action="<?php print _BASE_PATH . 'documentation/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
 					<?php endif; ?>
 
 					<div class="outer">
@@ -47,7 +47,7 @@ $documentation = (new \Documentation\Item)->where('id', $item->table_id)->getRow
 							<!-- Subject -->
 							<div class="inner">
 								<?php $tag = (new \Tag\Item)->where('id', $documentation->subject)->getRow()->data();?>
-								<?php include _PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'Tag/template/tag.php'); ?>
+								<?php include _PUBLIC_PATH . $template->setTemplateFile(_PLUGIN_PATH . 'Tag/template/tag.php'); ?>
 							</div>
 						<?php endif; ?>
 
@@ -62,7 +62,7 @@ $documentation = (new \Documentation\Item)->where('id', $item->table_id)->getRow
 					<?php if($item->author): ?>
 						<div class="outer">
 							<div class="inner">
-								<?php include $page->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+								<?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
 							</div>
 						</div>
 					</form>
@@ -73,13 +73,13 @@ $documentation = (new \Documentation\Item)->where('id', $item->table_id)->getRow
 					<?php if($items): ?>
 						<?php foreach($items as $item):?>
 							<?php if($item->published || $item->author): ?>
-								<?php include _PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . $item->plugin_url . '/template/' . $item->file); ?>
+								<?php include _PUBLIC_PATH . $template->setTemplateFile(_PLUGIN_PATH . $item->plugin_url . '/template/' . $item->file); ?>
 							<?php endif; ?>
 						<?php endforeach;?>
 					<?php endif; ?>
 				</div>
 
-				<?php include $page->setTemplateFile('include/add.php'); ?>
+				<?php include $template->setTemplateFile('include/add.php'); ?>
 
 			</article>
 		</div>

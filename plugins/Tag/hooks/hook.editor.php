@@ -5,8 +5,8 @@ if($auth->isLoggedIn()){
   if(canEditAsEditor($auth)){
 
     function tag_post_route(){
-      global $router, $db, $auth, $page, $button;
-      $router->post('/tag/post', function() use($db, $auth, $page, $button) {
+      global $router, $db, $auth, $template, $button;
+      $router->post('/tag/post', function() use($db, $auth, $template, $button) {
         (new \Tag\Item)->post();
       });
     }

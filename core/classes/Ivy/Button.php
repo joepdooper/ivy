@@ -1,7 +1,7 @@
 <?php
 namespace Ivy;
 
-class Button extends Page {
+class Button extends Template {
 
   public function delete($name = null, $value = null, $id = null, $formaction = null) {
     include $this->setTemplateFile('buttons/button.delete.php');

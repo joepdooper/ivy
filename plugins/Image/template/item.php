@@ -6,7 +6,7 @@ $image = (new \Image\Item)->where('id', $item->table_id)->getRow()->data();
 <div class="item item-image col-12 col-md-6 col-lg-4" id="item-<?php print $item->id; ?>">
 	<div class="inner">
 
-		<form action="<?php print _BASE_PATH . 'image/update/' . $item->id . $page->url; ?>" method="POST" enctype="multipart/form-data">
+		<form action="<?php print _BASE_PATH . 'image/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
 
 			<div class="position-relative">
 					<?php if(!$image->file): ?>
@@ -32,7 +32,7 @@ $image = (new \Image\Item)->where('id', $item->table_id)->getRow()->data();
 				<?php endif; ?>
 			</div>
 
-			<?php include $page->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+			<?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
 
 		</form>
 

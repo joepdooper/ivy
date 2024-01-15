@@ -6,7 +6,7 @@ $gig = (new \Gig\Item)->where('id', $item->table_id)->getRow()->data();
 <div class="<?php if($item->class): print $item->class; else:?>item item-gig col-12 col-md-6 col-lg-4<?php endif;?>" id="item-<?php print $item->id; ?>">
 	<div class="inner">
 
-		<form action="<?php print _BASE_PATH . 'gig/update/' . $item->id . $page->url; ?>" method="POST" enctype="multipart/form-data">
+		<form action="<?php print _BASE_PATH . 'gig/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
 
 			<div class="item-wrap bg-secondary">
 				<article>
@@ -16,7 +16,7 @@ $gig = (new \Gig\Item)->where('id', $item->table_id)->getRow()->data();
 							<div class="inner">
 								<div class="tag">
 									<?php $tag = (new \Tag\Item)->where('id', $gig->subject)->getRow()->data();?>
-									<?php include _PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'Tag/template/tag.php'); ?>
+									<?php include _PUBLIC_PATH . $template->setTemplateFile(_PLUGIN_PATH . 'Tag/template/tag.php'); ?>
 								</div>
 							</div>
 						<?php endif; ?>
@@ -24,14 +24,14 @@ $gig = (new \Gig\Item)->where('id', $item->table_id)->getRow()->data();
 						<div class="inner d-flex align-items-baseline justify-content-between">
 							<div class="gigdate">
 								<?php if($item->author): ?>
-									<?php $page->setDate('date',date('Y-m-d',strtotime($gig->datetime)),'date'.$item->id); ?>
+									<input class="editor form-control" type="date" id="date_<?php echo $item->id; ?>" name="date" value="<?php echo date('Y-m-d',strtotime($gig->datetime)); ?>">
 								<?php else: ?>
 									<h2><?php print date('d.m.y',strtotime($gig->datetime)); ?></h2>
 								<?php endif; ?>
 							</div>
 							<div class="gigtime">
 								<?php if($item->author): ?>
-									<?php $page->setTime('time',date('H:i',strtotime($gig->datetime)),'time'.$item->id); ?>
+									<input class="editor form-control" type="time" id="time_<?php echo $item->id; ?>" name="time" value="<?php echo date('H:i',strtotime($gig->datetime)); ?>">
 								<?php else: ?>
 									<small>
 										<?php print date('H:i',strtotime($gig->datetime)); ?>
@@ -65,7 +65,7 @@ $gig = (new \Gig\Item)->where('id', $item->table_id)->getRow()->data();
 
 			<?php
 			if ($auth->isLoggedIn()):
-				include $page->setTemplateFile('buttons/item_admin_buttons.php');
+				include $template->setTemplateFile('buttons/item_admin_buttons.php');
 			endif;
 			?>
 

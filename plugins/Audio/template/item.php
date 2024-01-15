@@ -6,7 +6,7 @@ $audio = (new \Audio\Item)->where('id', $item->table_id)->getRow()->data();
 <div class="item item-audio col-12 col-md-6 col-lg-4" id="item-<?php print $item->id; ?>">
 	<div class="inner">
 
-		<form action="<?php print _BASE_PATH . 'audio/update/' . $item->id . $page->url; ?>" method="POST" enctype="multipart/form-data">
+		<form action="<?php print _BASE_PATH . 'audio/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
 
 			<div class="position-relative">
 				<?php if(!isset($audio->file)): ?>
@@ -30,7 +30,7 @@ $audio = (new \Audio\Item)->where('id', $item->table_id)->getRow()->data();
 				<?php endif; ?>
 			</div>
 
-			<?php include $page->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+			<?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
 
 		</form>
 

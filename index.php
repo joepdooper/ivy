@@ -29,12 +29,12 @@ $hooks->do_action('end_router_action');
 $router->run();
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo substr($info['language']->value, 0, 2); ?>">
+<html lang="<?php echo substr($setting['language']->value, 0, 2); ?>">
 <head>
 
   <?php
   $hooks->do_action('start_head_action');
-  include $page->setTemplateFile('head.php');
+  include $template->setTemplateFile('head.php');
   $hooks->do_action('end_head_action');
   ?>
 
@@ -46,11 +46,11 @@ $router->run();
 
   <?php $hooks->do_action('add_css_action');?>
 
-  <?php if($option['minify_css']->bool): ?>
-    <link defer href="<?php print _BASE_PATH . $page->setTemplateFile('css/minified.css'); ?>" rel="stylesheet" type="text/css">
+  <?php if($setting['minify_css']->bool): ?>
+    <link defer href="<?php print _BASE_PATH . $template->setTemplateFile('css/minified.css'); ?>" rel="stylesheet" type="text/css">
   <?php else: ?>
-    <?php foreach($page->css as $cssfile): ?>
-      <link defer href="<?php print _BASE_PATH . $page->setTemplateFile($cssfile); ?>" rel="stylesheet" type="text/css">
+    <?php foreach($template->css as $cssfile): ?>
+      <link defer href="<?php print _BASE_PATH . $template->setTemplateFile($cssfile); ?>" rel="stylesheet" type="text/css">
     <?php endforeach; ?>
   <?php endif; ?>
 
@@ -63,12 +63,12 @@ $router->run();
 
     <?php
     $hooks->do_action('start_header_action');
-    include $page->setTemplateFile('header.php');
+    include $template->setTemplateFile('header.php');
     $hooks->do_action('end_header_action');
 
     $hooks->do_action('start_message_action');
     $msg = new \Ivy\Message();
-    $msg->tpl = $page->setTemplateFile('include/message.php');
+    $msg->tpl = $template->setTemplateFile('include/message.php');
     $msg->display();
     $hooks->do_action('end_message_action');
     ?>
@@ -90,7 +90,7 @@ $router->run();
 
     <?php
     $hooks->do_action('start_footer_action');
-    include $page->setTemplateFile('footer.php');
+    include $template->setTemplateFile('footer.php');
     $hooks->do_action('end_footer_action');
     ?>
 
@@ -99,11 +99,11 @@ $router->run();
 
   <?php $hooks->do_action('add_js_action'); ?>
 
-  <?php if($option['minify_js']->bool): ?>
-    <script src="<?php print _BASE_PATH . $page->setTemplateFile('js/minified.js'); ?>"></script>
+  <?php if($setting['minify_js']->bool): ?>
+    <script src="<?php print _BASE_PATH . $template->setTemplateFile('js/minified.js'); ?>"></script>
   <?php else: ?>
-    <?php foreach($page->js as $jsfile): ?>
-      <script src="<?php print _BASE_PATH . $page->setTemplateFile($jsfile); ?>"></script>
+    <?php foreach($template->js as $jsfile): ?>
+      <script src="<?php print _BASE_PATH . $template->setTemplateFile($jsfile); ?>"></script>
     <?php endforeach; ?>
   <?php endif; ?>
 

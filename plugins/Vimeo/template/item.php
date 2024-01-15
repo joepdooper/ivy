@@ -13,9 +13,9 @@ $vimeo = (new \Vimeo\Item)->where('id', $item->table_id)->getRow()->data();
     <?php endif; ?>
 
     <?php if($item->author): ?>
-      <form action="<?php print _BASE_PATH . 'vimeo/update/' . $item->id . $page->url; ?>" method="POST" enctype="multipart/form-data">
+      <form action="<?php print _BASE_PATH . 'vimeo/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
         <input type="text" placeholder="Vimeo video id" name="vimeo_video_id" value="<?php print $vimeo->vimeo_video_id; ?>">
-        <?php include $page->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+        <?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
       </form>
     <?php endif; ?>
 

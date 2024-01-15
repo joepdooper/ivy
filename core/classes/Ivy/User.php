@@ -13,7 +13,7 @@ class User extends Model {
 
   function register() {
 
-    global $db, $auth;
+    global $db, $auth, $setting;
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
@@ -51,6 +51,13 @@ class User extends Model {
       }
 
       $db->insert('profiles',['user_id' => $userId]);
+
+      // Set role to registered user
+      if($setting['registration_role']->bool && $setting['registration_role']->value){
+        $role = strtoupper($setting['registration_role']->value);
+        $roleConstant = "\Delight\Auth\Role::$role";
+        $auth->admin()->addRoleForUserById($userId, constant($roleConstant));
+      }
 
       Message::add('An email has been sent to ' . $_POST['email'] . ' with a link to activate your account', _BASE_PATH . 'admin/login');
 

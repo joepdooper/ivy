@@ -2,14 +2,14 @@
 defined('_BASE_PATH') or die('Something went wrong');
 
 function add_youtube_css(){
-  global $page;
-  $page->addCSS("plugins/Youtube/css/youtube.css");
+  global $template;
+  $template->addCSS("plugins/Youtube/css/youtube.css");
 }
 
 function add_youtube_js(){
-  global $page;
+  global $template;
   if (!in_array("IframeManager", $_SESSION['plugins_active'])):
-    $page->addJS("plugins/Youtube/js/youtube.js");
+    $template->addJS("plugins/Youtube/js/youtube.js");
   endif;
 }
 

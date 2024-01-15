@@ -25,8 +25,8 @@ class Item extends Model {
   }
 
   public static function set($name,$value,$id = null) {
-    global $page;
-    include(_PUBLIC_PATH . $page->setTemplateFile(_PLUGIN_PATH . 'Audio/template/input.TypeAudio.php'));
+    global $template;
+    include(_PUBLIC_PATH . $template->setTemplateFile(_PLUGIN_PATH . 'Audio/template/input.TypeAudio.php'));
   }
 
 }

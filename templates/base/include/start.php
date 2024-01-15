@@ -11,7 +11,7 @@ $items = (new \Ivy\Item)->where('parent',null)->orderBy(['sort', 'date', 'id'],'
 			<?php foreach($items as $item):?>
 
 				<?php if($item->published || $item->author): ?>
-					<?php include $page->setTemplateFile(_PLUGIN_PATH . $item->plugin_url . '/template/' . $item->file); ?>
+					<?php include $template->setTemplateFile(_PLUGIN_PATH . $item->plugin_url . '/template/' . $item->file); ?>
 				<?php endif; ?>
 
 			<?php endforeach;?>

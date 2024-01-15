@@ -2,24 +2,24 @@
 defined('_BASE_PATH') or die('Something went wrong');
 
 function add_darkmode_buttons(){
-  global $page;
-  include $page->setTemplateFile(_PLUGIN_PATH . "DarkMode/template/buttons.php");
+  global $template;
+  include $template->setTemplateFile(_PLUGIN_PATH . "DarkMode/template/buttons.php");
 }
 
 function add_darkmode_checkbox(){
-  global $page;
+  global $template;
   $checked = (isset($_SESSION['darkMode']) && $_SESSION['darkMode']) ? true : false;
-  include $page->setTemplateFile(_PLUGIN_PATH . "DarkMode/template/checkbox.php");
+  include $template->setTemplateFile(_PLUGIN_PATH . "DarkMode/template/checkbox.php");
 }
 
 function add_darkmode_css(){
-  global $page;
-  $page->addCSS(_PLUGIN_PATH . "DarkMode/css/dark-mode.css");
+  global $template;
+  $template->addCSS(_PLUGIN_PATH . "DarkMode/css/dark-mode.css");
 }
 
 function add_darkmode_js(){
-  global $page;
-  $page->addJS(_PLUGIN_PATH . "DarkMode/js/dark-mode.js");
+  global $template;
+  $template->addJS(_PLUGIN_PATH . "DarkMode/js/dark-mode.js");
 }
 
 function set_darkmode_route(){

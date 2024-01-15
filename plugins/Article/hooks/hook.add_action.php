@@ -2,16 +2,16 @@
 defined('_BASE_PATH') or die('Something went wrong');
 
 function add_article_css(){
-  global $page;
-  $page->addCSS("plugins/Article/css/article.css");
+  global $template;
+  $template->addCSS("plugins/Article/css/article.css");
 }
 
 function article_show_page(){
-  global $router, $db, $auth, $page, $button;
-  $router->get('/article/(\d+)', function($id) use($db, $auth, $page, $button) {
+  global $router, $db, $auth, $template, $button;
+  $router->get('/article/(\d+)', function($id) use($db, $auth, $template, $button) {
     $item = (new \Ivy\Item)->where('id',$id)->getRow()->data();
-    $page->content = $page->setTemplateFile(_PLUGIN_PATH . $item->plugin_url . '/template/page.php');
-    include $page->setTemplateFile('main.php');
+    $template->content = $template->setTemplateFile(_PLUGIN_PATH . $item->plugin_url . '/template/page.php');
+    include $template->setTemplateFile('main.php');
   });
 }
 

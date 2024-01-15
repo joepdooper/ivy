@@ -6,17 +6,17 @@ if($auth->isLoggedIn()){
 
     function text_insert_update_delete_route(){
       global $router;
-      $router->post('/text/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $page_route = null, $page_id = null) {
+      $router->post('/text/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $template_route = null, $template_id = null) {
 
         $item = new \Ivy\Item();
         $text = new \Text\Item();
 
-        $redirect = _BASE_PATH . (isset($page_id) && $action != 'delete' ? htmlentities($page_route) . DIRECTORY_SEPARATOR . htmlentities($page_id) : "");
+        $redirect = _BASE_PATH . (isset($template_id) && $action != 'delete' ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($template_id) : "");
 
         switch ($action) {
           case 'insert':
           $text->insert(['text' => 'Write…']);
-          $item->insert(['template' => $id, 'parent' => $page_id]);
+          $item->insert(['template' => $id, 'parent' => $template_id]);
           \Ivy\Message::add('Text inserted', $redirect);
           break;
           case 'update':
@@ -39,13 +39,13 @@ if($auth->isLoggedIn()){
     }
 
     function add_text_toolbar(){
-      global $page;
-      include $page->setTemplateFile(_PLUGIN_PATH . 'Text/template/toolbar.php');
+      global $template;
+      include $template->setTemplateFile(_PLUGIN_PATH . 'Text/template/toolbar.php');
     }
 
     function add_text_admin_js(){
-      global $page;
-      $page->addJS("plugins/Text/js/text_admin.js");
+      global $template;
+      $template->addJS("plugins/Text/js/text_admin.js");
     }
 
     $hooks->add_action('start_router_action','text_insert_update_delete_route');

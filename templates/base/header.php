@@ -6,14 +6,14 @@ endif;
 ?>
 
 <header id="header" class="bg-secondary position-relative">
-	<?php if (isset($page->id)):?>
+	<?php if (isset($template->id)):?>
 		<div class="float-start">
 			<?php $button->link(_BASE_PATH,null,'feather/arrow-left.svg','Back'); ?>
 		</div>
 	<?php endif;?>
 	<div class="float-start">
-		<a id="logo" href="<?php echo _BASE_PATH;?>" title="<?php print $info['name']->value; ?>">
-			<?php print $info['name']->value; ?>
+		<a id="logo" href="<?php echo _BASE_PATH;?>" title="<?php print $setting['name']->value; ?>">
+			<?php print $setting['name']->value; ?>
 		</a>
 	</div>
 	<?php
@@ -21,7 +21,7 @@ endif;
 	$hooks->do_action('dark_mode_buttons');
 	?>
 	<nav class="menu float-end">
-		<ul class="clearfix">
+		<ul>
 			<?php if($auth->isLoggedIn()): ?>
 				<li>
 					<?php if($profile->users_image): ?>
