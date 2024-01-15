@@ -319,6 +319,16 @@ CREATE TABLE `tag` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `tag` WRITE;
+/*!40000 ALTER TABLE `tag` DISABLE KEYS */;
+
+INSERT INTO `tag` (`id`, `value`)
+VALUES
+	(1,'Article'),
+	(2,'Documentation');
+
+/*!40000 ALTER TABLE `tag` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Export von Tabelle template
