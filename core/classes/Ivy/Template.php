@@ -14,6 +14,7 @@ class Template extends Model {
   public $filter = null;
   public $css = array();
   public $js = array();
+  public $esm = array();
   public $route, $id, $url, $content;
 
   public function setTemplateFile($file) {
@@ -34,6 +35,10 @@ class Template extends Model {
 
   public function addJS($file) {
     array_push($this->js, $file);
+  }
+
+  public function addESM($file) {
+    array_push($this->esm, $file);
   }
 
   public static function define_browser() {

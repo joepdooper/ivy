@@ -99,6 +99,12 @@ $router->run();
 
   <?php $hooks->do_action('add_js_action'); ?>
 
+  <?php if(!empty($template->esm)): ?>
+    <?php foreach($template->esm as $esmfile): ?>
+      <script type="module" src="<?php print _BASE_PATH . $template->setTemplateFile($esmfile); ?>"></script>
+    <?php endforeach; ?>
+  <?php endif; ?>
+
   <?php if($setting['minify_js']->bool): ?>
     <script src="<?php print _BASE_PATH . $template->setTemplateFile('js/minified.js'); ?>"></script>
   <?php else: ?>
