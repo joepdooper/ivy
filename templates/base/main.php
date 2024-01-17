@@ -8,7 +8,9 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
     if($template->route === 'start'){
       include $template->setTemplateFile('include/add.php');
     }
-    include $template->content;
+    if($template->content){
+      include $template->content;
+    }
     ?>
   </div>
 
