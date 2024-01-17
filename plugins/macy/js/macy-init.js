@@ -10,6 +10,7 @@ if (document.getElementById("grid")) {
 			480: 1
 		}
 	});
+	macy.reInit();
 }
 
 function reInitMacy(){
@@ -27,7 +28,3 @@ add_to_function("imageSrcPreview",reInitMacy);
 add_to_function("savedSortedList",reInitMacy);
 add_to_function("startSortingList",removeMacy);
 add_to_function("YoutubePlayerReady",reInitMacy);
-
-document.addEventListener('DOMContentLoaded', function () {
-	macy.reInit();
-});
