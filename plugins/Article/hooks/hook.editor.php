@@ -27,7 +27,7 @@ if($auth->isLoggedIn()){
           } else {
             $item->update(['published' => $_POST['publish_item']]);
           }
-          require_once _PUBLIC_PATH . _PLUGIN_PATH . 'article/posts/update.php';
+          require_once _PUBLIC_PATH . _PLUGIN_PATH . 'Article/posts/update.php';
           $article->update(['title' => $title, 'subtitle' => $subtitle, 'subject' => $subject, 'image' => $image]);
           \Ivy\Message::add('Article updated', $redirect);
           break;
