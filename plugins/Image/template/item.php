@@ -9,14 +9,15 @@ $image = (new \Image\Item)->where('id', $item->table_id)->getRow()->data();
 		<form action="<?php print _BASE_PATH . 'image/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
 
 			<div class="position-relative">
-					<?php if(!$image->file): ?>
-						<div class="no-image">
-							<img id="upload_image_<?php print $item->id; ?>Preview" src="#" alt="no image" />
-						</div>
-					<?php else: ?>
-						<?php \Image\Item::set('image',$image->file); ?>
-					<?php endif; ?>
-					<?php if($item->author): ?>
+				<?php if(!$image->file): ?>
+					<div class="no-image">
+						<img id="upload_image_<?php print $item->id; ?>Preview" src="#" alt="no image" />
+					</div>
+				<?php else: ?>
+					<?php \Image\Item::set('image',$image->file); ?>
+				<?php endif; ?>
+
+				<?php if($item->author): ?>
 					<div class="editImageButton">
 						<?php if($image->file): ?>
 							<?php $button->delete('delete_image','single_image_' . $item->id,'delete_image_'.$item->id); ?>
@@ -32,7 +33,9 @@ $image = (new \Image\Item)->where('id', $item->table_id)->getRow()->data();
 				<?php endif; ?>
 			</div>
 
-			<?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+			<?php if($item->author): ?>
+				<?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+			<?php endif; ?>
 
 		</form>
 
