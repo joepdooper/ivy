@@ -43,7 +43,7 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 
 			<!-- Main image -->
 			<div class="main-image">
-				<?php if(!$article->image): ?>
+				<?php if(!$article->image && $item->author): ?>
 					<div class="no-image">
 						<img id="upload_image_<?php print $item->table_id; ?>Preview" src="#" alt="no image" />
 					</div>
