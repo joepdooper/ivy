@@ -27,7 +27,6 @@ if(grid){
         data: setSortList()
       })
       .then(response => {
-        // console.log(response.data);
         call_my_function("savedSortedList");
       })
       .catch(error =>{
