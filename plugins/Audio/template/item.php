@@ -6,7 +6,9 @@ $audio = (new \Audio\Item)->where('id', $item->table_id)->getRow()->data();
 <div class="item item-audio col-12 col-md-6 col-lg-4" id="item-<?php print $item->id; ?>">
 	<div class="inner">
 
-		<form action="<?php print _BASE_PATH . 'audio/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
+		<?php if ($auth->isLoggedIn() && $item->author): ?>
+			<form action="<?php print _BASE_PATH . 'audio/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
+		<?php endif; ?>
 
 			<div class="position-relative">
 				<?php if(!isset($audio->file)): ?>
@@ -16,7 +18,7 @@ $audio = (new \Audio\Item)->where('id', $item->table_id)->getRow()->data();
 				<?php else: ?>
 					<?php \Audio\Item::set('audio', _BASE_PATH . _MEDIA_PATH . 'item/audio/' . $audio->file); ?>
 				<?php endif; ?>
-				<?php if($item->author): ?>
+				<?php if ($auth->isLoggedIn() && $item->author): ?>
 					<div class="editImageButton">
 						<?php if(!isset($audio->file)): ?>
 							<?php $button->upload('upload_audio','single_audio_' . $item->id,'upload_audio_'.$item->id); ?>
@@ -30,9 +32,10 @@ $audio = (new \Audio\Item)->where('id', $item->table_id)->getRow()->data();
 				<?php endif; ?>
 			</div>
 
-			<?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
-
-		</form>
+			<?php if ($auth->isLoggedIn() && $item->author): ?>
+				<?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+				</form>
+			<?php endif; ?>
 
 	</div>
 </div>

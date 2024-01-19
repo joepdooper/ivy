@@ -6,7 +6,7 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 <div class="article">
 	<article>
 
-		<?php if ($item->author): ?>
+		<?php if ($auth->isLoggedIn() && $item->author): ?>
 			<form action="<?php print _BASE_PATH . 'article/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
 			<?php endif; ?>
 
@@ -22,8 +22,8 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 
 				<!-- Titles -->
 				<div class="inner">
-					<h1><?php $item->author ? \Text\Item::set('title',$article->title,'title') : print $article->title; ?></h1>
-					<h2><?php $item->author ? \Text\Item::set('subtitle',$article->subtitle,'subtitle') : print $article->subtitle; ?></h2>
+					<h1><?php $auth->isLoggedIn() && $item->author ? \Text\Item::set('title',$article->title,'title') : print $article->title; ?></h1>
+					<h2><?php $auth->isLoggedIn() && $item->author ? \Text\Item::set('subtitle',$article->subtitle,'subtitle') : print $article->subtitle; ?></h2>
 				</div>
 
 				<!-- Author -->
@@ -32,7 +32,7 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 					$author = (new \Ivy\Profile)->where('id',$item->user_id)->getRow()->data();
 					$date = $item->date;
 					?>
-					<?php if($item->author): ?>
+					<?php if ($auth->isLoggedIn() && $item->author): ?>
 						<input class="editor form-control" type="datetime" id="datetime_<?php echo $item->id; ?>" name="datetime" value="<?php echo date('Y-m-d H:i:s',strtotime($date)); ?>">
 					<?php else: ?>
 						<?php include $template->setTemplateFile('include/author.php'); ?>
@@ -50,7 +50,7 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 				<?php else: ?>
 					<?php \Image\Item::set('image', $article->image); ?>
 				<?php endif; ?>
-				<?php if($item->author): ?>
+				<?php if ($auth->isLoggedIn() && $item->author): ?>
 					<div class="editImageButton">
 						<?php if($article->image): ?>
 							<?php $button->delete('delete_image','main_article_image_' . $item->id, 'delete_image_' . $item->table_id); ?>
@@ -66,7 +66,7 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 				<?php endif; ?>
 			</div>
 
-			<?php if($item->author): ?>
+			<?php if ($auth->isLoggedIn() && $item->author): ?>
 				<div class="outer">
 					<div class="inner">
 						<?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
@@ -86,7 +86,9 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 			<?php endif; ?>
 		</div>
 
-		<?php include $template->setTemplateFile('include/add.php'); ?>
+		<?php if ($auth->isLoggedIn() && $item->author): ?>
+			<?php include $template->setTemplateFile('include/add.php'); ?>
+		<?php endif; ?>
 
 	</article>
 </div>

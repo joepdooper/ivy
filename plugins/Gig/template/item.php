@@ -6,7 +6,9 @@ $gig = (new \Gig\Item)->where('id', $item->table_id)->getRow()->data();
 <div class="<?php if($item->class): print $item->class; else:?>item item-gig col-12 col-md-6 col-lg-4<?php endif;?>" id="item-<?php print $item->id; ?>">
 	<div class="inner">
 
-		<form action="<?php print _BASE_PATH . 'gig/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
+		<?php if ($auth->isLoggedIn() && $item->author): ?>
+			<form action="<?php print _BASE_PATH . 'gig/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
+		<?php endif; ?>
 
 			<div class="item-wrap bg-secondary">
 				<article>
@@ -23,14 +25,14 @@ $gig = (new \Gig\Item)->where('id', $item->table_id)->getRow()->data();
 						<!-- Titles -->
 						<div class="inner d-flex align-items-baseline justify-content-between">
 							<div class="gigdate">
-								<?php if($item->author): ?>
+								<?php if ($auth->isLoggedIn() && $item->author): ?>
 									<input class="editor form-control" type="date" id="date_<?php echo $item->id; ?>" name="date" value="<?php echo date('Y-m-d',strtotime($gig->datetime)); ?>">
 								<?php else: ?>
 									<h2><?php print date('d.m.y',strtotime($gig->datetime)); ?></h2>
 								<?php endif; ?>
 							</div>
 							<div class="gigtime">
-								<?php if($item->author): ?>
+								<?php if ($auth->isLoggedIn() && $item->author): ?>
 									<input class="editor form-control" type="time" id="time_<?php echo $item->id; ?>" name="time" value="<?php echo date('H:i',strtotime($gig->datetime)); ?>">
 								<?php else: ?>
 									<small>
@@ -41,7 +43,7 @@ $gig = (new \Gig\Item)->where('id', $item->table_id)->getRow()->data();
 						</div>
 						<div class="inner">
 							<div class="gigvenue">
-								<?php if($item->author): ?>
+								<?php if ($auth->isLoggedIn() && $item->author): ?>
 									<?php \Text\Item::set('venue',$gig->venue,'venue'.$item->id)?>
 								<?php else: ?>
 									<p>
@@ -50,7 +52,7 @@ $gig = (new \Gig\Item)->where('id', $item->table_id)->getRow()->data();
 								<?php endif; ?>
 							</div>
 							<div class="gigaddress">
-								<?php if($item->author): ?>
+								<?php if ($auth->isLoggedIn() && $item->author): ?>
 									<?php \Text\Item::set('address',$gig->address,'address'.$item->id)?>
 								<?php else: ?>
 									<p>
@@ -63,13 +65,10 @@ $gig = (new \Gig\Item)->where('id', $item->table_id)->getRow()->data();
 				</article>
 			</div>
 
-			<?php
-			if ($auth->isLoggedIn()):
-				include $template->setTemplateFile('buttons/item_admin_buttons.php');
-			endif;
-			?>
-
-		</form>
+			<?php if ($auth->isLoggedIn() && $item->author): ?>
+				<?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+				</form>
+			<?php endif; ?>
 
 	</div>
 </div>

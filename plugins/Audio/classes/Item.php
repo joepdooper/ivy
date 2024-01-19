@@ -9,7 +9,7 @@ class Item extends Model {
 
   public $id, $file, $token;
   protected $table = 'audio';
-  const _AUDIO_PATH = 'audio/';
+  const _AUDIO_PATH = 'audio' . DIRECTORY_SEPARATOR;
 
   public function upload($audio) {
     $file = new File();

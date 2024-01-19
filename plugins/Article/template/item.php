@@ -36,13 +36,11 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 			</article>
 		</a>
 
-		<form action="<?php print _BASE_PATH . 'article/update/' . $item->id; ?>" method="POST" enctype="multipart/form-data">
-			<?php
-			if ($auth->isLoggedIn()):
-				include $template->setTemplateFile('buttons/item_admin_buttons.php');
-			endif;
-			?>
-		</form>
+		<?php if ($auth->isLoggedIn() && $item->author): ?>
+			<form action="<?php print _BASE_PATH . 'article/update/' . $item->id; ?>" method="POST" enctype="multipart/form-data">
+				<?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+			</form>
+		<?php endif; ?>
 
 	</div>
 </div>

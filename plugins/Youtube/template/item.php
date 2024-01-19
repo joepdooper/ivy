@@ -12,7 +12,7 @@ $youtube = (new \Youtube\Item)->where('id', $item->table_id)->getRow()->data();
       <div data-youtube="<?php print $youtube->youtube_video_id; ?>" id="youtube-<?php print $item->id; ?>" class="youtube-video"></div>
     <?php endif; ?>
 
-    <?php if($item->author): ?>
+    <?php if ($auth->isLoggedIn() && $item->author): ?>
       <form action="<?php print _BASE_PATH . 'youtube/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
         <input type="text" placeholder="Youtube video id" name="youtube_video_id" value="<?php print $youtube->youtube_video_id; ?>">
         <?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>

@@ -20,12 +20,12 @@ $documentation = (new \Documentation\Item)->where('id', $item->table_id)->getRow
 							<ul>
 								<?php foreach ((new \Documentation\Item)->where('subject',$tag->id)->get()->data() as $link): ?>
 									<?php if((new \Ivy\Item)->where('id',$link->item_id)->getRow()->data->published): ?>
-									<li class="<?php if($link->item_id === $item->id): ?>active<?php endif; ?>">
-										<a href="<?php print _BASE_PATH . 'documentation/' . $link->item_id; ?>">
-											<div class="inner"><?php print $link->title; ?></div>
-										</a>
-									</li>
-								<?php endif; ?>
+										<li class="<?php if($link->item_id === $item->id): ?>active<?php endif; ?>">
+											<a href="<?php print _BASE_PATH . 'documentation/' . $link->item_id; ?>">
+												<div class="inner"><?php print $link->title; ?></div>
+											</a>
+										</li>
+									<?php endif; ?>
 								<?php endforeach; ?>
 							</ul>
 						</li>
@@ -37,7 +37,7 @@ $documentation = (new \Documentation\Item)->where('id', $item->table_id)->getRow
 		<div class="col-12 col-md-9">
 			<article>
 
-				<?php if ($item->author): ?>
+				<?php if ($auth->isLoggedIn() && $item->author): ?>
 					<form action="<?php print _BASE_PATH . 'documentation/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
 					<?php endif; ?>
 
@@ -59,7 +59,7 @@ $documentation = (new \Documentation\Item)->where('id', $item->table_id)->getRow
 
 					</div>
 
-					<?php if($item->author): ?>
+					<?php if ($auth->isLoggedIn() && $item->author): ?>
 						<div class="outer">
 							<div class="inner">
 								<?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
@@ -79,7 +79,9 @@ $documentation = (new \Documentation\Item)->where('id', $item->table_id)->getRow
 					<?php endif; ?>
 				</div>
 
-				<?php include $template->setTemplateFile('include/add.php'); ?>
+				<?php if ($auth->isLoggedIn() && $item->author): ?>
+					<?php include $template->setTemplateFile('include/add.php'); ?>
+				<?php endif; ?>
 
 			</article>
 		</div>

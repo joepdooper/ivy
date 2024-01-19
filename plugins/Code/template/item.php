@@ -7,7 +7,7 @@ $languages = ['css','php','javascript','shell','sql']
 <div class="item item-code col-12 <?php if(!$item->parent): ?>col-md-6 col-lg-4<?php endif; ?>" id="item-<?php print $item->id; ?>">
   <div class="inner">
 
-    <?php if($item->author): ?>
+    <?php if($auth->isLoggedIn() && $item->author): ?>
       <form action="<?php print _BASE_PATH . 'code/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
         <select name="language">
           <?php foreach ($languages as $language): ?>
