@@ -44,8 +44,7 @@ if($auth->isLoggedIn()){
     }
 
     function add_text_admin_js(){
-      global $template;
-      $template->addJS("plugins/Text/js/text_admin.js");
+      print "<script src='" . _BASE_PATH . _PLUGIN_PATH . "Text/js/text_admin.js'></script>";
     }
 
     $hooks->add_action('start_router_action','text_insert_update_delete_route');

@@ -34,7 +34,9 @@ if($auth->isLoggedIn()){
           case 'delete':
           $item->where('id', $id)->getRow();
           $article->where('id', $item->data->table_id)->getRow();
-          (new \Image\Item)->unlink($article->image);
+          if($article->data->image){
+            (new \Image\Item)->unlink($article->data->image);
+          }
           $item->delete();
           $article->delete();
           \Ivy\Message::add('Article deleted', $redirect);

@@ -49,8 +49,7 @@ if($auth->isLoggedIn()){
     }
 
     function add_audio_admin_js(){
-      global $template;
-      $template->addJS("plugins/Audio/js/audio_admin.js");
+      print "<script src='" . _BASE_PATH . _PLUGIN_PATH . "Audio/js/audio_admin.js'></script>";
     }
 
     $hooks->add_action('start_router_action','audio_insert_update_delete_route');
