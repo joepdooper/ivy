@@ -35,7 +35,11 @@ class Profile extends Model {
 
           if($auth->getUsername() != $name){
             $this->table = 'users';
-            $this->save(['id' => $auth->getUserId(),'username' => $name]);
+            $this->where('id',$auth->getUserId())->getRow();
+            $this->save([
+              'id' => $auth->getUserId(),
+              'username' => $name
+            ]);
             $_SESSION[\Delight\Auth\UserManager::SESSION_FIELD_USERNAME] = $name;
           }
 
@@ -71,19 +75,23 @@ class Profile extends Model {
             }
           }
 
-          if(isset($_POST['users_image']) && $_POST['users_image'] == 'delete'){
+          if(isset($_POST['users_image']) && $_POST['users_image'] === 'delete'){
             $this->table = 'profiles';
-            $this->save(['id' => $this->id,'user_id' => $auth->getUserId(),'users_image' => '']);
-            (new \Image\Item)->delete($this->users_image);
+            $this->where('user_id',$auth->getUserId())->getRow();
+            $this->save([
+              'id' => $this->data->id,
+              'users_image' => ''
+            ]);
+            (new \Image\Item)->unlink($this->data->users_image);
           }
 
-          if($_FILES){
+          if($_FILES['users_image']['tmp_name']){
             $this->table = 'profiles';
-            $db->update(
-              'profiles',
-              ['users_image' => (new \Image\Item)->upload($_FILES['users_image'])],
-              ['user_id' => $_SESSION['auth_user_id']]
-            );
+            $this->where('user_id',$auth->getUserId())->getRow();
+            $this->save([
+              'id' => $this->data->id,
+              'users_image' => (new \Image\Item)->upload($_FILES['users_image'])
+            ]);
           }
 
           $message = 'Update succesfully';
