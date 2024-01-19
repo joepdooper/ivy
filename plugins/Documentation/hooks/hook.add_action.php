@@ -10,7 +10,9 @@ function documentation_show_page(){
   global $router, $db, $auth, $template, $button;
   $router->get('/documentation/(\d+)', function($id) use($db, $auth, $template, $button) {
     $item = (new \Ivy\Item)->where('id',$id)->getRow()->data();
-    $template->content = $template->setTemplateFile(_PLUGIN_PATH . $item->plugin_url . '/template/page.php');
+    if($item->published){
+      $template->content = $template->setTemplateFile(_PLUGIN_PATH . $item->plugin_url . '/template/page.php');
+    }
     include $template->setTemplateFile('main.php');
   });
 }
