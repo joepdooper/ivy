@@ -38,7 +38,7 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 
 		<?php if ($auth->isLoggedIn() && $item->author): ?>
 			<form action="<?php print _BASE_PATH . 'article/update/' . $item->id; ?>" method="POST" enctype="multipart/form-data">
-				<?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+				<?php include $template->setTemplateFile('include/item_admin_buttons.php'); ?>
 			</form>
 		<?php endif; ?>
 

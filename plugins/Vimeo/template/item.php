@@ -15,7 +15,7 @@ $vimeo = (new \Vimeo\Item)->where('id', $item->table_id)->getRow()->data();
     <?php if ($auth->isLoggedIn() && $item->author): ?>
       <form action="<?php print _BASE_PATH . 'vimeo/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
         <input type="text" placeholder="Vimeo video id" name="vimeo_video_id" value="<?php print $vimeo->vimeo_video_id; ?>">
-        <?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+        <?php include $template->setTemplateFile('include/item_admin_buttons.php'); ?>
       </form>
     <?php endif; ?>
 

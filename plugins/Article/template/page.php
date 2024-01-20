@@ -69,7 +69,7 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 			<?php if ($auth->isLoggedIn() && $item->author): ?>
 				<div class="outer">
 					<div class="inner">
-						<?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+						<?php include $template->setTemplateFile('include/item_admin_buttons.php'); ?>
 					</div>
 				</div>
 			</form>

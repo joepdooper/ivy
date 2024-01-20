@@ -15,7 +15,7 @@ $youtube = (new \Youtube\Item)->where('id', $item->table_id)->getRow()->data();
     <?php if ($auth->isLoggedIn() && $item->author): ?>
       <form action="<?php print _BASE_PATH . 'youtube/update/' . $item->id . $template->url; ?>" method="POST" enctype="multipart/form-data">
         <input type="text" placeholder="Youtube video id" name="youtube_video_id" value="<?php print $youtube->youtube_video_id; ?>">
-        <?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+        <?php include $template->setTemplateFile('include/item_admin_buttons.php'); ?>
       </form>
     <?php endif; ?>
 

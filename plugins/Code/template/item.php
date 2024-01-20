@@ -15,7 +15,7 @@ $languages = ['css','php','javascript','shell','sql']
           <?php endforeach; ?>
         </select>
         <textarea class="bg-secondary" name="code"><?php print $code->code; ?></textarea>
-        <?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+        <?php include $template->setTemplateFile('include/item_admin_buttons.php'); ?>
       </form>
     <?php else: ?>
       <pre><code data-language="<?php print $code->language; ?>"><?php print $code->code; ?></code></pre>

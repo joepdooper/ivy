@@ -66,7 +66,7 @@ $gig = (new \Gig\Item)->where('id', $item->table_id)->getRow()->data();
 			</div>
 
 			<?php if ($auth->isLoggedIn() && $item->author): ?>
-				<?php include $template->setTemplateFile('buttons/item_admin_buttons.php'); ?>
+				<?php include $template->setTemplateFile('include/item_admin_buttons.php'); ?>
 				</form>
 			<?php endif; ?>
 
