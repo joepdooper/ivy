@@ -5,7 +5,7 @@ if(isset($_SESSION['auth_user_id'])):
 endif;
 ?>
 
-<form action="<?php print _BASE_PATH . 'post/profile/'; ?>" method="POST" enctype="multipart/form-data">
+<form action="<?php print _BASE_PATH . 'admin/profile/post'; ?>" method="POST" enctype="multipart/form-data">
   <div class="admin-container">
 
     <div class="outer">
@@ -60,10 +60,6 @@ endif;
         <div class="form-group">
           <input name="users[email]" type="email" placeholder="email" value="<?php print $auth->getEmail(); ?>">
         </div>
-
-        <!-- <div class="form-group">
-        <input type="password" name="password" placeholder="password" value="">
-      </div> -->
 
     </div>
   </div>

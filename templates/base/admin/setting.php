@@ -3,7 +3,7 @@ defined('_BASE_PATH') ?: header('location: ../../../index.php');
 $settings = (new Ivy\Setting)->get()->data();
 ?>
 
-<form action="<?php print _BASE_PATH . 'post/setting/'; ?>" method="POST" enctype="multipart/form-data">
+<form action="<?php print _BASE_PATH . 'admin/setting/post'; ?>" method="POST" enctype="multipart/form-data">
 
   <div class="outer">
     <div class="inner">

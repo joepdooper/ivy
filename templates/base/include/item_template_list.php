@@ -1,4 +1,5 @@
 <?php
+defined('_BASE_PATH') ?: header('location: ../../index.php');
 $itemtemplates = (new \Ivy\ItemTemplate)->get()->data();
 ?>
 

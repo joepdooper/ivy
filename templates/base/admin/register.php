@@ -2,7 +2,7 @@
 defined('_BASE_PATH') ?: header('location: ../../../index.php');
 ?>
 
-<form action="<?php print _BASE_PATH . 'post/register/'; ?>" method="POST" enctype="multipart/form-data">
+<form action="<?php print _BASE_PATH . 'admin/user/register/'; ?>" method="POST" enctype="multipart/form-data">
   <div class="admin-container">
 
     <div class="outer">

@@ -80,7 +80,7 @@ $documentation = (new \Documentation\Item)->where('id', $item->table_id)->getRow
 				</div>
 
 				<?php if ($auth->isLoggedIn() && $item->author): ?>
-					<?php include $template->setTemplateFile('include/add.php'); ?>
+					<?php include $template->setTemplateFile('include/add_item_template.php'); ?>
 				<?php endif; ?>
 
 			</article>

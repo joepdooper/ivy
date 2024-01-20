@@ -4,7 +4,7 @@ $installed = array();
 $plugins = new Ivy\Plugin();
 ?>
 
-<form action="<?php print _BASE_PATH . 'post/plugin/'; ?>" method="POST" enctype="multipart/form-data">
+<form action="<?php print _BASE_PATH . 'admin/plugin/post'; ?>" method="POST" enctype="multipart/form-data">
 
   <div class="outer">
     <div class="inner">

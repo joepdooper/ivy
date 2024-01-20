@@ -17,6 +17,10 @@ class Template extends Model {
   public $esm = array();
   public $route, $id, $url, $content;
 
+  public function __construct() {
+    $this->url = DIRECTORY_SEPARATOR . $this->route . DIRECTORY_SEPARATOR . $this->id;
+  }
+
   public function setTemplateFile($file) {
     if (file_exists(_TEMPLATE_SUB . $file)) {
       return _TEMPLATE_SUB . $file;

@@ -5,7 +5,7 @@
   <version>1.0.0</version>
   <image></image>
   <settings></settings>
-  <description>Use macy.js</description>
+  <description>Macy.js - lightweight, dependency-free, 4kb masonry layout library, designed for a hassle-free configuration</description>
   <type>javascript</type>
   <database>
     <install></install>

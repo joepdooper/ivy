@@ -26,5 +26,6 @@ function removeMacy(){
 
 add_to_function("imageSrcPreview",reInitMacy);
 add_to_function("savedSortedList",reInitMacy);
+add_to_function("swupPageView",reInitMacy);
 add_to_function("startSortingList",removeMacy);
 add_to_function("YoutubePlayerReady",reInitMacy);
