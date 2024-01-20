@@ -103,9 +103,10 @@ $router->mount('/admin', function() use ($router, $db, $auth, $template, $button
 });
 
 
-$router->get('/([a-z0-9_-]+)/(\w+)', function($route,$id) use($template) {
+$router->get('/([a-z0-9_-]+)/([a-z0-9_-]+)', function($route,$id) use($template) {
   $template->route = htmlentities($route);
   $template->id = htmlentities($id);
+  $template->url = DIRECTORY_SEPARATOR . $template->route . DIRECTORY_SEPARATOR . $template->id;
 });
 
 $router->get('/', function() {
