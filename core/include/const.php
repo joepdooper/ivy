@@ -1,6 +1,6 @@
 <?php
 // version
-define('_IVY_VERSION', '0.4.0');
+define('_IVY_VERSION', '0.1.0');
 // subfolder
 $scriptPath = str_replace('\\', '/', dirname($_SERVER['SCRIPT_FILENAME']));
 $scriptPath = rtrim($scriptPath, '/'); // Remove trailing slash
