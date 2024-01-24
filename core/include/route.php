@@ -85,19 +85,16 @@ $router->mount('/admin', function() use ($router, $db, $auth, $template, $button
   });
 
   $router->get('/(\w+)', function($id) use ($db, $auth, $template, $button) {
-
     if (!$auth->isLoggedIn() && !in_array($id,['login','reset','register'])) {
       header('location:' . _BASE_PATH . 'admin/login');
       exit;
     }
-
     if($auth->isLoggedIn() && in_array($id,['setting','plugin','register','reset','template','user'])){
       if (!canEditAsAdmin($auth)){
         header('location:' . _BASE_PATH . 'admin/profile');
         exit;
       }
     }
-
   });
 
 });
