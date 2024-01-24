@@ -30,5 +30,9 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
         <?php endif;?>
       </ul>
     </nav>
+  <?php else: ?>
+    <div class="text-align-center inner">
+      Build with <a href="https://github.com/joepdooper/ivy"><strong>ivy</strong></a> © <?php print date("Y"); ?>
+    </div>
   <?php endif; ?>
 </footer>
