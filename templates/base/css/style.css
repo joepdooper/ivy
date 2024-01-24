@@ -631,6 +631,21 @@ input[name="publish_item"] ~ .button.visible svg:nth-of-type(2) {
 .editImageButton .button {
   background-color: var(--c-background);
 }
+.item .editButton {
+  -webkit-transition: opacity .3s;
+  -moz-transition: opacity .3s;
+  -o-transition: opacity .3s;
+  -ms-transition: opacity .3s;
+  transition: opacity .3s;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  opacity: 0;
+
+}
+.item:hover .editButton {
+  opacity: 1;
+}
 
 /* MENUS */
 nav.menu {
