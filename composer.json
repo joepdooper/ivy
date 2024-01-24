@@ -16,18 +16,14 @@
     "delight-im/auth": "^8.3",
     "delight-im/db": "^1.3",
     "phpmailer/phpmailer": "^6.4",
-    "peppeocchi/php-cron-scheduler": "^4.0",
     "verot/class.upload.php": "^2.1",
-    "voku/anti-xss": "^4.1",
     "spatie/url": "^1.3",
     "matthiasmullie/minify": "^1.3",
     "php-curl-class/php-curl-class": "^9.6",
     "bramus/router": "^1.6",
     "bainternet/php-hooks": "^1.0",
     "vlucas/phpdotenv": "^5.5",
-    "spatie/schema-org": "^3.14",
-    "samdark/sitemap": "^2.4",
-    "phrity/websocket": "dev-v2.1-main"
+    "samdark/sitemap": "^2.4"
   },
   "scripts": {
     "post-create-project-cmd": [
