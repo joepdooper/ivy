@@ -35,7 +35,7 @@ if($auth->isLoggedIn()){
           $item->where('id', $id)->getRow();
           $article->where('id', $item->data->table_id)->getRow();
           if($article->data->image){
-            (new \Image\Item)->unlink($article->data->image);
+            (new \Image\Item)->delete_file($article->data->image);
           }
           $item->delete();
           $article->delete();

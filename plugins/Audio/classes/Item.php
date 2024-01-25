@@ -19,7 +19,7 @@ class Item extends Model {
     return $file->upload($audio);
   }
 
-  public function unlink($file = null) {
+  public function delete_file($file = null) {
     $audio = isset($file) ? $file : $this->data->file;
     unlink(_PUBLIC_PATH . _MEDIA_PATH . 'item/' . self::_AUDIO_PATH . $audio);
   }

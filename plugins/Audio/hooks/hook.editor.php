@@ -23,7 +23,7 @@ if($auth->isLoggedIn()){
           $item->where('id', $id)->getRow();
           $audio->where('id', $item->data->table_id)->getRow();
           if (isset($_POST['delete_audio'])) {
-            $audio->unlink();
+            $audio->delete_file();
           }
           $audio->data->file = isset($_POST['delete_audio']) ? NULL : (isset($_POST['audio']) ? trim($_POST['audio']) : $audio->data->file);
           if(!empty($_FILES['upload_audio']['name'])){
@@ -37,7 +37,7 @@ if($auth->isLoggedIn()){
           $item->where('id', $id)->getRow();
           $audio->where('id', $item->data->table_id)->getRow();
           if (!empty($audio->data->file)) {
-            $audio->unlink();
+            $audio->delete_file();
           }
           $audio->delete();
           $item->delete();

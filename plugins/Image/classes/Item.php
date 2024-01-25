@@ -31,7 +31,7 @@ class Item extends Model {
     return $this->file;
   }
 
-  public function unlink($file = null) {
+  public function delete_file($file = null) {
     $image = isset($file) ? $file : $this->data->file;
     $image_sizes = new \Image\Settings();
     foreach ($image_sizes->get()->data() as $size){

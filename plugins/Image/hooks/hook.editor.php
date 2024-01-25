@@ -24,7 +24,7 @@ if($auth->isLoggedIn()){
             $item->where('id', $id)->getRow();
             $image->where('id', $item->data->table_id)->getRow();
             if (isset($_POST['delete_image'])) {
-              $image->unlink();
+              $image->delete_file();
             }
             $image->data->file = isset($_POST['delete_image']) ? NULL : (isset($_POST['image']) ? trim($_POST['image']) : $image->data->file);
             if(!empty($_FILES['upload_image']['name'])){
@@ -38,7 +38,7 @@ if($auth->isLoggedIn()){
             $item->where('id', $id)->getRow();
             $image->where('id', $item->data->table_id)->getRow();
             if (!empty($image->data->file)) {
-              $image->unlink();
+              $image->delete_file();
             }
             $image->delete();
             $item->delete();
