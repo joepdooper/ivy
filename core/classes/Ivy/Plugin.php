@@ -50,7 +50,13 @@ class Plugin extends Model {
           ]);
 
           // -- install plugin database
-          empty($setting->database->install) ?: require_once _PUBLIC_PATH . _PLUGIN_PATH . $plugout . '/' . $setting->database->install;
+          if (!empty($setting->database->install)) {
+            $databaseFilePath = _PUBLIC_PATH . _PLUGIN_PATH . $plugout . '/' . $setting->database->install;
+            if (is_file($databaseFilePath) && strpos($databaseFilePath, _PUBLIC_PATH . _PLUGIN_PATH . $plugout . '/') === 0) {
+              require_once $databaseFilePath;
+            }
+          }
+
         }
 
         // -- deinstall plugin
