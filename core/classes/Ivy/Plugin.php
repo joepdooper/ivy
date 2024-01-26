@@ -10,9 +10,35 @@ class Plugin extends Model {
 
   protected $table = 'plugin';
   protected $path = _BASE_PATH . 'admin/plugin';
+  public $plugin;
+
+  private static function return_plugin_file_path($plugin, $file) {
+    return _PUBLIC_PATH . _PLUGIN_PATH . $plugin->url . DIRECTORY_SEPARATOR . $file;
+  }
+
+  public static function load($plugin) {
+    global $auth, $hooks;
+    $hook_file_basic = self::return_plugin_file_path($plugin, 'hooks/hook.add_action.php');
+    if (file_exists($hook_file_basic)) {
+      include $hook_file_basic;
+    }
+    if($auth->isLoggedIn()){
+      if(canEditAsEditor($auth)){
+        $hook_file_editor = self::return_plugin_file_path($plugin, 'hooks/hook.editor.php');
+        if (file_exists($hook_file_editor)) {
+          include $hook_file_editor;
+        }
+      }
+      if(canEditAsAdmin($auth)){
+        $hook_file_admin = self::return_plugin_file_path($plugin, 'hooks/hook.admin.php');
+        if (file_exists($hook_file_admin)) {
+          include $hook_file_admin;
+        }
+      }
+    }
+  }
 
   function post() {
-
     global $db, $auth;
 
     if($_SERVER['REQUEST_METHOD'] === 'POST' && $auth->isLoggedIn()){
@@ -50,7 +76,12 @@ class Plugin extends Model {
           ]);
 
           // -- install plugin database
-          empty($setting->database->install) ?: require_once _PUBLIC_PATH . _PLUGIN_PATH . $plugout . '/' . $setting->database->install;
+          if(!empty($setting->database->install)) {
+            $database_installer_file = self::return_plugin_file_path($setting->url, $setting->database->install);
+            if (file_exists($database_installer_file )) {
+              require_once $database_installer_file ;
+            }
+          }
         }
 
         // -- deinstall plugin
@@ -71,7 +102,12 @@ class Plugin extends Model {
             );
             // -- remove plugin database
             $setting = simplexml_load_file(_PUBLIC_PATH . _PLUGIN_PATH . $url . '/info.xml');
-            empty($setting->database->uninstall) ?: require_once _PUBLIC_PATH . _PLUGIN_PATH . $url . '/' . $setting->database->uninstall;
+            if(!empty($setting->database->uninstall)) {
+              $database_installer_file = self::return_plugin_file_path($setting->url, $setting->database->uninstall);
+              if (file_exists($database_installer_file )) {
+                require_once $database_installer_file ;
+              }
+            }
           }
         }
 
