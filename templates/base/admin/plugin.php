@@ -1,7 +1,7 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../../index.php');
 $installed = array();
-$plugins = new Ivy\Plugin();
+$plugins = (new Ivy\Plugin)->get()->data();
 ?>
 
 <form action="<?php print _BASE_PATH . 'admin/plugin/post'; ?>" method="POST" enctype="multipart/form-data">
@@ -26,7 +26,7 @@ $plugins = new Ivy\Plugin();
           </tr>
         </thead>
         <tbody>
-          <?php foreach($plugins->get()->data() as $row):?>
+          <?php foreach($plugins as $row):?>
             <tr>
               <td>
                 <?php
