@@ -50,25 +50,25 @@ if (file_exists($hook_template_admin )) {
 $template->addJS("core/js/helper.js");
 
 // Loop through hooks from plugin
-$plugins = $db->select('SELECT * FROM `plugin`');
+$plugins = (new \Ivy\Plugin)->get()->data();
 $_SESSION['plugins_active'] = array();
 if($plugins):
   foreach($plugins as $plugin):
-    if($plugin['active'] == '1'):
-      $_SESSION['plugins_active'][] = $plugin['name'];
-      $hook_file_basic = _PUBLIC_PATH . _PLUGIN_PATH . $plugin['url'] . '/hooks/hook.add_action.php';
+    if($plugin->active == '1'):
+      $_SESSION['plugins_active'][] = $plugin->name;
+      $hook_file_basic = _PUBLIC_PATH . _PLUGIN_PATH . $plugin->url . '/hooks/hook.add_action.php';
       if (file_exists($hook_file_basic)) {
         include $hook_file_basic;
       }
       if($auth->isLoggedIn()){
         if(canEditAsEditor($auth)){
-          $hook_file_editor = _PUBLIC_PATH . _PLUGIN_PATH . $plugin['url'] . '/hooks/hook.editor.php';
+          $hook_file_editor = _PUBLIC_PATH . _PLUGIN_PATH . $plugin->url . '/hooks/hook.editor.php';
           if (file_exists($hook_file_editor)) {
             include $hook_file_editor;
           }
         }
         if(canEditAsAdmin($auth)){
-          $hook_file_admin = _PUBLIC_PATH . _PLUGIN_PATH . $plugin['url'] . '/hooks/hook.admin.php';
+          $hook_file_admin = _PUBLIC_PATH . _PLUGIN_PATH . $plugin->url . '/hooks/hook.admin.php';
           if (file_exists($hook_file_admin)) {
             include $hook_file_admin;
           }
