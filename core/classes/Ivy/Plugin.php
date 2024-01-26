@@ -77,10 +77,7 @@ class Plugin extends Model {
 
           // -- install plugin database
           if(!empty($setting->database->install)) {
-            $database_installer_file = self::return_plugin_file_path($setting->url, $setting->database->install);
-            if (file_exists($database_installer_file )) {
-              require_once $database_installer_file ;
-            }
+            require_once self::return_plugin_file_path($setting->url, $setting->database->install);
           }
         }
 
@@ -103,10 +100,7 @@ class Plugin extends Model {
             // -- remove plugin database
             $setting = simplexml_load_file(_PUBLIC_PATH . _PLUGIN_PATH . $url . '/info.xml');
             if(!empty($setting->database->uninstall)) {
-              $database_installer_file = self::return_plugin_file_path($setting->url, $setting->database->uninstall);
-              if (file_exists($database_installer_file )) {
-                require_once $database_installer_file ;
-              }
+              require_once self::return_plugin_file_path($setting->url, $setting->database->uninstall);
             }
           }
         }
