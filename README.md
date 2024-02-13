@@ -1,5 +1,5 @@
-<div style="max-height:48px;width:auto;">
-  <img src="https://dooper.io/ivy/logo.svg" alt="ivy logo" height="48">
+<div style="max-height:48px;width:auto;color:#F40">
+  <img src="https://dooper.io/ivy/templates/ivy/images/logo.svg" alt="ivy logo" height="48">
 </div>
 
 **ivy**, another sleek simple fast CMS with an effortless template and plugin environment
