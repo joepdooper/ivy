@@ -2,7 +2,7 @@
   <img src="https://dooper.io/ivy/templates/ivy/images/logo-red.svg" alt="ivy logo" height="48">
 </div>
 
-Yet another sleek simple fast CMS with an effortless template and plugin environment
+<span style="font-size:1.5rem;">Yet another sleek simple fast CMS with an effortless template and plugin environment</span>
 
 ## Install
 
