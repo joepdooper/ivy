@@ -20,6 +20,11 @@ $router->before('GET|POST', '/admin/([a-z0-9_-]+)', function($id) {
       header('location:' . _BASE_PATH);
       exit();
     }
+  } else {
+    if(!in_array($id,['register','login','reset'])){
+      header('location:' . _BASE_PATH . 'admin/login');
+      exit();
+    }
   }
 });
 
