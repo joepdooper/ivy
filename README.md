@@ -4,9 +4,9 @@
 
 Yet another sleek simple fast CMS with an effortless template and plugin environment
 
-[![Composer](https://img.shields.io/badge/Composer-brightgreen)](https://getcomposer.org/)
-[![npm](https://img.shields.io/badge/npm-brightgreen)](https://www.npmjs.com/)
-[![PHP](https://img.shields.io/badge/PHP-v8.1.0-brightgreen)](https://www.php.net/)
+[![Composer](https://img.shields.io/badge/Composer-222)](https://getcomposer.org/)
+[![npm](https://img.shields.io/badge/npm-222)](https://www.npmjs.com/)
+[![PHP](https://img.shields.io/badge/PHP-v8.1.0-222)](https://www.php.net/)
 
 ## Install
 
