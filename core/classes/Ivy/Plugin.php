@@ -150,7 +150,7 @@ class Plugin extends Model {
 
             if (is_file($url)) {
                 if (strpos($url, $dir) === 0) {
-                    $content = file_get_contents($url, true);
+                    $content = file_get_contents($url);
                     $plugin = json_decode($content);
                 }
             }
