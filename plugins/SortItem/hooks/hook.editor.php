@@ -3,7 +3,7 @@ defined('_BASE_PATH') or die('Something went wrong');
 global $auth;
 
 if($auth->isLoggedIn()){
-  if(canEditAsEditor($auth)){
+  if(\Ivy\User::canEditAsEditor($auth)){
       global $router;
 
       $router->post('/item/sort/', function(){

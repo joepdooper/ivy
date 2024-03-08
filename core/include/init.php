@@ -16,7 +16,6 @@ $db = \Delight\Db\PdoDatabase::fromPdo($pdo);
 
 // authentication
 $auth = new \Delight\Auth\Auth($db,true);
-require_once _PUBLIC_PATH . 'core/include/auth.php';
 
 // hooks
 $hooks = new Hooks();
@@ -24,7 +23,7 @@ $hooks = new Hooks();
 // core autoload
 require_once _PUBLIC_PATH . 'core/include/autoloader.php';
 
-// settings
+// set settings
 (new \Ivy\Setting)->get()->setKeyBy('name')->cache()->data();
 
 // template
@@ -35,7 +34,11 @@ define('_TEMPLATE_SUB', _TEMPLATES_PATH . $db->selectValue($sql, ['sub']) . DIRE
 // core JS
 \Ivy\Template::addJS("core/js/helper.js");
 
-// template hooks
+// start router
+$router = new \Bramus\Router\Router();
+$router->setBasePath(_SUBFOLDER);
+
+// template hooks and routes
 include \Ivy\Template::setTemplateFile('hooks/hook.basic.php');
 $hook_template_editor = \Ivy\Template::setTemplateFile('hooks/hook.editor.php');
 if (file_exists($hook_template_editor)) {
@@ -47,56 +50,11 @@ if (file_exists($hook_template_admin)) {
 }
 
 // plugin hooks and routes
-$router = new \Bramus\Router\Router();
-$router->setBasePath(_SUBFOLDER);
 $plugin = new \Ivy\Plugin;
 $plugin->run();
+
+// standard routes
 include _PUBLIC_PATH . 'core/include/routes.php';
+
+// run router
 $router->run();
-
-// minify
-use MatthiasMullie\Minify;
-
-function minify_css_files(): void
-{
-    $minify = new Minify\CSS();
-
-    if(\Ivy\Setting::$cache['minify_css']->bool){
-        if(!file_exists(\Ivy\Template::setTemplateFile('css/minified.css'))){
-            foreach(\Ivy\Template::$css as $cssfile){
-                $sourcePath = \Ivy\Template::setTemplateFile($cssfile);
-                $minify->add($sourcePath);
-            }
-            $minify->minify(_PUBLIC_PATH . _TEMPLATE_SUB . 'css/minified.css');
-        }
-    } else {
-        if(file_exists(\Ivy\Template::setTemplateFile('css/minified.css'))){
-            unlink(\Ivy\Template::setTemplateFile('css/minified.css'));
-        }
-    }
-
-}
-
-$hooks->add_action('add_css_action','minify_css_files','9999');
-
-function minify_js_files(): void
-{
-    $minify = new Minify\JS();
-
-    if(\Ivy\Setting::$cache['minify_js']->bool){
-        if(!file_exists(\Ivy\Template::setTemplateFile('js/minified.js'))){
-            foreach(\Ivy\Template::$js as $jsfile){
-                $sourcePath = \Ivy\Template::setTemplateFile($jsfile);
-                $minify->add($sourcePath);
-            }
-            $minify->minify(_PUBLIC_PATH . _TEMPLATE_SUB . 'js/minified.js');
-        }
-    } else {
-        if(file_exists(\Ivy\Template::setTemplateFile('js/minified.js'))){
-            unlink(\Ivy\Template::setTemplateFile('js/minified.js'));
-        }
-    }
-
-}
-
-$hooks->add_action('add_js_action','minify_js_files','9999');

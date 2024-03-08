@@ -18,7 +18,7 @@ $router->before('GET', '/.*', function() {
 $router->before('GET|POST', '/admin/([a-z0-9_-]+)', function($id) {
     global $auth;
     if($auth->isLoggedIn()){
-        if(!canEditAsAdmin($auth) && !in_array($id,['register','login','logout','reset','profile'])){
+        if(!\Ivy\User::canEditAsAdmin($auth) && !in_array($id,['register','login','logout','reset','profile'])){
             header('location:' . _BASE_PATH);
             exit();
         }
@@ -33,7 +33,7 @@ $router->before('GET|POST', '/admin/([a-z0-9_-]+)', function($id) {
 $router->before('GET|POST', '/plugin/.*', function() {
     global $auth;
     if($auth->isLoggedIn()){
-        if(!canEditAsSuperAdmin($auth)){
+        if(!\Ivy\User::canEditAsSuperAdmin($auth)){
             header('location:' . _BASE_PATH);
             exit();
         }
@@ -97,12 +97,12 @@ $router->mount('/admin', function() use ($router, $db, $auth, $template) {
             exit;
         }
         if($auth->isLoggedIn() && in_array($id,['setting','plugin','register','reset','template','user'])){
-            if (!canEditAsAdmin($auth)){
+            if (!\Ivy\User::canEditAsAdmin($auth)){
                 header('location:' . _BASE_PATH . 'admin/profile');
                 exit;
             }
         }
-        if(canEditAsAdmin($auth) || (!canEditAsAdmin($auth) && in_array($id,['register','login','logout','reset','profile']))):
+        if(\Ivy\User::canEditAsAdmin($auth) || (!\Ivy\User::canEditAsAdmin($auth) && in_array($id,['register','login','logout','reset','profile']))):
             \Ivy\Template::$file = \Ivy\Template::setTemplateFile('admin/' . $id . '.php');
         endif;
     });

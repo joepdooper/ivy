@@ -3,7 +3,7 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
 global $auth;
 ?>
 
-<?php if(canEditAsEditor($auth)): ?>
+<?php if(\Ivy\User::canEditAsEditor($auth)): ?>
 
 	<input id="overlay-mode" name="overlay-mode" class="overlay-mode-checkbox d-none" type="checkbox">
 

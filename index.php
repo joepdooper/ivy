@@ -14,6 +14,7 @@ require 'core/include/const.php';
 // Include init
 require 'core/include/init.php';
 
+global $hooks;
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo substr(\Ivy\Setting::$cache['language']->value, 0, 2); ?>">
@@ -30,6 +31,23 @@ require 'core/include/init.php';
     </script>
 
     <?php $hooks->do_action('add_css_action');?>
+
+    <?php
+    if(\Ivy\Setting::$cache['minify_css']->bool){
+        if(!file_exists(\Ivy\Template::setTemplateFile('css/minified.css'))){
+            $minify = new MatthiasMullie\Minify\CSS();
+            foreach(\Ivy\Template::$css as $cssfile){
+                $sourcePath = \Ivy\Template::setTemplateFile($cssfile);
+                $minify->add($sourcePath);
+            }
+            $minify->minify(_PUBLIC_PATH . _TEMPLATE_SUB . 'css/minified.css');
+        }
+    } else {
+        if(file_exists(\Ivy\Template::setTemplateFile('css/minified.css'))){
+            unlink(\Ivy\Template::setTemplateFile('css/minified.css'));
+        }
+    }
+    ?>
 
     <?php if(\Ivy\Setting::$cache['minify_css']->bool): ?>
         <link defer href="<?php print _BASE_PATH . \Ivy\Template::setTemplateFile('css/minified.css'); ?>" rel="stylesheet" type="text/css">
@@ -75,6 +93,23 @@ require 'core/include/init.php';
 </div>
 
 <?php $hooks->do_action('add_js_action'); ?>
+
+<?php
+if(\Ivy\Setting::$cache['minify_js']->bool){
+    if(!file_exists(\Ivy\Template::setTemplateFile('js/minified.js'))){
+        $minify = new MatthiasMullie\Minify\JS();
+        foreach(\Ivy\Template::$js as $jsfile){
+            $sourcePath = \Ivy\Template::setTemplateFile($jsfile);
+            $minify->add($sourcePath);
+        }
+        $minify->minify(_PUBLIC_PATH . _TEMPLATE_SUB . 'js/minified.js');
+    }
+} else {
+    if(file_exists(\Ivy\Template::setTemplateFile('js/minified.js'))){
+        unlink(\Ivy\Template::setTemplateFile('js/minified.js'));
+    }
+}
+?>
 
 <?php if(!empty(\Ivy\Template::$esm)): ?>
     <?php foreach(\Ivy\Template::$esm as $esmfile): ?>

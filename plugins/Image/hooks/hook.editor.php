@@ -3,7 +3,7 @@ defined('_BASE_PATH') or die('Something went wrong');
 global $auth;
 
 if($auth->isLoggedIn()){
-    if(canEditAsEditor($auth)){
+    if(\Ivy\User::canEditAsEditor($auth)){
         global $router, $auth, $db;
 
         if($auth->isLoggedIn()){

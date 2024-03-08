@@ -3,7 +3,7 @@ defined('_BASE_PATH') or die('Something went wrong');
 global $auth;
 
 if($auth->isLoggedIn()){
-    if(canEditAsEditor($auth)){
+    if(\Ivy\User::canEditAsEditor($auth)){
 
         global $router;
         $router->post('/text/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $template_route = null, $template_id = null) {

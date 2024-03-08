@@ -11,7 +11,7 @@ global $auth;
     <?php endif; ?>
   </div>
 
-  <?php if(canEditAsEditor($auth)): ?>
+  <?php if(\Ivy\User::canEditAsEditor($auth)): ?>
     <input id="overlay-mode" name="overlay-mode" class="overlay-mode-checkbox d-none" type="checkbox">
     <label class="overlay" for="overlay-mode">
       <div class="popup">

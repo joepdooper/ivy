@@ -3,7 +3,7 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
 ?>
 
 <footer class="bg-secondary position-relative">
-  <?php if(canEditAsAdmin($auth)): ?>
+  <?php if(\Ivy\User::canEditAsAdmin($auth)): ?>
     <nav class="menu">
       <ul>
         <li>
