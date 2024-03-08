@@ -28,5 +28,3 @@ function userIsAdmin(\Delight\Auth\Auth $auth, $id) {
 function userIsEditor(\Delight\Auth\Auth $auth, $id) {
     return $auth->admin()->doesUserHaveRole($id, \Delight\Auth\Role::EDITOR);
 }
-
-?>

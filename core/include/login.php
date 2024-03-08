@@ -32,4 +32,3 @@ if (isset($selector) && isset($token)){
     // die('Too many requests');
   }
 }
-?>

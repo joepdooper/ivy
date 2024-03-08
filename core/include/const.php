@@ -26,4 +26,3 @@ define('_MEDIA_PATH', "media" . DIRECTORY_SEPARATOR);
 define('_PLUGIN_PATH', "plugins" . DIRECTORY_SEPARATOR);
 // template directory
 define('_TEMPLATES_PATH', "templates" . DIRECTORY_SEPARATOR);
-?>

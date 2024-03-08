@@ -1,4 +1,6 @@
 <?php
+global $router;
+
 // https://github.com/bramus/router
 
 // BEFORE MIDDLEWARE
