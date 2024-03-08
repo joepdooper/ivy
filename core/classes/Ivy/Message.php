@@ -3,7 +3,7 @@ namespace Ivy;
 
 class Message {
 
-  public $tpl;
+  public string $tpl;
 
   function __construct() {
     if(!isset($_SESSION["flash_messages"])){
@@ -12,7 +12,8 @@ class Message {
     $this->tpl = '';
   }
 
-  public static function add($value, $redirect = null) {
+  public static function add($value, $redirect = null): void
+  {
     if (isset($_SESSION["flash_messages"]) && !in_array($value, $_SESSION["flash_messages"])){
       $_SESSION["flash_messages"][] = $value;
     }
@@ -26,7 +27,8 @@ class Message {
     }
   }
 
-  public function display($value = null) {
+  public function display($value = null): void
+  {
     if($value && !empty($this->tpl)){
       include $this->tpl;
     }
@@ -38,9 +40,9 @@ class Message {
     $this->remove();
   }
 
-  private function remove() {
+  private function remove(): void
+  {
     $_SESSION["flash_messages"] = array();
   }
 
 }
-?>

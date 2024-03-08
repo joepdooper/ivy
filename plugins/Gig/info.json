@@ -1,0 +1,16 @@
+{
+  "name": "Gig",
+  "url": "Gig",
+  "version": "1.0.0",
+  "settings": false,
+  "description": "Gig item",
+  "type": "item",
+  "database": {
+    "install": "db/install.db.php",
+    "uninstall": "db/uninstall.db.php"
+  },
+  "dependencies": [
+    "Text",
+    "Tag"
+  ]
+}

@@ -8,4 +8,3 @@ class ItemTemplate extends Model {
   protected $table = 'item_template';
 
 }
-?>

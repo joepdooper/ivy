@@ -1,52 +1,52 @@
 <?php
 namespace Ivy;
 
-use HTMLPurifier_Config;
-use HTMLPurifier;
-
 #[\AllowDynamicProperties]
 
 class Template extends Model {
 
-  protected $table = 'template';
-  protected $path = _BASE_PATH . 'admin/template';
+    protected $table = 'template';
+    protected $path = _BASE_PATH . 'admin/template';
 
-  public $filter = null;
-  public $css = array();
-  public $js = array();
-  public $esm = array();
-  public $route, $id, $url, $content;
+    public static array $css = array();
+    public static array $js = array();
+    public static array $esm = array();
 
-  public function setTemplateFile($file) {
-    if (file_exists(_TEMPLATE_SUB . $file)) {
-      return _TEMPLATE_SUB . $file;
-    } elseif(file_exists(_TEMPLATE_BASE . $file)) {
-      return _TEMPLATE_BASE . $file;
-    } elseif(file_exists($file)) {
-      return $file;
-    } else {
-      return false;
+    public static string $route;
+    public static string $id;
+    public static string $url = "";
+    public static string $file;
+    public static \stdClass $content;
+
+    public static function setTemplateFile($file, $content = null): bool|string
+    {
+        if($content) {
+            self::$content = $content;
+        }
+        if (file_exists(_TEMPLATE_SUB . $file)) {
+            return _TEMPLATE_SUB . $file;
+        } elseif(file_exists(_TEMPLATE_BASE . $file)) {
+            return _TEMPLATE_BASE . $file;
+        } elseif(file_exists($file)) {
+            return $file;
+        } else {
+            return false;
+        }
     }
-  }
 
-  public function addCSS($file) {
-    array_push($this->css, $file);
-  }
-
-  public function addJS($file) {
-    array_push($this->js, $file);
-  }
-
-  public function addESM($file) {
-    array_push($this->esm, $file);
-  }
-
-  public static function define_browser() {
-    $IE11orOlderBrowser = preg_match('~MSIE|Internet Explorer~i', $_SERVER['HTTP_USER_AGENT']) || preg_match('~Trident/7.0(.*)?; rv:11.0~', $_SERVER['HTTP_USER_AGENT']);
-    if ($IE11orOlderBrowser) {
-      Message::add('Please use a more modern browser');
+    public static function addCSS($file): void
+    {
+        self::$css[] = $file;
     }
-  }
+
+    public static function addJS($file): void
+    {
+        self::$js[] = $file;
+    }
+
+    public static function addESM($file): void
+    {
+        self::$esm[] = $file;
+    }
 
 }
-?>

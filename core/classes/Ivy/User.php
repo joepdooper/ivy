@@ -11,9 +11,10 @@ class User extends Model {
 
   // Register
 
-  function register() {
+  function register(): void
+  {
 
-    global $db, $auth, $setting;
+    global $db, $auth;
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
@@ -22,7 +23,7 @@ class User extends Model {
 
       try {
         $userId = $auth->register($purifier->purify($_POST['email']), $purifier->purify($_POST['password']), $purifier->purify($_POST['username']), function ($selector, $token) use ($purifier) {
-          $url = _BASE_PATH . 'admin/login/' . \urlencode($selector) . '/' . \urlencode($token);
+          $url = _BASE_PATH . 'admin/login/' . urlencode($selector) . '/' . urlencode($token);
           // send email
           $mail = new Mail();
           $mail->Address = $purifier->purify($_POST['email']);
@@ -34,27 +35,23 @@ class User extends Model {
         });
       }
       catch (\Delight\Auth\InvalidEmailException $e) {
-        \Ivy\Message::add('Invalid email address', _BASE_PATH . 'admin/register');
-        // die('Invalid email address');
+        Message::add('Invalid email address', _BASE_PATH . 'admin/register');
       }
       catch (\Delight\Auth\InvalidPasswordException $e) {
-        \Ivy\Message::add('Invalid password', _BASE_PATH . 'admin/register');
-        // die('Invalid password');
+        Message::add('Invalid password', _BASE_PATH . 'admin/register');
       }
       catch (\Delight\Auth\UserAlreadyExistsException $e) {
-        \Ivy\Message::add('User already exists', _BASE_PATH . 'admin/register');
-        // die('User already exists');
+        Message::add('User already exists', _BASE_PATH . 'admin/register');
       }
       catch (\Delight\Auth\TooManyRequestsException $e) {
-        \Ivy\Message::add('Too many requests', _BASE_PATH . 'admin/register');
-        // die('Too many requests');
+        Message::add('Too many requests', _BASE_PATH . 'admin/register');
       }
 
       $db->insert('profiles',['user_id' => $userId]);
 
       // Set role to registered user
-      if($setting['registration_role']->bool && $setting['registration_role']->value){
-        $role = strtoupper($setting['registration_role']->value);
+      if(Setting::$cache['registration_role']->bool && Setting::$cache['registration_role']->value){
+        $role = strtoupper(Setting::$cache['registration_role']->value);
         $roleConstant = "\Delight\Auth\Role::$role";
         $auth->admin()->addRoleForUserById($userId, constant($roleConstant));
       }
@@ -67,7 +64,8 @@ class User extends Model {
 
   // Login
 
-  function login() {
+  function login(): void
+  {
 
     global $auth;
 
@@ -78,22 +76,22 @@ class User extends Model {
 
       try {
         $auth->login($purifier->purify($_POST['email']), $purifier->purify($_POST['password']));
-        \Ivy\Message::add('Welcome ' . $auth->getUsername(), _BASE_PATH . 'admin/profile');
+        Message::add('Welcome ' . $auth->getUsername(), _BASE_PATH . 'admin/profile');
       }
       catch (\Delight\Auth\InvalidEmailException $e) {
-        \Ivy\Message::add('Wrong email address', _BASE_PATH . 'admin/login');
+        Message::add('Wrong email address', _BASE_PATH . 'admin/login');
         // die('Wrong email address');
       }
       catch (\Delight\Auth\InvalidPasswordException $e) {
-        \Ivy\Message::add('Wrong password', _BASE_PATH . 'admin/login');
+        Message::add('Wrong password', _BASE_PATH . 'admin/login');
         // die('Wrong password');
       }
       catch (\Delight\Auth\EmailNotVerifiedException $e) {
-        \Ivy\Message::add('Email not verified', _BASE_PATH . 'admin/login');
+        Message::add('Email not verified', _BASE_PATH . 'admin/login');
         // die('Email not verified');
       }
       catch (\Delight\Auth\TooManyRequestsException $e) {
-        \Ivy\Message::add('Too many requests', _BASE_PATH . 'admin/login');
+        Message::add('Too many requests', _BASE_PATH . 'admin/login');
         // die('Too many requests');
       }
 
@@ -103,7 +101,8 @@ class User extends Model {
 
   // Logout
 
-  function logout() {
+  function logout(): void
+  {
 
     global $auth, $hooks;
 
@@ -127,7 +126,8 @@ class User extends Model {
 
   // Reset
 
-  function reset() {
+  function reset(): void
+  {
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
@@ -194,7 +194,8 @@ class User extends Model {
 
   }
 
-  function post() {
+  function post(): void
+  {
 
     global $auth;
 
@@ -234,9 +235,9 @@ class User extends Model {
           }
         }
 
-        \Ivy\Message::add('Update succesfully',_BASE_PATH . 'admin/user');
+        Message::add('Update succesfully',_BASE_PATH . 'admin/user');
       } catch (Exception $e) {
-        \Ivy\Message::add('Something went wrong',_BASE_PATH . 'admin/user');
+        Message::add('Something went wrong',_BASE_PATH . 'admin/user');
       }
 
     }
@@ -244,4 +245,3 @@ class User extends Model {
   }
 
 }
-?>

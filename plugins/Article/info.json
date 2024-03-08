@@ -1,0 +1,17 @@
+{
+  "name": "Article",
+  "url": "Article",
+  "version": "1.0.0",
+  "settings": false,
+  "description": "Article item",
+  "type": "item",
+  "database": {
+    "install": "db/install.db.php",
+    "uninstall": "db/uninstall.db.php"
+  },
+  "dependencies": [
+    "Image",
+    "Text",
+    "Tag"
+  ]
+}

@@ -1,48 +1,57 @@
 <?php
 namespace Ivy;
 
-class Button extends Template {
+class Button {
 
-  public function delete($name = null, $value = null, $id = null, $formaction = null) {
-    include $this->setTemplateFile('buttons/button.delete.php');
-    include $this->setTemplateFile('buttons/button.confirm.php');
-  }
+    public static function delete($name = null, $value = null, $id = null, $formaction = null): void
+    {
+        include Template::setTemplateFile('buttons/button.delete.php');
+        include Template::setTemplateFile('buttons/button.confirm.php');
+    }
 
-  public function remove($name = null, $value = null) {
-    include $this->setTemplateFile('buttons/button.remove.php');
-  }
+    public static function remove($name = null, $value = null): void
+    {
+        include Template::setTemplateFile('buttons/button.remove.php');
+    }
 
-  public function close($name = null, $value = null) {
-    include $this->setTemplateFile('buttons/button.close.php');
-  }
+    public static function close($name = null, $value = null): void
+    {
+        include Template::setTemplateFile('buttons/button.close.php');
+    }
 
-  public function save($text = null, $value = null) {
-    include $this->setTemplateFile('buttons/button.save.php');
-  }
+    public static function save($text = null, $value = null): void
+    {
+        include Template::setTemplateFile('buttons/button.save.php');
+    }
 
-  public function confirm($text = null, $value = null) {
-    include $this->setTemplateFile('buttons/button.confirm.php');
-  }
+    public static function confirm($text = null, $value = null): void
+    {
+        include Template::setTemplateFile('buttons/button.confirm.php');
+    }
 
-  public function submit($text = null) {
-    include $this->setTemplateFile('buttons/button.submit.php');
-  }
+    public static function submit($text = null): void
+    {
+        include Template::setTemplateFile('buttons/button.submit.php');
+    }
 
-  public function link($url = null, $text = null, $icon = null, $label = null) {
-    include $this->setTemplateFile('buttons/button.link.php');
-  }
+    public static function link($url = null, $text = null, $icon = null, $label = null): void
+    {
+        include Template::setTemplateFile('buttons/button.link.php');
+    }
 
-  public function upload($name = null, $value = null, $id = null) {
-    include $this->setTemplateFile('buttons/button.upload.php');
-  }
+    public static function upload($name = null, $value = null, $id = null): void
+    {
+        include Template::setTemplateFile('buttons/button.upload.php');
+    }
 
-  public function switch($name = null, $value = null, $id = null) {
-    include $this->setTemplateFile('buttons/button.switch.php');
-  }
+    public static function switch($name = null, $value = null, $id = null): void
+    {
+        include Template::setTemplateFile('buttons/button.switch.php');
+    }
 
-  public function visible($name = null, $value = null, $id = null) {
-    include $this->setTemplateFile('buttons/button.visible.php');
-  }
+    public static function visible($name = null, $value = null, $id = null): void
+    {
+        include Template::setTemplateFile('buttons/button.visible.php');
+    }
 
 }
-?>

@@ -30,7 +30,7 @@ defined('_BASE_PATH') ?: header('location: ../../../index.php');
 
     <div class="outer">
       <div class="inner text-align-center">
-        <?php $button->submit('register'); ?>
+        <?php \Ivy\Button::submit('register'); ?>
       </div>
       <div class="inner text-align-center">
         <a href="login" class="btn btn-light btn-block">Have an account? Login</a>

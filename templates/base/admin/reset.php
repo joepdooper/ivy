@@ -11,7 +11,7 @@ defined('_BASE_PATH') ?: header('location: ../../../index.php');
       </div>
     </div>
 
-    <?php if($selector && $token): ?>
+    <?php if(isset($selector) && isset($token)): ?>
 
       <div class="outer">
         <div class="inner">
@@ -25,7 +25,7 @@ defined('_BASE_PATH') ?: header('location: ../../../index.php');
 
       <div class="outer">
         <div class="inner text-align-center">
-          <?php $button->submit('save password'); ?>
+          <?php \Ivy\Button::submit('save password'); ?>
         </div>
       </div>
 
@@ -41,7 +41,7 @@ defined('_BASE_PATH') ?: header('location: ../../../index.php');
 
       <div class="outer">
         <div class="inner text-align-center">
-          <?php $button->submit('send request'); ?>
+          <?php \Ivy\Button::submit('send request'); ?>
         </div>
       </div>
 

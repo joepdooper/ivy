@@ -1,8 +1,8 @@
 <?php
 namespace Ivy;
 
-use HTMLPurifier_Config;
 use HTMLPurifier;
+use HTMLPurifier_Config;
 
 class Profile extends Model {
 
@@ -132,4 +132,3 @@ class Profile extends Model {
   }
 
 }
-?>

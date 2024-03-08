@@ -1,0 +1,12 @@
+{
+  "name": "Vimeo",
+  "url": "Vimeo",
+  "version": "1.0.0",
+  "settings": false,
+  "description": "Vimeo SDK",
+  "type": "item",
+  "database": {
+    "install": "db/install.db.php",
+    "uninstall": "db/uninstall.db.php"
+  }
+}

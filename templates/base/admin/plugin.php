@@ -26,32 +26,31 @@ $plugins = (new Ivy\Plugin)->get()->data();
           </tr>
         </thead>
         <tbody>
-          <?php foreach($plugins as $row):?>
+          <?php foreach($plugins as $plugin):?>
             <tr>
               <td>
                 <?php
-                $button->switch(
-                  'plugin[' . $row->id . ']',
-                  $row->active
+                \Ivy\Button::switch(
+                  'plugin[' . $plugin->id . '][active]',
+                  $plugin->active
                 );
                 ?>
               </td>
-              <td><strong><?php echo $row->name; ?></strong></td>
-              <td><?php echo $row->desc; ?></td>
-              <td><?php echo $row->version; ?></td>
-              <td><?php echo $row->type; ?></td>
+              <td><strong><?php echo $plugin->name; ?></strong></td>
+              <td><?php echo $plugin->desc; ?></td>
+              <td><?php echo $plugin->version; ?></td>
+              <td><?php echo $plugin->type; ?></td>
               <td>
-                <div class="editButton">
-                  <?php $button->delete('delete[' . $row->id . ']',$row->id); ?>
-                  <?php if (!empty($row->settings)):?>
-                    <a class="button" href="<?php echo _BASE_PATH; ?>plugin/<?php echo $row->url; ?>">
-                      <?php print file_get_contents(_BASE_PATH . "media/icon/" . "feather/settings.svg"); ?>
-                    </a>
-                  <?php endif; ?>
-                </div>
+                <input type="hidden" name="plugin[<?php echo $plugin->id; ?>][id]" value="<?php echo $plugin->id; ?>">
+                <?php \Ivy\Button::delete('plugin[' . $plugin->id . '][delete]',"plugin_".$plugin->id); ?>
+                <?php if (!empty($plugin->settings)):?>
+                  <a class="button" href="<?php echo _BASE_PATH; ?>plugin/<?php echo $plugin->url; ?>">
+                    <?php print file_get_contents(_BASE_PATH . "media/icon/" . "feather/settings.svg"); ?>
+                  </a>
+                <?php endif; ?>
               </td>
             </tr>
-            <?php array_push($installed,$row->url); ?>
+            <?php array_push($installed,$plugin->url); ?>
           <?php endforeach;?>
         </tbody>
       </table>
@@ -65,12 +64,12 @@ $plugins = (new Ivy\Plugin)->get()->data();
         <span class="select-arrow">
           <?php print file_get_contents(_BASE_PATH . "media/icon/" . "feather/chevron-down.svg"); ?>
         </span>
-        <select name="plugout">
+        <select name="plugin[][url]">
           <option disabled selected value>Install plugin</option>
           <?php foreach ($plugouts as $val): ?>
             <?php if(($val[0] != ".") && !in_array($val,$installed)): ?>
-              <?php $plugout = simplexml_load_file(_PUBLIC_PATH . _PLUGIN_PATH . $val . '/info.xml'); ?>
-              <option value="<?php echo $plugout->url; ?>"><?php echo $plugout->name . ' (' . $plugout->description . ')'; ?></option>
+              <?php $plugout = json_decode(file_get_contents(_PUBLIC_PATH . _PLUGIN_PATH . $val . '/info.json')); ?>
+                  <option value="<?php echo $plugout->url; ?>"><?php echo $plugout->name . ' (' . $plugout->description . ')'; ?></option>
             <?php endif;?>
           <?php endforeach;?>
         </select>
@@ -80,7 +79,7 @@ $plugins = (new Ivy\Plugin)->get()->data();
 
   <div class="outer">
     <div class="inner text-align-center">
-      <?php $button->submit('update'); ?>
+      <?php \Ivy\Button::submit('update'); ?>
     </div>
   </div>
 

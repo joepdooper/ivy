@@ -29,4 +29,12 @@ $db->exec(
     ]
   );
 
+  $db->insert(
+    'tag',
+    [
+      // set
+      'value' => 'Gig'
+    ]
+  );
+
   ?>

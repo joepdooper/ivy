@@ -24,4 +24,12 @@ $db->insert(
   ]
 );
 
+$db->insert(
+  'tag',
+  [
+    // set
+    'value' => 'Article'
+  ]
+);
+
 ?>

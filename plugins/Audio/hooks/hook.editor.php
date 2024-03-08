@@ -1,10 +1,10 @@
 <?php
 defined('_BASE_PATH') or die('Something went wrong');
+global $auth;
 
 if($auth->isLoggedIn()){
   if(canEditAsEditor($auth)){
 
-    function audio_insert_update_delete_route(){
       global $router;
       $router->post('/audio/(\w+)/(\d+)(/\w+)?(/\d+)?', function($action, $id, $template_route = null, $template_id = null) {
 
@@ -46,15 +46,15 @@ if($auth->isLoggedIn()){
         }
 
       });
-    }
 
-    function add_audio_admin_js(){
+
+    function add_audio_admin_js(): void
+    {
       print "<script src='" . _BASE_PATH . _PLUGIN_PATH . "Audio/js/audio_admin.js'></script>";
     }
 
-    $hooks->add_action('start_router_action','audio_insert_update_delete_route');
+    global $hooks;
     $hooks->add_action('add_js_action','add_audio_admin_js');
 
   }
 }
-?>

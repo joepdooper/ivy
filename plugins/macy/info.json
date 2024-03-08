@@ -1,0 +1,8 @@
+{
+  "name": "Macy",
+  "url": "macy",
+  "version": "1.0.0",
+  "settings": false,
+  "description": "Macy.js - lightweight, dependency-free, 4kb masonry layout library, designed for a hassle-free configuration",
+  "type": "javascript"
+}

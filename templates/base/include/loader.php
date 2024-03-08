@@ -1,3 +1,7 @@
+<?php
+defined('_BASE_PATH') ?: header('location: ../../../index.php');
+?>
+
 <div class="loading">
 	<div class="outer">
 		<div class="inner text-align-center">

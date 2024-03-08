@@ -60,4 +60,3 @@ class Item extends Model {
   }
 
 }
-?>

@@ -1,8 +1,9 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
+global $auth, $tag;
 ?>
 
-<?php if (canEditAsEditor($auth) && $item->author): ?>
+<?php if (canEditAsEditor($auth) && \Ivy\Template::$content->author): ?>
   <div class="select-container">
     <span class="select-arrow">
       <?php print file_get_contents(_BASE_PATH . "media/icon/" . "feather/chevron-down.svg"); ?>

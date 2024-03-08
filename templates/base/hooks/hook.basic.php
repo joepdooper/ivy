@@ -2,27 +2,25 @@
 defined('_BASE_PATH') or die('Something went wrong');
 
 function add_template_root_css(){
-  global $template;
-  $template->addCSS('css/normalize.css');
-	$template->addCSS('css/style_root.css');
+    \Ivy\Template::addCSS('css/normalize.css');
+    \Ivy\Template::addCSS('css/style_root.css');
 }
 
 function add_template_default_css(){
-  global $template;
-  $template->addCSS('css/simple-grid.css');
-	$template->addCSS('css/style.css');
-  $template->addCSS('css/swup.css');
-	$template->addCSS('css/overlay.css');
+    \Ivy\Template::addCSS('css/simple-grid.css');
+    \Ivy\Template::addCSS('css/style.css');
+    \Ivy\Template::addCSS('css/swup.css');
+    \Ivy\Template::addCSS('css/overlay.css');
 }
 
 function add_template_sub_css(){
-  global $template;
-	$template->addCSS('css/style_sub.css');
+    \Ivy\Template::addCSS('css/style_sub.css');
 }
 
 function add_template_js(){
-  global $template;
-  $template->addESM("templates/base/js/template.js");
+    \Ivy\Template::addJS("node_modules/axios/dist/axios.min.js");
+    \Ivy\Template::addJS("node_modules/petite-vue/dist/petite-vue.umd.js");
+    \Ivy\Template::addJS("templates/base/js/template.js");
 }
 
 $hooks->add_action('add_css_action','add_template_root_css',1);

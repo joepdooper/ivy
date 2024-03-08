@@ -560,11 +560,6 @@ form .form-group .users-image {
   border-radius: 50%;
 }
 
-/* POPUP */
-.popup {
-  max-width: 1024px;
-}
-
 /* DELETE BUTTON */
 .input-delete ~ .confirm {
   display: none;
@@ -583,8 +578,7 @@ input[name="publish_item"] ~ .button.visible svg:nth-of-type(2) {
 }
 
 /* EDIT BUTTON */
-.editImageButton,
-.editArticleButton {
+.editImageButton {
   position: absolute;
   overflow: auto;
   z-index: 9;
@@ -594,19 +588,6 @@ input[name="publish_item"] ~ .button.visible svg:nth-of-type(2) {
   left:50%;
   margin-top: -20px;
   margin-left: -20px;
-}
-.editArticleButton {
-  overflow: auto;
-  display: block;
-  left: 10px;
-  right: 10px;
-  top: 10px;
-  bottom: 10px;
-  pointer-events: none;
-}
-.editArticleButton .delete,
-.editArticleButton .confirm {
-  pointer-events: auto;
 }
 .editImageButton label,
 .editButton {

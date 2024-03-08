@@ -1,16 +1,3 @@
-# ************************************************************
-# Sequel Pro SQL dump
-# Version 4541
-#
-# http://www.sequelpro.com/
-# https://github.com/sequelpro/sequelpro
-#
-# Host: 127.0.0.1 (MySQL 5.7.44)
-# Datenbank: blog
-# Erstellt am: 2024-01-15 13:24:33 +0000
-# ************************************************************
-
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -45,21 +32,6 @@ DROP TABLE IF EXISTS `audio`;
 CREATE TABLE `audio` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `file` varchar(255) DEFAULT NULL,
-  `token` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-# Export von Tabelle code
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `code`;
-
-CREATE TABLE `code` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` text NOT NULL,
-  `language` varchar(255) DEFAULT NULL,
   `token` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -168,15 +140,14 @@ LOCK TABLES `item_template` WRITE;
 
 INSERT INTO `item_template` (`id`, `name`, `table`, `plugin_url`, `route`, `file`)
 VALUES
-	(1,'Text','text','Text','text','item.php'),
-	(2,'Image','image','Image','image','item.php'),
-	(3,'Article','article','Article','article','item.php'),
-	(4,'Documentation','documentation','Documentation','documentation','item.php'),
-	(5,'Audio','audio','Audio','audio','item.php'),
-	(6,'Code','code','Code','code','item.php'),
-	(7,'Youtube','youtube','Youtube','youtube','item.php'),
-	(8,'Vimeo','vimeo','Vimeo','vimeo','item.php'),
-	(9,'Gig','gig','Gig','gig','item.php');
+	(10,'Text','text','Text','text','item.php'),
+	(11,'Image','image','Image','image','item.php'),
+	(12,'Audio','audio','Audio','audio','item.php'),
+	(14,'Article','article','Article','article','item.php'),
+	(16,'Documentation','documentation','Documentation','documentation','item.php'),
+	(17,'Gig','gig','Gig','gig','item.php'),
+	(18,'Vimeo','vimeo','Vimeo','vimeo','item.php'),
+	(19,'Youtube','youtube','Youtube','youtube','item.php');
 
 /*!40000 ALTER TABLE `item_template` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -227,20 +198,20 @@ LOCK TABLES `plugin` WRITE;
 
 INSERT INTO `plugin` (`id`, `name`, `url`, `version`, `desc`, `type`, `active`, `settings`)
 VALUES
-	(1,'Text','Text','1.0.0','Text item','item',1,0),
-	(2,'Image','Image','1.0.0','Image item','item',1,1),
-	(3,'Tag','Tag','1.0.0','Create tags for items','filter',1,1),
-	(4,'Dark mode','DarkMode','1.0.0','Dark mode','template',1,0),
-	(5,'Sort item','SortItem','1.0.0','Sort items by drag and drop','template',1,0),
-	(6,'IframeManager','iframemanager','1.0.0','IframeManager from Orest Bida','utility',1,0),
-	(7,'Article','Article','1.0.0','Article item','item',1,0),
-	(8,'Documentation','Documentation','1.0.0','Documentation item','item',1,0),
-	(9,'Audio','Audio','1.0.0','Audio item','item',1,0),
-	(10,'Code','Code','1.0.0','Code item','item',1,0),
-	(11,'Youtube','Youtube','1.0.0','Youtube player','item',1,0),
-	(12,'Vimeo','Vimeo','1.0.0','Vimeo SDK','item',1,0),
-	(13,'Gig','Gig','1.0.0','Gig item','item',1,0),
-	(14,'Macy','macy','1.0.0','Use macy.js','javascript',1,0);
+	(24,'Dark mode','DarkMode','1.0.0','Dark mode','template',1,0),
+	(25,'Text','Text','1.0.0','Text item','item',1,0),
+	(26,'Image','Image','1.0.0','Image item','item',1,0),
+	(27,'Tag','Tag','1.0.0','Create tags for items','filter',1,1),
+	(28,'Audio','Audio','1.0.0','Audio item','item',1,0),
+	(29,'Macy','macy','1.0.0','Macy.js - lightweight, dependency-free, 4kb masonry layout library, designed for a hassle-free configuration','javascript',1,0),
+	(33,'Sort item','SortItem','1.0.0','Sort items by drag and drop','template',1,0),
+	(34,'Article','Article','1.0.0','Article item','item',1,0),
+	(37,'Documentation','Documentation','1.0.0','Documentation item','item',1,0),
+	(39,'Gig','Gig','1.0.0','Gig item','item',1,0),
+	(40,'Vimeo','Vimeo','1.0.0','Vimeo SDK','item',1,0),
+	(41,'Youtube','Youtube','1.0.0','Youtube player','item',1,0),
+	(44,'IframeManager','iframemanager','1.0.0','IframeManager from Orest Bida','utility',1,0),
+	(45,'Vanilla cookie consent','VanillaCookieConsent','1.0.0','Cookie consent from Orest Bida','utility',1,0);
 
 /*!40000 ALTER TABLE `plugin` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -264,7 +235,7 @@ LOCK TABLES `profiles` WRITE;
 
 INSERT INTO `profiles` (`id`, `user_id`, `users_image`, `last_activity`)
 VALUES
-	(1,1,NULL,'2024-01-15 12:00:00');
+	(1,1,NULL,'2024-02-26 19:39:26');
 
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -292,7 +263,7 @@ VALUES
 	(1,'Private',0,'','Website only accessible on login'),
 	(2,'Minify CSS',0,'','CSS template files as a single minified file'),
 	(3,'Minify JS',0,'','JS template files as a single minified file'),
-	(4,'Registration role',1,'EDITOR','Set automatic role after user registration'),
+	(4,'Registration role',0,'EDITOR','Set automatic role after user registration'),
 	(5,'Name',1,'ivy','Meta name'),
 	(6,'Title',1,'ivy','Meta title'),
 	(7,'Description',1,'Yet another sleek simple fast CMS with an effortless template and plugin environment','Meta description'),
@@ -324,8 +295,9 @@ LOCK TABLES `tag` WRITE;
 
 INSERT INTO `tag` (`id`, `value`)
 VALUES
-	(1,'Article'),
-	(2,'Documentation');
+	(8,'Article'),
+	(9,'Documentation'),
+	(11,'Gig');
 
 /*!40000 ALTER TABLE `tag` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -395,7 +367,8 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`)
 VALUES
-	(1,'admin@localhost.test','$2y$10$MPCNqwvXNzBK.Ip5PYhgGOkdzY.NrWgnvk.oz9RrEg0UmLKGnlpfu','ivy',0,1,1,263169,1701517536,1701537675,0);
+(1,'admin@localhost.test','$2y$10$MPCNqwvXNzBK.Ip5PYhgGOkdzY.NrWgnvk.oz9RrEg0UmLKGnlpfu','ivy',0,1,1,263169,1701517536,1701537675,0);
+
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

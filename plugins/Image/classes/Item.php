@@ -1,9 +1,8 @@
 <?php
 namespace Image;
 
-use Ivy\Model;
 use Ivy\File;
-use Verot\Upload\Upload;
+use Ivy\Model;
 
 class Item extends Model {
 
@@ -11,8 +10,7 @@ class Item extends Model {
   protected $table = 'image';
 
   public static function set($name,$value,$id = null) {
-    global $template;
-    include(_PUBLIC_PATH . $template->setTemplateFile(_PLUGIN_PATH . 'Image/template/input.TypeImage.php'));
+    include(_PUBLIC_PATH . \Ivy\Template::setTemplateFile(_PLUGIN_PATH . 'Image/template/input.TypeImage.php'));
   }
 
   public function upload($image) {

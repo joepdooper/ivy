@@ -11,8 +11,7 @@ class Item extends Model {
   protected $table = "text";
 
   public static function set($name,$value,$id = null) {
-    global $template;
-    include(_PUBLIC_PATH . $template->setTemplateFile(_PLUGIN_PATH . 'Text/template/input.TypeText.php'));
+    include(_PUBLIC_PATH . \Ivy\Template::setTemplateFile(_PLUGIN_PATH . 'Text/template/input.TypeText.php'));
   }
 
   public function purify($array) {

@@ -31,7 +31,7 @@ $users = (new Ivy\User)->get()->data();
               <td><?php echo $user->email; ?></td>
               <td>
                 <?php
-                $button->switch(
+                \Ivy\Button::switch(
                   'users[' . $user->id . '][super_admin]',
                   $auth->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::SUPER_ADMIN)
                 );
@@ -39,20 +39,20 @@ $users = (new Ivy\User)->get()->data();
               </td>
               <td>
                 <?php
-                $button->switch(
+                \Ivy\Button::switch(
                   'users[' . $user->id . '][admin]',
                   $auth->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::ADMIN),
                 );
                 ?>
               </td>
               <td>
-                <?php $button->switch(
+                <?php \Ivy\Button::switch(
                   'users[' . $user->id . '][editor]',
                   $auth->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::EDITOR)
                 );
                 ?>
               </td>
-              <td><?php $button->delete("users[" . $user->id . "][delete]","users_" . $user->id); ?></td>
+              <td><?php \Ivy\Button::delete("users[" . $user->id . "][delete]","users_" . $user->id); ?></td>
             </tr>
           <?php endforeach;?>
         </tbody>
@@ -62,7 +62,7 @@ $users = (new Ivy\User)->get()->data();
 
   <div class="outer">
     <div class="inner text-align-center">
-      <?php $button->submit('update'); ?>
+      <?php \Ivy\Button::submit('update'); ?>
     </div>
   </div>
 

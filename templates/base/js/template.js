@@ -1,5 +1,3 @@
-import * as axios from '../../../node_modules/axios/dist/axios.min.js';
-import { createApp, reactive } from '../../../node_modules/petite-vue/dist/petite-vue.es.js';
 // import * as swup from '../../../node_modules/swup/dist/Swup.umd.js';
 //
 // const swp = new Swup;

@@ -26,7 +26,7 @@ defined('_BASE_PATH') ?: header('location: ../../../index.php');
 
     <div class="outer">
       <div class="inner text-align-center">
-        <?php $button->submit('login'); ?>
+        <?php \Ivy\Button::submit('login'); ?>
       </div>
       <div class="inner text-align-center">
         <a href="register">No account? Register!</a>

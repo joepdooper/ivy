@@ -1,0 +1,8 @@
+{
+  "name": "Sort item",
+  "url": "SortItem",
+  "version": "1.0.0",
+  "settings": false,
+  "description": "Sort items by drag and drop",
+  "type": "template"
+}

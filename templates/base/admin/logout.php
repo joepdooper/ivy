@@ -9,7 +9,7 @@ defined('_BASE_PATH') ?: header('location: ../../../index.php');
       <div class="text-align-center">
         <div class="outer">
           <div class="inner">
-            <?php $button->submit('logout'); ?>
+            <?php \Ivy\Button::submit('logout'); ?>
           </div>
         </div>
       </div>

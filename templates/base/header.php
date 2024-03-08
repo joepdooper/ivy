@@ -6,14 +6,14 @@ endif;
 ?>
 
 <header id="header" class="bg-secondary position-relative">
-	<?php if (isset($template->id)):?>
+	<?php if (isset(\Ivy\Template::$id)):?>
 		<div class="float-start">
-			<?php $button->link(_BASE_PATH,null,'feather/arrow-left.svg','Back'); ?>
+			<?php (new Ivy\Button)::link(_BASE_PATH,null,'feather/arrow-left.svg','Back'); ?>
 		</div>
 	<?php endif;?>
 	<div class="float-start">
-		<a id="logo" href="<?php echo _BASE_PATH;?>" title="<?php print $setting['name']->value; ?>">
-			<?php print $setting['name']->value; ?>
+		<a id="logo" href="<?php echo _BASE_PATH;?>" title="<?php print \Ivy\Setting::$cache['name']->value; ?>">
+			<?php print \Ivy\Setting::$cache['name']->value; ?>
 		</a>
 	</div>
 	<?php
@@ -29,15 +29,15 @@ endif;
 							<div class="float-start users-image" style="background-image:url(<?php print _BASE_PATH . 'media/item/thumb/' . $profile->users_image; ?>)"></div>
 						</a>
 					<?php else: ?>
-						<?php $button->link(_BASE_PATH . 'admin/profile',null,'feather/user.svg','Profile'); ?>
+						<?php (new Ivy\Button)::link(_BASE_PATH . 'admin/profile',null,'feather/user.svg','Profile'); ?>
 					<?php endif;?>
 				</li>
 				<li>
-					<?php $button->link(_BASE_PATH . 'admin/logout',null,'feather/log-out.svg','Logout'); ?>
+					<?php (new Ivy\Button)::link(_BASE_PATH . 'admin/logout',null,'feather/log-out.svg','Logout'); ?>
 				</li>
 			<?php else: ?>
 				<li>
-					<?php $button->link(_BASE_PATH . 'admin/login',null,'feather/user.svg','Login'); ?>
+					<?php (new Ivy\Button)::link(_BASE_PATH . 'admin/login',null,'feather/user.svg','Login'); ?>
 				</li>
 			<?php endif;?>
 		</ul>

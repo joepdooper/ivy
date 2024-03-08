@@ -1,12 +1,13 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
+global $auth;
+$article = (new \Article\Item)->where('id', \Ivy\Template::$content->table_id)->getRow()->data();
 ?>
 
-<div class="<?php if($item->class): print $item->class; else:?>item item-article col-12 col-md-6 col-lg-4<?php endif;?>" id="item-<?php print $item->id; ?>">
+<div class="<?php if(\Ivy\Template::$content->class): print \Ivy\Template::$content->class; else:?>item item-article col-12 col-md-6 col-lg-4<?php endif;?>" id="item-<?php print \Ivy\Template::$content->id; ?>">
 	<div class="inner">
 
-		<a class="item-wrap bg-secondary" href="<?php print _BASE_PATH . 'article/' . $item->id; ?>">
+		<a class="item-wrap bg-secondary" href="<?php print _BASE_PATH . 'article/' . \Ivy\Template::$content->id; ?>">
 			<?php if(!empty($article->image)): ?>
 				<?php \Image\Item::set('image', $article->image); ?>
 			<?php endif; ?>
@@ -27,18 +28,18 @@ $article = (new \Article\Item)->where('id', $item->table_id)->getRow()->data();
 					<!-- Author -->
 					<div class="inner">
 						<?php
-						$author = (new \Ivy\Profile)->where('id',$item->user_id)->getRow()->data();
-						$date = $item->date;
-						include $template->setTemplateFile('include/author.php');
+						$author = (new \Ivy\Profile)->where('id',\Ivy\Template::$content->user_id)->getRow()->data();
+						$date = \Ivy\Template::$content->date;
+						include \Ivy\Template::setTemplateFile('include/author.php');
 						?>
 					</div>
 				</div>
 			</article>
 		</a>
 
-		<?php if ($auth->isLoggedIn() && $item->author): ?>
-			<form action="<?php print _BASE_PATH . 'article/update/' . $item->id; ?>" method="POST" enctype="multipart/form-data">
-				<?php include $template->setTemplateFile('include/item_admin_buttons.php'); ?>
+		<?php if ($auth->isLoggedIn() && \Ivy\Template::$content->author): ?>
+			<form action="<?php print _BASE_PATH . 'article/update/' . \Ivy\Template::$content->id; ?>" method="POST" enctype="multipart/form-data">
+				<?php include \Ivy\Template::setTemplateFile('include/item_admin_buttons.php'); ?>
 			</form>
 		<?php endif; ?>
 

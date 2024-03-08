@@ -1,0 +1,12 @@
+{
+  "name": "Image",
+  "url": "Image",
+  "version": "1.0.0",
+  "settings": false,
+  "description": "Image item",
+  "type": "item",
+  "database": {
+    "install": "db/install.db.php",
+    "uninstall": "db/uninstall.db.php"
+  }
+}

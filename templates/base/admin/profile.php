@@ -31,7 +31,7 @@ endif;
 
             <div class="float-start users-image" style="background-image:url(<?php print _BASE_PATH . 'media/item/thumb/' . $profile->users_image; ?>)">
               <div class="editImageButton">
-                <?php $button->delete('users_image','delete'); ?>
+                <?php \Ivy\Button::delete('users_image','delete'); ?>
               </div>
             </div>
 
@@ -39,7 +39,7 @@ endif;
 
             <div class="float-start users-image" id="usersImagePreview">
               <div class="editImageButton">
-                <?php $button->upload('users_image','upload'); ?>
+                <?php \Ivy\Button::upload('users_image','upload'); ?>
               </div>
             </div>
             <script>
@@ -66,7 +66,7 @@ endif;
 
   <div class="outer">
     <div class="inner text-align-center">
-      <?php $button->submit('update'); ?>
+      <?php \Ivy\Button::submit('update'); ?>
     </div>
   </div>
 

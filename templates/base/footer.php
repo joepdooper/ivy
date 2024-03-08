@@ -12,20 +12,20 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
           </label>
         </li>
         <li>
-          <?php $button->link(_BASE_PATH . 'admin/setting',null,'feather/sliders.svg','Settings'); ?>
+          <?php (new Ivy\Button)::link(_BASE_PATH . 'admin/setting',null,'feather/sliders.svg','Settings'); ?>
         </li>
         <li>
-          <?php $button->link(_BASE_PATH . 'admin/template',null,'feather/layout.svg','Templates'); ?>
+          <?php (new Ivy\Button)::link(_BASE_PATH . 'admin/template',null,'feather/layout.svg','Templates'); ?>
         </li>
         <li>
-          <?php $button->link(_BASE_PATH . 'admin/plugin',null,'feather/package.svg','Plugins'); ?>
+          <?php (new Ivy\Button)::link(_BASE_PATH . 'admin/plugin',null,'feather/package.svg','Plugins'); ?>
         </li>
         <li>
-          <?php $button->link(_BASE_PATH . 'admin/user',null,'feather/users.svg','Users'); ?>
+          <?php (new Ivy\Button)::link(_BASE_PATH . 'admin/user',null,'feather/users.svg','Users'); ?>
         </li>
-        <?php if (in_array("Tag", $_SESSION['plugins_active'])):?>
+        <?php if (in_array("Tag", $_SESSION['plugin_actives'])):?>
           <li>
-            <?php $button->link(_BASE_PATH . 'plugin/Tag',null,'feather/tag.svg','Tags'); ?>
+            <?php (new Ivy\Button)::link(_BASE_PATH . 'plugin/Tag',null,'feather/tag.svg','Tags'); ?>
           </li>
         <?php endif;?>
       </ul>

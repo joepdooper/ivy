@@ -25,8 +25,7 @@ class Item extends Model {
   }
 
   public static function set($name,$value,$id = null) {
-    global $template;
-    include(_PUBLIC_PATH . $template->setTemplateFile(_PLUGIN_PATH . 'Audio/template/input.TypeAudio.php'));
+    include(_PUBLIC_PATH . \Ivy\Template::setTemplateFile(_PLUGIN_PATH . 'Audio/template/input.TypeAudio.php'));
   }
 
 }

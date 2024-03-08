@@ -16,6 +16,10 @@
   align-items: center;
 }
 
+.popup {
+  max-width: 1024px;
+}
+
 .popup .inner {
   background-color: var(--c-background);
 }

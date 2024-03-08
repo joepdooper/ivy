@@ -6,7 +6,7 @@ use Ivy\Model;
 class Settings extends Model {
 
   protected $table = 'image_sizes';
-  protected $path = _BASE_PATH . 'plugin/image';
+  protected $path = _BASE_PATH . 'plugin/Image';
 
   public function save($array)
   {

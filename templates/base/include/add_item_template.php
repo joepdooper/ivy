@@ -1,5 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
+global $auth;
 ?>
 
 <?php if(canEditAsEditor($auth)): ?>
@@ -10,8 +11,8 @@ defined('_BASE_PATH') ?: header('location: ../../index.php');
 		<div class="popup">
 			<div class="outer">
 				<div class="inner">
-					<?php (new \Ivy\Button)->close('close',"overlay-mode"); ?>
-					<?php include $template->setTemplateFile('include/item_template_list.php'); ?>
+					<?php \Ivy\Button::close('close',"overlay-mode"); ?>
+					<?php include \Ivy\Template::setTemplateFile('include/item_template_list.php'); ?>
 				</div>
 			</div>
 		</div>

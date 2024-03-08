@@ -7,147 +7,116 @@ use HTMLPurifier;
 #[\AllowDynamicProperties]
 
 class Plugin extends Model {
+    use Cache;
 
-  protected $table = 'plugin';
-  protected $path = _BASE_PATH . 'admin/plugin';
-  public $plugin;
+    protected $table = 'plugin';
+    protected $path = _BASE_PATH . 'admin/plugin';
+    public array $actives;
+    public \stdClass $plugin;
 
-  private static function return_plugin_file_path($plugin, $file) {
-    return _PUBLIC_PATH . _PLUGIN_PATH . $plugin->url . DIRECTORY_SEPARATOR . $file;
-  }
-
-  public static function load($plugin) {
-    global $auth, $hooks;
-    $hook_file_basic = self::return_plugin_file_path($plugin, 'hooks/hook.add_action.php');
-    if (file_exists($hook_file_basic)) {
-      include $hook_file_basic;
-    }
-    if($auth->isLoggedIn()){
-      if(canEditAsEditor($auth)){
-        $hook_file_editor = self::return_plugin_file_path($plugin, 'hooks/hook.editor.php');
-        if (file_exists($hook_file_editor)) {
-          include $hook_file_editor;
-        }
-      }
-      if(canEditAsAdmin($auth)){
-        $hook_file_admin = self::return_plugin_file_path($plugin, 'hooks/hook.admin.php');
-        if (file_exists($hook_file_admin)) {
-          include $hook_file_admin;
-        }
-      }
-    }
-  }
-
-  function post() {
-    global $db, $auth;
-
-    if($_SERVER['REQUEST_METHOD'] === 'POST' && $auth->isLoggedIn()){
-
-      $config = HTMLPurifier_Config::createDefault();
-      $purifier = new HTMLPurifier($config);
-
-      try {
-
-        $plugins = isset($_POST['plugin']) ? $_POST['plugin'] : '';
-        $plugout = isset($_POST['plugout']) ? $_POST['plugout'] : '';
-        $deletes = isset($_POST['delete']) ? $_POST['delete'] : '';
-
-        $plugin = new Plugin;
-
-        // -- install plugin
-        if(!empty($plugout)){
-          $setting = simplexml_load_file(_PUBLIC_PATH . _PLUGIN_PATH . $plugout . '/info.xml');
-
-          // -- check dependencies
-          if (isset($setting->dependencies) && !empty($missing = $this->checkDependencies((array)$setting->dependencies->dependency))) {
-            $count = count($missing);
-            $message = "This plugin has " . ($count > 1 ? "dependencies" : "dependency") . ". Please install the " . ($count > 1 ? "plugins" : "plugin") . " " . implode(", ", $missing);
-            Message::add($message, _BASE_PATH . 'admin/plugin');
-          }
-
-          $plugin->insert([
-            'name' => $setting->name,
-            'version' => $setting->version,
-            'desc' => $setting->description,
-            'url' => $setting->url,
-            'type' => $setting->type,
-            // 'image' => $setting->image
-            'settings' => (!empty($setting->settings) ? '1' : '0')
-          ]);
-
-          // -- install plugin database
-          if(!empty($setting->database->install)) {
-            $database_installer_file = self::return_plugin_file_path($setting->url, $setting->database->install);
-            if (file_exists($database_installer_file )) {
-              require_once $database_installer_file ;
+    public function run(): void
+    {
+        $plugins = $this->get()->data();
+        if ($plugins) {
+            foreach ($plugins as $plugin) {
+                if ($plugin->active == '1') {
+                    $this->actives[] = $plugin->name;
+                }
             }
-          }
-        }
-
-        // -- deinstall plugin
-        if(!empty($deletes)){
-          foreach ($deletes as $key => $value) {
-            $url = $db->selectValue(
-              'SELECT url FROM plugin WHERE id = :id',
-              [
-                $value
-              ]
-            );
-            $db->delete(
-              'plugin',
-              [
-                // where
-                'id' => $value
-              ]
-            );
-            // -- remove plugin database
-            $setting = simplexml_load_file(_PUBLIC_PATH . _PLUGIN_PATH . $url . '/info.xml');
-            if(!empty($setting->database->uninstall)) {
-              $database_installer_file = self::return_plugin_file_path($setting->url, $setting->database->uninstall);
-              if (file_exists($database_installer_file )) {
-                require_once $database_installer_file ;
-              }
+            $_SESSION['plugin_actives'] = $this->actives;
+            foreach ($plugins as $plugin) {
+                if ($plugin->active == '1') {
+                    $this->includeHooks($plugin);
+                }
             }
-          }
         }
-
-        // (de)activate plugin
-        if(!empty($plugins)){
-          foreach ($plugins as $key => $value) {
-            $db->update(
-              'plugin',
-              [
-                // set
-                'active' => $value
-              ],
-              [
-                // where
-                'id' => $key
-              ]
-            );
-          }
-        }
-
-        Message::add('Update succesfully',_BASE_PATH . 'admin/plugin');
-      } catch (Exception $e) {
-        Message::add('Something went wrong',_BASE_PATH . 'admin/plugin');
-      }
-
     }
 
-  }
+    public function includeHooks($plugin): void
+    {
+        global $auth;
 
-  // -- function to check dependencies
-  private function checkDependencies($dependencies) {
-    global $db;
+        $this->plugin = $plugin;
 
-    $missing = array_filter($dependencies, function ($dependency) use ($db) {
-      // -- check if the dependent plugin is installed
-      return !$db->selectValue('SELECT id FROM plugin WHERE name = :name', ['name' => $dependency]);
-    });
+        if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.basic.php')) {
+            include _PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.basic.php';
+        }
+        if($auth->isLoggedIn()){
+            if(canEditAsEditor($auth)){
+                if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.editor.php')) {
+                    include _PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.editor.php';
+                }
+            }
+            if(canEditAsAdmin($auth)){
+                if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.admin.php')) {
+                    include _PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.admin.php';
+                }
+            }
+        }
+    }
 
-    return $missing;
-  }
+    function post(): void
+    {
+        global $db;
+
+        $config = HTMLPurifier_Config::createDefault();
+        $purifier = new HTMLPurifier($config);
+
+        $plugins = $_POST['plugin'] ?? '';
+
+        foreach ($plugins as $key => $plugin) {
+
+            if(!isset($plugin['id'])) {
+                $info = json_decode(file_get_contents(_PUBLIC_PATH . _PLUGIN_PATH . $plugin['url'] . '/info.json'));
+                if (isset($info->dependencies) && !empty($missing = $this->checkDependencies((array)$info->dependencies))) {
+                    $count = count($missing);
+                    $message = "This plugin has " . ($count > 1 ? "dependencies" : "dependency") . ". Please install the " . ($count > 1 ? "plugins" : "plugin") . " " . implode(", ", $missing);
+                    Message::add($message, _BASE_PATH . 'admin/plugin');
+                }
+                $_POST['plugin'][$key] = [
+                    'name' => $purifier->purify($info->name),
+                    'version' => $purifier->purify($info->version),
+                    'desc' => $purifier->purify($info->description),
+                    'url' => $purifier->purify($info->url),
+                    'type' => $purifier->purify($info->type),
+                    'settings' => (!empty($info->settings) ? '1' : '0')
+                ];
+                if(!empty($info->database->install)) {
+                    if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $info->url . DIRECTORY_SEPARATOR . $info->database->install)) {
+                        require_once _PUBLIC_PATH . _PLUGIN_PATH . $info->url . DIRECTORY_SEPARATOR . $info->database->install;
+                    }
+                }
+            }
+
+            if(isset($plugin['delete'])) {
+                $plugin['url'] = $db->selectValue(
+                    'SELECT url FROM plugin WHERE id = :id',
+                    [
+                        $plugin['id']
+                    ]
+                );
+                $info = json_decode(file_get_contents(_PUBLIC_PATH . _PLUGIN_PATH . $plugin['url'] . '/info.json'));
+                if(!empty($info->database->uninstall)) {
+                    if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $info->url . DIRECTORY_SEPARATOR . $info->database->uninstall)) {
+                        require_once _PUBLIC_PATH . _PLUGIN_PATH . $info->url . DIRECTORY_SEPARATOR . $info->database->uninstall;
+                    }
+                }
+            }
+
+        }
+
+        parent::post();
+    }
+
+    // -- function to check dependencies
+    private function checkDependencies($dependencies): array
+    {
+        global $db;
+
+        return array_filter($dependencies, function ($dependency) use ($db) {
+            // -- check if the dependent plugin is installed
+            return !$db->selectValue('SELECT id FROM plugin WHERE name = :name', ['name' => $dependency]);
+        });
+    }
 
 }
-?>

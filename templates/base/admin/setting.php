@@ -30,7 +30,7 @@ $settings = (new Ivy\Setting)->get()->data();
               <tr>
                 <td>
                   <?php
-                  $button->switch(
+                  \Ivy\Button::switch(
                     'setting[' . $setting->id . '][bool]',
                     $setting->bool
                   );
@@ -50,7 +50,7 @@ $settings = (new Ivy\Setting)->get()->data();
                 <?php endif; ?>
                 <td>
                   <input type="hidden" name="setting[<?php echo $setting->id; ?>][id]" value="<?php echo $setting->id; ?>">
-                  <?php $button->delete("setting[" . $setting->id . "][delete]","setting_" . $setting->id); ?>
+                  <?php \Ivy\Button::delete("setting[" . $setting->id . "][delete]","setting_" . $setting->id); ?>
                 </td>
               </tr>
             <?php endif; ?>
@@ -67,7 +67,7 @@ $settings = (new Ivy\Setting)->get()->data();
 
   <div class="outer">
     <div class="inner text-align-center">
-      <?php $button->submit('update'); ?>
+      <?php \Ivy\Button::submit('update'); ?>
     </div>
   </div>
 
