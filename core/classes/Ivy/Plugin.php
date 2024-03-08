@@ -42,12 +42,12 @@ class Plugin extends Model {
             include _PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.basic.php';
         }
         if($auth->isLoggedIn()){
-            if(canEditAsEditor($auth)){
+            if(User::canEditAsEditor($auth)){
                 if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.editor.php')) {
                     include _PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.editor.php';
                 }
             }
-            if(canEditAsAdmin($auth)){
+            if(User::canEditAsAdmin($auth)){
                 if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.admin.php')) {
                     include _PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.admin.php';
                 }
@@ -66,40 +66,59 @@ class Plugin extends Model {
 
         foreach ($plugins as $key => $plugin) {
 
+            // -- install plugin
             if(!isset($plugin['id'])) {
-                $info = json_decode(file_get_contents(_PUBLIC_PATH . _PLUGIN_PATH . $plugin['url'] . '/info.json'));
-                if (isset($info->dependencies) && !empty($missing = $this->checkDependencies((array)$info->dependencies))) {
-                    $count = count($missing);
-                    $message = "This plugin has " . ($count > 1 ? "dependencies" : "dependency") . ". Please install the " . ($count > 1 ? "plugins" : "plugin") . " " . implode(", ", $missing);
-                    Message::add($message, _BASE_PATH . 'admin/plugin');
-                }
-                $_POST['plugin'][$key] = [
-                    'name' => $purifier->purify($info->name),
-                    'version' => $purifier->purify($info->version),
-                    'desc' => $purifier->purify($info->description),
-                    'url' => $purifier->purify($info->url),
-                    'type' => $purifier->purify($info->type),
-                    'settings' => (!empty($info->settings) ? '1' : '0')
-                ];
-                if(!empty($info->database->install)) {
-                    if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $info->url . DIRECTORY_SEPARATOR . $info->database->install)) {
-                        require_once _PUBLIC_PATH . _PLUGIN_PATH . $info->url . DIRECTORY_SEPARATOR . $info->database->install;
+                try {
+
+                    $this->plugin = $this->loadPluginInfo($plugin);
+
+                    if (isset($this->plugin->dependencies) && !empty($missing = $this->checkDependencies((array)$this->plugin->dependencies))) {
+                        $count = count($missing);
+                        $message = "This plugin has " . ($count > 1 ? "dependencies" : "dependency") . ". Please install the " . ($count > 1 ? "plugins" : "plugin") . " " . implode(", ", $missing);
+                        Message::add($message, _BASE_PATH . 'admin/plugin');
                     }
+
+                    $_POST['plugin'][$key] = [
+                        'name' => $purifier->purify($this->plugin->name),
+                        'version' => $purifier->purify($this->plugin->version),
+                        'desc' => $purifier->purify($this->plugin->description),
+                        'url' => $purifier->purify($this->plugin->url),
+                        'type' => $purifier->purify($this->plugin->type),
+                        'settings' => (!empty($this->plugin->settings) ? '1' : '0')
+                    ];
+
+                    if(!empty($this->plugin->database->install)) {
+                        if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . $this->plugin->database->install)) {
+                            require_once _PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . $this->plugin->database->install;
+                        }
+                    }
+
+                } catch (Exception $e) {
+                    Message::add("Error installing plugin: " . $e->getMessage());
                 }
             }
 
+            // -- deinstall plugin
             if(isset($plugin['delete'])) {
-                $plugin['url'] = $db->selectValue(
-                    'SELECT url FROM plugin WHERE id = :id',
-                    [
-                        $plugin['id']
-                    ]
-                );
-                $info = json_decode(file_get_contents(_PUBLIC_PATH . _PLUGIN_PATH . $plugin['url'] . '/info.json'));
-                if(!empty($info->database->uninstall)) {
-                    if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $info->url . DIRECTORY_SEPARATOR . $info->database->uninstall)) {
-                        require_once _PUBLIC_PATH . _PLUGIN_PATH . $info->url . DIRECTORY_SEPARATOR . $info->database->uninstall;
+                try {
+
+                    $plugin['url'] = $db->selectValue(
+                        'SELECT url FROM plugin WHERE id = :id',
+                        [
+                            $plugin['id']
+                        ]
+                    );
+
+                    $this->plugin = $this->loadPluginInfo($plugin);
+
+                    if(!empty($this->plugin->database->uninstall)) {
+                        if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . $this->plugin->database->uninstall)) {
+                            require_once _PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . $this->plugin->database->uninstall;
+                        }
                     }
+
+                } catch (Exception $e) {
+                    Message::add("Error deinstalling plugin: " . $e->getMessage());
                 }
             }
 
@@ -117,6 +136,17 @@ class Plugin extends Model {
             // -- check if the dependent plugin is installed
             return !$db->selectValue('SELECT id FROM plugin WHERE name = :name', ['name' => $dependency]);
         });
+    }
+
+    private function loadPluginInfo($plugin)
+    {
+        $url = realpath(_PUBLIC_PATH . _PLUGIN_PATH . $plugin['url']);
+
+        if (str_starts_with($url, _PUBLIC_PATH . _PLUGIN_PATH)) {
+            $plugin = json_decode(file_get_contents($url . '/info.json', true));
+        }
+
+        return $plugin;
     }
 
 }
