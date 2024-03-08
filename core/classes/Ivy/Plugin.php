@@ -140,10 +140,12 @@ class Plugin extends Model {
 
     private function loadPluginInfo($plugin)
     {
-        $url = realpath(_PUBLIC_PATH . _PLUGIN_PATH . $plugin['url']);
+        $url = realpath(_PUBLIC_PATH . _PLUGIN_PATH . $plugin['url'] . '/info.json');
 
-        if (str_starts_with($url, _PUBLIC_PATH . _PLUGIN_PATH)) {
-            $plugin = json_decode(file_get_contents($url . '/info.json', true));
+        if (is_file($url)) {
+            if (strpos($url, _PUBLIC_PATH . _PLUGIN_PATH . $plugin['url']) === 0) {
+                $plugin = json_decode(file_get_contents($url, true));
+            }
         }
 
         return $plugin;
