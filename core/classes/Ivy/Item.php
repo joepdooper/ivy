@@ -5,11 +5,11 @@ namespace Ivy;
 
 class Item extends Model {
 
-  protected $table = 'items';
+    protected $table = 'items';
 
-  public function __construct()
-  {
-    $this->query = "SELECT
+    public function __construct()
+    {
+        $this->query = "SELECT
     `items`.*,
     `item_template`.`name`,
     `item_template`.`plugin_url`,
@@ -23,40 +23,65 @@ class Item extends Model {
     AND `plugin`.`url` = `item_template`.`plugin_url`
     AND `plugin`.`active` != '0'
     ";
-  }
-
-  // -- get
-  public function get()
-  {
-    parent::get();
-
-    foreach ($this->data as $key => $value) {
-      $this->data[$key]->author = isset($_SESSION['auth_user_id']) ? (($this->data[$key]->user_id == $_SESSION['auth_user_id']) ? true : false) : false;
     }
 
-    return $this;
-  }
+    // -- get
+    public function get()
+    {
+        parent::get();
 
-  // -- get row
-  public function getRow()
-  {
-    parent::getRow();
+        foreach ($this->data as $key => $value) {
+            $this->data[$key]->author = isset($_SESSION['auth_user_id']) && $this->data[$key]->user_id == $_SESSION['auth_user_id'];
+        }
 
-    $this->data->author = isset($_SESSION['auth_user_id']) ? (isset($this->data->user_id) && ($this->data->user_id == $_SESSION['auth_user_id']) ? true : false) : false;
+        return $this;
+    }
 
-    return $this;
-  }
+    // -- get row
+    public function getRow()
+    {
+        parent::getRow();
 
-  // -- insert
-  public function insert($set)
-  {
-    global $db;
+        $this->data->author = isset($_SESSION['auth_user_id']) && isset($this->data->user_id) && ($this->data->user_id == $_SESSION['auth_user_id']);
 
-    $set['published'] = $set['published'] ?? 0;
-    $set['user_id'] = $set['user_id'] ?? $_SESSION['auth_user_id'];
-    $set['table_id'] = $set['table_id'] ?? $db->getLastInsertId();
+        return $this;
+    }
 
-    return parent::insert($set);
-  }
+    // -- insert
+    public function insert($set)
+    {
+        global $db;
+
+        $set['published'] = $set['published'] ?? 0;
+        $set['user_id'] = $set['user_id'] ?? $_SESSION['auth_user_id'];
+        $set['table_id'] = $set['table_id'] ?? $db->getLastInsertId();
+
+        return parent::insert($set);
+    }
+
+    public function delete()
+    {
+        global $db;
+
+        parent::delete();
+
+        $children = (new \Ivy\Item())->where('parent', $this->data->id)->get()->data();
+        if (!empty($children)) {
+            foreach ($children as $child) {
+                $db->delete(
+                    $child->table,
+                    [
+                        'id' => $child->table_id
+                    ]
+                );
+                $db->delete(
+                    'items',
+                    [
+                        'id' => $child->id
+                    ]
+                );
+            }
+        }
+    }
 
 }
