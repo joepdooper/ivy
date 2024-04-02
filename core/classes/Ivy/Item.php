@@ -87,9 +87,11 @@ class Item extends Model {
 
     public static function position($position, $items) {
 
-        return array_filter($items, function($item) use ($position) {
-            return property_exists($item, 'position') && $item->position === $position;
-        });
+        if($items) {
+            return array_filter($items, function($item) use ($position) {
+                return property_exists($item, 'position') && $item->position === $position;
+            });
+        }
 
     }
 

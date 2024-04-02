@@ -17,7 +17,7 @@ class Template extends Model {
     public static string $url = "";
     public static ?string $file;
     public static array $positions = array();
-    public static mixed $content;
+    public static mixed $content = null;
 
     public static function file($file, $content = null, $position = null): bool|string
     {

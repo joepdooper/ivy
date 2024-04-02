@@ -16,7 +16,7 @@ CREATE TABLE `article` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `subtitle` varchar(255) NOT NULL,
-  `subject` int(11) NOT NULL,
+  `subject` json NOT NULL,
   `image` varchar(255) DEFAULT NULL,
   `token` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -120,6 +120,20 @@ VALUES
 UNLOCK TABLES;
 
 
+# Export von Tabelle item_tag
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `item_tag`;
+
+CREATE TABLE `item_tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `item_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 # Export von Tabelle item_template
 # ------------------------------------------------------------
 
@@ -168,7 +182,8 @@ CREATE TABLE `items` (
   `token` int(11) DEFAULT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `sort` int(11) DEFAULT NULL,
-  `class` varchar(255) DEFAULT NULL,
+  `style` varchar(255) DEFAULT NULL,
+  `position_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `postid` (`table_id`),
   KEY `userid` (`user_id`)
@@ -201,7 +216,6 @@ VALUES
 	(24,'Dark mode','DarkMode','1.0.0','Dark mode','template',1,0),
 	(25,'Text','Text','1.0.0','Text item','item',1,0),
 	(26,'Image','Image','1.0.0','Image item','item',1,0),
-	(27,'Tag','Tag','1.0.0','Create tags for items','filter',1,1),
 	(28,'Audio','Audio','1.0.0','Audio item','item',1,0),
 	(29,'Macy','macy','1.0.0','Macy.js - lightweight, dependency-free, 4kb masonry layout library, designed for a hassle-free configuration','javascript',1,0),
 	(33,'Sort item','SortItem','1.0.0','Sort items by drag and drop','template',1,0),
@@ -211,9 +225,32 @@ VALUES
 	(40,'Vimeo','Vimeo','1.0.0','Vimeo SDK','item',1,0),
 	(41,'Youtube','Youtube','1.0.0','Youtube player','item',1,0),
 	(44,'IframeManager','iframemanager','1.0.0','IframeManager from Orest Bida','utility',1,0),
-	(45,'Vanilla cookie consent','VanillaCookieConsent','1.0.0','Cookie consent from Orest Bida','utility',1,0);
+	(45,'Vanilla cookie consent','VanillaCookieConsent','1.0.0','Cookie consent from Orest Bida','utility',1,0),
+	(46,'Tag','Tag','1.0.0','Create tags for items','filter',1,1);
 
 /*!40000 ALTER TABLE `plugin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Export von Tabelle position
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `position`;
+
+CREATE TABLE `position` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `value` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `position` WRITE;
+/*!40000 ALTER TABLE `position` DISABLE KEYS */;
+
+INSERT INTO `position` (`id`, `value`)
+VALUES
+	(1,'intro');
+
+/*!40000 ALTER TABLE `position` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -235,7 +272,8 @@ LOCK TABLES `profiles` WRITE;
 
 INSERT INTO `profiles` (`id`, `user_id`, `users_image`, `last_activity`)
 VALUES
-	(1,1,NULL,'2024-02-26 19:39:26');
+	(1,1,'eff9fd259e5e07108658404eefb32d0e.jpg','2024-03-16 18:12:17'),
+	(2,2,NULL,'2024-02-28 19:29:41');
 
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -297,7 +335,7 @@ INSERT INTO `tag` (`id`, `value`)
 VALUES
 	(8,'Article'),
 	(9,'Documentation'),
-	(11,'Gig');
+	(10,'Gig');
 
 /*!40000 ALTER TABLE `tag` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -367,8 +405,7 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`)
 VALUES
-(1,'admin@localhost.test','$2y$10$MPCNqwvXNzBK.Ip5PYhgGOkdzY.NrWgnvk.oz9RrEg0UmLKGnlpfu','ivy',0,1,1,263169,1701517536,1701537675,0);
-
+    (1,'admin@localhost.test','$2y$10$MPCNqwvXNzBK.Ip5PYhgGOkdzY.NrWgnvk.oz9RrEg0UmLKGnlpfu','ivy',0,1,1,263169,1701517536,1701537675,0);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
