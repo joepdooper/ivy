@@ -1,6 +1,6 @@
 <?php
 // version
-define('_IVY_VERSION', '0.7.0');
+define('_IVY_VERSION', '0.7.1');
 // public
 define('_PUBLIC', DIRECTORY_SEPARATOR . 'public');
 // subfolder
