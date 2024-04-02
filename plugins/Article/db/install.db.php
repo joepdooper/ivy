@@ -1,4 +1,8 @@
 <?php
+defined('_BASE_PATH') or die('Something went wrong');
+
+global $db;
+
 $db->exec('
 CREATE TABLE `article` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -31,5 +35,3 @@ $db->insert(
     'value' => 'Article'
   ]
 );
-
-?>

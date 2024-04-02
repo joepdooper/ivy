@@ -1,6 +1,7 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
-$profile = (new \Ivy\Profile)->where('id',$id)->getRow()->data();
+use Ivy\Template;
+$profile = Template::$content;
 ?>
 
 <div class="profile">

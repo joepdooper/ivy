@@ -16,7 +16,7 @@ $youtube = (new \Youtube\Item)->where('id', \Ivy\Template::$content->table_id)->
     <?php if ($auth->isLoggedIn() && \Ivy\Template::$content->author): ?>
       <form action="<?php print _BASE_PATH . 'youtube/update/' . \Ivy\Template::$content->id . \Ivy\Template::$url; ?>" method="POST" enctype="multipart/form-data">
         <input type="text" placeholder="Youtube video id" name="youtube_video_id" value="<?php print $youtube->youtube_video_id; ?>">
-        <?php include \Ivy\Template::setTemplateFile('include/item_admin_buttons.php'); ?>
+        <?php include \Ivy\Template::file('include/item_admin_buttons.php'); ?>
       </form>
     <?php endif; ?>
 

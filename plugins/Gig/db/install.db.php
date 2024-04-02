@@ -1,6 +1,10 @@
 <?php
+defined('_BASE_PATH') or die('Something went wrong');
+
+global $db;
+
 $db->exec(
-  '
+    "
   CREATE TABLE `gig` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `datetime` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -14,27 +18,25 @@ $db->exec(
     `token` int(11) DEFAULT NULL,
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-    '
-  );
+    "
+);
 
-  $db->insert(
+$db->insert(
     'item_template',
     [
       // set
-      'name' => 'Gig',
-      'table' => 'gig',
-      'plugin_url' => 'Gig',
-      'route' => 'gig',
-      'file' => 'item.php',
+        'name' => 'Gig',
+        'table' => 'gig',
+        'plugin_url' => 'Gig',
+        'route' => 'gig',
+        'file' => 'item.php',
     ]
-  );
+);
 
-  $db->insert(
+$db->insert(
     'tag',
     [
       // set
-      'value' => 'Gig'
+        'value' => 'Gig'
     ]
-  );
-
-  ?>
+);

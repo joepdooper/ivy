@@ -1,47 +1,55 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
+
+use Ivy\Profile;
+use Ivy\Template;
+
 global $auth;
-$article = (new \Article\Item)->where('id', \Ivy\Template::$content->table_id)->getRow()->data();
+
+$content = Template::$content;
+$content->data = (new \Article\Item)->where('id', $content->table_id)->getRow()->data();
 ?>
 
-<div class="<?php if(\Ivy\Template::$content->class): print \Ivy\Template::$content->class; else:?>item item-article col-12 col-md-6 col-lg-4<?php endif;?>" id="item-<?php print \Ivy\Template::$content->id; ?>">
-	<div class="inner">
+<div class="<?php if($content->style): print $content->style; else:?>item item-article col-12 col-md-6 col-lg-4<?php endif;?>" id="item-<?php print $content->id; ?>">
+    <div class="inner">
 
-		<a class="item-wrap bg-secondary" href="<?php print _BASE_PATH . 'article/' . \Ivy\Template::$content->id; ?>">
-			<?php if(!empty($article->image)): ?>
-				<?php \Image\Item::set('image', $article->image); ?>
-			<?php endif; ?>
-			<article>
-				<div class="outer">
-					<!-- Subject -->
-					<div class="inner">
-						<?php $tag = (new \Tag\Item)->where('id', $article->subject)->getRow()->data(); ?>
-						<div class="tag">
-							<?php print $tag->value; ?>
-						</div>
-					</div>
-					<!-- Titles -->
-					<div class="inner">
-						<h1><?php print $article->title; ?></h1>
-						<h2><?php print $article->subtitle; ?></h2>
-					</div>
-					<!-- Author -->
-					<div class="inner">
-						<?php
-						$author = (new \Ivy\Profile)->where('id',\Ivy\Template::$content->user_id)->getRow()->data();
-						$date = \Ivy\Template::$content->date;
-						include \Ivy\Template::setTemplateFile('include/author.php');
-						?>
-					</div>
-				</div>
-			</article>
-		</a>
+        <a class="item-wrap bg-secondary" href="<?php print _BASE_PATH . 'article/' . $content->id; ?>">
+            <?php if(!empty($content->data->image)): ?>
+                <?php \Image\Item::set('image', $content->data->image); ?>
+            <?php endif; ?>
+            <article>
+                <div class="outer">
+                    <!-- Subject -->
+                    <div class="inner">
+                        <div class="tag">
+                            <?php
+                            $tag = (new \Tag\Item)->where('id', $content->data->subject)->getRow()->data();
+                            print $tag->value;
+                            ?>
+                        </div>
+                    </div>
+                    <!-- Titles -->
+                    <div class="inner">
+                        <h1><?php print $content->data->title; ?></h1>
+                        <h2><?php print $content->data->subtitle; ?></h2>
+                    </div>
+                    <!-- Author -->
+                    <div class="inner">
+                        <?php
+                        $author = (new Profile)->where('id', $content->user_id)->getRow()->data();
+                        $author->date = $content->date;
+                        include Template::file('include/author.php', $author);
+                        ?>
+                    </div>
+                </div>
+            </article>
+        </a>
 
-		<?php if ($auth->isLoggedIn() && \Ivy\Template::$content->author): ?>
-			<form action="<?php print _BASE_PATH . 'article/update/' . \Ivy\Template::$content->id; ?>" method="POST" enctype="multipart/form-data">
-				<?php include \Ivy\Template::setTemplateFile('include/item_admin_buttons.php'); ?>
-			</form>
-		<?php endif; ?>
+        <?php if ($auth->isLoggedIn() && $content->author): ?>
+            <form action="<?php print _BASE_PATH . 'article/update/' . $content->id; ?>" method="POST" enctype="multipart/form-data">
+                <?php include Template::file('include/item_admin_buttons.php', $content); ?>
+            </form>
+        <?php endif; ?>
 
-	</div>
+    </div>
 </div>

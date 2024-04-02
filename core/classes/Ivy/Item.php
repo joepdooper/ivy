@@ -17,12 +17,13 @@ class Item extends Model {
     `item_template`.`table`,
     `item_template`.`file`,
     `plugin`.`url`,
-    `plugin`.`active`
-    FROM `items`, `item_template`, `plugin`
-    WHERE `item_template`.`id` = `items`.`template`
-    AND `plugin`.`url` = `item_template`.`plugin_url`
-    AND `plugin`.`active` != '0'
-    ";
+    `plugin`.`active`,
+    `position`.`value` AS `position`
+    FROM `items`
+    INNER JOIN `item_template` ON `item_template`.`id` = `items`.`template`
+    INNER JOIN `plugin` ON `plugin`.`url` = `item_template`.`plugin_url`
+    LEFT JOIN `position` ON `position`.`id` = `items`.`position_id`
+    WHERE `plugin`.`active` != '0'";
     }
 
     // -- get
@@ -82,6 +83,14 @@ class Item extends Model {
                 );
             }
         }
+    }
+
+    public static function position($position, $items) {
+
+        return array_filter($items, function($item) use ($position) {
+            return property_exists($item, 'position') && $item->position === $position;
+        });
+
     }
 
 }

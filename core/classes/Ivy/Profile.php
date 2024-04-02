@@ -82,7 +82,7 @@ class Profile extends Model {
               'id' => $this->data->id,
               'users_image' => ''
             ]);
-            (new \Image\Item)->delete_file($this->data->users_image);
+            (new \Image\Item)->delete_set($this->data->users_image);
           }
 
           if($_FILES['users_image']['tmp_name']){

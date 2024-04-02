@@ -11,49 +11,7 @@ class Plugin extends Model {
 
     protected $table = 'plugin';
     protected $path = _BASE_PATH . 'admin/plugin';
-    public array $actives;
     public \stdClass $plugin;
-
-    public function run(): void
-    {
-        $plugins = $this->get()->data();
-        if ($plugins) {
-            foreach ($plugins as $plugin) {
-                if ($plugin->active == '1') {
-                    $this->actives[] = $plugin->name;
-                }
-            }
-            $_SESSION['plugin_actives'] = $this->actives;
-            foreach ($plugins as $plugin) {
-                if ($plugin->active == '1') {
-                    $this->includeHooks($plugin);
-                }
-            }
-        }
-    }
-
-    public function includeHooks($plugin): void
-    {
-        global $auth;
-
-        $this->plugin = $plugin;
-
-        if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.basic.php')) {
-            include _PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.basic.php';
-        }
-        if($auth->isLoggedIn()){
-            if(User::canEditAsEditor($auth)){
-                if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.editor.php')) {
-                    include _PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.editor.php';
-                }
-            }
-            if(User::canEditAsAdmin($auth)){
-                if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.admin.php')) {
-                    include _PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . 'hooks/hook.admin.php';
-                }
-            }
-        }
-    }
 
     function post(): void
     {
@@ -153,7 +111,7 @@ class Plugin extends Model {
             $path = $dir . $file;
             $url = realpath($path);
 
-            if (is_file($url)) {
+            if ($url) {
                 if (strpos($url, $dir) === 0) {
                     $content = file_get_contents($url);
                     $plugin = json_decode($content);

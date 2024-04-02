@@ -19,13 +19,13 @@ class Item extends Model {
     return $file->upload($audio);
   }
 
-  public function delete_file($file = null) {
+  public function delete_set($file = null) {
     $audio = isset($file) ? $file : $this->data->file;
     unlink(_PUBLIC_PATH . _MEDIA_PATH . 'item/' . self::_AUDIO_PATH . $audio);
   }
 
   public static function set($name,$value,$id = null) {
-    include(_PUBLIC_PATH . \Ivy\Template::setTemplateFile(_PLUGIN_PATH . 'Audio/template/input.TypeAudio.php'));
+    include(_PUBLIC_PATH . \Ivy\Template::file(_PLUGIN_PATH . 'Audio/template/input.TypeAudio.php'));
   }
 
 }

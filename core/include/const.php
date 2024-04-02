@@ -1,12 +1,15 @@
 <?php
 // version
-define('_IVY_VERSION', '0.6.0');
+define('_IVY_VERSION', '0.7.0');
+// public
+define('_PUBLIC', DIRECTORY_SEPARATOR . 'public');
 // subfolder
 $scriptPath = str_replace('\\', '/', dirname($_SERVER['SCRIPT_FILENAME']));
 $scriptPath = rtrim($scriptPath, '/'); // Remove trailing slash
 $scriptPath = str_replace($_SERVER['DOCUMENT_ROOT'], '', $scriptPath);
+// $scriptPath = str_replace(_PUBLIC, '', $scriptPath);
 $scriptPath = ($scriptPath !== '' ? $scriptPath : '');
-define('_SUBFOLDER', $scriptPath . '/');
+define('_SUBFOLDER', $scriptPath . DIRECTORY_SEPARATOR);
 // root
 define('_ROOT', $_SERVER['DOCUMENT_ROOT']);
 // protocol http or https

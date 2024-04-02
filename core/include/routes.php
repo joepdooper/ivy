@@ -1,13 +1,15 @@
 <?php
-global $router;
+use Ivy\Setting;
+use Ivy\Template;
+use Ivy\User;
 
-// https://github.com/bramus/router
+global $db, $auth, $router;
 
 // BEFORE MIDDLEWARE
 
 $router->before('GET', '/.*', function() {
     global $auth;
-    if(!$auth->isLoggedIn() && \Ivy\Setting::$cache['private']->bool){
+    if(!$auth->isLoggedIn() && Setting::$cache['private']->bool){
         if(_CURRENT_PAGE != _BASE_PATH . 'admin/login'){
             header('location:' . _BASE_PATH . 'admin/login');
             exit;
@@ -18,7 +20,7 @@ $router->before('GET', '/.*', function() {
 $router->before('GET|POST', '/admin/([a-z0-9_-]+)', function($id) {
     global $auth;
     if($auth->isLoggedIn()){
-        if(!\Ivy\User::canEditAsAdmin($auth) && !in_array($id,['register','login','logout','reset','profile'])){
+        if(!User::canEditAsAdmin($auth) && !in_array($id,['register','login','logout','reset','profile'])){
             header('location:' . _BASE_PATH);
             exit();
         }
@@ -33,7 +35,7 @@ $router->before('GET|POST', '/admin/([a-z0-9_-]+)', function($id) {
 $router->before('GET|POST', '/plugin/.*', function() {
     global $auth;
     if($auth->isLoggedIn()){
-        if(!\Ivy\User::canEditAsSuperAdmin($auth)){
+        if(!User::canEditAsSuperAdmin($auth)){
             header('location:' . _BASE_PATH);
             exit();
         }
@@ -42,16 +44,16 @@ $router->before('GET|POST', '/plugin/.*', function() {
     }
 });
 
-$router->before('GET|POST', '/([a-z0-9_-]+)/([a-z0-9_-]+)', function ($route, $id) use($template) {
-    \Ivy\Template::$route = htmlentities($route);
-    \Ivy\Template::$id = htmlentities($id);
-    \Ivy\Template::$url = DIRECTORY_SEPARATOR . \Ivy\Template::$route . DIRECTORY_SEPARATOR . \Ivy\Template::$id;
+$router->before('GET|POST', '/([a-z0-9_-]+)/([a-z0-9_-]+)', function ($route, $id) {
+    Template::$route = htmlentities($route);
+    Template::$id = htmlentities($id);
+    Template::$url = DIRECTORY_SEPARATOR . Template::$route . DIRECTORY_SEPARATOR . Template::$id;
 });
 
 // ROUTING
 
 // -- ADMIN
-$router->mount('/admin', function() use ($router, $db, $auth, $template) {
+$router->mount('/admin', function() use ($router, $db, $auth) {
 
     $router->before('GET','/', function() {
         header('location:' . _BASE_PATH . 'admin/login');
@@ -76,7 +78,7 @@ $router->mount('/admin', function() use ($router, $db, $auth, $template) {
 
     $router->post('/template/post','\Ivy\Template@post');
 
-    $router->get('/(\w+)(/[^/]+)?(/[^/]+)?', function($id, $selector = null, $token = null) use($db, $auth, $template) {
+    $router->get('/(\w+)(/[^/]+)?(/[^/]+)?', function($id, $selector = null, $token = null) use($db, $auth) {
         switch ($id) {
             case "reset":
             case "login":
@@ -97,33 +99,16 @@ $router->mount('/admin', function() use ($router, $db, $auth, $template) {
             exit;
         }
         if($auth->isLoggedIn() && in_array($id,['setting','plugin','register','reset','template','user'])){
-            if (!\Ivy\User::canEditAsAdmin($auth)){
+            if (!User::canEditAsAdmin($auth)){
                 header('location:' . _BASE_PATH . 'admin/profile');
                 exit;
             }
         }
-        if(\Ivy\User::canEditAsAdmin($auth) || (!\Ivy\User::canEditAsAdmin($auth) && in_array($id,['register','login','logout','reset','profile']))):
-            \Ivy\Template::$file = \Ivy\Template::setTemplateFile('admin/' . $id . '.php');
-        endif;
     });
 
 });
 
-// -- START
-$router->get('/', function() use($db, $auth, $template){
-    \Ivy\Template::$file = \Ivy\Template::setTemplateFile('include/start.php');
-});
-
-// -- PLUGIN
-$router->get('/plugin/(\w+)', function($id) use($db, $auth, $template) {
-    \Ivy\Template::$file = \Ivy\Template::setTemplateFile(_PLUGIN_PATH . $id . '/template/' . 'settings.php');
-});
-
-// -- PROFILE
-$router->get('/profile/(\d+)', function($id) use($db, $auth, $template) {
-    \Ivy\Template::$file = \Ivy\Template::setTemplateFile('include/profile.php');
-});
-
+// -- 404
 $router->set404(function() {
     header('HTTP/1.1 404 Not Found');
 });

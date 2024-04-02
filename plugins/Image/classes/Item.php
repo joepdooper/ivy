@@ -3,6 +3,7 @@ namespace Image;
 
 use Ivy\File;
 use Ivy\Model;
+use Ivy\Template;
 
 class Item extends Model {
 
@@ -10,7 +11,7 @@ class Item extends Model {
   protected $table = 'image';
 
   public static function set($name,$value,$id = null) {
-    include(_PUBLIC_PATH . \Ivy\Template::setTemplateFile(_PLUGIN_PATH . 'Image/template/input.TypeImage.php'));
+    include(_PUBLIC_PATH . Template::file(_PLUGIN_PATH . 'Image/template/input.TypeImage.php'));
   }
 
   public function upload($image) {
@@ -29,7 +30,7 @@ class Item extends Model {
     return $this->file;
   }
 
-  public function delete_file($file = null) {
+  public function delete_set($file = null) {
     $image = isset($file) ? $file : $this->data->file;
     $image_sizes = new \Image\Settings();
     foreach ($image_sizes->get()->data() as $size){

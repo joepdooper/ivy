@@ -1,10 +1,15 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../../index.php');
+
+use Ivy\Button;
+use Ivy\Template;
+
+$admin_button = Template::$content;
 ?>
 
 <div class="editButton dissableSortable overflow-auto">
-	<?php Ivy\Button::visible('publish_item', \Ivy\Template::$content->published, 'publish_item_' . \Ivy\Template::$content->route . '_' . \Ivy\Template::$content->id); ?>
-	<?php \Ivy\Button::save('save_item', \Ivy\Template::$content->id); ?>
-	<?php \Ivy\Button::delete('delete_item', \Ivy\Template::$content->id,'delete_item_' . \Ivy\Template::$content->route . '_' . \Ivy\Template::$content->id, _BASE_PATH . \Ivy\Template::$content->route . '/delete/' . \Ivy\Template::$content->id . \Ivy\Template::$url); ?>
-	<!-- ?php \Ivy\Button::switch('publish_item', \Ivy\Template::$content->published, 'publish_item_'.\Ivy\Template::$content->id); ? -->
+	<?php Button::visible('publish_item', $admin_button->published, 'publish_item_' . $admin_button->route . '_' . $admin_button->id); ?>
+	<?php Button::save('save_item', $admin_button->id); ?>
+	<?php Button::delete('delete_item', $admin_button->id,'delete_item_' . $admin_button->route . '_' . $admin_button->id, _BASE_PATH . $admin_button->route . '/delete/' . $admin_button->id . Template::$url); ?>
+	<!-- ?php Button::switch('publish_item', $admin_button->published, 'publish_item_'.$admin_button->id); ? -->
 </div>

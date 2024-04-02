@@ -100,12 +100,11 @@ class User extends Model {
     function logout(): void
     {
 
-        global $auth, $hooks;
+        global $auth;
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
-            $config = HTMLPurifier_Config::createDefault();
-            $purifier = new HTMLPurifier($config);
+            $hooks = new \Hooks();
 
             $hooks->do_action('start_logout_action');
 
@@ -114,7 +113,7 @@ class User extends Model {
 
             $hooks->do_action('end_logout_action');
 
-            Message::add('Logout succesfully',_BASE_PATH);
+            Message::add('Logout successfully',_BASE_PATH);
 
         }
 

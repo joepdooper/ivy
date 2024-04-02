@@ -1,5 +1,8 @@
 <?php
 defined('_BASE_PATH') or die('Something went wrong');
+
+use Ivy\Template;
+
 global $router;
 
 $router->post('/darkmode/toggle/', function(){
@@ -9,20 +12,20 @@ $router->post('/darkmode/toggle/', function(){
     exit;
 });
 
-\Ivy\Template::addCSS(_PLUGIN_PATH . "DarkMode/css/dark-mode.css");
-\Ivy\Template::addJS(_PLUGIN_PATH . "DarkMode/js/dark-mode.js");
+Template::addCSS(_PLUGIN_PATH . "DarkMode/css/dark-mode.css");
+Template::addJS(_PLUGIN_PATH . "DarkMode/js/dark-mode.js");
 
 // -- hooks
 
 function add_darkmode_buttons(): void
 {
-  include \Ivy\Template::setTemplateFile(_PLUGIN_PATH . "DarkMode/template/buttons.php");
+  include Template::file(_PLUGIN_PATH . "DarkMode/template/buttons.php");
 }
 
 function add_darkmode_checkbox(): void
 {
   $checked = isset($_SESSION['darkMode']) && $_SESSION['darkMode'];
-  include \Ivy\Template::setTemplateFile(_PLUGIN_PATH . "DarkMode/template/checkbox.php");
+  include Template::file(_PLUGIN_PATH . "DarkMode/template/checkbox.php");
 }
 
 global $hooks;

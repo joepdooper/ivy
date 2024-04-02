@@ -1,5 +1,10 @@
 <?php
-$db->exec('
+defined('_BASE_PATH') or die('Something went wrong');
+
+global $db;
+
+$db->exec(
+    "
 CREATE TABLE `documentation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `item_id` int(11) DEFAULT NULL,
@@ -10,27 +15,25 @@ CREATE TABLE `documentation` (
   `token` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-  '
+  "
 );
 
 $db->insert(
-  'item_template',
-  [
-    // set
-    'name' => 'Documentation',
-    'table' => 'documentation',
-    'plugin_url' => 'Documentation',
-    'route' => 'documentation',
-    'file' => 'item.php',
-  ]
+    'item_template',
+    [
+      // set
+        'name' => 'Documentation',
+        'table' => 'documentation',
+        'plugin_url' => 'Documentation',
+        'route' => 'documentation',
+        'file' => 'item.php',
+    ]
 );
 
 $db->insert(
-  'tag',
-  [
-    // set
-    'value' => 'Documentation'
-  ]
+    'tag',
+    [
+      // set
+        'value' => 'Documentation'
+    ]
 );
-
-?>

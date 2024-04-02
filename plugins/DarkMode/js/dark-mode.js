@@ -14,4 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log(error);
     });
   });
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('darkMode') === null) {
+    checkbox.checked = true;
+  }
 });

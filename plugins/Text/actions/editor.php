@@ -40,7 +40,7 @@ if($auth->isLoggedIn()){
 
         function add_text_toolbar(): void
         {
-            include \Ivy\Template::setTemplateFile(_PLUGIN_PATH . 'Text/template/toolbar.php');
+            include \Ivy\Template::file(_PLUGIN_PATH . 'Text/template/toolbar.php');
         }
 
         function add_text_admin_js(): void
@@ -49,7 +49,7 @@ if($auth->isLoggedIn()){
         }
 
         global $hooks;
-        $hooks->add_action('end_wrapper_action','add_text_toolbar');
+        $hooks->add_action('end_footer_action','add_text_toolbar');
         $hooks->add_action('add_js_action','add_text_admin_js');
 
     }

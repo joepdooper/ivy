@@ -1,5 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
+use Ivy\Button;
 $tags = (new \Tag\Item)->get()->data();
 ?>
 
@@ -27,7 +28,7 @@ $tags = (new \Tag\Item)->get()->data();
               <td><input type="text" name="tag[<?php echo $row->id; ?>][value]" value="<?php echo $row->value; ?>"></td>
               <td>
                 <input type="hidden" name="tag[<?php echo $row->id; ?>][id]" value="<?php echo $row->id; ?>">
-                <?php \Ivy\Button::delete("tag[" . $row->id . "][delete]","tag_" . $row->id); ?>
+                <?php Button::delete("tag[" . $row->id . "][delete]","tag_" . $row->id); ?>
               </td>
             </tr>
           <?php endforeach;?>
@@ -44,7 +45,7 @@ $tags = (new \Tag\Item)->get()->data();
 
   <div class="outer">
     <div class="inner text-align-center">
-      <?php \Ivy\Button::submit('Save'); ?>
+      <?php Button::submit('Save'); ?>
     </div>
   </div>
 

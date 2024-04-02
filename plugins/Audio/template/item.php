@@ -34,7 +34,7 @@ $audio = (new \Audio\Item)->where('id', \Ivy\Template::$content->table_id)->getR
 			</div>
 
 			<?php if ($auth->isLoggedIn() && \Ivy\Template::$content->author): ?>
-				<?php include \Ivy\Template::setTemplateFile('include/item_admin_buttons.php'); ?>
+				<?php include \Ivy\Template::file('include/item_admin_buttons.php'); ?>
 				</form>
 			<?php endif; ?>
 

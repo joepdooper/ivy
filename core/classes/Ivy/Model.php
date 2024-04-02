@@ -39,6 +39,19 @@ class Model {
         return $this;
     }
 
+    // -- whereNot
+    public function whereNot($column, $value)
+    {
+        if (strpos($this->query, 'WHERE') === false) {
+            $this->query .= " WHERE `{$this->table}`.`{$column}` != :{$column}";
+        } else {
+            $this->query .= " AND `{$this->table}`.`{$column}` != :{$column}";
+        }
+        $this->bindings[$column] = $value;
+
+        return $this;
+    }
+
     // -- join
     public function join($table, $firstColumn, $operator, $secondColumn)
     {

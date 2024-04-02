@@ -1,5 +1,6 @@
 <?php
 defined('_BASE_PATH') ?: header('location: ../../index.php');
+use Ivy\Button;
 global $auth;
 $image_sizes = (new \Image\Settings)->get()->data();
 ?>
@@ -29,7 +30,7 @@ $image_sizes = (new \Image\Settings)->get()->data();
                 <tr>
                   <td>
                     <?php
-                    \Ivy\Button::switch(
+                    Button::switch(
                       'image_sizes[' . $row->id . '][bool]',
                       $row->bool
                     );
@@ -47,7 +48,7 @@ $image_sizes = (new \Image\Settings)->get()->data();
                   </td>
                   <td>
                     <input type="hidden" name="image_sizes[<?php echo $row->id; ?>][id]" value="<?php echo $row->id; ?>">
-                    <?php \Ivy\Button::delete("image_sizes[" . $row->id . "][delete]","size_" . $row->id); ?>
+                    <?php Button::delete("image_sizes[" . $row->id . "][delete]","size_" . $row->id); ?>
                   </td>
                 </tr>
               <?php endforeach;?>
@@ -66,7 +67,7 @@ $image_sizes = (new \Image\Settings)->get()->data();
 
   <div class="outer">
     <div class="inner text-align-center">
-      <?php \Ivy\Button::submit('Save'); ?>
+      <?php Button::submit('Save'); ?>
     </div>
   </div>
 
