@@ -272,8 +272,7 @@ LOCK TABLES `profiles` WRITE;
 
 INSERT INTO `profiles` (`id`, `user_id`, `users_image`, `last_activity`)
 VALUES
-	(1,1,'eff9fd259e5e07108658404eefb32d0e.jpg','2024-03-16 18:12:17'),
-	(2,2,NULL,'2024-02-28 19:29:41');
+	(1,1,NULL,'2024-03-16 18:12:17');
 
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
