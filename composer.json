@@ -23,7 +23,8 @@
     "bainternet/php-hooks": "^1.0",
     "vlucas/phpdotenv": "^5.5",
     "samdark/sitemap": "^2.4",
-    "prinsfrank/php-validated-properties": "dev-main"
+    "corviz/crow": "dev-main",
+    "wixel/gump": "dev-master"
   },
   "scripts": {
     "post-create-project-cmd": [
