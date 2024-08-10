@@ -40,7 +40,7 @@ Rename the `example.env` file to `.env` and update it with your database credent
 
 #### Accessing the backend
 
-To access the "backend" for the first time, follow these steps:
+To access the "backend" for the first time after the installation, follow these steps:
 
 1. Navigate to `yourserver.com/admin/login` (user icon)
 2. Use the credentials `admin@localhost.test` and `00000`
@@ -48,7 +48,7 @@ To access the "backend" for the first time, follow these steps:
 
 #### Changing email and password
 
-Open the `.env` file and update it with your email credentials. If you've modified the `.env` file, follow these steps:
+Open the `.env` file and update it with your mailbox credentials. If you've modified the `.env` file, follow these steps:
 
 1. Upon login, on the profile page, modify and submit your email address to initiate the email change process
 2. After successfully changing your email address, go to `yourserver.com/admin/logout` to log out (logout icon)
