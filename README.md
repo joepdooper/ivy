@@ -40,7 +40,7 @@ Rename the `example.env` file to `.env` and update it with your database credent
 
 #### Accessing the backend
 
-To access the "backend" for the first time after the installation, follow these steps:
+To access the "backend" for the first time, after the installation, follow these steps:
 
 1. Navigate to `yourserver.com/admin/login` (user icon)
 2. Use the credentials `admin@localhost.test` and `00000`
