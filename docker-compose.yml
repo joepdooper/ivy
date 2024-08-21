@@ -1,35 +1,39 @@
 version: '3.8'
 
 services:
-  app:
-    build: .
+  web:
+    image: php:8.2-apache
+    container_name: apache_server
     ports:
       - "8000:80"
     volumes:
       - .:/var/www/html
     environment:
-      - APACHE_RUN_USER=www-data
-      - APACHE_RUN_GROUP=www-data
-      - COMPOSER_ALLOW_SUPERUSER=1
-      - DB_CONNECTION=${DB_CONNECTION}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_DATABASE=${DB_DATABASE}
+      - APACHE_DOCUMENT_ROOT=/var/www/html
     depends_on:
       - db
+    networks:
+      - webnet
 
   db:
     image: mysql:5.7
+    container_name: mysql_db
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER: ${DB_USERNAME}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ivy
+      MYSQL_USER: msqluser
+      MYSQL_PASSWORD: msqlpassword
     volumes:
       - db_data:/var/lib/mysql
-      - ./mysql-init:/docker-entrypoint-initdb.d
+      - ./ivy.sql:/docker-entrypoint-initdb.d/ivy.sql
+    ports:
+      - "3306:3306"
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    driver: bridge
 
 volumes:
   db_data:
