@@ -37,6 +37,8 @@ Start your Docker containers, and the database will be created and initialized f
 docker-compose up
 ```
 
+Once the containers are running, you can access the website at http://localhost:8000.
+
 ##### Option B: Manual Setup
 
 Create a database for **ivy** using your MySQL client. Import the provided `ivy.sql` file:
