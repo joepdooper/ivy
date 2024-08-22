@@ -37,6 +37,7 @@ Start your Docker containers, and the database will be created and initialized f
 docker-compose up
 ```
 
+Rename the example.env file to .env and update it with the docker-compose.yml database credentials.
 Once the containers are running, you can access the website at http://localhost:8000.
 
 - **Option B: Manual Setup**
