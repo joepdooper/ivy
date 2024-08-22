@@ -6,6 +6,7 @@ Yet another sleek simple fast CMS with an effortless template and plugin environ
 
 [![Composer](https://img.shields.io/badge/Composer-222)](https://getcomposer.org/)
 [![npm](https://img.shields.io/badge/npm-222)](https://www.npmjs.com/)
+[![Docker](https://img.shields.io/badge/Docker-222)](https://www.docker.com/)
 [![PHP](https://img.shields.io/badge/PHP-v8.2.0-222)](https://www.php.net/)
 
 ## Install
@@ -28,7 +29,17 @@ composer create-project joepdooper/ivy .
 
 #### 3. Set up the database
 
-Create a database for **ivy** and import the provided `ivy.sql` file:
+##### Option A: Using Docker
+
+Start your Docker containers, and the database will be created and initialized for you:
+
+```bash
+docker-compose up
+```
+
+##### Option B: Manual Setup
+
+Create a database for **ivy** using your MySQL client. Import the provided `ivy.sql` file:
 
 ```bash
 mysql -u your_database_username -p your_database_name < ivy.sql
