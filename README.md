@@ -29,7 +29,7 @@ composer create-project joepdooper/ivy .
 
 #### 3. Set up the database
 
-##### Option A: Using Docker
+- **Option A: Using Docker**
 
 Start your Docker containers, and the database will be created and initialized for you:
 
@@ -39,7 +39,7 @@ docker-compose up
 
 Once the containers are running, you can access the website at http://localhost:8000.
 
-##### Option B: Manual Setup
+- **Option B: Manual Setup**
 
 Create a database for **ivy** using your MySQL client. Import the provided `ivy.sql` file:
 
