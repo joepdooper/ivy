@@ -31,14 +31,13 @@ composer create-project joepdooper/ivy .
 
 - **Option A: Using Docker**
 
-Start your Docker containers, and the database will be created and initialized for you:
+Start the Docker containers to automatically create and initialize the database:
 
 ```bash
 docker-compose up
 ```
 
-Rename the example.env file to .env and update it with the docker-compose.yml database credentials.
-Once the containers are running, you can access the website at http://localhost:8000.
+Rename the example.env file to .env and update it with the docker-compose.yml database credentials. Once the containers are running, the website is accessible at http://localhost:8000.
 
 - **Option B: Manual Setup**
 
