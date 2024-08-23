@@ -31,10 +31,10 @@ composer create-project joepdooper/ivy .
 
 - **Option A: Using Docker**
 
-Start the Docker containers to automatically create and initialize the database:
+Start the Docker containers to automatically set up an Apache web server and MySQL database:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 Rename the example.env file to .env and update it with the docker-compose.yml database credentials. Once the containers are running, the website is accessible at http://localhost:8000.
