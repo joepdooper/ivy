@@ -9,7 +9,7 @@
     "normalize.css": "^8.0.1",
     "petite-vue": "^0.4.1",
     "sortablejs": "^1.15.0",
-    "swup": "^4.5.1",
+    "swup": "^4.8.1",
     "vanilla-cookieconsent": "^3.0.0"
   },
   "devDependencies": {
