@@ -1,0 +1,40 @@
+{extends '../body.latte'}
+
+{block main}
+    <main class="grow p-4">
+        <form action="{= _BASE_PATH . 'admin/user/register/'}" method="POST" enctype="multipart/form-data"
+              class="max-w-xl mx-auto">
+            <div class="space-y-4">
+                <h1 class="leading-none text-6xl font-bold">Register</h1>
+
+                <div>
+                    <label>
+                        <input type="text" name="username" placeholder="name" class="input input-bordered w-full">
+                    </label>
+                </div>
+
+                <div>
+                    <label>
+                        <input type="email" name="email" placeholder="email" class="input input-bordered w-full">
+                    </label>
+                </div>
+
+                <div>
+                    <label>
+                        <input type="password" name="password" placeholder="password"
+                               class="input input-bordered w-full">
+                    </label>
+                </div>
+
+                <div class="text-center">
+                    {\Ivy\Button::submit('register')}
+                </div>
+
+                <div class="text-center">
+                    <a class="text-xs" href="{= _BASE_PATH . 'admin/login'}">Have an account? Login</a>
+                </div>
+
+            </div>
+        </form>
+    </main>
+{/block}

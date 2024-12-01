@@ -1,0 +1,48 @@
+{block head}
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0">
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'none'"> -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="{\Ivy\Setting::$stash['name']->value}">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="{\Ivy\Setting::$stash['description']->value}">
+    <meta name="keywords" content="{\Ivy\Setting::$stash['keywords']->value}">
+    <meta name="author" content="{\Ivy\Setting::$stash['author']->value}">
+    <meta name="date.created" content="{\Ivy\Setting::$stash['created']->value}">
+    <meta name="date.available" content="{\Ivy\Setting::$stash['available']->value}">
+    <meta name="date.updated" content="{\Ivy\Setting::$stash['updated']->value}">
+    <meta name="robots" content="index, follow">
+    <meta name="revisit-after" content="3 days">
+    <meta property="og:title" content="{\Ivy\Setting::$stash['title']->value}">
+    <meta property="og:site_name" content="{\Ivy\Setting::$stash['name']->value}">
+    <meta property="og:url" content="{\Ivy\Setting::$stash['url']->value}">
+    <meta property="og:description" content="{\Ivy\Setting::$stash['description']->value}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="{\Ivy\Setting::$stash['language']->value}"/>
+    <meta property="og:image"
+          content="{!isset(\Ivy\Setting::$stash['image']->value) ?: \Ivy\Setting::$stash['image']->value}"/>
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{\Ivy\Setting::$stash['title']->value}">
+    <meta name="twitter:description" content="{\Ivy\Setting::$stash['description']->value}">
+    <meta name="twitter:image"
+          content="{!isset(\Ivy\Setting::$stash['image']->value) ?: \Ivy\Setting::$stash['image']->value}">
+
+    <link rel="shortcut icon" type="image/x-icon" href="{= _BASE_PATH . _MEDIA_PATH . 'favicon/favicon.ico'}">
+    <link rel="shortcut icon" type="image/gif" href="{= _BASE_PATH . _MEDIA_PATH . 'favicon/favicon.gif'}">
+    <link rel="shortcut icon" type="image/png" href="{= _BASE_PATH . _MEDIA_PATH . 'favicon/favicon.png'}">
+    <!-- <link rel="icon" type="image/png" href="media/favicon/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="media/favicon/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="media/favicon/favicon-48x48.png" sizes="48x48" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="media/favicon/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="media/favicon/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="media/favicon/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="media/favicon/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon-precomposed" sizes="167x167" href="media/favicon/apple-touch-icon-167x167.png">
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="media/favicon/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon-precomposed" sizes="196x196" href="media/favicon/apple-touch-icon-196x196.png"> -->
+
+    <link rel="manifest" href="{= _BASE_PATH . 'manifest.json'}" crossorigin="use-credentials">
+
+    <title>{\Ivy\Setting::$stash['title']->value}</title>
+{/block}

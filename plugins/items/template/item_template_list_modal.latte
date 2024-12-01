@@ -1,0 +1,14 @@
+<input type="checkbox" id="template_list_modal" class="modal-toggle"/>
+<div class="modal" role="dialog">
+    <div class="modal-box">
+        <label for="template_list_modal"
+               class="btn btn-sm btn-circle btn-ghost absolute right-4 top-4">
+            {icon("feather/x.svg")|noescape}
+        </label>
+        <h3 class="text-lg font-bold leading-none">Insert item</h3>
+        {\Ivy\Template::render(_PLUGIN_PATH . 'items/template/item_template_list.latte', ['item_templates' => $item_templates])}
+    </div>
+</div>
+<label n:if="$item_templates" for="template_list_modal" class="btn btn-square btn-neutral fixed bottom-4 right-4">
+    {icon("feather/plus.svg")|noescape}
+</label>

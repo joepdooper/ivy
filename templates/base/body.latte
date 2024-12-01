@@ -1,0 +1,15 @@
+<div class="flex flex-col min-h-full antialiased">
+    {block header}
+        {\Ivy\Template::render('include/header.latte')}
+    {/block}
+
+    {\Ivy\Message::render('include/message.latte')}
+
+    {block main}
+        {\Ivy\Template::render('include/main.latte')}
+    {/block}
+
+    {block footer}
+        {\Ivy\Template::render('include/footer.latte')}
+    {/block}
+</div>

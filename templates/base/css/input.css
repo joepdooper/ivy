@@ -1,0 +1,72 @@
+html, body {
+    min-height: 100%;
+    height: 100%;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* SWITCH */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 45px;
+    height: 30px;
+    float: left;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: oklch(var(--nc));
+    -webkit-transition: .3s;
+    -moz-transition: .3s;
+    -o-transition: .3s;
+    -ms-transition: .3s;
+    transition: .3s;
+    border-radius: 30px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .3s;
+    -moz-transition: .3s;
+    -o-transition: .3s;
+    -ms-transition: .3s;
+    transition: .3s;
+    border-radius: 50%;
+}
+
+.form-check-input:checked ~ .switch .slider {
+    background-color: oklch(var(--n));
+}
+
+.form-check-input:checked ~ .switch .slider:before {
+    -ms-transform: translateX(15px);
+    transform: translateX(15px);
+}
+
+.btn {
+    min-height: 2.5rem;
+}
+
+.btn-square {
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+.btn svg {
+    max-height: 20px;
+}

@@ -1,0 +1,44 @@
+<div class="item item-image col-12 {if !$item->parent}col-6-md col-4-lg{/if}" id="item-{$item->id}">
+
+    {define item}
+        <div class="relative">
+
+            {if $image->file}
+                {\Image\Image::set('image', $image->file)}
+                {if \Ivy\User::isLoggedIn() && $item->author}
+                    <div class="absolute top-1/2 left-1/2 -mt-5 -ml-5">
+                        {\Ivy\Button::delete('delete_image', 'single_image_' . $item->id, 'delete_image_' . $item->id)}
+                    </div>
+                {/if}
+            {else}
+                <label for="upload_image_{$item->id}"
+                       class="block border border-dashed bg-gray-50 cursor-pointer min-h-72">
+                    <input type="file" id="upload_image_{$item->id}" class="hidden" name="upload_image"
+                           accept="image/*">
+                    <img class="text-center" id="upload_image_{$item->id}Preview" src="#" alt="upload image"/>
+                    <script>
+                        window.addEventListener('DOMContentLoaded', () => {
+                            previewImage("upload_image_" + {$item->id}, "upload_image_" + {$item->id} +"Preview", "src");
+                        });
+                    </script>
+                </label>
+            {/if}
+
+        </div>
+    {/define}
+
+    {if \Ivy\User::isLoggedIn() && $item->author}
+        <form action="{= _BASE_PATH . 'image/update/' . $item->id . \Ivy\Template::$url}" method="POST"
+              enctype="multipart/form-data">
+            <div class="relative group">
+                {include item}
+                <div class="hidden group-hover:block absolute z-10 inset-x-0 -bottom-6 text-center">
+                    {\Ivy\Template::render('include/item_admin_buttons.latte', ['item' => $item])}
+                </div>
+            </div>
+        </form>
+    {else}
+        {include item}
+    {/if}
+
+</div>

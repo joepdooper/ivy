@@ -1,0 +1,23 @@
+<div class="item item-vimeo col-12 {if !$item->parent}col-6-md col-4-lg{/if}"
+     id="item-{$item->id}">
+    <div>
+
+        {if in_array("IframeManager", $_SESSION['plugin_actives'])}
+            <div data-service="vimeo" data-id="{$vimeo->vimeo_video_id}" data-autoscale></div>
+        {else}
+            <div data-vimeo="{$vimeo->vimeo_video_id}" id="vimeo-{$item->id}"></div>
+        {/if}
+
+        {if \Ivy\User::isLoggedIn() && $item->author}
+            <form action="{= _BASE_PATH . 'vimeo/update/' . $item->id . \Ivy\Template::$url}" method="POST"
+                  enctype="multipart/form-data">
+                <label>
+                    <input type="text" placeholder="Vimeo video id" name="vimeo_video_id"
+                           value="{$vimeo->vimeo_video_id}">
+                </label>
+                {\Ivy\Template::render('include/item_admin_buttons.latte', ['item' => $item])}
+            </form>
+        {/if}
+
+    </div>
+</div>

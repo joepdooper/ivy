@@ -1,0 +1,67 @@
+{extends '../body.latte'}
+
+{block main}
+    <main class="grow p-4">
+        <form action="{= _BASE_PATH . 'admin/profile/post'}" method="POST" enctype="multipart/form-data"
+              class="max-w-xl mx-auto">
+
+            <div class="space-y-4">
+                <h1 class="leading-none text-6xl font-bold">Profile</h1>
+
+                <div>
+                    {foreach \Ivy\User::getRoles() as $key => $value}
+                        <span class="badge text-xs">{$value}</span>
+                    {/foreach}
+                </div>
+
+                <div class="form-group">
+                    <div class="avatar">
+                        {if isset($profile) && $profile->users_image}
+
+                            <div class="w-36 rounded-full">
+                                <img src="{= _BASE_PATH . 'media/item/thumb/' . $profile->users_image}"
+                                     alt="{\Ivy\User::getUsername()}"/>
+                            </div>
+                            <div class="join">
+                                {\Ivy\Button::delete('users_image', 'delete')}
+                            </div>
+
+                        {else}
+
+                            <div id="usersImagePreview" class="w-36 rounded-full">
+                                {\Ivy\Button::upload('users_image', 'upload')}
+                            </div>
+                            <script>
+                                window.addEventListener('DOMContentLoaded', () => {
+                                    previewImage("users_image", "usersImagePreview", "background");
+                                });
+                            </script>
+
+                        {/if}
+                    </div>
+                </div>
+
+                <input name="users[id]" type="hidden" value="{$profile->user_id}">
+
+                <div>
+                    <label>
+                        <input class="input input-bordered w-full" name="users[username]" type="text" placeholder="name"
+                               value="{$profile->username}">
+                    </label>
+                </div>
+
+                <div>
+                    <label>
+                        <input class="input input-bordered w-full" name="users[email]" type="email" placeholder="email"
+                               value="{$profile->email}">
+                    </label>
+                </div>
+
+                <div class="text-center">
+                    {\Ivy\Button::submit('update')}
+                </div>
+
+            </div>
+        </form>
+    </main>
+{/block}

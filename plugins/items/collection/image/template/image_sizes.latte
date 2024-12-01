@@ -1,0 +1,74 @@
+{extends _PUBLIC_PATH . _TEMPLATE_BASE . 'body.latte'}
+
+{block main}
+    <main class="grow p-4 w-full max-w-5xl mx-auto">
+        <form action="{= _BASE_PATH . 'image_sizes/post'}" method="POST" enctype="multipart/form-data">
+            <div class="space-y-4">
+                <h1 class="leading-none text-6xl font-bold">Image sizes</h1>
+
+                <div n:if="$image_sizes" class="overflow-x-auto">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Folder</th>
+                            <th>Width</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach $image_sizes as $row}
+                            <tr>
+                                <td>
+                                    {\Ivy\Button::switch(
+                                    'image_sizes[' . $row->id . '][bool]',
+                                    $row->bool
+                                    )}
+                                </td>
+                                {if empty($row->name)}
+                                    <td>
+                                        <label>
+                                            <input type="text" name="image_sizes[{$row->id}][name]"
+                                                   value="{$row->name}" class="input input-bordered w-full">
+                                        </label>
+                                    </td>
+                                {else}
+                                    <td>{$row->name}</td>
+                                {/if}
+                                <td>
+                                    <label>
+                                        <input type="text" name="image_sizes[{$row->id}][value]"
+                                               value="{$row->value}" class="input input-bordered w-full">
+                                    </label>
+                                </td>
+                                <td class="text-right">
+                                    <input type="hidden" name="image_sizes[{$row->id}][id]"
+                                           value="{$row->id}">
+                                    <div class="join">
+                                        {\Ivy\Button::delete("image_sizes[" . $row->id . "][delete]", "size_" . $row->id)}
+                                    </div>
+                                </td>
+                            </tr>
+                        {/foreach}
+                        <tr>
+                            <td colspan="4">
+                                <label>
+                                    <input type="text" name="image_sizes[][name]" placeholder="New size folder"
+                                           class="input input-bordered w-full">
+                                </label>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-center">
+                    {\Ivy\Button::submit('Save')}
+                </div>
+
+            </div>
+        </form>
+    </main>
+{/block}

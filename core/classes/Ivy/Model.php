@@ -1,37 +1,52 @@
 <?php
+
 namespace Ivy;
 
+use Delight\Db\Throwable\EmptyWhereClauseError;
+use Delight\Db\Throwable\IntegrityConstraintViolationException;
 use HTMLPurifier_Config;
 use HTMLPurifier;
 
-class Model {
+abstract class Model
+{
 
-    protected $table;
-    protected $query;
-    protected $bindings = [];
-    protected $path;
-    public $data = [];
+    protected string $table;
+    protected string $path;
+    protected string $query;
+    protected array $bindings;
+    protected object $data;
+    protected array $rows = [];
 
     public function __construct()
     {
-        $this->query = "SELECT * FROM `{$this->table}`";
+        $this->query = "SELECT * FROM `$this->table`";
+    }
+
+    public function getTable(): string
+    {
+        return $this->table;
+    }
+
+    public function getPath(): string
+    {
+        return $this->path;
     }
 
     // -- where
-    public function where($column, $value = null, $operator = '=')
+    public function where($column, $value = null, $operator = '='): static
     {
 
         if (is_null($value)) {
-            if (strpos($this->query, 'WHERE') === false) {
-                $this->query .= " WHERE `{$this->table}`.`{$column}` IS NULL";
+            if (!str_contains($this->query, 'WHERE')) {
+                $this->query .= " WHERE `$this->table`.`$column` IS NULL";
             } else {
-                $this->query .= " AND `{$this->table}`.`{$column}` IS NULL";
+                $this->query .= " AND `$this->table`.`$column` IS NULL";
             }
         } else {
-            if (strpos($this->query, 'WHERE') === false) {
-                $this->query .= " WHERE `{$this->table}`.`{$column}` {$operator} :{$column}";
+            if (!str_contains($this->query, 'WHERE')) {
+                $this->query .= " WHERE `$this->table`.`$column` $operator :$column";
             } else {
-                $this->query .= " AND `{$this->table}`.`{$column}` {$operator} :{$column}";
+                $this->query .= " AND `$this->table`.`$column` $operator :$column";
             }
             $this->bindings[$column] = $value;
         }
@@ -40,12 +55,12 @@ class Model {
     }
 
     // -- whereNot
-    public function whereNot($column, $value)
+    public function whereNot($column, $value): static
     {
-        if (strpos($this->query, 'WHERE') === false) {
-            $this->query .= " WHERE `{$this->table}`.`{$column}` != :{$column}";
+        if (!str_contains($this->query, 'WHERE')) {
+            $this->query .= " WHERE `$this->table`.`$column` != :$column";
         } else {
-            $this->query .= " AND `{$this->table}`.`{$column}` != :{$column}";
+            $this->query .= " AND `$this->table`.`$column` != :$column";
         }
         $this->bindings[$column] = $value;
 
@@ -53,43 +68,39 @@ class Model {
     }
 
     // -- join
-    public function join($table, $firstColumn, $operator, $secondColumn)
+    public function join($table, $firstColumn, $operator, $secondColumn): static
     {
-        $this->query .= " INNER JOIN $table ON `{$this->table}`.`{$firstColumn}` $operator `{$table}`.`{$secondColumn}`";
+        $this->query .= " INNER JOIN $table ON `$this->table`.`$firstColumn` $operator `$table`.`$secondColumn`";
 
         return $this;
     }
 
     // -- order by
-    public function orderBy($columns, $direction = 'asc')
+    public function orderBy($columns, $direction = 'asc'): static
     {
         if (is_array($columns)) {
             $orderByString = implode(', ', array_map(function ($column) use ($direction) {
-                return "`{$this->table}`.`{$column}` {$direction}";
+                return "`$this->table`.`$column` $direction";
             }, $columns));
         } else {
-            $orderByString = "`{$this->table}`.`{$columns}` {$direction}";
+            $orderByString = "`$this->table`.`$columns` $direction";
         }
 
-        $this->query .= " ORDER BY {$orderByString}";
+        $this->query .= " ORDER BY $orderByString";
 
         return $this;
     }
 
     // -- get
-    public function get()
+    public function get(): static
     {
-        global $db;
+        $rows = !empty($this->bindings)
+            ? DB::$connection->select($this->query, $this->bindings)
+            : DB::$connection->select($this->query);
 
-        if (!empty($this->bindings)) {
-            $data = $db->select($this->query, $this->bindings);
-        } else {
-            $data = $db->select($this->query);
-        }
-
-        if ($data) {
-            foreach ($data as $key => $value) {
-                $this->data[$key] = is_array($value) ? (object) $value : $value;
+        if ($rows) {
+            foreach ($rows as $key => $row) {
+                $this->rows[$key] = is_array($row) ? (object)$row : $row;
             }
         }
 
@@ -97,13 +108,13 @@ class Model {
     }
 
     // -- set key by value of column name
-    public function setKeyBy($columnname)
+    public function setKeyBy($columnName): static
     {
-        foreach ($this->data as $objectKey => $object) {
+        foreach ($this->rows as $objectKey => $object) {
             foreach ($object as $key => $value) {
-                if($key == $columnname) {
-                    unset($this->data[$objectKey]);
-                    $this->data[str_replace(' ', '_', strtolower($value))] = $object;
+                if ($key == $columnName) {
+                    unset($this->rows[$objectKey]);
+                    $this->rows[str_replace(' ', '_', strtolower($value))] = $object;
                 }
             }
         }
@@ -112,87 +123,98 @@ class Model {
     }
 
     // -- get row
-    public function getRow()
+    public function getRow(): static
     {
-        global $db;
 
         if (!empty($this->bindings)) {
-            $data = $db->selectRow($this->query, $this->bindings);
+            $data = DB::$connection->selectRow($this->query, $this->bindings);
         } else {
-            $data = $db->selectRow($this->query);
+            $data = DB::$connection->selectRow($this->query);
         }
 
-        $this->data = (object) $data;
+        $this->data = (object)$data;
 
         return $this;
     }
 
     // -- return only the database data
-    public function data()
+    public function single(): object
     {
         return $this->data;
     }
 
-    // -- insert
-    public function insert($set)
+    // -- return only the database rows
+    public function all(): array
     {
-        global $db;
+        return $this->rows;
+    }
+
+    // -- insert
+    public function insert($set): bool|int|string
+    {
 
         $set = $this->purify($set);
 
-        $db->insert(
-            $this->table,
-            $set
-        );
+        try {
+            DB::$connection->insert(
+                $this->table,
+                $set
+            );
+        } catch (IntegrityConstraintViolationException $e) {
+            Message::add($e->getMessage());
+        }
 
-        return $db->getLastInsertId();
+        return DB::$connection->getLastInsertId();
     }
 
     // -- update
-    public function update($set)
+    public function update($set): bool|int|string
     {
-        global $db;
-
         $set = $this->purify($set);
 
-        $db->update(
-            $this->table,
-            $set,
-            $this->bindings
-        );
+        try {
+            DB::$connection->update(
+                $this->table,
+                $set,
+                $this->bindings
+            );
+        } catch (IntegrityConstraintViolationException $e) {
+            Message::add($e->getMessage());
+        }
 
-        return $db->getLastInsertId();
+        return DB::$connection->getLastInsertId();
     }
 
     // -- delete
-    public function delete()
+    public function delete(): int
     {
-        global $db;
 
-        $db->delete(
-            $this->table,
-            $this->bindings
-        );
+        try {
+            DB::$connection->delete(
+                $this->table,
+                $this->bindings
+            );
+        } catch (EmptyWhereClauseError $e) {
+            Message::add($e->getMessage());
+        }
 
-        return $db->getLastInsertId();
+        return DB::$connection->getLastInsertId();
     }
 
     // -- save
-    public function save($array)
+    public function save($array): bool|int|string|null
     {
         $lastInsertId = null;
 
-        if(isset($array["delete"])){
+        if (isset($array["delete"])) {
             $this->bindings = ["id" => $array["id"]];
             $lastInsertId = $this->delete();
-        }
-        elseif(isset($array["id"])){
+        } elseif (isset($array["id"])) {
             $this->bindings = ["id" => $array["id"]];
             $lastInsertId = $this->update($array);
-        }
-        else {
+        } else {
             $key = key($array);
-            if(!empty($array[$key])) {
+            if (!empty($array[$key])) {
                 $lastInsertId = $this->insert($array);
             }
         }
@@ -200,30 +222,12 @@ class Model {
         return $lastInsertId;
     }
 
-    // -- post
-    public function post() {
-        global $auth;
-        if($_SERVER['REQUEST_METHOD'] === 'POST' && $auth->isLoggedIn()){
-            try {
-                foreach($_POST as $key => $array){
-                    if($key == $this->table) {
-                        foreach($array as $row){
-                            $this->save($row);
-                        }
-                    }
-                }
-                Message::add('Update succesfully', $this->path);
-            } catch (Exception $e) {
-                Message::add('Something went wrong', $this->path);
-            }
-        }
-    }
-
-    public function purify($array) {
+    public function purify($array)
+    {
         $config = HTMLPurifier_Config::createDefault();
         $purifier = new HTMLPurifier($config);
         foreach ($array as $key => $value) {
-            if($value){
+            if ($value) {
                 $array[$key] = $purifier->purify($value);
             }
         }

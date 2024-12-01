@@ -1,51 +1,60 @@
 <?php
+
 namespace Ivy;
 
-class Message {
+use stdClass;
 
-    public string $tpl;
+class Message
+{
+    public static string $template;
 
-    function __construct() {
-        if(!isset($_SESSION["flash_messages"])){
+    function __construct()
+    {
+        if (!isset($_SESSION["flash_messages"])) {
             $_SESSION["flash_messages"] = array();
         }
-        $this->tpl = '';
     }
 
-    public static function add($value, $redirect = null): void
+    public static function template($template): Message
     {
-        if (isset($_SESSION["flash_messages"]) && !in_array($value, $_SESSION["flash_messages"])){
+        self::$template = $template;
+        return new self;
+    }
+
+    public static function add($value, $redirect = null): Message
+    {
+        if (isset($_SESSION["flash_messages"]) && !in_array($value, $_SESSION["flash_messages"])) {
             $_SESSION["flash_messages"][] = $value;
         }
-        if ($redirect){
+        if ($redirect) {
             if (headers_sent()) {
-                print'<script> location.replace("' . $redirect .'"); </script>';
+                print '<script> location.replace("' . $redirect . '"); </script>';
             } else {
-                header('location:' . $redirect,  true,  302);
+                header('location:' . $redirect, true, 302);
                 exit;
             }
         }
+        return new self;
     }
 
-    public function display($value = null): void
+    public static function render($template = null): void
     {
-        if($value && !empty($this->tpl)){
-            include Template::file($this->tpl, $value);
+        if ($template) {
+            self::$template = $template;
         }
-        elseif(!empty($_SESSION["flash_messages"]) && !empty($this->tpl)){
-            foreach($_SESSION["flash_messages"] as $key => $value){
-                $message = new \stdClass;
+        if (!empty($_SESSION["flash_messages"]) && !empty(self::$template)) {
+            foreach ($_SESSION["flash_messages"] as $key => $value) {
+                $message = new stdClass;
                 $message->id = $key;
                 $message->text = $value;
-                include Template::file($this->tpl, $message);
+                Template::render(self::$template, ['message' => $message]);
             }
         }
-        $this->remove();
+        self::remove();
     }
 
-    private function remove(): void
+    private static function remove(): void
     {
         $_SESSION["flash_messages"] = array();
     }
-
 }

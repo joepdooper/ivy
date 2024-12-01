@@ -1,0 +1,80 @@
+{php $profile = isset($_SESSION['auth_user_id']) ? (new \Ivy\Profile)->where('user_id', $_SESSION['auth_user_id'])->getRow()->single() : null}
+<header>
+    <div class="border-b flex">
+        <div class="flex-1 p-4">
+            <a href="{= _BASE_PATH}" class="leading-none text-xl font-bold">
+                {\Ivy\Setting::$stash['name']->value}
+            </a>
+        </div>
+        <div class="px-4 flex gap-4 items-center">
+            {* Hook from DarkMode plugin *}
+            {\Ivy\Template::hooks()->do_action('dark_mode_buttons')}
+            {if \Ivy\User::isLoggedIn()}
+                <div class="dropdown dropdown-end h-10">
+                    <div tabindex="0" role="button" class="avatar">
+                        {if isset($profile->users_image)}
+                            <div class="w-10 rounded-full">
+                                <img alt="{$profile->username}"
+                                     src="{= _BASE_PATH . 'media/item/thumb/' . $profile->users_image}"/>
+                            </div>
+                        {else}
+                            {\Ivy\Button::link(_BASE_PATH . 'admin/profile', null, 'feather/user.svg', 'Profile')}
+                        {/if}
+                    </div>
+                    <ul
+                            tabindex="0"
+                            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                        <li>
+                            <a href="{= _BASE_PATH . 'admin/profile'}">
+                                {icon("feather/user.svg")|noescape}
+                                Profile
+                            </a>
+                        </li>
+                        {if \Ivy\User::canEditAsAdmin()}
+                            <li>
+                                <a href="{= _BASE_PATH . 'admin/setting'}">
+                                    {icon("feather/sliders.svg")|noescape}
+                                    Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{= _BASE_PATH . 'admin/plugin'}">
+                                    {icon("feather/package.svg")|noescape}
+                                    Plugins
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{= _BASE_PATH . 'admin/template'}">
+                                    {icon("feather/layout.svg")|noescape}
+                                    Templates
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{= _BASE_PATH . 'admin/user'}">
+                                    {icon("feather/users.svg")|noescape}
+                                    Users
+                                </a>
+                            </li>
+                            {if isset($_SESSION['plugin_actives']) && in_array("Tag", $_SESSION['plugin_actives'])}
+                                <li>
+                                    <a href="{= _BASE_PATH . 'plugin/tag'}">
+                                        {icon("feather/tag.svg")|noescape}
+                                        Add tags
+                                    </a>
+                                </li>
+                            {/if}
+                        {/if}
+                        <li>
+                            <a href="{= _BASE_PATH . 'admin/logout'}">
+                                {icon("feather/log-out.svg")|noescape}
+                                Sign out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            {else}
+                {\Ivy\Button::link(_BASE_PATH . 'admin/login', null, 'feather/user.svg', 'Login')}
+            {/if}
+        </div>
+    </div>
+</header>

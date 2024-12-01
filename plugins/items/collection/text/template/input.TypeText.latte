@@ -1,0 +1,13 @@
+<input type="hidden" id="input{$inputText['id']}" name="{$inputText['name']}"
+       value="{$inputText['value']}">
+
+<div id="editor{$inputText['id']}" class="editor">
+    <div id="content{$inputText['id']}" class="content"
+         contenteditable="true">{$inputText['value']|noescape}</div>
+</div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        inputTextListener({$inputText['id']});
+    });
+</script>

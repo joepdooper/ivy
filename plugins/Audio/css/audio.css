@@ -1,7 +1,0 @@
-.no-audio {
-  background-color: var(--c-neutral);
-  min-height: 40px;
-}
-.item-audio audio {
-  width: 100%;
-}

@@ -1,0 +1,10 @@
+<div class="dissableSortable join">
+    {if isset($item)}
+        {\Ivy\Button::visible('publish_item', $item->published, 'publish_item_' . $item->route . '_' . $item->id)}
+        {\Ivy\Button::save('save_item', $item->id)}
+        {\Ivy\Button::delete('delete_item', $item->id, 'delete_item_' . $item->route . '_' . $item->id, _BASE_PATH . $item->route . '/delete/' . $item->id . \Ivy\Template::$url)}
+        <label for="delete_modal_{$item->id}" class="btn btn-neutral btn-square join-item">
+            {icon("feather/trash-2.svg")|noescape}
+        </label>
+    {/if}
+</div>

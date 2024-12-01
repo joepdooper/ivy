@@ -1,0 +1,37 @@
+{extends '../body.latte'}
+
+{block main}
+    <main class="grow p-4">
+        <form action="{= _BASE_PATH . 'admin/user/login/'}" method="POST" enctype="multipart/form-data"
+              class="max-w-xl mx-auto">
+            <div class="space-y-4">
+                <h1 class="leading-none text-6xl font-bold">{= __('core.header.login')}</h1>
+
+                <div>
+                    <label>
+                        <input type="email" id="email" name="email" placeholder="{= __('core.placeholder.email')}"
+                               class="input input-bordered w-full">
+                    </label>
+                </div>
+
+                <div>
+                    <label>
+                        <input type="password" id="password" name="password"
+                               placeholder="{__('core.placeholder.password')}"
+                               class="input input-bordered w-full">
+                    </label>
+                </div>
+
+                <div class="text-center">
+                    {\Ivy\Button::submit(__('core.button.login'))}
+                </div>
+
+                <div class="text-center">
+                    <a class="text-xs" href="{= _BASE_PATH . 'admin/register'}">No account? Register!</a><br>
+                    <a class="text-xs" href="{= _BASE_PATH . 'admin/reset'}">Forgot password? Reset!</a>
+                </div>
+
+            </div>
+        </form>
+    </main>
+{/block}

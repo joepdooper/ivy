@@ -1,126 +1,111 @@
 <?php
+
 namespace Ivy;
 
-use HTMLPurifier_Config;
-use HTMLPurifier;
+use Exception;
 
-#[\AllowDynamicProperties]
+class Plugin extends Model
+{
+    protected string $table = 'plugin';
+    protected string $path = _BASE_PATH . 'admin/plugin';
+    private ?int $id;
+    private ?string $url;
+    private PluginInfo $info;
 
-class Plugin extends Model {
-    use Cache;
-
-    protected $table = 'plugin';
-    protected $path = _BASE_PATH . 'admin/plugin';
-    public \stdClass $plugin;
-
-    function post(): void
+    public function __construct($data = null)
     {
-        global $db;
-
-        $config = HTMLPurifier_Config::createDefault();
-        $purifier = new HTMLPurifier($config);
-
-        $plugins = $_POST['plugin'] ?? '';
-
-        foreach ($plugins as $key => $plugin) {
-
-            // -- install plugin
-            if(!isset($plugin['id'])) {
-                try {
-                    if (strpos(_PUBLIC_PATH . _PLUGIN_PATH . $plugin['id'], _PUBLIC_PATH . _PLUGIN_PATH) === 0) {
-
-                        $this->plugin = $this->loadPluginInfo($plugin);
-
-                        if (isset($this->plugin->dependencies) && !empty($missing = $this->checkDependencies((array)$this->plugin->dependencies))) {
-                            $count = count($missing);
-                            $message = "This plugin has " . ($count > 1 ? "dependencies" : "dependency") . ". Please install the " . ($count > 1 ? "plugins" : "plugin") . " " . implode(", ", $missing);
-                            Message::add($message, _BASE_PATH . 'admin/plugin');
-                        }
-
-                        $_POST['plugin'][$key] = [
-                            'name' => $purifier->purify($this->plugin->name),
-                            'version' => $purifier->purify($this->plugin->version),
-                            'desc' => $purifier->purify($this->plugin->description),
-                            'url' => $purifier->purify($this->plugin->url),
-                            'type' => $purifier->purify($this->plugin->type),
-                            'settings' => (!empty($this->plugin->settings) ? '1' : '0')
-                        ];
-
-                        if(!empty($this->plugin->database->install)) {
-                            if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . $this->plugin->database->install)) {
-                                require_once _PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . $this->plugin->database->install;
-                            }
-                        }
-
-                    }
-                } catch (Exception $e) {
-                    Message::add("Error installing plugin: " . $e->getMessage());
-                }
-            }
-
-            // -- deinstall plugin
-            if(isset($plugin['delete'])) {
-                try {
-
-                    $plugin['url'] = $db->selectValue(
-                        'SELECT url FROM plugin WHERE id = :id',
-                        [
-                            $plugin['id']
-                        ]
-                    );
-
-                    $this->plugin = $this->loadPluginInfo($plugin);
-
-                    if(!empty($this->plugin->database->uninstall)) {
-                        if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . $this->plugin->database->uninstall)) {
-                            require_once _PUBLIC_PATH . _PLUGIN_PATH . $this->plugin->url . DIRECTORY_SEPARATOR . $this->plugin->database->uninstall;
-                        }
-                    }
-
-                } catch (Exception $e) {
-                    Message::add("Error deinstalling plugin: " . $e->getMessage());
-                }
-            }
-
-        }
-
-        parent::post();
+        parent::__construct();
+        $this->id = $data['id'] ?? null;
+        $this->url = $data['url'] ?? null;
     }
 
-    // -- function to check dependencies
-    private function checkDependencies($dependencies): array
+    public function setInfo(): Plugin
     {
-        global $db;
+        $this->info = new PluginInfo($this->url);
 
-        return array_filter($dependencies, function ($dependency) use ($db) {
-            // -- check if the dependent plugin is installed
-            return !$db->selectValue('SELECT id FROM plugin WHERE name = :name', ['name' => $dependency]);
-        });
+        return $this;
     }
 
-    private function loadPluginInfo($plugin)
+    public function setUrl($url): Plugin
     {
-        $config = HTMLPurifier_Config::createDefault();
-        $purifier = new HTMLPurifier($config);
+        $this->url = $url;
 
-        $dir = _PUBLIC_PATH . _PLUGIN_PATH . $purifier->purify($plugin['url']) . DIRECTORY_SEPARATOR;
+        return $this;
+    }
 
-        if (strpos($dir, _PUBLIC_PATH . _PLUGIN_PATH) === 0) {
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
 
-            $file = "info.json";
-            $path = $dir . $file;
-            $url = realpath($path);
+    public function hasUrl(): bool
+    {
+        return (bool)$this->url;
+    }
 
-            if ($url) {
-                if (strpos($url, $dir) === 0) {
-                    $content = file_get_contents($url);
-                    $plugin = json_decode($content);
-                }
-            }
 
+    public function setId($id): Plugin
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function hasId(): bool
+    {
+        return (bool)$this->id;
+    }
+
+    public function checkDependencies(): array
+    {
+        $dependencies = [];
+        if (isset($this->info->dependencies)) {
+            $dependencies = array_filter($this->info->dependencies, function ($dependency) {
+                return !DB::$connection->selectValue('SELECT id FROM plugin WHERE name = :name', ['name' => $dependency]);
+            });
         }
 
-        return $plugin;
+        return $dependencies;
+    }
+
+    public function install(): void
+    {
+        try {
+            if (!empty($missing = $this->checkDependencies())) {
+                $count = count($missing);
+                $message = "This plugin has " . ($count > 1 ? "dependencies" : "dependency") . ". Please install the " . ($count > 1 ? "plugins" : "plugin") . " " . implode(", ", $missing);
+                Message::add($message, _BASE_PATH . 'admin/plugin');
+            }
+            if (isset($this->info->database['install']) && !empty($this->info->database['install']) && !empty($this->info->url)) {
+                if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $this->info->url . DIRECTORY_SEPARATOR . $this->info->database['install'])) {
+                    require_once _PUBLIC_PATH . _PLUGIN_PATH . $this->info->url . DIRECTORY_SEPARATOR . $this->info->database['install'];
+                }
+                unset($this->info->database);
+            }
+            $this->insert((array)$this->info);
+        } catch (Exception $e) {
+            Message::add("Error installing plugin: " . $e->getMessage());
+        }
+    }
+
+    public function uninstall(): void
+    {
+        try {
+            $this->setUrl($this->data->url)->setInfo();
+            if (isset($this->info->database['uninstall']) && !empty($this->info->database['uninstall'])) {
+                if (file_exists(_PUBLIC_PATH . _PLUGIN_PATH . $this->info->url . DIRECTORY_SEPARATOR . $this->info->database['uninstall'])) {
+                    require_once _PUBLIC_PATH . _PLUGIN_PATH . $this->info->url . DIRECTORY_SEPARATOR . $this->info->database['uninstall'];
+                }
+            }
+            $this->delete();
+        } catch (Exception $e) {
+            Message::add("Error uninstalling plugin: " . $e->getMessage());
+        }
     }
 
 }

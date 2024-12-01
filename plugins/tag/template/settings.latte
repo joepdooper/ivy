@@ -1,0 +1,53 @@
+{extends _PUBLIC_PATH . _TEMPLATE_BASE . 'body.latte'}
+TEST
+{block main}
+    <main class="grow p-4 w-full max-w-5xl mx-auto">
+        <form action="{= _BASE_PATH . 'tag/post'}" method="POST" enctype="multipart/form-data">
+            <div class="space-y-4">
+                <h1 class="leading-none text-6xl font-bold">Tags</h1>
+
+                <div class="overflow-x-auto">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach $tags as $key => $row}
+                            <tr>
+                                <td>
+                                    <label>
+                                        <input type="text" name="tag[{$key}][value]" value="{$row->value}"
+                                               class="input input-bordered w-full">
+                                    </label>
+                                </td>
+                                <td class="text-right">
+                                    <input type="hidden" name="tag[{$key}][id]" value="{$row->id}">
+                                    <div class="join">
+                                        {\Ivy\Button::delete("tag[" . $key . "][delete]", "tag_" . $row->id)}
+                                    </div>
+                                </td>
+                            </tr>
+                        {/foreach}
+                        <tr>
+                            <td colspan="2">
+                                <label>
+                                    <input class="input input-bordered w-full" type="text" name="tag[][value]"
+                                           placeholder="Add tag">
+                                </label>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-center">
+                    {\Ivy\Button::submit('save')}
+                </div>
+
+            </div>
+        </form>
+    </main>
+{/block}

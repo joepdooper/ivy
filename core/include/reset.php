@@ -1,23 +1,28 @@
 <?php
-defined('_BASE_PATH') ?: header('location: ../../index.php');
+
+global $auth;
+
+use Delight\Auth\InvalidSelectorTokenPairException;
+use Delight\Auth\TokenExpiredException;
+use Delight\Auth\ResetDisabledException;
+use Delight\Auth\TooManyRequestsException;
+use Delight\Auth\AuthError;
 use Ivy\Message;
 
 // Confirm Email
-if (isset($selector) && isset($token)){
-  try {
-    $auth->canResetPasswordOrThrow($selector, $token);
-    Message::add('Create a new secure password');
-  }
-  catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {
-    Message::add('Invalid token');
-  }
-  catch (\Delight\Auth\TokenExpiredException $e) {
-    Message::add('Token expired');
-  }
-  catch (\Delight\Auth\ResetDisabledException $e) {
-    Message::add('Password reset is disabled');
-  }
-  catch (\Delight\Auth\TooManyRequestsException $e) {
-    Message::add('Too many requests');
-  }
+if (isset($selector) && isset($token)) {
+    try {
+        $auth->canResetPasswordOrThrow($selector, $token);
+        Message::add('Create a new secure password');
+    } catch (InvalidSelectorTokenPairException $e) {
+        Message::add('Invalid token');
+    } catch (TokenExpiredException $e) {
+        Message::add('Token expired');
+    } catch (ResetDisabledException $e) {
+        Message::add('Password reset is disabled');
+    } catch (TooManyRequestsException $e) {
+        Message::add('Too many requests');
+    } catch (AuthError) {
+        Message::add('Auth error');
+    }
 }

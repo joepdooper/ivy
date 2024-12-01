@@ -1,0 +1,12 @@
+{
+  "name": "Sitemap",
+  "url": "Sitemap",
+  "version": "1.0.0",
+  "settings": true,
+  "description": "Create sitemaps",
+  "type": "SEO",
+  "database": {
+    "install": "db/install.db.php",
+    "uninstall": "db/uninstall.db.php"
+  }
+}

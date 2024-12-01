@@ -24,7 +24,11 @@
     "vlucas/phpdotenv": "^5.5",
     "samdark/sitemap": "^2.4",
     "corviz/crow": "dev-main",
-    "wixel/gump": "dev-master"
+    "wixel/gump": "dev-master",
+    "latte/latte": "^3.0@dev",
+    "predis/predis": "^3.0@alpha",
+    "amphp/file": "3.x-dev",
+    "amphp/cache": "2.x-dev"
   },
   "scripts": {
     "post-create-project-cmd": [
@@ -32,7 +36,8 @@
     ]
   },
   "require-dev": {
-    "pestphp/pest": "3.x-dev"
+    "pestphp/pest": "3.x-dev",
+    "phpstan/phpstan": "2.0.x-dev"
   },
   "config": {
     "allow-plugins": {

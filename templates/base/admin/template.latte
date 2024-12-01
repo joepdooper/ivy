@@ -1,0 +1,73 @@
+{extends '../body.latte'}
+
+{block main}
+    <main class="grow p-4 w-full max-w-5xl mx-auto">
+        <form action="{= _BASE_PATH . 'admin/template/post'}" method="POST" enctype="multipart/form-data">
+            <div class="space-y-4">
+                <h1 class="leading-none text-6xl font-bold">Templates</h1>
+
+                <div class="overflow-x-auto">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>name</th>
+                            <th>code</th>
+                            <th>select</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <input type="hidden" name="template[1][id]" value="1">
+                                Base
+                            </td>
+                            <td>
+                                <pre><code>_TEMPLATE_BASE</code></pre>
+                            </td>
+                            <td>
+                                <label>
+                                    <select class="select select-bordered w-full" name="template[1][value]">
+                                        {foreach array_diff(scandir(_PUBLIC_PATH . _TEMPLATES_PATH), array('.', '..', '.DS_Store')) as $val}
+                                            {php $theme = json_decode(file_get_contents(_PUBLIC_PATH . _TEMPLATES_PATH . $val . '/info.json'))}
+                                            <option value="{$theme->url}" {basename(_TEMPLATE_BASE) != $theme->url ?: 'selected'}>
+                                                {$theme->name . ' (' . $theme->description . ')'}
+                                            </option>
+                                        {/foreach}
+                                    </select>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="hidden" name="template[2][id]" value="2">
+                                Sub
+                            </td>
+                            <td>
+                                <pre><code>_TEMPLATE_SUB</code></pre>
+                            </td>
+                            <td>
+                                <label>
+                                    <select class="select select-bordered w-full" name="template[2][value]">
+                                        {foreach array_diff(scandir(_PUBLIC_PATH . _TEMPLATES_PATH), array('.', '..', '.DS_Store')) as $val}
+                                            {php $theme = json_decode(file_get_contents(_PUBLIC_PATH . _TEMPLATES_PATH . $val . '/info.json'))}
+                                            <option value="{$theme->url}" {basename(_TEMPLATE_SUB) != $theme->url ?: 'selected'}>
+                                                {$theme->name . ' (' . $theme->description . ')'}
+                                            </option>
+                                        {/foreach}
+                                    </select>
+                                </label>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="text-center">
+                    {\Ivy\Button::submit('update')}
+                </div>
+
+            </div>
+        </form>
+    </main>
+{/block}

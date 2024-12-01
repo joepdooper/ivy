@@ -1,59 +1,78 @@
 <?php
+
 namespace Ivy;
 
+use Delight\Auth\Administration;
+use Delight\Auth\AttemptCancelledException;
+use Delight\Auth\Auth;
+use Delight\Auth\AuthError;
+use Delight\Auth\EmailNotVerifiedException;
+use Delight\Auth\InvalidEmailException;
+use Delight\Auth\InvalidPasswordException;
+use Delight\Auth\InvalidSelectorTokenPairException;
+use Delight\Auth\NotLoggedInException;
+use Delight\Auth\ResetDisabledException;
+use Delight\Auth\Role;
+use Delight\Auth\TokenExpiredException;
+use Delight\Auth\TooManyRequestsException;
+use Delight\Auth\UnknownIdException;
+use Delight\Auth\UserAlreadyExistsException;
+use Delight\Db\Throwable\IntegrityConstraintViolationException;
+use Exception;
+use Hooks;
 use HTMLPurifier_Config;
 use HTMLPurifier;
+use function urlencode;
 
-class User extends Model {
+class User extends Model
+{
 
-    protected $table = 'users';
-    protected $path = _BASE_PATH . 'admin/user';
+    protected string $table = 'users';
+    protected string $path = _BASE_PATH . 'admin/user';
+    private static Auth $auth;
 
     // Register
 
-    function register(): void
+    /**
+     * @throws UnknownIdException
+     * @throws AuthError
+     * @throws IntegrityConstraintViolationException
+     */
+    public function register(): void
     {
 
-        global $db, $auth;
-
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $config = HTMLPurifier_Config::createDefault();
             $purifier = new HTMLPurifier($config);
 
             try {
-                $userId = $auth->register($purifier->purify($_POST['email']), $purifier->purify($_POST['password']), $purifier->purify($_POST['username']), function ($selector, $token) use ($purifier) {
+                $userId = self::$auth->register($purifier->purify($_POST['email']), $purifier->purify($_POST['password']), $purifier->purify($_POST['username']), function ($selector, $token) use ($purifier) {
                     $url = _BASE_PATH . 'admin/login/' . urlencode($selector) . '/' . urlencode($token);
                     // send email
                     $mail = new Mail();
                     $mail->Address = $purifier->purify($_POST['email']);
-                    $mail->Name    = $purifier->purify($_POST['username']);
+                    $mail->Name = $purifier->purify($_POST['username']);
                     $mail->Subject = 'Activate account';
-                    $mail->Body    = 'Activate your account with this link: ' . $url;
+                    $mail->Body = 'Activate your account with this link: ' . $url;
                     $mail->AltBody = 'Activate your account with this link: ' . $url;
                     $mail->send();
                 });
-            }
-            catch (\Delight\Auth\InvalidEmailException $e) {
+                DB::$connection->insert('profiles', ['user_id' => $userId]);
+                // Set role to registered user
+                if (Setting::$stash['registration_role']->bool && Setting::$stash['registration_role']->value) {
+                    $role = strtoupper(Setting::$stash['registration_role']->value);
+                    $roleConstant = "\Delight\Auth\Role::$role";
+                    self::$auth->admin()->addRoleForUserById($userId, constant($roleConstant));
+                }
+            } catch (InvalidEmailException) {
                 Message::add('Invalid email address', _BASE_PATH . 'admin/register');
-            }
-            catch (\Delight\Auth\InvalidPasswordException $e) {
+            } catch (InvalidPasswordException) {
                 Message::add('Invalid password', _BASE_PATH . 'admin/register');
-            }
-            catch (\Delight\Auth\UserAlreadyExistsException $e) {
+            } catch (UserAlreadyExistsException) {
                 Message::add('User already exists', _BASE_PATH . 'admin/register');
-            }
-            catch (\Delight\Auth\TooManyRequestsException $e) {
+            } catch (TooManyRequestsException) {
                 Message::add('Too many requests', _BASE_PATH . 'admin/register');
-            }
-
-            $db->insert('profiles',['user_id' => $userId]);
-
-            // Set role to registered user
-            if(Setting::$cache['registration_role']->bool && Setting::$cache['registration_role']->value){
-                $role = strtoupper(Setting::$cache['registration_role']->value);
-                $roleConstant = "\Delight\Auth\Role::$role";
-                $auth->admin()->addRoleForUserById($userId, constant($roleConstant));
             }
 
             Message::add('An email has been sent to ' . $_POST['email'] . ' with a link to activate your account', _BASE_PATH . 'admin/login');
@@ -64,30 +83,28 @@ class User extends Model {
 
     // Login
 
-    function login(): void
+    /**
+     * @throws AuthError
+     * @throws AttemptCancelledException
+     */
+    public function login(): void
     {
 
-        global $auth;
-
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $config = HTMLPurifier_Config::createDefault();
             $purifier = new HTMLPurifier($config);
 
             try {
-                $auth->login($purifier->purify($_POST['email']), $purifier->purify($_POST['password']));
-                Message::add('Welcome ' . $auth->getUsername(), _BASE_PATH . 'admin/profile');
-            }
-            catch (\Delight\Auth\InvalidEmailException $e) {
+                self::$auth->login($purifier->purify($_POST['email']), $purifier->purify($_POST['password']));
+                Message::add('Welcome ' . self::$auth->getUsername(), _BASE_PATH . 'admin/profile');
+            } catch (InvalidEmailException) {
                 Message::add('Wrong email address', _BASE_PATH . 'admin/login');
-            }
-            catch (\Delight\Auth\InvalidPasswordException $e) {
+            } catch (InvalidPasswordException) {
                 Message::add('Wrong password', _BASE_PATH . 'admin/login');
-            }
-            catch (\Delight\Auth\EmailNotVerifiedException $e) {
+            } catch (EmailNotVerifiedException) {
                 Message::add('Email not verified', _BASE_PATH . 'admin/login');
-            }
-            catch (\Delight\Auth\TooManyRequestsException $e) {
+            } catch (TooManyRequestsException) {
                 Message::add('Too many requests', _BASE_PATH . 'admin/login');
             }
 
@@ -97,23 +114,22 @@ class User extends Model {
 
     // Logout
 
-    function logout(): void
+    /**
+     * @throws AuthError
+     */
+    public function logout(): void
     {
 
-        global $auth;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            Template::hooks()->do_action('start_logout_action');
 
-            $hooks = new \Hooks();
+            self::$auth->logOut();
+            self::$auth->destroySession();
 
-            $hooks->do_action('start_logout_action');
+            Template::hooks()->do_action('end_logout_action');
 
-            $auth->logOut();
-            $auth->destroySession();
-
-            $hooks->do_action('end_logout_action');
-
-            Message::add('Logout successfully',_BASE_PATH);
+            Message::add('Logout successfully', _BASE_PATH);
 
         }
 
@@ -121,41 +137,38 @@ class User extends Model {
 
     // Reset
 
-    function reset(): void
+    /**
+     * @throws AuthError
+     */
+    public function reset(): void
     {
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
-
-            global $auth;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $config = HTMLPurifier_Config::createDefault();
             $purifier = new HTMLPurifier($config);
 
-            if(isset($_POST['email'])){
+            if (isset($_POST['email'])) {
 
                 try {
-                    $auth->forgotPassword($purifier->purify($_POST['email']), function ($selector, $token) use ($purifier) {
-                        $url = _BASE_PATH . 'admin/reset/' . \urlencode($selector) . '/' . \urlencode($token);
+                    self::$auth->forgotPassword($purifier->purify($_POST['email']), function ($selector, $token) use ($purifier) {
+                        $url = _BASE_PATH . 'admin/reset/' . urlencode($selector) . '/' . urlencode($token);
                         // send email
                         $mail = new Mail();
                         $mail->Address = $purifier->purify($_POST['email']);
-                        $mail->Name    = '';
+                        $mail->Name = '';
                         $mail->Subject = 'Reset password';
-                        $mail->Body    = 'Reset password with this link: ' . $url;
+                        $mail->Body = 'Reset password with this link: ' . $url;
                         $mail->AltBody = 'Reset password with this link: ' . $url;
                         $mail->send();
                     });
-                }
-                catch (\Delight\Auth\InvalidEmailException $e) {
+                } catch (InvalidEmailException) {
                     Message::add('Invalid email address', _BASE_PATH . 'admin/reset');
-                }
-                catch (\Delight\Auth\EmailNotVerifiedException $e) {
+                } catch (EmailNotVerifiedException) {
                     Message::add('Email not verified', _BASE_PATH . 'admin/reset');
-                }
-                catch (\Delight\Auth\ResetDisabledException $e) {
+                } catch (ResetDisabledException) {
                     Message::add('Password reset is disabled', _BASE_PATH . 'admin/reset');
-                }
-                catch (\Delight\Auth\TooManyRequestsException $e) {
+                } catch (TooManyRequestsException) {
                     Message::add('Too many requests', _BASE_PATH . 'admin/reset');
                 }
 
@@ -163,24 +176,19 @@ class User extends Model {
 
             }
 
-            if(isset($_POST['password'])){
+            if (isset($_POST['password'])) {
                 try {
-                    $auth->resetPassword($_POST['selector'], $_POST['token'], $_POST['password']);
+                    self::$auth->resetPassword($_POST['selector'], $_POST['token'], $_POST['password']);
                     Message::add('Password has been reset', _BASE_PATH . 'admin/login');
-                }
-                catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {
+                } catch (InvalidSelectorTokenPairException) {
                     Message::add('Invalid token', _BASE_PATH . 'admin/reset');
-                }
-                catch (\Delight\Auth\TokenExpiredException $e) {
+                } catch (TokenExpiredException) {
                     Message::add('Token expired', _BASE_PATH . 'admin/reset');
-                }
-                catch (\Delight\Auth\ResetDisabledException $e) {
+                } catch (ResetDisabledException) {
                     Message::add('Password reset is disabled', _BASE_PATH . 'admin/reset');
-                }
-                catch (\Delight\Auth\InvalidPasswordException $e) {
+                } catch (InvalidPasswordException) {
                     Message::add('Invalid password', _BASE_PATH . 'admin/reset');
-                }
-                catch (\Delight\Auth\TooManyRequestsException $e) {
+                } catch (TooManyRequestsException) {
                     Message::add('Too many requests', _BASE_PATH . 'admin/reset');
                 }
             }
@@ -189,89 +197,124 @@ class User extends Model {
 
     }
 
-    function post(): void
+    static function canEditAsEditor(): bool
     {
-
-        global $auth;
-
-        if($_SERVER['REQUEST_METHOD'] === 'POST' && $auth->isLoggedIn()){
-
-            try {
-
-                $users = isset($_POST['users']) ? $_POST['users'] : '';
-
-                // Update users
-                if(!empty($users)){
-                    foreach($users as $key => $row){
-                        if($row['delete']){
-                            try {
-                                $auth->admin()->deleteUserById($key);
-                            }
-                            catch (\Delight\Auth\UnknownIdException $e) {
-                                die('Unknown ID');
-                            }
-                        } else {
-                            if($row['editor']){
-                                $auth->admin()->addRoleForUserById($key, \Delight\Auth\Role::EDITOR);
-                            } else {
-                                $auth->admin()->removeRoleForUserById($key, \Delight\Auth\Role::EDITOR);
-                            }
-                            if($row['admin']){
-                                $auth->admin()->addRoleForUserById($key, \Delight\Auth\Role::ADMIN);
-                            } else {
-                                $auth->admin()->removeRoleForUserById($key, \Delight\Auth\Role::ADMIN);
-                            }
-                            if($row['super_admin']){
-                                $auth->admin()->addRoleForUserById($key, \Delight\Auth\Role::SUPER_ADMIN);
-                            } else {
-                                $auth->admin()->removeRoleForUserById($key, \Delight\Auth\Role::SUPER_ADMIN);
-                            }
-                        }
-                    }
-                }
-
-                Message::add('Update succesfully',_BASE_PATH . 'admin/user');
-            } catch (Exception $e) {
-                Message::add('Something went wrong',_BASE_PATH . 'admin/user');
-            }
-
-        }
-
+        $roles = [
+            Role::EDITOR,
+            Role::ADMIN,
+            Role::SUPER_ADMIN
+        ];
+        return self::$auth->hasAnyRole(...$roles);
     }
 
-    static function canEditAsEditor(\Delight\Auth\Auth $auth): bool
+    static function canEditAsAdmin(): bool
     {
-        return $auth->hasAnyRole(
-            \Delight\Auth\Role::EDITOR,
-            \Delight\Auth\Role::ADMIN,
-            \Delight\Auth\Role::SUPER_ADMIN
-        );
-    }
-    static function canEditAsAdmin(\Delight\Auth\Auth $auth): bool
-    {
-        return $auth->hasAnyRole(
-            \Delight\Auth\Role::ADMIN,
-            \Delight\Auth\Role::SUPER_ADMIN
-        );
-    }
-    static function canEditAsSuperAdmin(\Delight\Auth\Auth $auth): bool
-    {
-        return $auth->hasAnyRole(
-            \Delight\Auth\Role::SUPER_ADMIN
-        );
+        $roles = [
+            Role::ADMIN,
+            Role::SUPER_ADMIN
+        ];
+        return self::$auth->hasAnyRole(...$roles);
     }
 
-    static function userIsSuperAdmin(\Delight\Auth\Auth $auth, $id): bool
+    static function canEditAsSuperAdmin(): bool
     {
-        return $auth->admin()->doesUserHaveRole($id, \Delight\Auth\Role::SUPER_ADMIN);
+        $roles = [
+            Role::SUPER_ADMIN
+        ];
+        return self::$auth->hasAnyRole(...$roles);
     }
-    static function userIsAdmin(\Delight\Auth\Auth $auth, $id): bool
+
+    /**
+     * @throws UnknownIdException
+     */
+    static function userIsSuperAdmin($id): bool
     {
-        return $auth->admin()->doesUserHaveRole($id, \Delight\Auth\Role::ADMIN);
+        return self::$auth->admin()->doesUserHaveRole($id, Role::SUPER_ADMIN);
     }
-    static function userIsEditor(\Delight\Auth\Auth $auth, $id): bool
+
+    /**
+     * @throws UnknownIdException
+     */
+    static function userIsAdmin($id): bool
     {
-        return $auth->admin()->doesUserHaveRole($id, \Delight\Auth\Role::EDITOR);
+        return self::$auth->admin()->doesUserHaveRole($id, Role::ADMIN);
+    }
+
+    /**
+     * @throws UnknownIdException
+     */
+    static function userIsEditor($id): bool
+    {
+        return self::$auth->admin()->doesUserHaveRole($id, Role::EDITOR);
+    }
+
+    static function isLoggedIn(): bool
+    {
+        return self::$auth->isLoggedIn();
+    }
+
+    static function getRoles(): array
+    {
+        return self::$auth->getRoles();
+    }
+
+    static function admin(): Administration
+    {
+        return self::$auth->admin();
+    }
+
+    static function auth(): void
+    {
+        self::$auth = new Auth(DB::$connection, true);
+    }
+
+    public static function getUsername(): ?string
+    {
+        return self::$auth->getUsername();
+    }
+
+    public static function getEmail(): ?string
+    {
+        return self::$auth->getEmail();
+    }
+
+    public static function getUserId(): ?int
+    {
+        return self::$auth->getUserId();
+    }
+
+    /**
+     * @throws AuthError
+     * @throws NotLoggedInException
+     */
+    public static function logOutEverywhere(): void
+    {
+        self::$auth->logOutEverywhere();
+    }
+
+    /**
+     * @throws InvalidEmailException
+     * @throws TooManyRequestsException
+     * @throws AuthError
+     * @throws UserAlreadyExistsException
+     * @throws EmailNotVerifiedException
+     * @throws NotLoggedInException
+     */
+    public static function changeEmail($newEmail, $callback): void
+    {
+        self::$auth->changeEmail($newEmail, $callback);
+    }
+
+    /**
+     * @throws TooManyRequestsException
+     * @throws InvalidSelectorTokenPairException
+     * @throws AuthError
+     * @throws UserAlreadyExistsException
+     * @throws TokenExpiredException
+     */
+    public static function confirmEmail($selector, $token): void
+    {
+        self::$auth->confirmEmail($selector, $token);
     }
 
 }

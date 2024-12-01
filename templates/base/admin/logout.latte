@@ -1,0 +1,15 @@
+{extends '../body.latte'}
+
+{block main}
+    <main class="grow p-4">
+        <form action="{= _BASE_PATH . 'admin/user/logout'}" method="POST" enctype="multipart/form-data">
+            <div class="space-y-4">
+
+                <div class="text-center">
+                    {\Ivy\Button::submit(__('core.button.logout'))}
+                </div>
+
+            </div>
+        </form>
+    </main>
+{/block}

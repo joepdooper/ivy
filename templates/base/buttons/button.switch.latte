@@ -1,0 +1,6 @@
+<input type="hidden" name="{$name}" value="0"/>
+<input class="form-check-input hidden" type="checkbox" role="switch" name="{$name}"
+       id="{$id ?? $name}" value="1" {!empty($value) ? "checked" : ''} >
+<label class="switch" for="{$id ?? $name}">
+    <span class="slider"></span>
+</label>

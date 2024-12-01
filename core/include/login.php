@@ -1,31 +1,36 @@
 <?php
-defined('_BASE_PATH') ?: header('location: ../../index.php');
+
+
+use Delight\Auth\NotLoggedInException;
+use Delight\Auth\InvalidSelectorTokenPairException;
+use Delight\Auth\TokenExpiredException;
+use Delight\Auth\UserAlreadyExistsException;
+use Delight\Auth\TooManyRequestsException;
+use Delight\Auth\AuthError;
 use Ivy\Message;
+use Ivy\User;
 
 // Confirm Email
-if (isset($selector) && isset($token)){
-  try {
-    $auth->confirmEmail($selector, $token);
-    if ($auth->isLoggedIn()) {
-      try {
-        $auth->logOutEverywhere();
-      }
-      catch (\Delight\Auth\NotLoggedInException $e) {
-        Message::add('Not logged in');
-      }
+if (isset($selector) && isset($token)) {
+    try {
+        User::confirmEmail($selector, $token);
+        if (User::isLoggedIn()) {
+            try {
+                User::logOutEverywhere();
+            } catch (NotLoggedInException) {
+                Message::add('Not logged in');
+            }
+        }
+        Message::add('Email address has been verified', _BASE_PATH . 'admin/login');
+    } catch (InvalidSelectorTokenPairException) {
+        Message::add('Invalid token');
+    } catch (TokenExpiredException) {
+        Message::add('Token expired');
+    } catch (UserAlreadyExistsException) {
+        Message::add('Email address already exists');
+    } catch (TooManyRequestsException) {
+        Message::add('Too many requests');
+    } catch (AuthError) {
+        Message::add('Auth error');
     }
-    Message::add('Email address has been verified',_BASE_PATH . 'admin/login');
-  }
-  catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {
-    Message::add('Invalid token');
-  }
-  catch (\Delight\Auth\TokenExpiredException $e) {
-    Message::add('Token expired');
-  }
-  catch (\Delight\Auth\UserAlreadyExistsException $e) {
-    Message::add('Email address already exists');
-  }
-  catch (\Delight\Auth\TooManyRequestsException $e) {
-    Message::add('Too many requests');
-  }
 }

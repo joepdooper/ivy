@@ -1,0 +1,55 @@
+{extends '../body.latte'}
+
+{block main}
+    <main class="grow p-4 w-full max-w-5xl mx-auto">
+        <form action="{= _BASE_PATH . 'admin/user/post'}" method="POST" enctype="multipart/form-data">
+            <div class="space-y-4">
+                <h1 class="leading-none text-6xl font-bold">Users</h1>
+
+                {if isset($users)}
+                    <div class="overflow-x-auto">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th>super_admin</th>
+                                <th>admin</th>
+                                <th>editor</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {foreach $users as $user}
+                                <tr>
+                                    <td>{$user->username}</td>
+                                    <td>{$user->email}</td>
+                                    <td>
+                                        {\Ivy\Button::switch('user[' . $user->id . '][super_admin]', \Ivy\User::admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::SUPER_ADMIN))}
+                                    </td>
+                                    <td>
+                                        {\Ivy\Button::switch('user[' . $user->id . '][admin]', \Ivy\User::admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::ADMIN))}
+                                    </td>
+                                    <td>
+                                        {\Ivy\Button::switch('user[' . $user->id . '][editor]', \Ivy\User::admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::EDITOR))}
+                                    </td>
+                                    <td class="text-right">
+                                        <div class="join">
+                                            {\Ivy\Button::delete("user[" . $user->id . "][delete]", "user_" . $user->id)}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {/foreach}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-center">
+                        {\Ivy\Button::submit('update')}
+                    </div>
+                {/if}
+
+            </div>
+        </form>
+    </main>
+{/block}

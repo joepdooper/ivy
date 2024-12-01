@@ -1,6 +1,6 @@
 {
   "name": "Tag",
-  "url": "Tag",
+  "url": "tag",
   "version": "1.0.0",
   "settings": true,
   "description": "Create tags for items",

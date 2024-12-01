@@ -1,0 +1,16 @@
+{if \Ivy\User::canEditAsEditor() && $item->author}
+    <div>
+        <label>
+            <select class="select select-bordered w-full" name="tag">
+                {foreach (new \Tag\Tag)->get()->all() as $option}
+                    <option value="{$option->id}"
+                            {if isset($tag->id) && $tag->id === $option->id}selected="selected"{/if}>
+                        {$option->value}
+                    </option>
+                {/foreach}
+            </select>
+        </label>
+    </div>
+{else}
+    <div class="tag text-xs">{$tag->value}</div>
+{/if}

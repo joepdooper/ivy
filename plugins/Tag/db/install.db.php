@@ -1,9 +1,7 @@
 <?php
-defined('_BASE_PATH') or die('Something went wrong');
 
-global $db;
 
-$db->exec(
+\Ivy\DB::$connection->exec(
     "
   CREATE TABLE `tag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -13,7 +11,7 @@ $db->exec(
     "
 );
 
-$db->exec(
+\Ivy\DB::$connection->exec(
     "
   CREATE TABLE `item_tag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

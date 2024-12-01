@@ -1,0 +1,26 @@
+{if !empty($inputImage['value'])}
+
+    <input type="hidden" name="{$inputImage['name']}" value="{$inputImage['value']}">
+
+    <picture class="block h-auto w-full">
+        <source media="(min-width:1024px)"
+                srcset="{= DIRECTORY_SEPARATOR . _SUBFOLDER}media/item/large/{= $image_name . '.webp'} 1x, {= DIRECTORY_SEPARATOR . _SUBFOLDER}media/item/large/{= $image_name . '.webp'} 2x"
+                type="image/webp">
+        <source media="(min-width:1024px)"
+                srcset="{= DIRECTORY_SEPARATOR . _SUBFOLDER}media/item/large/{= $inputImage['value']} 1x, {= DIRECTORY_SEPARATOR . _SUBFOLDER}media/item/large/{= $inputImage['value']} 2x">
+        <source media="(min-width:660px)"
+                srcset="{= DIRECTORY_SEPARATOR . _SUBFOLDER}media/item/small/{= $image_name . '.webp'} 1x, {= DIRECTORY_SEPARATOR . _SUBFOLDER}media/item/large/{= $image_name . '.webp'} 2x"
+                type="image/webp">
+        <source media="(min-width:660px)"
+                srcset="{= DIRECTORY_SEPARATOR . _SUBFOLDER}media/item/small/{= $inputImage['value']} 1x, {= DIRECTORY_SEPARATOR . _SUBFOLDER}media/item/large/{= $inputImage['value']} 2x">
+        <source media="(min-width:320px)"
+                srcset="{= DIRECTORY_SEPARATOR . _SUBFOLDER}media/item/thumb/{= $image_name . '.webp'} 1x, {= DIRECTORY_SEPARATOR . _SUBFOLDER}media/item/small/{= $image_name . '.webp'} 2x"
+                type="image/webp">
+        <source media="(min-width:320px)"
+                srcset="{= DIRECTORY_SEPARATOR . _SUBFOLDER}media/item/thumb/{= $inputImage['value']} 1x, {= DIRECTORY_SEPARATOR . _SUBFOLDER}media/item/small/{= $inputImage['value']} 2x">
+        <img class="block h-auto w-full max-w-full"
+             src="{= DIRECTORY_SEPARATOR . _SUBFOLDER}media/item/thumb/{= $inputImage['value']}" {$image_info|noescape}
+             alt="" loading="lazy">
+    </picture>
+
+{/if}

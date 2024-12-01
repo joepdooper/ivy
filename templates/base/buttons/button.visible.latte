@@ -1,0 +1,12 @@
+<label class="swap btn btn-neutral btn-square join-item"
+       for="{$id ?? $name}">
+    <input type="hidden" name="{$name}" value="0"/>
+    <input id="{$id ?? $name}" type="checkbox" name="{$name}"
+           value="1" {empty($value) ?: "checked"}>
+    <div class="swap-on">
+        {icon("feather/eye.svg")|noescape}
+    </div>
+    <div class="swap-off">
+        {icon("feather/eye-off.svg")|noescape}
+    </div>
+</label>

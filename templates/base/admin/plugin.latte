@@ -1,0 +1,68 @@
+{extends '../body.latte'}
+
+{block main}
+    <main class="grow p-4 w-full max-w-5xl mx-auto">
+        <form action="{= _BASE_PATH . 'admin/plugin/post'}" method="POST" enctype="multipart/form-data">
+            <div class="space-y-4">
+
+                <h1 class="leading-none text-6xl font-bold">Plugins</h1>
+
+                <div n:if="$installed_plugins" class="overflow-x-auto">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Version</th>
+                            <th>Type</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach $installed_plugins as $plugin}
+                            <tr>
+                                <td>
+                                    {\Ivy\Button::switch('plugin[' . $plugin->id . '][active]', $plugin->active, 'plugin_' . $plugin->id)}
+                                </td>
+                                <td><strong>{$plugin->name}</strong></td>
+                                <td>{$plugin->description}</td>
+                                <td>{$plugin->version}</td>
+                                <td>{$plugin->type}</td>
+                                <td class="text-right">
+                                    <input type="hidden" name="plugin[{$plugin->id}][id]" value="{$plugin->id}">
+                                    <div class="join">
+                                        <a n:if="$plugin->settings && $plugin->active"
+                                                class="btn btn-neutral btn-square join-item"
+                                                href="{= _BASE_PATH . 'plugin/' . $plugin->url}">
+                                            {icon("feather/settings.svg")|noescape}
+                                        </a>
+                                        {\Ivy\Button::delete('plugin[' . $plugin->id . '][delete]', "plugin_" . $plugin->id)}
+                                    </div>
+                                </td>
+                            </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div>
+                    <label>
+                        <select class="select select-bordered w-full" name="plugin[][url]">
+                            <option disabled selected value>Install plugin</option>
+                            {foreach $uninstalled_plugins as $plugin}
+                                <option value="{$plugin->url}">{$plugin->name . ' (' . $plugin->description . ')'}
+                                </option>
+                            {/foreach}
+                        </select>
+                    </label>
+                </div>
+
+                <div class="text-center">
+                    {\Ivy\Button::submit('update')}
+                </div>
+
+            </div>
+        </form>
+    </main>
+{/block}

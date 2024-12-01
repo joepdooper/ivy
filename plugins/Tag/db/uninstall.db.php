@@ -1,16 +1,24 @@
 <?php
-defined('_BASE_PATH') or die('Something went wrong');
 
-global $db;
+use Ivy\DB;
+use Ivy\Message;
 
-$db->exec(
-    "
-    DROP TABLE `tag`;
-    "
-);
+try {
+    DB::$connection->exec(
+        "
+        DROP TABLE `tag`;
+        "
+    );
+} catch (Exception $e) {
+    Message::add($e->getMessage());
+}
 
-$db->exec(
-    "
-    DROP TABLE `item_tag`;
-    "
-);
+try {
+    DB::$connection->exec(
+        "
+        DROP TABLE `item_tag`;
+        "
+    );
+} catch (Exception $e) {
+    Message::add($e->getMessage());
+}

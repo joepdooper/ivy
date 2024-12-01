@@ -1,0 +1,82 @@
+{extends '../body.latte'}
+
+{block main}
+    <main class="grow p-4 w-full max-w-5xl mx-auto">
+        {if isset($settings)}
+            <form action="{= _BASE_PATH . 'admin/setting/post'}" method="POST" enctype="multipart/form-data">
+                <div class="space-y-4">
+                    <h1 class="leading-none text-6xl font-bold">Settings</h1>
+
+                    <div class="overflow-x-auto">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>name</th>
+                                <th>code</th>
+                                <th>value</th>
+                                <th>info</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {foreach $settings as $setting}
+                                {if isset($setting->name)}
+                                    <tr>
+                                        <td>
+                                            {\Ivy\Button::switch('setting[' . $setting->id . '][bool]',$setting->bool)}
+                                        </td>
+                                        <td class="font-bold">
+                                            {$setting->name}
+                                        </td>
+                                        <td>
+                                            <pre><code>{= '$setting' . "['" . strtolower(str_replace(' ', '_', $setting->name)) . "']"}</code></pre>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input type="text" name="setting[{$setting->id}][value]"
+                                                       value="{$setting->value}" class="input input-bordered w-full">
+                                            </label>
+                                        </td>
+                                        {if empty($setting->info) && !empty($setting->name)}
+                                            <td>
+                                                <label>
+                                                    <input type="text" name="setting[{$setting->id}][info]"
+                                                           value="{$setting->info}" class="input input-bordered w-full">
+                                                </label>
+                                            </td>
+                                        {else}
+                                            <td>{$setting->info}</td>
+                                        {/if}
+                                        <td class="text-right">
+                                            <input type="hidden" name="setting[{$setting->id}][id]"
+                                                   value="{$setting->id}">
+                                            <div class="join">
+                                                {\Ivy\Button::delete("setting[" . $setting->id . "][delete]", "setting_" .
+                                                $setting->id)}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {/if}
+                            {/foreach}
+                            <tr>
+                                <td colspan="6">
+                                    <label>
+                                        <input class="input input-bordered w-full" type="text" name="setting[][name]"
+                                               placeholder="Add setting name">
+                                    </label>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-center">
+                        {\Ivy\Button::submit('update')}
+                    </div>
+
+                </div>
+            </form>
+        {/if}
+    </main>
+{/block}
