@@ -1,5 +1,6 @@
 <?php
 
+use Ivy\App;
 use Ivy\Setting;
 use Ivy\Template;
 
@@ -13,14 +14,18 @@ ini_set('error_log', 'logs/php_error.txt');
 session_start();
 
 // Include paths
-require 'core/include/const.php';
+require_once 'include/const.php';
+require_once 'vendor/autoload.php';
+require_once 'include/autoloader.php';
+require_once 'include/functions.php';
 
-// Include init
-require 'core/include/init.php';
+$app = new App;
+$app->loadCoreRoutes('include/routes.php');
+$app->run();
 ?>
 
 <!DOCTYPE html>
-<html lang="<?= substr(Setting::$stash['language']->value, 0, 2); ?>" data-color-mode="dark">
+<html lang="<?= substr(Setting::getFromStashByKey('language')->value, 0, 2); ?>" data-color-mode="dark">
 <head>
 
     <?php
@@ -36,7 +41,7 @@ require 'core/include/init.php';
     <?php Template::hooks()->do_action('add_css_action'); ?>
 
     <?php
-    if (Setting::$stash['minify_css']->bool) {
+    if (Setting::getFromStashByKey('minify_css')->bool) {
         if (!file_exists(Template::file('css/minified.css'))) {
             $minify = new MatthiasMullie\Minify\CSS();
             foreach (Template::$css as $cssfile) {
@@ -51,7 +56,7 @@ require 'core/include/init.php';
     }
     ?>
 
-    <?php if (Setting::$stash['minify_css']->bool): ?>
+    <?php if (Setting::getFromStashByKey('minify_css')->bool): ?>
         <link href="<?= _BASE_PATH . Template::file('css/minified.css'); ?>" rel="stylesheet" type="text/css">
     <?php else: ?>
         <?php foreach (Template::$css as $cssfile): ?>
@@ -71,7 +76,7 @@ Template::hooks()->do_action('after_body_action');
 <?php Template::hooks()->do_action('add_js_action'); ?>
 
 <?php
-if (Setting::$stash['minify_js']->bool) {
+if (Setting::getFromStashByKey('minify_js')->bool) {
     if (!file_exists(Template::file('js/minified.js'))) {
         $minify = new MatthiasMullie\Minify\JS();
         foreach (Template::$js as $jsfile) {
@@ -92,7 +97,7 @@ if (Setting::$stash['minify_js']->bool) {
     <?php endforeach; ?>
 <?php endif; ?>
 
-<?php if (Setting::$stash['minify_js']->bool): ?>
+<?php if (Setting::getFromStashByKey('minify_js')->bool): ?>
     <script src="<?= _BASE_PATH . Template::file('js/minified.js'); ?>"></script>
 <?php else: ?>
 <?php foreach (Template::$js as $jsfile): ?>

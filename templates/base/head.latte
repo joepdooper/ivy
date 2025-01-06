@@ -4,29 +4,29 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'none'"> -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="{\Ivy\Setting::$stash['name']->value}">
+    <meta name="apple-mobile-web-app-title" content="{\Ivy\Setting::getFromStashByKey('name')->value}">
     <meta name="theme-color" content="#ffffff">
-    <meta name="description" content="{\Ivy\Setting::$stash['description']->value}">
-    <meta name="keywords" content="{\Ivy\Setting::$stash['keywords']->value}">
-    <meta name="author" content="{\Ivy\Setting::$stash['author']->value}">
-    <meta name="date.created" content="{\Ivy\Setting::$stash['created']->value}">
-    <meta name="date.available" content="{\Ivy\Setting::$stash['available']->value}">
-    <meta name="date.updated" content="{\Ivy\Setting::$stash['updated']->value}">
+    <meta name="description" content="{\Ivy\Setting::getFromStashByKey('description')->value}">
+    <meta name="keywords" content="{\Ivy\Setting::getFromStashByKey('keywords')->value}">
+    <meta name="author" content="{\Ivy\Setting::getFromStashByKey('author')->value}">
+    <meta name="date.created" content="{\Ivy\Setting::getFromStashByKey('created')->value}">
+    <meta name="date.available" content="{\Ivy\Setting::getFromStashByKey('available')->value}">
+    <meta name="date.updated" content="{\Ivy\Setting::getFromStashByKey('updated')->value}">
     <meta name="robots" content="index, follow">
     <meta name="revisit-after" content="3 days">
-    <meta property="og:title" content="{\Ivy\Setting::$stash['title']->value}">
-    <meta property="og:site_name" content="{\Ivy\Setting::$stash['name']->value}">
-    <meta property="og:url" content="{\Ivy\Setting::$stash['url']->value}">
-    <meta property="og:description" content="{\Ivy\Setting::$stash['description']->value}">
+    <meta property="og:title" content="{\Ivy\Setting::getFromStashByKey('title')->value}">
+    <meta property="og:site_name" content="{\Ivy\Setting::getFromStashByKey('name')->value}">
+    <meta property="og:url" content="{\Ivy\Setting::getFromStashByKey('url')->value}">
+    <meta property="og:description" content="{\Ivy\Setting::getFromStashByKey('description')->value}">
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="{\Ivy\Setting::$stash['language']->value}"/>
+    <meta property="og:locale" content="{\Ivy\Setting::getFromStashByKey('language')->value}"/>
     <meta property="og:image"
-          content="{!isset(\Ivy\Setting::$stash['image']->value) ?: \Ivy\Setting::$stash['image']->value}"/>
+          content="{!isset(\Ivy\Setting::getFromStashByKey('image')->value) ?: \Ivy\Setting::getFromStashByKey('image')->value}"/>
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="{\Ivy\Setting::$stash['title']->value}">
-    <meta name="twitter:description" content="{\Ivy\Setting::$stash['description']->value}">
+    <meta name="twitter:title" content="{\Ivy\Setting::getFromStashByKey('title')->value}">
+    <meta name="twitter:description" content="{\Ivy\Setting::getFromStashByKey('description')->value}">
     <meta name="twitter:image"
-          content="{!isset(\Ivy\Setting::$stash['image']->value) ?: \Ivy\Setting::$stash['image']->value}">
+          content="{!isset(\Ivy\Setting::getFromStashByKey('image')->value) ?: \Ivy\Setting::getFromStashByKey('image')->value}">
 
     <link rel="shortcut icon" type="image/x-icon" href="{= _BASE_PATH . _MEDIA_PATH . 'favicon/favicon.ico'}">
     <link rel="shortcut icon" type="image/gif" href="{= _BASE_PATH . _MEDIA_PATH . 'favicon/favicon.gif'}">
@@ -44,5 +44,5 @@
 
     <link rel="manifest" href="{= _BASE_PATH . 'manifest.json'}" crossorigin="use-credentials">
 
-    <title>{\Ivy\Setting::$stash['title']->value}</title>
+    <title>{\Ivy\Setting::getFromStashByKey('title')->value}</title>
 {/block}

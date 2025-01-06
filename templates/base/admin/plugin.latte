@@ -7,7 +7,7 @@
 
                 <h1 class="leading-none text-6xl font-bold">Plugins</h1>
 
-                <div n:if="$installed_plugins" class="overflow-x-auto">
+                <div n:ifset="$installed_plugins" class="overflow-x-auto">
                     <table class="table">
                         <thead>
                         <tr>
@@ -23,21 +23,27 @@
                         {foreach $installed_plugins as $plugin}
                             <tr>
                                 <td>
-                                    {\Ivy\Button::switch('plugin[' . $plugin->id . '][active]', $plugin->active, 'plugin_' . $plugin->id)}
+                                    {\Ivy\Button::switch('plugin[' . $plugin->getId() . '][active]', $plugin->active, 'plugin_' . $plugin->getId())}
                                 </td>
                                 <td><strong>{$plugin->name}</strong></td>
                                 <td>{$plugin->description}</td>
                                 <td>{$plugin->version}</td>
                                 <td>{$plugin->type}</td>
                                 <td class="text-right">
-                                    <input type="hidden" name="plugin[{$plugin->id}][id]" value="{$plugin->id}">
+                                    <input type="hidden" name="plugin[{$plugin->getId()}][id]"
+                                           value="{$plugin->getId()}">
                                     <div class="join">
+                                        <a n:if="$plugin->collection && $plugin->active"
+                                                class="btn btn-neutral btn-square join-item"
+                                                href="{= _BASE_PATH . 'plugin' . DIRECTORY_SEPARATOR . $plugin->getUrl() . DIRECTORY_SEPARATOR . 'collection'}">
+                                            {icon("feather/package.svg")|noescape}
+                                        </a>
                                         <a n:if="$plugin->settings && $plugin->active"
                                                 class="btn btn-neutral btn-square join-item"
-                                                href="{= _BASE_PATH . 'plugin/' . $plugin->url}">
+                                                href="{= _BASE_PATH . 'plugin' . DIRECTORY_SEPARATOR . $plugin->getUrl() . DIRECTORY_SEPARATOR . 'settings'}">
                                             {icon("feather/settings.svg")|noescape}
                                         </a>
-                                        {\Ivy\Button::delete('plugin[' . $plugin->id . '][delete]', "plugin_" . $plugin->id)}
+                                        {\Ivy\Button::delete('plugin[' . $plugin->getId() . '][delete]', "plugin_" . $plugin->getId())}
                                     </div>
                                 </td>
                             </tr>
@@ -46,7 +52,7 @@
                     </table>
                 </div>
 
-                <div>
+                <div n:ifset="$uninstalled_plugins">
                     <label>
                         <select class="select select-bordered w-full" name="plugin[][url]">
                             <option disabled selected value>Install plugin</option>

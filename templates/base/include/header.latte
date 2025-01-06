@@ -1,9 +1,9 @@
-{php $profile = isset($_SESSION['auth_user_id']) ? (new \Ivy\Profile)->where('user_id', $_SESSION['auth_user_id'])->getRow()->single() : null}
+{php $profile = isset($_SESSION['auth_user_id']) ? (new \Ivy\Profile)->where('user_id', $_SESSION['auth_user_id'])->fetchOne() : null}
 <header>
-    <div class="border-b flex">
+    <div class="border-b dark:border-slate-700 flex">
         <div class="flex-1 p-4">
             <a href="{= _BASE_PATH}" class="leading-none text-xl font-bold">
-                {\Ivy\Setting::$stash['name']->value}
+                {\Ivy\Setting::getFromStashByKey('name')->value}
             </a>
         </div>
         <div class="px-4 flex gap-4 items-center">
