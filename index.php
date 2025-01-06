@@ -20,7 +20,7 @@ require_once 'include/autoloader.php';
 require_once 'include/functions.php';
 
 $app = new App;
-$app->loadCoreRoutes('include/routes.php');
+$app->loadCoreRoutesAssets('include/routes.php');
 $app->run();
 ?>
 
