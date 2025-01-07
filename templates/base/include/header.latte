@@ -3,7 +3,7 @@
     <div class="border-b dark:border-slate-700 flex">
         <div class="flex-1 p-4">
             <a href="{= _BASE_PATH}" class="leading-none text-xl font-bold">
-                {\Ivy\Setting::getFromStashByKey('name')->value}
+                {\Ivy\App::getStashFrom(\Ivy\Setting::class)['name']->value}
             </a>
         </div>
         <div class="px-4 flex gap-4 items-center">

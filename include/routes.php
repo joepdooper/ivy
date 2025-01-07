@@ -8,7 +8,7 @@ use Ivy\User;
 // BEFORE MIDDLEWARE
 
 App::router()->before('GET', '/.*', function () {
-    if (!User::isLoggedIn() && Setting::getFromStashByKey('private')->bool) {
+    if (!User::isLoggedIn() && App::getStashFrom(Setting::class)['private']->bool) {
         if (_CURRENT_PAGE != _BASE_PATH . 'admin/login') {
             header('location:' . _BASE_PATH . 'admin/login');
             exit;
