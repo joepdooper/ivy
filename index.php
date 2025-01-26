@@ -14,9 +14,9 @@ ini_set('error_log', 'logs/php_error.txt');
 session_start();
 
 // Include paths
-require_once 'include/const.php';
 require_once 'vendor/autoload.php';
 require_once 'include/autoloader.php';
+require_once 'include/const.php';
 require_once 'include/functions.php';
 
 $app = new App;
