@@ -24,7 +24,6 @@ html, body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: oklch(var(--nc));
     -webkit-transition: .3s;
     -moz-transition: .3s;
     -o-transition: .3s;
@@ -40,7 +39,7 @@ html, body {
     width: 26px;
     left: 2px;
     bottom: 2px;
-    background-color: white;
+    background-color: oklch(var(--nc));
     -webkit-transition: .3s;
     -moz-transition: .3s;
     -o-transition: .3s;

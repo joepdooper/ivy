@@ -25,17 +25,17 @@
                                     <td>{$user->username}</td>
                                     <td>{$user->email}</td>
                                     <td>
-                                        {\Ivy\Button::switch('user[' . $user->id . '][super_admin]', \Ivy\User::admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::SUPER_ADMIN))}
+                                        {\Ivy\Button::switch('user[' . $user->getId() . '][super_admin]', \Ivy\User::admin()->doesUserHaveRole($user->getId(), \Delight\Auth\Role::SUPER_ADMIN))}
                                     </td>
                                     <td>
-                                        {\Ivy\Button::switch('user[' . $user->id . '][admin]', \Ivy\User::admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::ADMIN))}
+                                        {\Ivy\Button::switch('user[' . $user->getId() . '][admin]', \Ivy\User::admin()->doesUserHaveRole($user->getId(), \Delight\Auth\Role::ADMIN))}
                                     </td>
                                     <td>
-                                        {\Ivy\Button::switch('user[' . $user->id . '][editor]', \Ivy\User::admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::EDITOR))}
+                                        {\Ivy\Button::switch('user[' . $user->getId() . '][editor]', \Ivy\User::admin()->doesUserHaveRole($user->getId(), \Delight\Auth\Role::EDITOR))}
                                     </td>
                                     <td class="text-right">
                                         <div class="join">
-                                            {\Ivy\Button::delete("user[" . $user->id . "][delete]", "user_" . $user->id)}
+                                            {\Ivy\Button::delete("user[" . $user->getId() . "][delete]", "user_" . $user->getId())}
                                         </div>
                                     </td>
                                 </tr>

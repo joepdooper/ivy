@@ -24,7 +24,7 @@
                                 {if isset($setting->name)}
                                     <tr>
                                         <td>
-                                            {\Ivy\Button::switch('setting[' . $setting->id . '][bool]',$setting->bool)}
+                                            {\Ivy\Button::switch('setting[' . $setting->getId() . '][bool]',$setting->bool)}
                                         </td>
                                         <td class="font-bold">
                                             {$setting->name}
@@ -34,14 +34,14 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="text" name="setting[{$setting->id}][value]"
+                                                <input type="text" name="setting[{$setting->getId()}][value]"
                                                        value="{$setting->value}" class="input input-bordered w-full">
                                             </label>
                                         </td>
                                         {if empty($setting->info) && !empty($setting->name)}
                                             <td>
                                                 <label>
-                                                    <input type="text" name="setting[{$setting->id}][info]"
+                                                    <input type="text" name="setting[{$setting->getId()}][info]"
                                                            value="{$setting->info}" class="input input-bordered w-full">
                                                 </label>
                                             </td>
@@ -49,11 +49,11 @@
                                             <td>{$setting->info}</td>
                                         {/if}
                                         <td class="text-right">
-                                            <input type="hidden" name="setting[{$setting->id}][id]"
-                                                   value="{$setting->id}">
+                                            <input type="hidden" name="setting[{$setting->getId()}][id]"
+                                                   value="{$setting->getId()}">
                                             <div class="join">
-                                                {\Ivy\Button::delete("setting[" . $setting->id . "][delete]", "setting_" .
-                                                $setting->id)}
+                                                {\Ivy\Button::delete("setting[" . $setting->getId() . "][delete]", "setting_" .
+                                                $setting->getId())}
                                             </div>
                                         </td>
                                     </tr>

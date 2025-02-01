@@ -10,10 +10,6 @@ use Ivy\User;
 // -- ADMIN
 
 App::router()->mount('/admin', function () {
-    App::router()->get('/profile', function () {
-        $profile = (new \Ivy\Profile)->where('user_id', $_SESSION['auth_user_id'])->fetchOne();
-        Template::view('admin/profile.latte', ['profile' => $profile]);
-    });
     App::router()->get('/register', function () {
         Template::view('admin/register.latte');
     });
@@ -26,13 +22,19 @@ App::router()->mount('/admin', function () {
     App::router()->get('/reset', function () {
         Template::view('admin/reset.latte');
     });
-    if (User::canEditAsAdmin()):
+    if (User::isLoggedIn()):
+        App::router()->get('/profile', function () {
+            $profile = (new Profile)->where('user_id', $_SESSION['auth_user_id'])->fetchOne();
+            Template::view('admin/profile.latte', ['profile' => $profile]);
+        });
+    endif;
+    if (User::isLoggedIn() && User::canEditAsAdmin()):
         App::router()->get('/plugin', function () {
             // -- Installed plugins from database
             $installed_plugins = (new Plugin)->where('parent_id', null)->fetchAll();
             // -- Uninstalled plugins from directory
             $values_to_remove_from_uninstalled_plugins = ['.', '..', '.DS_Store'];
-            foreach ($installed_plugins as $key => $plugin) {
+            foreach ($installed_plugins as $plugin) {
                 $plugin->setInfo();
                 $values_to_remove_from_uninstalled_plugins[] = $plugin->getUrl();
             }
@@ -51,7 +53,7 @@ App::router()->mount('/admin', function () {
             Template::view('admin/template.latte');
         });
         App::router()->get('/user', function () {
-            $users = (new User)->fetchAll();
+            $users = (new User)->addJoin('profiles', 'id', '=', 'user_id')->fetchAll();
             Template::view('admin/user.latte', ['users' => $users]);
         });
         App::router()->get('/setting', function () {
