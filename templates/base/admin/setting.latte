@@ -13,7 +13,6 @@
                             <tr>
                                 <th></th>
                                 <th>name</th>
-                                <th>code</th>
                                 <th>value</th>
                                 <th>info</th>
                                 <th></th>
@@ -28,9 +27,6 @@
                                         </td>
                                         <td class="font-bold">
                                             {$setting->name}
-                                        </td>
-                                        <td>
-                                            <pre><code>{= '$setting' . "['" . strtolower(str_replace(' ', '_', $setting->name)) . "']"}</code></pre>
                                         </td>
                                         <td>
                                             <label>
