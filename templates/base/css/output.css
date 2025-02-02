@@ -3325,11 +3325,6 @@ html {
   background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity, 1)));
 }
 
-.bg-gray-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1));
-}
-
 .bg-gray-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
@@ -3476,6 +3471,7 @@ html {
   left: 0;
   right: 0;
   bottom: 0;
+  background-color: oklch(var(--nc));
   transition: .3s;
   border-radius: 30px;
 }
@@ -3487,13 +3483,27 @@ html {
   width: 26px;
   left: 2px;
   bottom: 2px;
-  background-color: oklch(var(--nc));
+  background-color: white;
   transition: .3s;
   border-radius: 50%;
 }
 
 .form-check-input:checked ~ .switch .slider {
-  background-color: oklch(var(--n));
+  background-color: oklch(var(--inc));
+}
+
+@media (prefers-color-scheme: dark) {
+  .slider {
+    background-color: oklch(var(--inc));
+  }
+
+  .slider:before {
+    background-color: oklch(var(--b1));
+  }
+
+  .form-check-input:checked ~ .switch .slider {
+    background-color: oklch(var(--nc));
+  }
 }
 
 .form-check-input:checked ~ .switch .slider:before {
@@ -3551,11 +3561,6 @@ html {
   .dark\:border-slate-700 {
     --tw-border-opacity: 1;
     border-color: rgb(51 65 85 / var(--tw-border-opacity, 1));
-  }
-
-  .dark\:bg-gray-600 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(75 85 99 / var(--tw-bg-opacity, 1));
   }
 
   .dark\:bg-gray-800 {

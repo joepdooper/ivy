@@ -24,6 +24,7 @@ html, body {
     left: 0;
     right: 0;
     bottom: 0;
+    background-color: oklch(var(--nc));
     -webkit-transition: .3s;
     -moz-transition: .3s;
     -o-transition: .3s;
@@ -39,7 +40,7 @@ html, body {
     width: 26px;
     left: 2px;
     bottom: 2px;
-    background-color: oklch(var(--nc));
+    background-color: white;
     -webkit-transition: .3s;
     -moz-transition: .3s;
     -o-transition: .3s;
@@ -49,7 +50,19 @@ html, body {
 }
 
 .form-check-input:checked ~ .switch .slider {
-    background-color: oklch(var(--n));
+    background-color: oklch(var(--inc));
+}
+
+@media (prefers-color-scheme: dark) {
+    .slider {
+        background-color: oklch(var(--inc));
+    }
+        .slider:before {
+        background-color: oklch(var(--b1));
+    }
+    .form-check-input:checked ~ .switch .slider {
+        background-color: oklch(var(--nc));
+    }
 }
 
 .form-check-input:checked ~ .switch .slider:before {
