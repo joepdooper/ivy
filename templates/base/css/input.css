@@ -57,7 +57,7 @@ html, body {
     .slider {
         background-color: oklch(var(--inc));
     }
-        .slider:before {
+    .slider:before {
         background-color: oklch(var(--b1));
     }
     .form-check-input:checked ~ .switch .slider {
