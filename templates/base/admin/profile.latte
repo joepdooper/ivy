@@ -2,7 +2,7 @@
 
 {block main}
     <main class="grow p-4">
-        <form action="{= _BASE_PATH . 'admin/profile/post'}" method="POST" enctype="multipart/form-data"
+        <form action="{= _p('BASE_PATH') . 'admin/profile/post'}" method="POST" enctype="multipart/form-data"
               class="max-w-xl mx-auto">
 
             <div class="space-y-4">
@@ -16,24 +16,24 @@
 
                 <div class="form-group">
                     <div class="avatar">
-                        {if isset($profile) && $profile->users_image}
+                        {if isset($profile) && $profile->getCurrentUserImage()}
 
                             <div class="w-36 rounded-full">
-                                <img src="{= _BASE_PATH . 'media/item/thumb/' . $profile->users_image}"
+                                <img src="{= _p('BASE_PATH') . 'media/item/thumb/' . $profile->getCurrentUserImage()}"
                                      alt="{\Ivy\User::getUsername()}"/>
                             </div>
                             <div class="join">
-                                {\Ivy\Button::delete('users_image', 'delete')}
+                                {\Ivy\Button::delete('user_image', 'delete')}
                             </div>
 
                         {else}
 
                             <div id="usersImagePreview" class="w-36 rounded-full">
-                                {\Ivy\Button::upload('users_image', 'upload')}
+                                {\Ivy\Button::upload('user_image', 'upload')}
                             </div>
                             <script>
                                 window.addEventListener('DOMContentLoaded', () => {
-                                    previewImage("users_image", "usersImagePreview", "background");
+                                    previewImage("user_image", "usersImagePreview", "background");
                                 });
                             </script>
 
@@ -41,19 +41,19 @@
                     </div>
                 </div>
 
-                <input name="users[id]" type="hidden" value="{$profile->user_id}">
+                <input name="users[id]" type="hidden" value="{$profile->getCurrentUserId()}">
 
                 <div>
                     <label>
                         <input class="input input-bordered w-full" name="users[username]" type="text" placeholder="name"
-                               value="{$profile->username}">
+                               value="{$profile->getCurrentUsername()}">
                     </label>
                 </div>
 
                 <div>
                     <label>
                         <input class="input input-bordered w-full" name="users[email]" type="email" placeholder="email"
-                               value="{$profile->email}">
+                               value="{$profile->getCurrentEmail()}">
                     </label>
                 </div>
 

@@ -20,7 +20,7 @@ if (isset($selector) && isset($token)) {
                 Message::add('Not logged in');
             }
         }
-        Message::add('Email address has been verified', _BASE_PATH . 'admin/login');
+        Message::add('Email address has been verified', Path::get('BASE_PATH') . 'admin/login');
     } catch (InvalidSelectorTokenPairException) {
         Message::add('Invalid token');
     } catch (TokenExpiredException) {

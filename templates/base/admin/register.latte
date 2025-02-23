@@ -2,7 +2,7 @@
 
 {block main}
     <main class="grow p-4">
-        <form action="{= _BASE_PATH . 'admin/user/register/'}" method="POST" enctype="multipart/form-data"
+        <form action="{= _p('BASE_PATH') . 'admin/user/register/'}" method="POST" enctype="multipart/form-data"
               class="max-w-xl mx-auto">
             <div class="space-y-4">
                 <h1 class="leading-none text-6xl font-bold">Register</h1>
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="text-center">
-                    <a class="text-xs" href="{= _BASE_PATH . 'admin/login'}">Have an account? Login</a>
+                    <a class="text-xs" href="{= _p('BASE_PATH') . 'admin/login'}">Have an account? Login</a>
                 </div>
 
             </div>

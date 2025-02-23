@@ -2,12 +2,11 @@
 
 {block main}
     <main class="grow p-4 w-full max-w-5xl mx-auto">
-        {if isset($settings)}
-            <form action="{= _BASE_PATH . 'admin/setting/post'}" method="POST" enctype="multipart/form-data">
-                <div class="space-y-4">
+        <form action="{= _p('BASE_PATH') . 'admin/setting/post'}" method="POST" enctype="multipart/form-data">
+            <div class="space-y-4">
                     <h1 class="leading-none text-6xl font-bold">Settings</h1>
 
-                    <div class="overflow-x-auto">
+                    <div n:ifset="$settings" class="overflow-x-auto">
                         <table class="table">
                             <thead>
                             <tr>
@@ -20,29 +19,29 @@
                             </thead>
                             <tbody>
                             {foreach $settings as $key => $setting}
-                                {if isset($setting->name)}
+                                {if $setting->getName()}
                                     <tr>
                                         <td>
-                                            {\Ivy\Button::switch("setting[$key][bool]", $setting->bool)}
+                                            {\Ivy\Button::switch("setting[$key][bool]", $setting->getBool())}
                                         </td>
                                         <td class="font-bold">
-                                            {$setting->name}
+                                            {$setting->getName()}
                                         </td>
                                         <td>
                                             <label>
                                                 <input type="text" name="setting[{$key}][value]"
-                                                       value="{$setting->value}" class="input input-bordered w-full">
+                                                       value="{$setting->value ?? ''}" class="input input-bordered w-full">
                                             </label>
                                         </td>
-                                        {if empty($setting->info) && !empty($setting->name)}
+                                        {if empty($setting->getInfo()) && !empty($setting->getName())}
                                             <td>
                                                 <label>
                                                     <input type="text" name="setting[{$key}][info]"
-                                                           value="{$setting->info}" class="input input-bordered w-full">
+                                                           value="{$setting->info ?? ''}" class="input input-bordered w-full">
                                                 </label>
                                             </td>
                                         {else}
-                                            <td>{$setting->info}</td>
+                                            <td>{$setting->getInfo()}</td>
                                         {/if}
                                         <td class="text-right">
                                             <input type="hidden" name="setting[{$key}][id]"
@@ -71,8 +70,7 @@
                         {\Ivy\Button::submit('update')}
                     </div>
 
-                </div>
-            </form>
-        {/if}
+            </div>
+        </form>
     </main>
 {/block}

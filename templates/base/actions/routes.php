@@ -1,6 +1,7 @@
 <?php
 
 use Ivy\App;
+use Ivy\Path;
 use Ivy\Plugin;
 use Ivy\Profile;
 use Ivy\Setting;
@@ -38,12 +39,12 @@ App::router()->mount('/admin', function () {
                 $plugin->setInfo();
                 $values_to_remove_from_uninstalled_plugins[] = $plugin->getUrl();
             }
-            $uninstalled_plugins = array_filter(scandir(_PUBLIC_PATH . _PLUGIN_PATH), function ($plugin) use ($values_to_remove_from_uninstalled_plugins) {
+            $uninstalled_plugins = array_filter(scandir(Path::get('PUBLIC_PATH') . Path::get('PLUGIN_PATH')), function ($plugin) use ($values_to_remove_from_uninstalled_plugins) {
                 return !in_array($plugin, $values_to_remove_from_uninstalled_plugins);
             });
             $uninstalled_plugins_info = [];
             foreach ($uninstalled_plugins as $key => $plugin) {
-                $uninstalled_plugins_info[$key] = json_decode(file_get_contents(_PUBLIC_PATH . _PLUGIN_PATH . $plugin . '/info.json'));
+                $uninstalled_plugins_info[$key] = json_decode(file_get_contents(Path::get('PUBLIC_PATH') . Path::get('PLUGIN_PATH') . $plugin . '/info.json'));
                 $uninstalled_plugins_info[$key]->url = $plugin;
             }
             $uninstalled_plugins = $uninstalled_plugins_info;

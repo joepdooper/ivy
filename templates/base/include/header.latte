@@ -1,8 +1,8 @@
 <header>
     <div class="border-b dark:border-slate-700 flex">
         <div class="flex-1 p-4">
-            <a href="{= _BASE_PATH}" class="leading-none text-xl font-bold">
-                {\Ivy\App::getStashFrom(\Ivy\Setting::class)['name']->value}
+            <a href="{= _p('BASE_PATH')}" class="leading-none text-xl font-bold">
+                {\Ivy\Setting::getStash()['name']->getValue()}
             </a>
         </div>
         <div class="px-4 flex gap-4 items-center">
@@ -11,51 +11,51 @@
             {if \Ivy\User::isLoggedIn()}
                 <div class="dropdown dropdown-end h-10">
                     <div tabindex="0" role="button" class="avatar">
-                        {if !empty(\Ivy\Profile::getUserImage())}
+                        {if !empty(\Ivy\Profile::getCurrentUserImage())}
                             <div class="w-10 rounded-full">
-                                <img alt="{\Ivy\Profile::getUserName()}"
-                                     src="{= _BASE_PATH . 'media/item/thumb/' . \Ivy\Profile::getUserImage()}"/>
+                                <img alt="{\Ivy\Profile::getCurrentUserName()}"
+                                     src="{= _p('BASE_PATH') . 'media/item/thumb/' . \Ivy\Profile::getCurrentUserImage()}"/>
                             </div>
                         {else}
-                            {\Ivy\Button::link(_BASE_PATH . 'admin/profile', null, 'feather/user.svg', 'Profile')}
+                            {\Ivy\Button::link(_p('BASE_PATH') . 'admin/profile', null, 'feather/user.svg', 'Profile')}
                         {/if}
                     </div>
                     <ul tabindex="0"
                             class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                         <li>
-                            <a href="{= _BASE_PATH . 'admin/profile'}">
+                            <a href="{= _p('BASE_PATH') . 'admin/profile'}">
                                 {icon("feather/user.svg")|noescape}
                                 Profile
                             </a>
                         </li>
                         {if \Ivy\User::canEditAsAdmin()}
                             <li>
-                                <a href="{= _BASE_PATH . 'admin/setting'}">
+                                <a href="{= _p('BASE_PATH') . 'admin/setting'}">
                                     {icon("feather/sliders.svg")|noescape}
                                     Settings
                                 </a>
                             </li>
                             <li>
-                                <a href="{= _BASE_PATH . 'admin/plugin'}">
+                                <a href="{= _p('BASE_PATH') . 'admin/plugin'}">
                                     {icon("feather/package.svg")|noescape}
                                     Plugins
                                 </a>
                             </li>
                             <li>
-                                <a href="{= _BASE_PATH . 'admin/template'}">
+                                <a href="{= _p('BASE_PATH') . 'admin/template'}">
                                     {icon("feather/layout.svg")|noescape}
                                     Templates
                                 </a>
                             </li>
                             <li>
-                                <a href="{= _BASE_PATH . 'admin/user'}">
+                                <a href="{= _p('BASE_PATH') . 'admin/user'}">
                                     {icon("feather/users.svg")|noescape}
                                     Users
                                 </a>
                             </li>
                             {if isset($_SESSION['plugin_actives']) && in_array("Tag", $_SESSION['plugin_actives'])}
                                 <li>
-                                    <a href="{= _BASE_PATH . 'plugin/tag'}">
+                                    <a href="{= _p('BASE_PATH') . 'plugin/tag/settings'}">
                                         {icon("feather/tag.svg")|noescape}
                                         Add tags
                                     </a>
@@ -63,7 +63,7 @@
                             {/if}
                         {/if}
                         <li>
-                            <a href="{= _BASE_PATH . 'admin/logout'}">
+                            <a href="{= _p('BASE_PATH') . 'admin/logout'}">
                                 {icon("feather/log-out.svg")|noescape}
                                 Sign out
                             </a>
@@ -71,7 +71,7 @@
                     </ul>
                 </div>
             {else}
-                {\Ivy\Button::link(_BASE_PATH . 'admin/login', null, 'feather/user.svg', 'Login')}
+                {\Ivy\Button::link(_p('BASE_PATH') . 'admin/login', null, 'feather/user.svg', 'Login')}
             {/if}
         </div>
     </div>

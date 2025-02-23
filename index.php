@@ -1,6 +1,7 @@
 <?php
 
 use Ivy\App;
+use Ivy\Path;
 use Ivy\Setting;
 use Ivy\Template;
 
@@ -13,19 +14,16 @@ ini_set('error_log', 'logs/php_error.txt');
 // Init session
 session_start();
 
-// Include paths
+// Autoloader
 require_once 'vendor/autoload.php';
-require_once 'include/autoloader.php';
-require_once 'include/const.php';
-require_once 'include/functions.php';
+require_once 'autoloader.php';
 
 $app = new App;
-$app->setCoreRoutesAssets('include/routes.php');
 $app->run();
 ?>
 
 <!DOCTYPE html>
-<html lang="<?= substr(App::getStashFrom(Setting::class)['language']->value, 0, 2); ?>" data-color-mode="dark">
+<html lang="<?= substr(Setting::getStash()['language']->getValue(), 0, 2); ?>" data-color-mode="dark">
 <head>
 
     <?php
@@ -35,19 +33,19 @@ $app->run();
     ?>
 
     <script>
-        const _SUBFOLDER = "<?= _SUBFOLDER; ?>";
+        const _SUBFOLDER = "<?= Path::get('SUBFOLDER'); ?>";
     </script>
 
     <?php Template::hooks()->do_action('add_css_action'); ?>
 
     <?php
-    if (App::getStashFrom(Setting::class)['minify_css']->bool) {
+    if (Setting::getStash()['minify_css']->getBool()) {
         if (!file_exists(Template::file('css/minified.css'))) {
             $minify = new MatthiasMullie\Minify\CSS();
-            foreach (Template::$css as $cssfile) {
+            foreach (Template::getCss() as $cssfile) {
                 $minify->add($cssfile);
             }
-            $minify->minify(_PUBLIC_PATH . _TEMPLATE_SUB . 'css/minified.css');
+            $minify->minify(Path::get('PUBLIC_PATH') . _TEMPLATE_SUB . 'css/minified.css');
         }
     } else {
         if (file_exists(Template::file('css/minified.css'))) {
@@ -56,11 +54,11 @@ $app->run();
     }
     ?>
 
-    <?php if (App::getStashFrom(Setting::class)['minify_css']->bool): ?>
-        <link href="<?= _BASE_PATH . Template::file('css/minified.css'); ?>" rel="stylesheet" type="text/css">
+    <?php if (Setting::getStash()['minify_css']->getBool()): ?>
+        <link href="<?= Path::get('BASE_PATH') . Template::file('css/minified.css'); ?>" rel="stylesheet" type="text/css">
     <?php else: ?>
-        <?php foreach (Template::$css as $cssfile): ?>
-            <link href="<?= _BASE_PATH . $cssfile; ?>" rel="stylesheet" type="text/css">
+        <?php foreach (Template::getCss() as $cssfile): ?>
+            <link href="<?= Path::get('BASE_PATH') . $cssfile; ?>" rel="stylesheet" type="text/css">
         <?php endforeach; ?>
     <?php endif; ?>
 
@@ -76,13 +74,13 @@ Template::hooks()->do_action('after_body_action');
 <?php Template::hooks()->do_action('add_js_action'); ?>
 
 <?php
-if (App::getStashFrom(Setting::class)['minify_js']->bool) {
+if (Setting::getStash()['minify_js']->getBool()) {
     if (!file_exists(Template::file('js/minified.js'))) {
         $minify = new MatthiasMullie\Minify\JS();
-        foreach (Template::$js as $jsfile) {
+        foreach (Template::getJs() as $jsfile) {
             $minify->add($jsfile);
         }
-        $minify->minify(_PUBLIC_PATH . _TEMPLATE_SUB . 'js/minified.js');
+        $minify->minify(Path::get('PUBLIC_PATH') . _TEMPLATE_SUB . 'js/minified.js');
     }
 } else {
     if (file_exists(Template::file('js/minified.js'))) {
@@ -91,17 +89,15 @@ if (App::getStashFrom(Setting::class)['minify_js']->bool) {
 }
 ?>
 
-<?php if (!empty(Template::$esm)): ?>
-    <?php foreach (Template::$esm as $esmfile): ?>
-        <script type="module" src="<?= _BASE_PATH . Template::file($esmfile); ?>"></script>
-    <?php endforeach; ?>
-<?php endif; ?>
+<?php foreach (Template::getEsm() as $esmfile): ?>
+    <script type="module" src="<?= Path::get('BASE_PATH') . Template::file($esmfile); ?>"></script>
+<?php endforeach; ?>
 
-<?php if (App::getStashFrom(Setting::class)['minify_js']->bool): ?>
-    <script src="<?= _BASE_PATH . Template::file('js/minified.js'); ?>"></script>
+<?php if (Setting::getStash()['minify_js']->getBool()): ?>
+    <script src="<?= Path::get('BASE_PATH') . Template::file('js/minified.js'); ?>"></script>
 <?php else: ?>
-<?php foreach (Template::$js as $jsfile): ?>
-    <script src="<?= _BASE_PATH . $jsfile; ?>"></script>
+<?php foreach (Template::getJs() as $jsfile): ?>
+    <script src="<?= Path::get('BASE_PATH') . $jsfile; ?>"></script>
 <?php endforeach; ?>
 <?php endif; ?>
 

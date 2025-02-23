@@ -4,33 +4,33 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'none'"> -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="{\Ivy\App::getStashFrom(\Ivy\Setting::class)['name']->value}">
+    <meta name="apple-mobile-web-app-title" content="{\Ivy\Setting::getStash()['name']->getValue()}">
     <meta name="theme-color" content="#ffffff">
-    <meta name="description" content="{\Ivy\App::getStashFrom(\Ivy\Setting::class)['description']->value}">
-    <meta name="keywords" content="{\Ivy\App::getStashFrom(\Ivy\Setting::class)['keywords']->value}">
-    <meta name="author" content="{\Ivy\App::getStashFrom(\Ivy\Setting::class)['author']->value}">
-    <meta name="date.created" content="{\Ivy\App::getStashFrom(\Ivy\Setting::class)['created']->value}">
-    <meta name="date.available" content="{\Ivy\App::getStashFrom(\Ivy\Setting::class)['available']->value}">
-    <meta name="date.updated" content="{\Ivy\App::getStashFrom(\Ivy\Setting::class)['updated']->value}">
+    <meta name="description" content="{\Ivy\Setting::getStash()['description']->getValue()}">
+    <meta name="keywords" content="{\Ivy\Setting::getStash()['keywords']->getValue()}">
+    <meta name="author" content="{\Ivy\Setting::getStash()['author']->getValue()}">
+    <meta name="date.created" content="{\Ivy\Setting::getStash()['created']->getValue()}">
+    <meta name="date.available" content="{\Ivy\Setting::getStash()['available']->getValue()}">
+    <meta name="date.updated" content="{\Ivy\Setting::getStash()['updated']->getValue()}">
     <meta name="robots" content="index, follow">
     <meta name="revisit-after" content="3 days">
-    <meta property="og:title" content="{\Ivy\App::getStashFrom(\Ivy\Setting::class)['title']->value}">
-    <meta property="og:site_name" content="{\Ivy\App::getStashFrom(\Ivy\Setting::class)['name']->value}">
-    <meta property="og:url" content="{\Ivy\App::getStashFrom(\Ivy\Setting::class)['url']->value}">
-    <meta property="og:description" content="{\Ivy\App::getStashFrom(\Ivy\Setting::class)['description']->value}">
+    <meta property="og:title" content="{\Ivy\Setting::getStash()['title']->getValue()}">
+    <meta property="og:site_name" content="{\Ivy\Setting::getStash()['name']->getValue()}">
+    <meta property="og:url" content="{\Ivy\Setting::getStash()['url']->getValue()}">
+    <meta property="og:description" content="{\Ivy\Setting::getStash()['description']->getValue()}">
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="{\Ivy\App::getStashFrom(\Ivy\Setting::class)['language']->value}"/>
+    <meta property="og:locale" content="{\Ivy\Setting::getStash()['language']->getValue()}"/>
     <meta property="og:image"
-          content="{!isset(\Ivy\App::getStashFrom(\Ivy\Setting::class)['image']->value) ?: \Ivy\App::getStashFrom(\Ivy\Setting::class)['image']->value}"/>
+          content="{!isset(\Ivy\Setting::getStash()['image']) ?: \Ivy\Setting::getStash()['image']?->getValue()}"/>
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="{\Ivy\App::getStashFrom(\Ivy\Setting::class)['title']->value}">
-    <meta name="twitter:description" content="{\Ivy\App::getStashFrom(\Ivy\Setting::class)['description']->value}">
+    <meta name="twitter:title" content="{\Ivy\Setting::getStash()['title']->getValue()}">
+    <meta name="twitter:description" content="{\Ivy\Setting::getStash()['description']->getValue()}">
     <meta name="twitter:image"
-          content="{!isset(\Ivy\App::getStashFrom(\Ivy\Setting::class)['image']->value) ?: \Ivy\App::getStashFrom(\Ivy\Setting::class)['image']->value}">
+          content="{!isset(\Ivy\Setting::getStash()['image']) ?: \Ivy\Setting::getStash()['image']?->getValue()}">
 
-    <link rel="shortcut icon" type="image/x-icon" href="{= _BASE_PATH . _MEDIA_PATH . 'favicon/favicon.ico'}">
-    <link rel="shortcut icon" type="image/gif" href="{= _BASE_PATH . _MEDIA_PATH . 'favicon/favicon.gif'}">
-    <link rel="shortcut icon" type="image/png" href="{= _BASE_PATH . _MEDIA_PATH . 'favicon/favicon.png'}">
+    <link rel="shortcut icon" type="image/x-icon" href="{= _p('BASE_PATH') . _p('MEDIA_PATH') . 'favicon/favicon.ico'}">
+    <link rel="shortcut icon" type="image/gif" href="{= _p('BASE_PATH') . _p('MEDIA_PATH') . 'favicon/favicon.gif'}">
+    <link rel="shortcut icon" type="image/png" href="{= _p('BASE_PATH') . _p('MEDIA_PATH') . 'favicon/favicon.png'}">
     <!-- <link rel="icon" type="image/png" href="media/favicon/favicon-16x16.png" sizes="16x16" />
     <link rel="icon" type="image/png" href="media/favicon/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="media/favicon/favicon-48x48.png" sizes="48x48" />
@@ -42,7 +42,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="180x180" href="media/favicon/apple-touch-icon-180x180.png">
     <link rel="apple-touch-icon-precomposed" sizes="196x196" href="media/favicon/apple-touch-icon-196x196.png"> -->
 
-    <link rel="manifest" href="{= _BASE_PATH . 'manifest.json'}" crossorigin="use-credentials">
+    <link rel="manifest" href="{= _p('BASE_PATH') . 'manifest.json'}" crossorigin="use-credentials">
 
-    <title>{\Ivy\App::getStashFrom(\Ivy\Setting::class)['title']->value}</title>
+    <title>{\Ivy\Setting::getStash()['title']->getValue()}</title>
 {/block}

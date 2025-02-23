@@ -2,7 +2,7 @@
 
 {block main}
     <main class="grow p-4 w-full max-w-5xl mx-auto">
-        <form action="{= _BASE_PATH . 'admin/template/post'}" method="POST" enctype="multipart/form-data">
+        <form action="{= _p('BASE_PATH') . 'admin/template/post'}" method="POST" enctype="multipart/form-data">
             <div class="space-y-4">
                 <h1 class="leading-none text-6xl font-bold">Templates</h1>
 
@@ -27,8 +27,8 @@
                             <td>
                                 <label>
                                     <select class="select select-bordered w-full" name="template[1][value]">
-                                        {foreach array_diff(scandir(_PUBLIC_PATH . _TEMPLATES_PATH), array('.', '..', '.DS_Store')) as $val}
-                                            {php $theme = json_decode(file_get_contents(_PUBLIC_PATH . _TEMPLATES_PATH . $val . '/info.json'))}
+                                        {foreach array_diff(scandir(_p('PUBLIC_PATH') . _p('TEMPLATES_PATH')), array('.', '..', '.DS_Store')) as $val}
+                                            {php $theme = json_decode(file_get_contents(_p('PUBLIC_PATH') . _p('TEMPLATES_PATH') . $val . '/info.json'))}
                                             <option value="{$theme->url}" {basename(_TEMPLATE_BASE) != $theme->url ?: 'selected'}>
                                                 {$theme->name . ' (' . $theme->description . ')'}
                                             </option>
@@ -48,8 +48,8 @@
                             <td>
                                 <label>
                                     <select class="select select-bordered w-full" name="template[2][value]">
-                                        {foreach array_diff(scandir(_PUBLIC_PATH . _TEMPLATES_PATH), array('.', '..', '.DS_Store')) as $val}
-                                            {php $theme = json_decode(file_get_contents(_PUBLIC_PATH . _TEMPLATES_PATH . $val . '/info.json'))}
+                                        {foreach array_diff(scandir(_p('PUBLIC_PATH') . _p('TEMPLATES_PATH')), array('.', '..', '.DS_Store')) as $val}
+                                            {php $theme = json_decode(file_get_contents(_p('PUBLIC_PATH') . _p('TEMPLATES_PATH') . $val . '/info.json'))}
                                             <option value="{$theme->url}" {basename(_TEMPLATE_SUB) != $theme->url ?: 'selected'}>
                                                 {$theme->name . ' (' . $theme->description . ')'}
                                             </option>
