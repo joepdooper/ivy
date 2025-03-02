@@ -9,7 +9,7 @@ use Ivy\User;
 // BEFORE MIDDLEWARE
 
 App::router()->before('GET', '/.*', function () {
-    if (!User::isLoggedIn() && Setting::getStash()['private']->getBool()) {
+    if (!User::getAuth()->isLoggedIn() && Setting::getStash()['private']->bool) {
         if (Path::get('CURRENT_PAGE') != Path::get('BASE_PATH') . 'admin/login') {
             header('location:' . Path::get('BASE_PATH') . 'admin/login');
             exit;
@@ -18,7 +18,7 @@ App::router()->before('GET', '/.*', function () {
 });
 
 App::router()->before('GET|POST', '/admin/([a-z0-9_-]+)', function ($id) {
-    if (User::isLoggedIn()) {
+    if (User::getAuth()->isLoggedIn()) {
         if (!User::canEditAsAdmin() && !in_array($id, ['register', 'login', 'logout', 'reset', 'profile'])) {
             header('location:' . Path::get('BASE_PATH'));
             exit();
@@ -32,7 +32,7 @@ App::router()->before('GET|POST', '/admin/([a-z0-9_-]+)', function ($id) {
 });
 
 App::router()->before('GET|POST', '/plugin/.*', function () {
-    if (User::isLoggedIn()) {
+    if (User::getAuth()->isLoggedIn()) {
         if (!User::canEditAsSuperAdmin()) {
             header('location:' . Path::get('BASE_PATH'));
             exit();

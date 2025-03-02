@@ -2,14 +2,16 @@
 
 {block main}
     <main class="grow p-4">
-        <form action="{= _p('BASE_PATH') . 'admin/user/login/'}" method="POST" enctype="multipart/form-data"
+        <form action="{path('BASE_PATH') . 'admin/user/login/'}" method="POST" enctype="multipart/form-data"
               class="max-w-xl mx-auto">
+            {csrf()}
+
             <div class="space-y-4">
-                <h1 class="leading-none text-6xl font-bold">{= _t('core.header.login')}</h1>
+                <h1 class="leading-none text-6xl font-bold">{text('login.header')}</h1>
 
                 <div>
                     <label>
-                        <input type="email" id="email" name="email" placeholder="{= _t('core.placeholder.email')}"
+                        <input type="email" id="email" name="email" placeholder="{text('core.placeholder.email')}"
                                class="input input-bordered w-full">
                     </label>
                 </div>
@@ -17,18 +19,18 @@
                 <div>
                     <label>
                         <input type="password" id="password" name="password"
-                               placeholder="{= _t('core.placeholder.password')}"
+                               placeholder="{text('core.placeholder.password')}"
                                class="input input-bordered w-full">
                     </label>
                 </div>
 
                 <div class="text-center">
-                    {\Ivy\Button::submit(_t('core.button.login'))}
+                    {\Ivy\Button::submit(text('login.button.submit'))}
                 </div>
 
                 <div class="text-center">
-                    <a class="text-xs" href="{= _p('BASE_PATH') . 'admin/register'}">No account? Register!</a><br>
-                    <a class="text-xs" href="{= _p('BASE_PATH') . 'admin/reset'}">Forgot password? Reset!</a>
+                    <a class="text-xs" href="{path('BASE_PATH') . 'admin/register'}">{text('login.link.register')}</a><br>
+                    <a class="text-xs" href="{path('BASE_PATH') . 'admin/reset'}">{text('login.link.reset')}</a>
                 </div>
 
             </div>

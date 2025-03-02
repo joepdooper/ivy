@@ -2,13 +2,13 @@
 
 {block main}
     <main class="grow p-4">
-        <form action="{= _p('BASE_PATH') . 'admin/user/logout'}" method="POST" enctype="multipart/form-data">
+        <form action="{path('BASE_PATH') . 'admin/user/logout'}" method="POST" enctype="multipart/form-data">
+            {csrf()}
+
             <div class="space-y-4">
-
                 <div class="text-center">
-                    {\Ivy\Button::submit(_t('core.button.logout'))}
+                    {\Ivy\Button::submit(text('logout.button.submit'))}
                 </div>
-
             </div>
         </form>
     </main>

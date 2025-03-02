@@ -2,10 +2,12 @@
 
 {block main}
     <main class="grow p-4">
-        <form action="{= _p('BASE_PATH') . 'admin/user/reset'}" method="POST" enctype="multipart/form-data"
+        <form action="{path('BASE_PATH') . 'admin/user/reset'}" method="POST" enctype="multipart/form-data"
               class="max-w-xl mx-auto">
+            {csrf()}
+
             <div class="space-y-4">
-                <h1 class="leading-none text-6xl font-bold">Reset</h1>
+                <h1 class="leading-none text-6xl font-bold">{text('reset.header')}</h1>
 
                 {if isset($selector) && isset($token)}
 
@@ -13,25 +15,25 @@
                         <input type="hidden" name="selector" value="{$selector}">
                         <input type="hidden" name="token" value="{$token}">
                         <label>
-                            <input type="password" name="password" placeholder="password"
-                                   class="input input-bordered w-full">
+                            <input type="password" name="password" placeholder="{text('core.placeholder.password')}"
+                                   class="input input-bordered w-full" autocomplete="new-password">
                         </label>
                     </div>
 
                     <div class="text-center">
-                        {\Ivy\Button::submit('save password')}
+                        {\Ivy\Button::submit(text('reset.button.save'))}
                     </div>
 
                 {else}
 
                     <div>
                         <label>
-                            <input type="email" name="email" placeholder="email" class="input input-bordered w-full">
+                            <input type="email" name="email" placeholder="{text('core.placeholder.email')}" class="input input-bordered w-full">
                         </label>
                     </div>
 
                     <div class="text-center">
-                        {\Ivy\Button::submit('send request')}
+                        {\Ivy\Button::submit(text('reset.button.request'))}
                     </div>
 
                 {/if}

@@ -1,11 +1,6 @@
 <?php
 
 return [
-    'header' => [
-        'login' => 'Login',
-        'logout' => 'Logout',
-        'profile' => 'Profile'
-    ],
     'menu' => [
         'profile' => 'Profile',
         'settings' => 'Settings',
@@ -13,11 +8,11 @@ return [
         'templates' => 'Templates'
     ],
     'button' => [
-        'login' => 'login',
-        'logout' => 'logout',
-        'update' => 'update',
+        'update' => 'Update',
     ],
     'placeholder' => [
+        'name' => 'Name',
+        'username' => 'Username',
         'email' => 'Email',
         'password' => 'Password'
     ],

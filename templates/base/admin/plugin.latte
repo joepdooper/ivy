@@ -2,7 +2,7 @@
 
 {block main}
     <main class="grow p-4 w-full max-w-5xl mx-auto">
-        <form action="{= _p('BASE_PATH') . 'admin/plugin/post'}" method="POST" enctype="multipart/form-data">
+        <form action="{path('BASE_PATH') . 'admin/plugin/post'}" method="POST" enctype="multipart/form-data">
             <div class="space-y-4">
 
                 <h1 class="leading-none text-6xl font-bold">Plugins</h1>
@@ -23,27 +23,27 @@
                         {foreach $installed_plugins as $key => $plugin}
                             <tr>
                                 <td>
-                                    {\Ivy\Button::switch("plugin[$key][active]", $plugin->getActive())}
+                                    {\Ivy\Button::switch("plugin[$key][active]", $plugin->active)}
                                 </td>
-                                <td><strong>{$plugin->getName()}</strong></td>
-                                <td>{$plugin->getDescription()}</td>
-                                <td>{$plugin->getVersion()}</td>
-                                <td>{$plugin->getType()}</td>
+                                <td><strong>{$plugin->name}</strong></td>
+                                <td>{$plugin->description}</td>
+                                <td>{$plugin->version}</td>
+                                <td>{$plugin->type}</td>
                                 <td class="text-right">
                                     <input type="hidden" name="plugin[{$key}][id]"
-                                           value="{$plugin->getId()}">
+                                           value="{$plugin->id}">
                                     <div class="join">
-                                        <a n:if="$plugin->getCollection() && $plugin->getActive()"
+                                        <a n:if="$plugin->getCollection() && $plugin->active"
                                                 class="btn btn-neutral btn-square join-item"
-                                                href="{= _p('BASE_PATH') . 'plugin' . DIRECTORY_SEPARATOR . $plugin->getUrl() . DIRECTORY_SEPARATOR . 'collection'}">
+                                                href="{path('BASE_PATH') . 'plugin' . DIRECTORY_SEPARATOR . $plugin->url . DIRECTORY_SEPARATOR . 'collection'}">
                                             {icon("feather/package.svg")|noescape}
                                         </a>
-                                        <a n:if="$plugin->getSettings() && $plugin->getActive()"
+                                        <a n:if="$plugin->settings && $plugin->active"
                                                 class="btn btn-neutral btn-square join-item"
-                                                href="{= _p('BASE_PATH') . 'plugin' . DIRECTORY_SEPARATOR . $plugin->getUrl() . DIRECTORY_SEPARATOR . 'settings'}">
+                                                href="{path('BASE_PATH') . 'plugin' . DIRECTORY_SEPARATOR . $plugin->url . DIRECTORY_SEPARATOR . 'settings'}">
                                             {icon("feather/settings.svg")|noescape}
                                         </a>
-                                        {\Ivy\Button::delete("plugin[$key][delete]", "plugin_" . $plugin->getId())}
+                                        {\Ivy\Button::delete("plugin[$key][delete]", "plugin_" . $plugin->id)}
                                     </div>
                                 </td>
                             </tr>

@@ -4,35 +4,35 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'none'"> -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="{= _s('name')}">
+    <meta name="apple-mobile-web-app-title" content="{setting('name')}">
     <meta name="theme-color" content="#ffffff">
-    <meta name="description" content="{= _s('description')}">
-    <meta name="keywords" content="{= _s('keywords')}">
-    <meta name="author" content="{= _s('author')}">
-    <meta name="date.created" content="{= _s('created')}">
-    <meta name="date.available" content="{= _s('available')}">
-    <meta name="date.updated" content="{= _s('updated')}">
+    <meta name="description" content="{setting('description')}">
+    <meta name="keywords" content="{setting('keywords')}">
+    <meta name="author" content="{setting('author')}">
+    <meta name="date.created" content="{setting('created')}">
+    <meta name="date.available" content="{setting('available')}">
+    <meta name="date.updated" content="{setting('updated')}">
     <meta name="robots" content="index, follow">
     <meta name="revisit-after" content="3 days">
-    <meta property="og:title" content="{= _s('title')}">
-    <meta property="og:site_name" content="{= _s('name')}">
-    <meta property="og:url" content="{= _s('url')}">
-    <meta property="og:description" content="{= _s('description')}">
+    <meta property="og:title" content="{setting('title')}">
+    <meta property="og:site_name" content="{setting('name')}">
+    <meta property="og:url" content="{setting('url')}">
+    <meta property="og:description" content="{setting('description')}">
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="{= _s('language')}"/>
+    <meta property="og:locale" content="{setting('language')}"/>
     <meta property="og:image"
-          content="{!_s('image') ?: _s('image')}"/>
+          content="{!setting('image') ?: setting('image')}"/>
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="{= _s('title')}">
-    <meta name="twitter:description" content="{= _s('description')}">
+    <meta name="twitter:title" content="{setting('title')}">
+    <meta name="twitter:description" content="{setting('description')}">
     <meta name="twitter:image"
-          content="{!_s('image') ?: _s('image')}">
+          content="{!setting('image') ?: setting('image')}">
 
-    <link rel="shortcut icon" type="image/x-icon" href="{= _p('BASE_PATH') . _p('MEDIA_PATH') . 'favicon/favicon.ico'}">
-    <link rel="shortcut icon" type="image/gif" href="{= _p('BASE_PATH') . _p('MEDIA_PATH') . 'favicon/favicon.gif'}">
-    <link rel="shortcut icon" type="image/png" href="{= _p('BASE_PATH') . _p('MEDIA_PATH') . 'favicon/favicon.png'}">
+    <link rel="shortcut icon" type="image/x-icon" href="{path('BASE_PATH') . path('MEDIA_PATH') . 'favicon/favicon.ico'}">
+    <link rel="shortcut icon" type="image/gif" href="{path('BASE_PATH') . path('MEDIA_PATH') . 'favicon/favicon.gif'}">
+    <link rel="shortcut icon" type="image/png" href="{path('BASE_PATH') . path('MEDIA_PATH') . 'favicon/favicon.png'}">
 
-    <link rel="manifest" href="{= _p('BASE_PATH') . 'manifest.json'}" crossorigin="use-credentials">
+    <link rel="manifest" href="{path('BASE_PATH') . 'manifest.json'}" crossorigin="use-credentials">
 
-    <title>{= _s('title')}</title>
+    <title>{setting('title')}</title>
 {/block}
