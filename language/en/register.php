@@ -1,10 +1,7 @@
 <?php
 
 return [
-    'header' => 'Register',
-    'button' => [
-        'submit' => 'Register',
-    ],
+    'register' => 'Register',
     'link' => [
         'login' => 'Have an account? Login',
     ],

@@ -7,11 +7,11 @@
             {csrf()}
 
             <div class="space-y-4">
-                <h1 class="leading-none text-6xl font-bold">{text('login.header')}</h1>
+                <h1 class="leading-none text-6xl font-bold">{text('login.login')}</h1>
 
                 <div>
                     <label>
-                        <input type="email" id="email" name="email" placeholder="{text('core.placeholder.email')}"
+                        <input type="email" id="email" name="email" placeholder="{text('placeholder.email')}"
                                class="input input-bordered w-full">
                     </label>
                 </div>
@@ -19,13 +19,13 @@
                 <div>
                     <label>
                         <input type="password" id="password" name="password"
-                               placeholder="{text('core.placeholder.password')}"
+                               placeholder="{text('placeholder.password')}"
                                class="input input-bordered w-full">
                     </label>
                 </div>
 
                 <div class="text-center">
-                    {\Ivy\Button::submit(text('login.button.submit'))}
+                    {button type:submit, text:text('login.login')}
                 </div>
 
                 <div class="text-center">

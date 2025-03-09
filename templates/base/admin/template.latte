@@ -6,15 +6,15 @@
             {csrf()}
 
             <div class="space-y-4">
-                <h1 class="leading-none text-6xl font-bold">Templates</h1>
+                <h1 class="leading-none text-6xl font-bold">{text('template.templates')}</h1>
 
                 <div class="overflow-x-auto">
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>name</th>
-                            <th>code</th>
-                            <th>select</th>
+                            <th>{text('template.name')}</th>
+                            <th>{text('template.code')}</th>
+                            <th>{text('template.select')}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="text-center">
-                    {\Ivy\Button::submit('update')}
+                    {button type:submit, text:text('button.update')}
                 </div>
 
             </div>

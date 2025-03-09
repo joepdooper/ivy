@@ -1,9 +1,7 @@
 <?php
 
 return [
-    'header' => 'Reset',
-    'button' => [
-        'request' => 'Send request',
-        'save' => 'Save password',
-    ],
+    'reset' => 'Reset',
+    'send_request' => 'Send request',
+    'save_password' => 'Save password',
 ];

@@ -3,19 +3,20 @@
 {block main}
     <main class="grow p-4 w-full max-w-5xl mx-auto">
         <form action="{path('BASE_PATH') . 'admin/plugin/post'}" method="POST" enctype="multipart/form-data">
-            <div class="space-y-4">
+            {csrf()}
 
-                <h1 class="leading-none text-6xl font-bold">Plugins</h1>
+            <div class="space-y-4">
+                <h1 class="leading-none text-6xl font-bold">{text('plugin.plugins')}</h1>
 
                 <div n:ifset="$installed_plugins" class="overflow-x-auto">
                     <table class="table">
                         <thead>
                         <tr>
                             <th></th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Version</th>
-                            <th>Type</th>
+                            <th>{text('plugin.name')}</th>
+                            <th>{text('plugin.description')}</th>
+                            <th>{text('plugin.version')}</th>
+                            <th>{text('plugin.type')}</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -23,7 +24,7 @@
                         {foreach $installed_plugins as $key => $plugin}
                             <tr>
                                 <td>
-                                    {\Ivy\Button::switch("plugin[$key][active]", $plugin->active)}
+                                    {button type:switch, name:"plugin[$key][active]", value:$plugin->active}
                                 </td>
                                 <td><strong>{$plugin->name}</strong></td>
                                 <td>{$plugin->description}</td>
@@ -43,7 +44,7 @@
                                                 href="{path('BASE_PATH') . 'plugin' . DIRECTORY_SEPARATOR . $plugin->url . DIRECTORY_SEPARATOR . 'settings'}">
                                             {icon("feather/settings.svg")|noescape}
                                         </a>
-                                        {\Ivy\Button::delete("plugin[$key][delete]", "plugin_" . $plugin->id)}
+                                        {button type:delete, name:"plugin[$key][delete]", value:"plugin_" . $plugin->id, id:$plugin->id}
                                     </div>
                                 </td>
                             </tr>
@@ -55,7 +56,7 @@
                 <div n:ifset="$uninstalled_plugins">
                     <label>
                         <select class="select select-bordered w-full" name="plugin[][url]">
-                            <option disabled selected value>Install plugin</option>
+                            <option disabled selected value>{text('plugin.select_to_install')}</option>
                             {foreach $uninstalled_plugins as $plugin}
                                 <option value="{$plugin->url}">{$plugin->name . ' (' . $plugin->description . ')'}
                                 </option>
@@ -65,7 +66,7 @@
                 </div>
 
                 <div class="text-center">
-                    {\Ivy\Button::submit('update')}
+                    {button type:submit, text:text('button.update')}
                 </div>
 
             </div>

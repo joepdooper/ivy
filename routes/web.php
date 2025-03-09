@@ -101,7 +101,7 @@ App::router()->mount('/admin', function () {
             Template::view('admin/template.latte');
         });
         App::router()->get('/user', function () {
-            $users = (new User)->addJoin('profiles', 'id', '=', 'user_id')->fetchAll();
+            $users = (new User)->fetchAll();
             Template::view('admin/user.latte', ['users' => $users]);
         });
         App::router()->get('/setting', function () {

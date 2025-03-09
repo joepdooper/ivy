@@ -7,11 +7,11 @@
             {csrf()}
 
             <div class="space-y-4">
-                <h1 class="leading-none text-6xl font-bold">Profile</h1>
+                <h1 class="leading-none text-6xl font-bold">{text('user.profile')}</h1>
 
                 <div>
                     {foreach \Ivy\User::getAuth()->getRoles() as $role}
-                        <span class="badge badge-xs p-3">{$role}</span>
+                        <span class="badge p-3">{text('user.'.strtolower($role))}</span>
                     {/foreach}
                 </div>
 
@@ -24,14 +24,14 @@
                                      alt="{\Ivy\User::getAuth()->getUsername()}"/>
                             </div>
                             <div class="join">
-                                {\Ivy\Button::delete('avatar', 'delete')}
+                                {button type:delete, name:"avatar", value:"delete", id:$profile->id}
                             </div>
 
                         {else}
 
                             <div class="indicator">
                                 <div class="indicator-item indicator-middle indicator-center w-10 h-10">
-                                    {\Ivy\Button::upload('avatar', 'upload')}
+                                    {button type:upload, name:"avatar", value:"upload", id:$profile->id}
                                 </div>
                                 <div id="userImagePreview" class="h-36 w-36 rounded-full border dark:border-gray-700">
 
@@ -51,20 +51,20 @@
 
                 <div>
                     <label>
-                        <input class="input input-bordered w-full" name="username" type="text" placeholder="name"
+                        <input class="input input-bordered w-full" name="username" type="text" placeholder="{text('placeholder.name')}"
                                value="{$profile->getCurrentUsername()}">
                     </label>
                 </div>
 
                 <div>
                     <label>
-                        <input class="input input-bordered w-full" name="email" type="email" placeholder="email"
+                        <input class="input input-bordered w-full" name="email" type="email" placeholder="{text('placeholder.email')}"
                                value="{$profile->getCurrentEmail()}">
                     </label>
                 </div>
 
                 <div class="text-center">
-                    {\Ivy\Button::submit('update')}
+                    {button type:submit, text:text('button.update')}
                 </div>
 
             </div>

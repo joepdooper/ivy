@@ -7,7 +7,7 @@
             {csrf()}
 
             <div class="space-y-4">
-                <h1 class="leading-none text-6xl font-bold">{text('reset.header')}</h1>
+                <h1 class="leading-none text-6xl font-bold">{text('reset.reset')}</h1>
 
                 {if isset($selector) && isset($token)}
 
@@ -15,25 +15,25 @@
                         <input type="hidden" name="selector" value="{$selector}">
                         <input type="hidden" name="token" value="{$token}">
                         <label>
-                            <input type="password" name="password" placeholder="{text('core.placeholder.password')}"
+                            <input type="password" name="password" placeholder="{text('placeholder.password')}"
                                    class="input input-bordered w-full" autocomplete="new-password">
                         </label>
                     </div>
 
                     <div class="text-center">
-                        {\Ivy\Button::submit(text('reset.button.save'))}
+                        {button type:submit, text:text('reset.save_password')}
                     </div>
 
                 {else}
 
                     <div>
                         <label>
-                            <input type="email" name="email" placeholder="{text('core.placeholder.email')}" class="input input-bordered w-full">
+                            <input type="email" name="email" placeholder="{text('placeholder.email')}" class="input input-bordered w-full">
                         </label>
                     </div>
 
                     <div class="text-center">
-                        {\Ivy\Button::submit(text('reset.button.request'))}
+                        {button type:submit, text:text('reset.send_request')}
                     </div>
 
                 {/if}

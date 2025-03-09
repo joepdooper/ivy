@@ -1,5 +1,18 @@
-<label class="button-delete btn btn-neutral btn-square join-item">
-    <input type="checkbox" class="hidden"
-           name="{$name}" value="{$value}">
-    {icon("feather/trash-2.svg")|noescape}
-</label>
+    <input type="checkbox" id="modal_delete_{$id}" class="modal-toggle block" name="{$name}" value="{$value}"/>
+    <div n:if="$id" class="modal text-left" role="dialog">
+        <div class="modal-box">
+            <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" for="modal_delete_{$id}">✕</label>
+            <h3 class="text-lg font-bold">Delete</h3>
+            <p class="py-4">Do you want to delete nr. {$id}</p>
+            <div class="modal-action">
+                <label for="modal_delete_{$id}" class="btn">{text('button.cancel')}</label>
+                <button class="btn btn-primary"
+                        name="submit" type="submit" value="delete">{text('button.delete')}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <label class="btn btn-neutral btn-square join-item" for="modal_delete_{$id}">
+        {icon("feather/trash-2.svg")|noescape}
+    </label>

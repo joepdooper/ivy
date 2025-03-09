@@ -6,7 +6,7 @@
             {csrf()}
 
             <div class="space-y-4">
-                <h1 class="leading-none text-6xl font-bold">Users</h1>
+                <h1 class="leading-none text-6xl font-bold">{text('user.users')}</h1>
 
                     <div n:ifset="$users" class="overflow-x-auto">
                         <table class="table">
@@ -14,29 +14,31 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th>super_admin</th>
-                                <th>admin</th>
-                                <th>editor</th>
+                                <th>{text('user.super_admin')}</th>
+                                <th>{text('user.admin')}</th>
+                                <th>{text('user.editor')}</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                            {foreach $users as $user}
+                            {foreach $users as $key => $user}
                                 <tr>
                                     <td>{$user->username}</td>
                                     <td>{$user->email}</td>
                                     <td>
-                                        {\Ivy\Button::switch('user[' . $user->id . '][super_admin]', \Ivy\User::getAuth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::SUPER_ADMIN))}
+                                        {button type:switch, name:"user[$key][super_admin]", value:\Ivy\User::getAuth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::SUPER_ADMIN)}
                                     </td>
                                     <td>
-                                        {\Ivy\Button::switch('user[' . $user->id . '][admin]', \Ivy\User::getAuth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::ADMIN))}
+                                        {button type:switch, name:"user[$key][admin]", value:\Ivy\User::getAuth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::ADMIN)}
                                     </td>
                                     <td>
-                                        {\Ivy\Button::switch('user[' . $user->id . '][editor]', \Ivy\User::getAuth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::EDITOR))}
+                                        {button type:switch, name:"user[$key][editor]", value:\Ivy\User::getAuth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::EDITOR)}
                                     </td>
                                     <td class="text-right">
+                                        <input type="hidden" name="user[{$key}][id]"
+                                               value="{$user->id}">
                                         <div class="join">
-                                            {\Ivy\Button::delete("user[" . $user->id . "][delete]", "user_" . $user->id)}
+                                            {button type:delete, name:"user[$key][delete]", value:"user_" . $user->id, id:$user->id}
                                         </div>
                                     </td>
                                 </tr>
@@ -46,7 +48,7 @@
                     </div>
 
                     <div class="text-center">
-                        {\Ivy\Button::submit('update')}
+                        {button type:submit, text:text('button.update')}
                     </div>
 
             </div>

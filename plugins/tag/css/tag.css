@@ -1,0 +1,10 @@
+a.tag,
+.tag,
+select[name="tag"] {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: lowercase;
+    font-variant: small-caps;
+    font-size: 0.75rem;
+    line-height: 1;
+}

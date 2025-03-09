@@ -1,0 +1,18 @@
+{
+  "name": "Tag",
+  "version": "1.0.0",
+  "settings": true,
+  "description": "Create tags for items",
+  "type": "filter",
+  "database": {
+    "install": "db/install.db.php",
+    "uninstall": "db/uninstall.db.php"
+  },
+  "actions": [
+    {
+      "name": "add tag",
+      "url": "plugin/tag/manage",
+      "icon": "feather/tag.svg"
+    }
+  ]
+}

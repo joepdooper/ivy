@@ -6,71 +6,67 @@
             {csrf()}
 
             <div class="space-y-4">
-                    <h1 class="leading-none text-6xl font-bold">Settings</h1>
+                <h1 class="leading-none text-6xl font-bold">{text('setting.settings')}</h1>
 
-                    <div n:ifset="$settings" class="overflow-x-auto">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>name</th>
-                                <th>value</th>
-                                <th>info</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {foreach $settings as $key => $setting}
-                                {if $setting->name}
-                                    <tr>
-                                        <td>
-                                            {\Ivy\Button::switch("setting[$key][bool]", $setting->bool)}
-                                        </td>
-                                        <td class="font-bold">
-                                            {$setting->name}
-                                        </td>
+                <div n:ifset="$settings" class="overflow-x-auto">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>{text('setting.name')}</th>
+                            <th>{text('setting.value')}</th>
+                            <th>{text('setting.info')}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach $settings as $key => $setting}
+                            {if $setting->name}
+                                <tr>
+                                    <td>
+                                        {button type:switch, name:"setting[$key][bool]", value:$setting->bool}
+                                    </td>
+                                    <td class="font-bold">
+                                        {$setting->name}
+                                    </td>
+                                    <td>
+                                        <label>
+                                            <input type="text" name="setting[{$key}][value]" value="{$setting->value}" class="input input-bordered w-full">
+                                        </label>
+                                    </td>
+                                    {if !$setting->info}
                                         <td>
                                             <label>
-                                                <input type="text" name="setting[{$key}][value]"
-                                                       value="{$setting->value}" class="input input-bordered w-full">
+                                                <input type="text" name="setting[{$key}][info]" class="input input-bordered w-full">
                                             </label>
                                         </td>
-                                        {if !$setting->info && $setting->name}
-                                            <td>
-                                                <label>
-                                                    <input type="text" name="setting[{$key}][info]"
-                                                           value="" class="input input-bordered w-full">
-                                                </label>
-                                            </td>
-                                        {else}
-                                            <td>{$setting->info}</td>
-                                        {/if}
-                                        <td class="text-right">
-                                            <input type="hidden" name="setting[{$key}][id]"
-                                                   value="{$setting->id}">
-                                            <div class="join">
-                                                {\Ivy\Button::delete("setting[$key][delete]", "setting_" .
-                                                $setting->id)}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                {/if}
-                            {/foreach}
-                            <tr>
-                                <td colspan="6">
-                                    <label>
-                                        <input class="input input-bordered w-full" type="text" name="setting[][name]"
-                                               placeholder="Add setting name">
+                                    {else}
+                                        <td>{$setting->info}</td>
+                                    {/if}
+                                    <td class="text-right">
+                                        <input type="hidden" name="setting[{$key}][id]"
+                                               value="{$setting->id}">
+                                        <div class="join">
+                                            {button type:delete, name:"setting[$key][delete]", value:"setting_" . $setting->id, id:$setting->id}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {/if}
+                        {/foreach}
+                        <tr>
+                            <td colspan="6">
+                                <label>
+                                    <input class="input input-bordered w-full" type="text" name="setting[][name]" placeholder="{text('setting.add_name')}">
                                     </label>
                                 </td>
                             </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
+                </div>
 
-                    <div class="text-center">
-                        {\Ivy\Button::submit('update')}
-                    </div>
+                <div class="text-center">
+                    {button type:submit, text:text('button.update')}
+                </div>
 
             </div>
         </form>

@@ -15,6 +15,6 @@
     {/if}
     <p class="text-xs ml-2">
         <strong>{$author->username}</strong>
-        on {date('d.m.y', strtotime($author->date))}
+        {text('misc.on')} {date('d.m.y', strtotime($author->date))}
     </p>
 </div>
