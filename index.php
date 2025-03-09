@@ -6,9 +6,9 @@ use Ivy\Setting;
 use Ivy\Template;
 
 error_reporting(E_ALL);
-ini_set('ignore_repeated_errors', getenv('IGNORE_REPEATED_ERRORS') ?? FALSE);
-ini_set('display_errors', getenv('DISPLAY_ERRORS') ?? FALSE);
-ini_set('log_errors', getenv('LOG_ERRORS') ?? FALSE);
+ini_set('ignore_repeated_errors', TRUE);
+ini_set('display_errors', TRUE);
+ini_set('log_errors', TRUE);
 ini_set('error_log', 'logs/php_error.txt');
 
 // Init session
