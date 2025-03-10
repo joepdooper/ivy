@@ -1,3 +1,4 @@
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -36,7 +37,7 @@ DROP TABLE IF EXISTS `profiles`;
 CREATE TABLE `profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `users_image` varchar(255) DEFAULT NULL,
+  `user_image` varchar(255) DEFAULT NULL,
   `last_activity` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -44,7 +45,7 @@ CREATE TABLE `profiles` (
 LOCK TABLES `profiles` WRITE;
 /*!40000 ALTER TABLE `profiles` DISABLE KEYS */;
 
-INSERT INTO `profiles` (`id`, `user_id`, `users_image`, `last_activity`)
+INSERT INTO `profiles` (`id`, `user_id`, `user_image`, `last_activity`)
 VALUES
 	(1,1,NULL,'2024-01-01 12:00:00');
 
@@ -63,13 +64,14 @@ CREATE TABLE `setting` (
   `bool` tinyint(1) NOT NULL DEFAULT '0',
   `value` varchar(255) DEFAULT NULL,
   `info` varchar(255) DEFAULT NULL,
+  `token` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `setting` WRITE;
 /*!40000 ALTER TABLE `setting` DISABLE KEYS */;
 
-INSERT INTO `setting` (`id`, `name`, `bool`, `value`, `info`)
+INSERT INTO `setting` (`id`, `name`, `bool`, `value`, `info`, `token`)
 VALUES
 	(1,'Private',0,'','Website only accessible on login'),
 	(2,'Minify CSS',0,'','CSS template files as a single minified file'),
