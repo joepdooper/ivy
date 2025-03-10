@@ -4,7 +4,7 @@ use Ivy\DB;
 use Ivy\Message;
 
 try {
-    DB::$connection->exec(
+    DB::getConnection()->exec(
         "
         DROP TABLE `tag`;
         "
@@ -14,7 +14,7 @@ try {
 }
 
 try {
-    DB::$connection->exec(
+    DB::getConnection()->exec(
         "
         DROP TABLE `item_tag`;
         "

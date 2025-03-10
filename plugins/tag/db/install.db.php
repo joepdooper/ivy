@@ -1,7 +1,7 @@
 <?php
 
 
-\Ivy\DB::$connection->exec(
+\Ivy\DB::getConnection()->exec(
     "
   CREATE TABLE `tag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -11,7 +11,7 @@
     "
 );
 
-\Ivy\DB::$connection->exec(
+\Ivy\DB::getConnection()->exec(
     "
   CREATE TABLE `item_tag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
