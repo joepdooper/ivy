@@ -73,20 +73,20 @@ LOCK TABLES `setting` WRITE;
 
 INSERT INTO `setting` (`id`, `name`, `bool`, `value`, `info`, `token`)
 VALUES
-	(1,'Private',0,'','Website only accessible on login'),
-	(2,'Minify CSS',0,'','CSS template files as a single minified file'),
-	(3,'Minify JS',0,'','JS template files as a single minified file'),
-	(4,'Registration role',0,'EDITOR','Set automatic role after user registration'),
-	(5,'Name',1,'dooper.io','Meta name'),
-	(6,'Title',1,'ivy','Meta title'),
-	(7,'Description',1,'Yet another sleek simple fast CMS with an effortless template and plugin environment','Meta description'),
-	(8,'Keywords',1,'fast, CMS, design, build, simple, slim, clean, easy, quick, cms-framework, content-management-system, google-page-speed, easy-to-deploy ','Meta keywords'),
-	(9,'Url',1,'http://localhost/ivy/','Meta url'),
-	(10,'Language',1,'en_GB','Meta language'),
-	(11,'Author',1,'Joep Dooper','Meta author'),
-	(12,'Created',1,'2024-01-01','Meta created'),
-	(13,'Available',1,'2024-01-01','Meta available'),
-	(14,'Updated',1,'2024-01-01','Meta updated');
+	(1,'Private',0,'','Website only accessible on login',NULL),
+	(2,'Minify CSS',0,'','CSS template files as a single minified file',NULL),
+	(3,'Minify JS',0,'','JS template files as a single minified file',NULL),
+	(4,'Registration role',0,'EDITOR','Set automatic role after user registration',NULL),
+	(5,'Name',1,'dooper.io','Meta name',NULL),
+	(6,'Title',1,'ivy','Meta title',NULL),
+	(7,'Description',1,'Yet another sleek simple fast CMS with an effortless template and plugin environment','Meta description',NULL),
+	(8,'Keywords',1,'fast, CMS, design, build, simple, slim, clean, easy, quick, cms-framework, content-management-system, google-page-speed, easy-to-deploy ','Meta keywords',NULL),
+	(9,'Url',1,'http://localhost/ivy/','Meta url',NULL),
+	(10,'Language',1,'en_GB','Meta language',NULL),
+	(11,'Author',1,'Joep Dooper','Meta author',NULL),
+	(12,'Created',1,'2024-01-01','Meta created',NULL),
+	(13,'Available',1,'2024-01-01','Meta available',NULL),
+	(14,'Updated',1,'2024-01-01','Meta updated',NULL);
 
 /*!40000 ALTER TABLE `setting` ENABLE KEYS */;
 UNLOCK TABLES;
