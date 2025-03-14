@@ -16,7 +16,8 @@
     "php-curl-class/php-curl-class": "^9.6",
     "bainternet/php-hooks": "^1.0",
     "samdark/sitemap": "^2.4",
-    "predis/predis": "^3.0@alpha"
+    "predis/predis": "^3.0@alpha",
+    "ezyang/htmlpurifier": "dev-master"
   },
   "scripts": {
     "post-create-project-cmd": [
