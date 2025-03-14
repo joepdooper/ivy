@@ -34,15 +34,17 @@
                                     <input type="hidden" name="plugin[{$key}][id]"
                                            value="{$plugin->id}">
                                     <div class="join">
-                                        <a n:if="$plugin->getCollection() && $plugin->active"
+                                         <a n:if="$plugin->active" n:foreach="$plugin->getInfo()->getActions() as $action"
                                                 class="btn btn-neutral btn-square join-item"
+                                                title="{text('plugin.'.$plugin->url.'.'.$action['text'])}"
+                                                href="{path('BASE_PATH') . 'plugin' . DIRECTORY_SEPARATOR . $plugin->url . DIRECTORY_SEPARATOR . $action['url']}">
+                                                {icon($action['icon'])|noescape}
+                                        </a>
+                                        <a n:if="$plugin->active && $plugin->getInfo()->getCollection()"
+                                                class="btn btn-neutral btn-square join-item"
+                                                title="{text('plugin.collection')}"
                                                 href="{path('BASE_PATH') . 'plugin' . DIRECTORY_SEPARATOR . $plugin->url . DIRECTORY_SEPARATOR . 'collection'}">
                                             {icon("feather/package.svg")|noescape}
-                                        </a>
-                                        <a n:if="$plugin->settings && $plugin->active"
-                                                class="btn btn-neutral btn-square join-item"
-                                                href="{path('BASE_PATH') . 'plugin' . DIRECTORY_SEPARATOR . $plugin->url . DIRECTORY_SEPARATOR . 'settings'}">
-                                            {icon("feather/settings.svg")|noescape}
                                         </a>
                                         {button type:delete, name:"plugin[$key][delete]", value:"plugin_" . $plugin->id, id:$plugin->id}
                                     </div>
