@@ -80,6 +80,7 @@ App::router()->mount('/admin', function () {
         App::router()->get('/plugin(/[a-z0-9_-]+)?(/collection)?', function ($id) {
             if($id) {
                 $parent_id = (new Plugin)->where('url', $id)->fetchOne()->getId();
+                $uninstalled_plugins = null;
             } else {
                 $parent_id = null;
             }
@@ -91,15 +92,17 @@ App::router()->mount('/admin', function () {
                 $plugin->setInfo();
                 $values_to_remove_from_uninstalled_plugins[] = $plugin->url;
             }
-            $uninstalled_plugins = array_filter(scandir(Path::get('PUBLIC_PATH') . Path::get('PLUGIN_PATH')), function ($plugin) use ($values_to_remove_from_uninstalled_plugins) {
-                return !in_array($plugin, $values_to_remove_from_uninstalled_plugins);
-            });
-            $uninstalled_plugins_info = [];
-            foreach ($uninstalled_plugins as $key => $plugin) {
-                $uninstalled_plugins_info[$key] = json_decode(file_get_contents(Path::get('PUBLIC_PATH') . Path::get('PLUGIN_PATH') . $plugin . '/info.json'));
-                $uninstalled_plugins_info[$key]->url = $plugin;
+            if(!$id) {
+                $uninstalled_plugins = array_filter(scandir(Path::get('PUBLIC_PATH') . Path::get('PLUGIN_PATH')), function ($plugin) use ($values_to_remove_from_uninstalled_plugins) {
+                    return !in_array($plugin, $values_to_remove_from_uninstalled_plugins);
+                });
+                $uninstalled_plugins_info = [];
+                foreach ($uninstalled_plugins as $key => $plugin) {
+                    $uninstalled_plugins_info[$key] = json_decode(file_get_contents(Path::get('PUBLIC_PATH') . Path::get('PLUGIN_PATH') . $plugin . '/info.json'));
+                    $uninstalled_plugins_info[$key]->url = $plugin;
+                }
+                $uninstalled_plugins = $uninstalled_plugins_info;
             }
-            $uninstalled_plugins = $uninstalled_plugins_info;
             Template::view('admin/plugin.latte', ['installed_plugins' => $installed_plugins, 'uninstalled_plugins' => $uninstalled_plugins]);
         });
         App::router()->get('/template', function () {
