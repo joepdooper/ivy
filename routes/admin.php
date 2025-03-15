@@ -6,11 +6,6 @@ use Ivy\User;
 
 App::router()->mount('/admin', function () {
 
-    App::router()->before('GET', '/', function () {
-        header('location:' . Path::get('BASE_PATH') . 'admin/login');
-        exit;
-    });
-
     App::router()->post('/user/register', '\Ivy\UserController@register');
 
     App::router()->post('/user/login', '\Ivy\UserController@login');

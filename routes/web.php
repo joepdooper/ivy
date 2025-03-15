@@ -77,9 +77,14 @@ App::router()->mount('/admin', function () {
         });
     endif;
     if (User::getAuth()->isLoggedIn() && User::canEditAsAdmin()):
-        App::router()->get('/plugin', function () {
+        App::router()->get('/plugin(/[a-z0-9_-]+)?(/collection)?', function ($id) {
+            if($id) {
+                $parent_id = (new Plugin)->where('url', $id)->fetchOne()->getId();
+            } else {
+                $parent_id = null;
+            }
             // -- Installed plugins from database
-            $installed_plugins = (new Plugin)->where('parent_id', null)->fetchAll();
+            $installed_plugins = (new Plugin)->where('parent_id', $parent_id)->fetchAll();
             // -- Uninstalled plugins from directory
             $values_to_remove_from_uninstalled_plugins = ['.', '..', '.DS_Store'];
             foreach ($installed_plugins as $plugin) {

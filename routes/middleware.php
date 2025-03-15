@@ -17,6 +17,11 @@ App::router()->before('GET', '/.*', function () {
     }
 });
 
+App::router()->before('GET', '/admin/', function () {
+    header('location:' . Path::get('BASE_PATH') . 'admin/login');
+    exit;
+});
+
 App::router()->before('GET|POST', '/admin/([a-z0-9_-]+)', function ($id) {
     if (User::getAuth()->isLoggedIn()) {
         if (!User::canEditAsAdmin() && !in_array($id, ['register', 'login', 'logout', 'reset', 'profile'])) {
