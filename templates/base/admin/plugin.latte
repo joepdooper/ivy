@@ -8,7 +8,7 @@
             <div class="space-y-4">
                 <h1 class="leading-none text-6xl font-bold">{text('plugin.plugins')}</h1>
 
-                <div n:ifset="$installed_plugins" class="overflow-x-auto">
+                <div n:if="$installed_plugins" class="overflow-x-auto">
                     <table class="table">
                         <thead>
                         <tr>
@@ -43,7 +43,7 @@
                                         <a n:if="$plugin->active && $plugin->getInfo()->getCollection()"
                                                 class="btn btn-neutral btn-square join-item"
                                                 title="{text('plugin.collection')}"
-                                                href="{path('BASE_PATH') . 'plugin' . DIRECTORY_SEPARATOR . $plugin->url . DIRECTORY_SEPARATOR . 'collection'}">
+                                                href="{path('BASE_PATH') . 'admin' . DIRECTORY_SEPARATOR . 'plugin' . DIRECTORY_SEPARATOR . $plugin->url . DIRECTORY_SEPARATOR . 'collection'}">
                                             {icon("feather/package.svg")|noescape}
                                         </a>
                                         {button type:delete, name:"plugin[$key][delete]", value:"plugin_" . $plugin->id, id:$plugin->id}
@@ -54,6 +54,7 @@
                         </tbody>
                     </table>
                 </div>
+                <div n:else class="text-center">{text('plugin.none_installed')}</div>
 
                 <div n:ifset="$uninstalled_plugins">
                     <label>

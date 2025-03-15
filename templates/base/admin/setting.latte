@@ -8,7 +8,7 @@
             <div class="space-y-4">
                 <h1 class="leading-none text-6xl font-bold">{text('setting.settings')}</h1>
 
-                <div n:ifset="$settings" class="overflow-x-auto">
+                <div n:if="$settings" class="overflow-x-auto">
                     <table class="table">
                         <thead>
                         <tr>
@@ -63,6 +63,7 @@
                         </tbody>
                     </table>
                 </div>
+                <div n:else class="text-center">{text('setting.none_defined')}</div>
 
                 <div class="text-center">
                     {button type:submit, text:text('button.update')}
