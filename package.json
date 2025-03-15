@@ -1,19 +1,14 @@
 {
   "dependencies": {
-    "@material/web": "^1.3.0",
-    "@orestbida/iframemanager": "^1.2.5",
     "@tailwindcss/cli": "^4.0.12",
     "axios": "^1.1.3",
     "callbackhooks": "^1.0.0",
     "linkify-html": "^4.0.2",
     "linkifyjs": "^4.0.2",
     "macy": "^2.5.1",
-    "normalize.css": "^8.0.1",
     "petite-vue": "^0.4.1",
     "sortablejs": "^1.15.0",
-    "swup": "^4.5.1",
-    "tailwindcss": "^4.0.12",
-    "vanilla-cookieconsent": "^3.0.0"
+    "tailwindcss": "^4.0.12"
   },
   "devDependencies": {
     "daisyui": "^5.0.0"
