@@ -3,7 +3,9 @@
         {\Ivy\Template::render('include/header.latte')}
     {/block}
 
-    {\Ivy\Message::render('include/message.latte')}
+    {if isLoggedIn()}
+        {\Ivy\Template::render('include/message.latte', ['flashes' => $flashes])}
+    {/if}
 
     {block main}
         {\Ivy\Template::render('include/main.latte')}

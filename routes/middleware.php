@@ -18,8 +18,13 @@ App::router()->before('GET', '/.*', function () {
 });
 
 App::router()->before('GET', '/admin/', function () {
-    header('location:' . Path::get('BASE_PATH') . 'admin/login');
-    exit;
+    if (User::getAuth()->isLoggedIn()) {
+        header('location:' . Path::get('BASE_PATH') . 'admin/profile');
+        exit;
+    } else {
+        header('location:' . Path::get('BASE_PATH') . 'admin/login');
+        exit;
+    }
 });
 
 App::router()->before('GET|POST', '/admin/([a-z0-9_-]+)', function ($id) {

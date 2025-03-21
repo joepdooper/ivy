@@ -1,3 +1,15 @@
-<div role="alert" class="alert">
-    <span>{$message?->text}</span>
-</div>
+{ifset $flashes}
+    <div class="flashes toast toast-end">
+        {foreach $flashes as $type => $messages}
+            {foreach $messages as $key => $message}
+                <!-- alert-success alert-error alert-info alert-warning -->
+                <input type="checkbox" id="alert_{$key}" checked/>
+                <div role="alert" class="alert alert-{$type} flex">
+                    <div class="flex-1">{$message}</div>
+                    <!-- btn-success btn-error btn-info btn-warning -->
+                    <label class="btn btn-xs btn-circle btn-{$type}" for="alert_{$key}">✕</label>
+                </div>
+            {/foreach}
+        {/foreach}
+    </div>
+{/ifset}

@@ -74,3 +74,12 @@ html, body {
 .btn svg {
     max-height: 20px;
 }
+
+.flashes > [type="checkbox"],
+.flashes > [type="checkbox"] + .alert {
+    display: none;
+}
+
+.flashes > [type="checkbox"]:checked + .alert {
+    display: flex;
+}

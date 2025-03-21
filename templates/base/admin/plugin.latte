@@ -46,7 +46,7 @@
                                                 href="{path('BASE_PATH') . 'admin' . DIRECTORY_SEPARATOR . 'plugin' . DIRECTORY_SEPARATOR . $plugin->url . DIRECTORY_SEPARATOR . 'collection'}">
                                             {icon("feather/package.svg")|noescape}
                                         </a>
-                                        {button type:delete, name:"plugin[$key][delete]", value:"plugin_" . $plugin->id, id:$plugin->id}
+                                        {button type:delete, name:"plugin[$key][delete]", value:"plugin_" . $plugin->id, id:$plugin->id, placeholder:$plugin->name}
                                     </div>
                                 </td>
                             </tr>

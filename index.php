@@ -11,9 +11,6 @@ ini_set('display_errors', TRUE);
 ini_set('log_errors', TRUE);
 ini_set('error_log', 'logs/php_error.txt');
 
-// Init session
-session_start();
-
 // Autoloader
 require_once 'vendor/autoload.php';
 require_once 'autoloader.php';

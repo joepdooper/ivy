@@ -2,8 +2,8 @@
     <div n:if="$id" class="modal text-left" role="dialog">
         <div class="modal-box">
             <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" for="modal_delete_{$id}">✕</label>
-            <h3 class="text-lg font-bold">Delete</h3>
-            <p class="py-4">Do you want to delete nr. {$id}</p>
+            <h3 class="text-lg font-bold">{text('modal.delete')}</h3>
+            <p class="py-4">{text('modal.delete_question', ['placeholder' => $placeholder ?? $id])}</p>
             <div class="modal-action">
                 <label for="modal_delete_{$id}" class="btn">{text('button.cancel')}</label>
                 <button class="btn btn-primary"
@@ -13,6 +13,6 @@
         </div>
     </div>
 
-    <label class="btn btn-neutral btn-square join-item" title="{text('button.delete')}" for="modal_delete_{$id}">
+    <label class="btn btn-neutral btn-square join-item" title="{text('button.delete') . ' ' . ($placeholder ?? $id)}" for="modal_delete_{$id}">
         {icon("feather/trash-2.svg")|noescape}
     </label>
