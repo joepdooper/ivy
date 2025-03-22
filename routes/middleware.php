@@ -1,59 +1,16 @@
 <?php
 
 use Ivy\App;
-use Ivy\Path;
-use Ivy\Setting;
-use Ivy\Template;
-use Ivy\User;
 
 // BEFORE MIDDLEWARE
-
-App::router()->before('GET', '/.*', function () {
-    if (!User::getAuth()->isLoggedIn() && Setting::getStash()['private']->bool) {
-        if (Path::get('CURRENT_PAGE') != Path::get('BASE_PATH') . 'admin/login') {
-            header('location:' . Path::get('BASE_PATH') . 'admin/login');
-            exit;
-        }
-    }
+App::router()->before('GET', '/.*', '\Ivy\TemplateController@before');
+App::router()->mount('/admin', function () {
+    App::router()->before('GET', '/', '\Ivy\UserController@before');
+    App::router()->before('GET|POST', '/register', '\Ivy\UserController@beforeRegister');
+    App::router()->before('GET|POST', '/login', '\Ivy\UserController@beforeLogin');
+    App::router()->before('GET|POST', '/logout', '\Ivy\UserController@beforeLogout');
+    App::router()->before('GET|POST', '/reset', '\Ivy\UserController@beforeReset');
+    App::router()->before('GET|POST', '/profile', '\Ivy\ProfileController@before');
 });
-
-App::router()->before('GET', '/admin/', function () {
-    if (User::getAuth()->isLoggedIn()) {
-        header('location:' . Path::get('BASE_PATH') . 'admin/profile');
-        exit;
-    } else {
-        header('location:' . Path::get('BASE_PATH') . 'admin/login');
-        exit;
-    }
-});
-
-App::router()->before('GET|POST', '/admin/([a-z0-9_-]+)', function ($id) {
-    if (User::getAuth()->isLoggedIn()) {
-        if (!User::canEditAsAdmin() && !in_array($id, ['register', 'login', 'logout', 'reset', 'profile'])) {
-            header('location:' . Path::get('BASE_PATH'));
-            exit();
-        }
-    } else {
-        if (!in_array($id, ['register', 'login', 'reset'])) {
-            header('location:' . Path::get('BASE_PATH') . 'admin/login');
-            exit();
-        }
-    }
-});
-
-App::router()->before('GET|POST', '/plugin/.*', function () {
-    if (User::getAuth()->isLoggedIn()) {
-        if (!User::canEditAsSuperAdmin()) {
-            header('location:' . Path::get('BASE_PATH'));
-            exit();
-        }
-    } else {
-        header('location:' . Path::get('BASE_PATH') . 'admin/login');
-    }
-});
-
-App::router()->before('GET|POST', '/([a-z0-9_-]+)/([a-z0-9_-]+)', function ($route, $identifier) {
-    Template::$route = htmlentities($route);
-    Template::$identifier = htmlentities($identifier);
-    Template::$url = DIRECTORY_SEPARATOR . Template::$route . DIRECTORY_SEPARATOR . Template::$identifier;
-});
+App::router()->before('GET|POST', '/plugin/.*', '\Ivy\PluginController@before');
+App::router()->before('GET|POST', '/([a-z0-9_-]+)/([a-z0-9_-]+)', '\Ivy\TemplateController@dynamicRoute');
