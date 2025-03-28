@@ -6,7 +6,7 @@
             {csrf()}
 
             <div class="space-y-4">
-                <h1 class="leading-none text-6xl font-bold">Tags</h1>
+                <h1 class="leading-none text-6xl font-bold">{text('tag.tag.tags')}</h1>
 
                 <div class="overflow-x-auto">
                     <table class="table">
@@ -21,14 +21,14 @@
                             <tr>
                                 <td>
                                     <label>
-                                        <input type="text" name="tag[{$key}][value]" value="{$tag->getValue()}"
+                                        <input type="text" name="tag[{$key}][value]" value="{$tag->value}"
                                                class="input input-bordered w-full">
                                     </label>
                                 </td>
                                 <td class="text-right">
-                                    <input type="hidden" name="tag[{$key}][id]" value="{$tag->getId()}">
+                                    <input type="hidden" name="tag[{$key}][id]" value="{$tag->id}">
                                     <div class="join">
-                                        {\Ivy\Button::delete("tag[" . $key . "][delete]", "tag_" . $tag->getId())}
+                                        {button type:delete, name:"tag[$key][delete]", value:"tag_" . $tag->id, id:$tag->id}
                                     </div>
                                 </td>
                             </tr>
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="text-center">
-                    {\Ivy\Button::submit('save')}
+                    {button type:submit, text:text('button.save')}
                 </div>
 
             </div>

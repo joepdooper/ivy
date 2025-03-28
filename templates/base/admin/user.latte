@@ -26,13 +26,13 @@
                                     <td>{$user->username}</td>
                                     <td>{$user->email}</td>
                                     <td>
-                                        {button type:switch, name:"user[$key][super_admin]", value:\Ivy\User::getAuth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::SUPER_ADMIN)}
+                                        {button type:switch, name:"user[$key][super_admin]", value:\Ivy\Model\User::getAuth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::SUPER_ADMIN)}
                                     </td>
                                     <td>
-                                        {button type:switch, name:"user[$key][admin]", value:\Ivy\User::getAuth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::ADMIN)}
+                                        {button type:switch, name:"user[$key][admin]", value:\Ivy\Model\User::getAuth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::ADMIN)}
                                     </td>
                                     <td>
-                                        {button type:switch, name:"user[$key][editor]", value:\Ivy\User::getAuth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::EDITOR)}
+                                        {button type:switch, name:"user[$key][editor]", value:\Ivy\Model\User::getAuth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::EDITOR)}
                                     </td>
                                     <td class="text-right">
                                         <input type="hidden" name="user[{$key}][id]"

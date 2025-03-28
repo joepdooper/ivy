@@ -10,7 +10,7 @@
                 <h1 class="leading-none text-6xl font-bold">{text('user.profile')}</h1>
 
                 <div>
-                    {foreach \Ivy\User::getAuth()->getRoles() as $role}
+                    {foreach \Ivy\Model\User::getAuth()->getRoles() as $role}
                         <span class="badge p-3">{text('user.'.strtolower($role))}</span>
                     {/foreach}
                 </div>
@@ -21,7 +21,7 @@
 
                             <div class="w-36 rounded-full">
                                 <img src="{path('BASE_PATH') . path('MEDIA_PATH') . 'profile/' . $profile->getCurrentUserImage()}"
-                                     alt="{\Ivy\User::getAuth()->getUsername()}"/>
+                                     alt="{\Ivy\Model\User::getAuth()->getUsername()}"/>
                             </div>
                             <div class="join">
                                 {button type:delete, name:"avatar", value:"delete", id:$profile->id}

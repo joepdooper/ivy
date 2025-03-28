@@ -1,9 +1,11 @@
 <?php
 
 use Ivy\App;
+use Ivy\Manager\AssetManager;
+use Ivy\Manager\TemplateManager;
 use Ivy\Path;
-use Ivy\Setting;
-use Ivy\Template;
+use Ivy\Model\Setting;
+use Ivy\View\LatteView;
 
 error_reporting(E_ALL);
 ini_set('ignore_repeated_errors', TRUE);
@@ -23,38 +25,33 @@ $app->run();
 <html lang="<?= substr(Setting::getStash()['language']->value, 0, 2); ?>" data-color-mode="dark">
 <head>
 
-    <?php
-    Template::hooks()->do_action('before_head_action');
-    Template::head('head.latte');
-    Template::hooks()->do_action('after_head_action');
-    ?>
+    <?php LatteView::head('head.latte'); ?>
 
     <script>
         const _SUBFOLDER = "<?= Path::get('SUBFOLDER'); ?>";
     </script>
 
-    <?php Template::hooks()->do_action('add_css_action'); ?>
-
     <?php
     if (Setting::getStash()['minify_css']->bool) {
-        if (!file_exists(Template::file('css/minified.css'))) {
+        if (!file_exists(TemplateManager::file('css/minified.css'))) {
             $minify = new MatthiasMullie\Minify\CSS();
-            foreach (Template::getCss() as $cssfile) {
+            foreach (AssetManager::getCss() as $cssfile) {
                 $minify->add($cssfile);
             }
             $minify->minify(Path::get('PUBLIC_PATH') . _TEMPLATE_SUB . 'css/minified.css');
         }
     } else {
-        if (file_exists(Template::file('css/minified.css'))) {
-            unlink(Template::file('css/minified.css'));
+        $fileCSS = TemplateManager::file('css/minified.css');
+        if ($fileCSS && file_exists($fileCSS)) {
+            unlink($fileCSS);
         }
     }
     ?>
 
     <?php if (Setting::getStash()['minify_css']->bool): ?>
-        <link href="<?= Path::get('BASE_PATH') . Template::file('css/minified.css'); ?>" rel="stylesheet" type="text/css">
+        <link href="<?= Path::get('BASE_PATH') . TemplateManager::file('css/minified.css'); ?>" rel="stylesheet" type="text/css">
     <?php else: ?>
-        <?php foreach (Template::getCss() as $cssfile): ?>
+        <?php foreach (AssetManager::getCss() as $cssfile): ?>
             <link href="<?= Path::get('BASE_PATH') . $cssfile; ?>" rel="stylesheet" type="text/css">
         <?php endforeach; ?>
     <?php endif; ?>
@@ -62,38 +59,33 @@ $app->run();
 </head>
 <body>
 
-<?php
-Template::hooks()->do_action('before_body_action');
-Template::body('body.latte');
-Template::hooks()->do_action('after_body_action');
-?>
-
-<?php Template::hooks()->do_action('add_js_action'); ?>
+<?php LatteView::body('body.latte'); ?>
 
 <?php
 if (Setting::getStash()['minify_js']->bool) {
-    if (!file_exists(Template::file('js/minified.js'))) {
+    if (!file_exists(TemplateManager::file('js/minified.js'))) {
         $minify = new MatthiasMullie\Minify\JS();
-        foreach (Template::getJs() as $jsfile) {
+        foreach (AssetManager::getJS() as $jsfile) {
             $minify->add($jsfile);
         }
         $minify->minify(Path::get('PUBLIC_PATH') . _TEMPLATE_SUB . 'js/minified.js');
     }
 } else {
-    if (file_exists(Template::file('js/minified.js'))) {
-        unlink(Template::file('js/minified.js'));
+    $fileJS = TemplateManager::file('js/minified.js');
+    if ($fileJS && file_exists($fileJS)) {
+        unlink($fileJS);
     }
 }
 ?>
 
-<?php foreach (Template::getEsm() as $esmfile): ?>
-    <script type="module" src="<?= Path::get('BASE_PATH') . Template::file($esmfile); ?>"></script>
+<?php foreach (AssetManager::getESM() as $esmfile): ?>
+    <script type="module" src="<?= Path::get('BASE_PATH') . TemplateManager::file($esmfile); ?>"></script>
 <?php endforeach; ?>
 
 <?php if (Setting::getStash()['minify_js']->bool): ?>
-    <script src="<?= Path::get('BASE_PATH') . Template::file('js/minified.js'); ?>"></script>
+    <script src="<?= Path::get('BASE_PATH') . TemplateManager::file('js/minified.js'); ?>"></script>
 <?php else: ?>
-<?php foreach (Template::getJs() as $jsfile): ?>
+<?php foreach (AssetManager::getJS() as $jsfile): ?>
     <script src="<?= Path::get('BASE_PATH') . $jsfile; ?>"></script>
 <?php endforeach; ?>
 <?php endif; ?>

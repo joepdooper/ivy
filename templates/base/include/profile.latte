@@ -2,6 +2,6 @@
     <div class="float-start users-image user-{$profile->user_id}"
          style="background-image:url('media/item/thumb/{$profile->image}')"></div>
     <div class="float-start users-name user-{$profile->user_id}">
-        <strong>{$profile->username}</strong>{\Ivy\Profile::lastSeen($profile->last_login)}
+        <strong>{$profile->username}</strong>{\Ivy\Model\Profile::lastSeen($profile->last_login)}
     </div>
 </div>

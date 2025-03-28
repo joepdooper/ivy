@@ -6,15 +6,16 @@
             </a>
         </div>
         <div class="flex gap-x-4 px-2">
-            {* Hook from DarkMode plugin *}
-            {\Ivy\Template::hooks()->do_action('dark_mode_buttons')}
+            {if isset($_SESSION['plugin_actives']) && in_array("DarkMode", $_SESSION['plugin_actives'])}
+                {\Ivy\View\LatteView::render(Path::get('PLUGIN_PATH') . "darkmode/template/buttons.latte")}
+            {/if}
             {if isLoggedIn()}
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="avatar">
-                        {if \Ivy\Profile::hasCurrentUserImage()}
+                        {if \Ivy\Model\Profile::hasCurrentUserImage()}
                             <div class="w-10 rounded-full">
-                                <img alt="{\Ivy\Profile::getCurrentUserName()}"
-                                     src="{path('BASE_PATH') . path('MEDIA_PATH') . 'profile/' . \Ivy\Profile::getCurrentUserImage()}"/>
+                                <img alt="{\Ivy\Model\Profile::getCurrentUserName()}"
+                                     src="{path('BASE_PATH') . path('MEDIA_PATH') . 'profile/' . \Ivy\Model\Profile::getCurrentUserImage()}"/>
                             </div>
                         {else}
                             {icon("feather/user.svg")|noescape}
@@ -28,7 +29,7 @@
                                 {text('menu.profile')}
                             </a>
                         </li>
-                        {if \Ivy\User::canEditAsAdmin()}
+                        {if \Ivy\Model\User::canEditAsAdmin()}
                             <li>
                                 <a href="{path('BASE_PATH') . 'admin/setting'}">
                                     {icon("feather/sliders.svg")|noescape}

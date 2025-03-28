@@ -3,8 +3,9 @@
 namespace Tag;
 
 use GUMP;
-use Ivy\Controller;
-use Ivy\Message;
+use Ivy\Abstract\Controller;
+use Ivy\Path;
+use Ivy\View\LatteView;
 
 class TagController extends Controller
 {
@@ -12,10 +13,9 @@ class TagController extends Controller
 
     public function post(): void
     {
-        $this->requirePost();
-        $this->requireLogin();
+        $this->authorize('post', Tag::class);
 
-        $tags_data = $this->request->input('tag') ?? '';
+        $tags_data = $this->request->get('tag') ?? '';
 
         foreach ($tags_data as $tag_data) {
             try {
@@ -27,14 +27,23 @@ class TagController extends Controller
                     $this->tag->save($tag_data);
                 } else {
                     foreach ($validated as $string) {
-                        Message::add($string);
+                        $this->flashBag->add('error', $string);
                     }
                 }
             } catch (\Exception $e) {
-                Message::add($e->getMessage());
+                $this->flashBag->add('error', $e->getMessage());
             }
         }
 
-        Message::add('Updated successful', $this->tag->getPath() . DIRECTORY_SEPARATOR . 'manage');
+        $this->flashBag->add('success', 'Updated successful');
+        $this->redirect($this->tag->path . DIRECTORY_SEPARATOR . 'manage');
+    }
+
+    public function index(): void
+    {
+        $this->authorize('index', Tag::class);
+
+        $tags = (new Tag)->fetchAll();
+        LatteView::set(Path::get('PLUGIN_PATH') . 'tag/template/manage.latte', ['tags' => $tags]);
     }
 }

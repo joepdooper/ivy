@@ -2,7 +2,7 @@
 
 namespace Tag;
 
-use Ivy\Model;
+use Ivy\Abstract\Model;
 
 class Tag extends Model
 {
@@ -13,21 +13,4 @@ class Tag extends Model
     ];
 
     protected string $value;
-
-    /**
-     * @return string
-     */
-    public function getValue(): string
-    {
-        return $this->value;
-    }
-
-    /**
-     * @param string $value
-     */
-    public function setValue(string $value): void
-    {
-        $this->value = $value;
-    }
-
 }

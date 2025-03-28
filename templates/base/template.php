@@ -1,10 +1,10 @@
 <?php
 
-use Ivy\Template;
+use Ivy\Manager\AssetManager;
 
-Template::addCSS('css/output.css');
-Template::addCSS('css/custom.css');
+AssetManager::addCSS('css/output.css');
+AssetManager::addCSS('css/custom.css');
 
-// Template::addJS('node_modules/axios/dist/axios.min.js');
-// Template::addJS('node_modules/petite-vue/dist/petite-vue.umd.js');
-// Template::addJS('templates/base/js/template.js');
+// AssetManager::addJS('node_modules/axios/dist/axios.min.js');
+// AssetManager::addJS('node_modules/petite-vue/dist/petite-vue.umd.js');
+// AssetManager::addJS('templates/base/js/template.js');
