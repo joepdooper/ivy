@@ -1,6 +1,5 @@
 {
   "name": "joepdooper/ivy",
-  "version": "0.8.3",
   "description": "Another sleek, simple, fast PHP framework with an effortless template and plugin environment",
   "type": "project",
   "license": "MIT",
@@ -19,7 +18,7 @@
     "samdark/sitemap": "^2.4",
     "predis/predis": "^3.0@alpha",
     "ezyang/htmlpurifier": "dev-master",
-    "wixel/gump": "2.2.0"
+    "wixel/gump": "^2.2"
   },
   "scripts": {
     "post-create-project-cmd": [
