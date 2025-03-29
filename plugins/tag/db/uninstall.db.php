@@ -1,13 +1,16 @@
 <?php
 
-use Ivy\DB;
+use Ivy\App;
+use Ivy\Model\User;
 
-try {
-    DB::getConnection()->exec(
-        "
+if(User::canEditAsSuperAdmin()) {
+    try {
+        App::db()->exec(
+            "
         DROP TABLE `tag`;
         "
-    );
-} catch (Exception $e) {
-    Message::add($e->getMessage());
+        );
+    } catch (\Delight\Db\Throwable\Exception $e) {
+        error_log("Failed to drop table `tag`: " . $e->getMessage());
+    }
 }
