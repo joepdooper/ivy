@@ -1,8 +1,8 @@
 <?php
 
-use Ivy\App;
+use Ivy\Manager\RouterManager;
 
 // -- 404
-App::router()->set404(function () {
+RouterManager::instance()->set404(function () {
     header('HTTP/1.1 404 Not Found');
 });

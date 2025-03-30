@@ -1,9 +1,9 @@
 <?php
 
-use Ivy\App;
 use Ivy\Manager\AssetManager;
+use Ivy\Manager\RouterManager;
 
 AssetManager::addCSS("plugins/tag/css/tag.css");
 
-App::router()->get('/plugin/tag/manage','\Tag\TagController@index');
-App::router()->post('/tag/post', '\Tag\TagController@post');
+RouterManager::instance()->get('/plugin/tag/manage','\Tag\TagController@index');
+RouterManager::instance()->post('/tag/post', '\Tag\TagController@post');

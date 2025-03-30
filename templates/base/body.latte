@@ -1,17 +1,17 @@
 <div class="flex flex-col min-h-full antialiased">
     {block header}
-        {\Ivy\View\LatteView::render('include/header.latte')}
+        {render('include/header.latte')}
     {/block}
 
-    {if isLoggedIn()}
-        {\Ivy\View\LatteView::render('include/message.latte', ['flashes' => $flashes])}
+    {if auth()->isLoggedIn()}
+        {render('include/message.latte', ['flashes' => $flashes])}
     {/if}
 
     {block main}
-        {\Ivy\View\LatteView::render('include/main.latte')}
+        {render('include/main.latte')}
     {/block}
 
     {block footer}
-        {\Ivy\View\LatteView::render('include/footer.latte')}
+        {render('include/footer.latte')}
     {/block}
 </div>

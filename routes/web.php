@@ -1,6 +1,6 @@
 <?php
 
-use Ivy\App;
+use Ivy\Manager\RouterManager;
 
 // -- PROFILE
-App::router()->get('/profile/(\d+)', '\Ivy\Controller\ProfileController@public');
+RouterManager::instance()->get('/profile/(\d+)', '\Ivy\Controller\ProfileController@public');

@@ -1,11 +1,11 @@
 <?php
 
-use Ivy\App;
+use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
 
 if(User::canEditAsSuperAdmin()) {
     try {
-        App::db()->exec(
+        DatabaseManager::connection()->exec(
             "
         DROP TABLE `tag`;
         "

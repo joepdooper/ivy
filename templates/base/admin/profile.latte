@@ -10,18 +10,18 @@
                 <h1 class="leading-none text-6xl font-bold">{text('user.profile')}</h1>
 
                 <div>
-                    {foreach \Ivy\Model\User::getAuth()->getRoles() as $role}
+                    {foreach auth()->getRoles() as $role}
                         <span class="badge p-3">{text('user.'.strtolower($role))}</span>
                     {/foreach}
                 </div>
 
                 <div class="form-group">
                     <div class="avatar">
-                        {if isset($profile) && !empty($profile->hasCurrentUserImage())}
+                        {if $profile->user_image}
 
                             <div class="w-36 rounded-full">
-                                <img src="{path('BASE_PATH') . path('MEDIA_PATH') . 'profile/' . $profile->getCurrentUserImage()}"
-                                     alt="{\Ivy\Model\User::getAuth()->getUsername()}"/>
+                                <img src="{path('BASE_PATH') . path('MEDIA_PATH') . 'profile/' . $profile->user_image}"
+                                     alt="{auth()->getUsername()}"/>
                             </div>
                             <div class="join">
                                 {button type:delete, name:"avatar", value:"delete", id:$profile->id}
@@ -47,19 +47,19 @@
                     </div>
                 </div>
 
-                <input name="user_id" type="hidden" value="{$profile->getCurrentUserId()}">
+                <input name="user_id" type="hidden" value="{$profile->user_id}">
 
                 <div>
                     <label>
                         <input class="input input-bordered w-full" name="username" type="text" placeholder="{text('placeholder.name')}"
-                               value="{$profile->getCurrentUsername()}">
+                               value="{$profile->username}">
                     </label>
                 </div>
 
                 <div>
                     <label>
                         <input class="input input-bordered w-full" name="email" type="email" placeholder="{text('placeholder.email')}"
-                               value="{$profile->getCurrentEmail()}">
+                               value="{$profile->email}">
                     </label>
                 </div>
 
