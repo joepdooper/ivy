@@ -1,0 +1,14 @@
+{
+  "name": "Items",
+  "version": "1.0.0",
+  "collection": true,
+  "description": "Add items to homepage",
+  "type": "collection",
+  "database": {
+    "install": "db/install.db.php",
+    "uninstall": "db/uninstall.db.php"
+  },
+  "dependencies": [
+    "Tag"
+  ]
+}

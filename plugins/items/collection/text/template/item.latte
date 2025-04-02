@@ -1,0 +1,14 @@
+<div class="item item-text {if !$item->parent_id}{/if}" id="item-{$item->id}">
+    {if auth()->isLoggedIn()}
+        <form action="{path('BASE_PATH') . 'text/update/' . $item->id}" method="POST" enctype="multipart/form-data">
+            <div class="relative group">
+                {render(path('PLUGIN_PATH') . 'items/collection/text/template/input.TypeText.latte', ['id' => $text->id, 'name' => 'text', 'value' => $text->text])}
+                <div class="hidden group-hover:block absolute left-0 bottom-0">
+                    {render(path('PLUGIN_PATH') . 'items/template/item_admin_buttons.latte', ['item' => $item])}
+                </div>
+            </div>
+        </form>
+    {else}
+        <p>{* $text->text|noescape *}</p>
+    {/if}
+</div>

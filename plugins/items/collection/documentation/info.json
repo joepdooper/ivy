@@ -1,0 +1,14 @@
+{
+  "name": "Documentation",
+  "version": "1.0.0",
+  "settings": false,
+  "description": "Documentation item",
+  "type": "item",
+  "database": {
+    "install": "db/install.db.php",
+    "uninstall": "db/uninstall.db.php"
+  },
+  "dependencies": [
+    "Text"
+  ]
+}

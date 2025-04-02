@@ -1,0 +1,14 @@
+{extends path('PUBLIC_PATH') . file('body.latte')}
+
+{block main}
+    <main class="grow p-4">
+        <div n:if="$items" id="grid" class="columns-3 gap-4">
+            {foreach $items as $item}
+                {$item->render()}
+            {/foreach}
+        </div>
+        {if canEditAsAdmin()}
+            {render(path('PLUGIN_PATH') . 'items/template/item_template_list_modal.latte', ['item_templates' => $item_templates])}
+        {/if}
+    </main>
+{/block}

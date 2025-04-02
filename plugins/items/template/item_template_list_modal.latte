@@ -1,0 +1,32 @@
+<input type="checkbox" id="template_list_modal" class="modal-toggle"/>
+<div class="modal" role="dialog">
+    <div class="modal-box">
+        <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" for="template_list_modal">✕</label>
+        <h3 class="text-lg font-bold">{text('items.modal.insert_item')}</h3>
+
+        <form action="{path('BASE_PATH') . 'item_template/insert'}" method="POST"
+              enctype="multipart/form-data">
+            {csrf()}
+            <div class="join w-full">
+                <label class="w-full">
+                    <select name="item_template_id" class="select select-bordered w-full join-item">
+                        <option disabled selected>Select type of item to add</option>
+                        {foreach $item_templates as $item_template}
+                            {if $item_template->active}
+                                <option value="{$item_template->id}">{$item_template->name}</option>
+                            {/if}
+                        {/foreach}
+                    </select>
+                </label>
+                <div class="join-item">
+                    {button type:confirm, value:text('button.add'), title:text('items.modal.insert_selected_item')}
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<label for="template_list_modal" class="btn btn-square btn-primary fixed bottom-4 right-4">
+    {icon("feather/plus.svg")|noescape}
+</label>
