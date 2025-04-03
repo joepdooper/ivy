@@ -13,6 +13,6 @@ abstract class ItemPolicy
 
     public static function index(Item $item): bool
     {
-        return User::canEditAsEditor();
+        return true;
     }
 }

@@ -2,8 +2,6 @@
 
 namespace Items;
 
-use Delight\Db\Throwable\EmptyWhereClauseError;
-use Ivy\Abstract\Controller;
 use Ivy\Abstract\Model;
 use Ivy\Manager\DatabaseManager;
 
@@ -37,12 +35,10 @@ class Item extends Model
     protected bool $author;
     protected string $namespace;
     protected string $name;
-
     protected ?string $plugin_url;
+
     protected string $route;
     protected string $url;
-    protected bool $active;
-
 
     public function __construct()
     {
@@ -60,71 +56,6 @@ class Item extends Model
         INNER JOIN `item_template` ON `item_template`.`id` = `items`.`template_id`
         INNER JOIN `plugin` ON `plugin`.`url` = `item_template`.`plugin_url`
         WHERE `plugin`.`active` != '0'";
-    }
-
-    // -- get
-    public function fetchAll(): array
-    {
-        $rows = parent::fetchAll();
-
-        foreach ($rows as $value) {
-            $value->author = isset($_SESSION['auth_user_id']) && $value->user_id == $_SESSION['auth_user_id'];
-        }
-
-        return $rows;
-    }
-
-    // -- get row
-    public function fetchOne(): static
-    {
-        parent::fetchOne();
-
-        // $this->data->author = isset($_SESSION['auth_user_id']) && isset($this->single()->user_id) && ($this->single()->user_id == $_SESSION['auth_user_id']);
-
-        return $this;
-    }
-
-    // -- insert
-    public function populate(array $data): static
-    {
-        $data['published'] = $data['published'] ?? 0;
-        $data['user_id'] = $data['user_id'] ?? $_SESSION['auth_user_id'];
-        $data['table_id'] = $data['table_id'] ?? DatabaseManager::connection()->getLastInsertId();
-
-        return parent::populate($data);
-    }
-
-    public function delete(): int
-    {
-        $lastInsertId = parent::delete();
-
-        $children = (new Item())->where('parent', $this->single()->id)->get()->all();
-        if (!empty($children)) {
-            foreach ($children as $child) {
-                try {
-                    DatabaseManager::connection()->delete(
-                        $child->table,
-                        [
-                            'id' => $child->table_id
-                        ]
-                    );
-                } catch (EmptyWhereClauseError $e) {
-                    Message::add($e->getMessage());
-                }
-                try {
-                    DatabaseManager::connection()->delete(
-                        'items',
-                        [
-                            'id' => $child->id
-                        ]
-                    );
-                } catch (EmptyWhereClauseError $e) {
-                    Message::add($e->getMessage());
-                }
-            }
-        }
-
-        return $lastInsertId;
     }
 
     public function getAuthor(): bool

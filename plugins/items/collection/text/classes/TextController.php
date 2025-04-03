@@ -29,13 +29,15 @@ class TextController extends Controller
 
     public function update($id, $template_route = null, $identifier = null): void
     {
-        $item = $this->item->where('id', $id)->fetchOne();
-        $this->text->where('id', $item->table_id)->fetchOne();
-        $this->item->populate(['published' => $this->request->get('publish_item')])->update();
-        $this->text->populate(['text' => $this->request->get('text')])->update();
+        $this->item->where('id', $id)->populate(['published' => $this->request->get('publish_item')])->update();
+        // $this->text->where('id', $this->item->table_id)->populate(['text' => $this->request->get('text')])->update();
+//        $item = $this->item->where('id', $id)->fetchOne();
+//        $text = $this->text->where('id', $item->table_id)->fetchOne();
+//        $item->populate(['published' => $this->request->get('publish_item'), 'table_id' => $item->table_id])->update();
+//        $text->populate(['text' => $this->request->get('text')])->update();
 
-        $redirect = (isset($identifier) ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : "");
-        Message::add('Text updated', $redirect);
+        $this->flashBag->add('success', 'Text updated');
+        $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
     }
 
     public function delete($id, $template_route = null, $identifier = null): void
