@@ -76,24 +76,17 @@ class AudioController extends Controller
         $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
     }
 
-    public function upload($audio): string
+    public function upload($audio): ?string
     {
         $fileName = null;
         try {
             $file = new File;
             $file->setName(bin2hex(random_bytes(16)));
             $file->setAllowed(array('audio/*'));
-            foreach ((new ImageSize)->fetchAll() as $size) {
-                if($size->value){
-                    $file->setWidth($size->value);
-                }
-                $file->setDirectory(Path::get('PUBLIC_PATH') . 'media/item/' . $size->name);
-                $fileName = $file->upload($audio);
-                $file->setImageConvert( 'webp');
-                $file->upload($audio);
-            }
+            $file->setDirectory(Path::get('PUBLIC_PATH') . Path::get('MEDIA_PATH') . 'item/audio');
+            $fileName = $file->upload($audio);
         } catch (\Exception $e) {
-           error_log($e->getMessage());
+            $this->flashBag->add('error', $e->getMessage());
         }
 
         return $fileName;

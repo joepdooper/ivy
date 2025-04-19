@@ -1,42 +1,42 @@
-<div class="item item-audio {if !$item->parent}{/if}" id="item-{$item->id}">
+<div class="item item-audio {if !$item->parent_id}{/if}" id="item-{$item->id}">
 
     {define item}
         <div class="relative">
             {if $audio->file}
-                {\Audio\Audio::set('audio', Path::get('BASE_PATH') . _MEDIA_PATH . 'item/audio/' . $audio->file)}
-                {if auth()->isLoggedIn() && $item->author}
-                    <div class="absolute top-1/2 left-1/2 -mt-5 -ml-5">
-                        {\Ivy\Button::delete('delete_audio', 'single_audio_' . $item->id, 'delete_audio_' . $item->id)}
-                    </div>
-                {/if}
-            {else}
-                ----
-                <label n:if="!isset($audio->file)" for="upload_audio_{$item->id}"
-                                                   class="block border border-dashed bg-gray-50 cursor-pointer min-h-10">
-                    <input type="file" id="upload_audio_{$item->id}" class="hidden"
-                           name="upload_audio" accept="image/*,audio/*,video/*">
-                    <div id="upload_audio_{$item->id}Preview" class="text-center">upload audio</div>
-                    <script>
-                        window.addEventListener('DOMContentLoaded', () => {
-                            previewAudio("upload_audio_" + {$item->id}, "upload_audio_" + {$item->id} +"Preview");
-                        });
-                    </script>
-                </label>
+                {render(path('PLUGIN_PATH') . 'items/collection/audio/template/input.TypeAudio.latte', ['file' => $audio->file])}
             {/if}
         </div>
     {/define}
 
-    {if auth()->isLoggedIn() && $item->author}
-        <form action="{= Path::get('BASE_PATH') . 'audio/update/' . $item->id . \Ivy\Template::$url}" method="POST"
-              enctype="multipart/form-data">
+    {if auth()->isLoggedIn()}
+        <form action="{path('BASE_PATH') . 'audio/save/' . $item->id}" method="POST" enctype="multipart/form-data">
+            {csrf()}
             <div class="relative group">
                 {include item}
-                <div class="hidden group-hover:block absolute z-10 inset-x-0 -bottom-6 text-center">
-                    {\Ivy\Template::render('include/item_admin_buttons.latte', ['item' => $item])}
+                {if $audio->file}
+                    <div class="absolute top-1/2 left-1/2 -mt-5 -ml-5">
+                        {button type:delete, name:'remove', value:'remove_audio_' . $item->id, id:$item->id, placeholder:$audio->file}
+                    </div>
+                {else}
+                    <div class="block relative bg-base-200 min-h-10">
+                        <div class="text-center text-xs" id="upload_audio_{$item->id}Preview"></div>
+                        <div class="absolute top-1/2 left-1/2 -mt-5 -ml-5">
+                            {button type:upload, name:'audio', id:'upload_audio_' . $item->id}
+                        </div>
+                        <script>
+                            window.addEventListener('DOMContentLoaded', () => {
+                                previewAudio("upload_audio_" + {$item->id}, "upload_audio_" + {$item->id} +"Preview");
+                            });
+                        </script>
+                    </div>
+                {/if}
+                <div class="hidden group-hover:block">
+                    {render(path('PLUGIN_PATH') . 'items/template/item_admin_buttons.latte', ['item' => $item])}
                 </div>
             </div>
         </form>
     {else}
         {include item}
     {/if}
+
 </div>

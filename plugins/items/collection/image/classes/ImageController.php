@@ -76,7 +76,7 @@ class ImageController extends Controller
         $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
     }
 
-    public function upload($image): string
+    public function upload($image): ?string
     {
         $fileName = null;
         try {
@@ -87,13 +87,13 @@ class ImageController extends Controller
                 if($size->value){
                     $file->setWidth($size->value);
                 }
-                $file->setDirectory(Path::get('PUBLIC_PATH') . 'media/item/' . $size->name);
+                $file->setDirectory(Path::get('PUBLIC_PATH') . Path::get('MEDIA_PATH') . 'item/' . $size->name);
                 $fileName = $file->upload($image);
                 $file->setImageConvert( 'webp');
                 $file->upload($image);
             }
         } catch (\Exception $e) {
-           error_log($e->getMessage());
+            $this->flashBag->add('error', $e->getMessage());
         }
 
         return $fileName;
