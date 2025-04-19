@@ -1,6 +1,5 @@
 <?php
 
-use Delight\Db\Throwable\IntegrityConstraintViolationException;
 use Ivy\Manager\DatabaseManager;
 
 DatabaseManager::connection()->exec('
@@ -26,5 +25,5 @@ try {
             'namespace' => 'Code',
         ]
     );
-} catch (IntegrityConstraintViolationException $e) {
+} catch (Exception $e) {
 }

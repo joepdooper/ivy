@@ -2,7 +2,7 @@
 
 use Ivy\Template;
 use Ivy\User;
-use Items\Collections\Vimeo\AdminVimeoController;
+use Items\Collection\Vimeo\AdminVimeoController;
 
 function add_vimeo_player(): void
 {

@@ -1,6 +1,7 @@
 <div class="item item-text {if !$item->parent_id}{/if}" id="item-{$item->id}">
     {if auth()->isLoggedIn()}
-        <form action="{path('BASE_PATH') . 'text/update/' . $item->id}" method="POST" enctype="multipart/form-data">
+        <form action="{path('BASE_PATH') . 'text/save/' . $item->id}" method="POST" enctype="multipart/form-data">
+            {csrf()}
             <div class="relative group">
                 {render(path('PLUGIN_PATH') . 'items/collection/text/template/input.TypeText.latte', ['id' => $text->id, 'name' => 'text', 'value' => $text->text])}
                 <div class="hidden group-hover:block absolute left-0 bottom-0">

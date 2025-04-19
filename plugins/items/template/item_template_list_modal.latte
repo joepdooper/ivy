@@ -4,8 +4,7 @@
         <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" for="template_list_modal">✕</label>
         <h3 class="text-lg font-bold">{text('items.modal.insert_item')}</h3>
 
-        <form action="{path('BASE_PATH') . 'item_template/insert'}" method="POST"
-              enctype="multipart/form-data">
+        <form action="{path('BASE_PATH') . 'item_template/insert'}" method="POST" enctype="multipart/form-data">
             {csrf()}
             <div class="join w-full">
                 <label class="w-full">
@@ -27,6 +26,6 @@
     </div>
 </div>
 
-<label for="template_list_modal" class="btn btn-square btn-primary fixed bottom-4 right-4">
+<label for="template_list_modal" class="btn btn-square btn-primary absolute bottom-4 left-1/2 -ml-5">
     {icon("feather/plus.svg")|noescape}
 </label>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Items\Collections\Vimeo;
+namespace Items\Collection\Vimeo;
 
 use Items\ItemController;
 use Ivy\Template;

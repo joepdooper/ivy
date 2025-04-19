@@ -5,8 +5,6 @@ namespace Items\Collection\Text;
 use HTMLPurifier_Config;
 use HTMLPurifier;
 use Ivy\Abstract\Model;
-use Ivy\Path;
-use Ivy\View\LatteView;
 
 class Text extends Model
 {

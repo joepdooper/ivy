@@ -40,6 +40,7 @@ class Item extends Model
     protected string $route;
     protected string $url;
 
+
     public function __construct()
     {
         parent::__construct();
@@ -56,6 +57,16 @@ class Item extends Model
         INNER JOIN `item_template` ON `item_template`.`id` = `items`.`template_id`
         INNER JOIN `plugin` ON `plugin`.`url` = `item_template`.`plugin_url`
         WHERE `plugin`.`active` != '0'";
+    }
+
+    // -- insert
+    public function populate(array $data): static
+    {
+        $data['published'] = $data['published'] ?? 0;
+        $data['user_id'] = $data['user_id'] ?? $_SESSION['auth_user_id'];
+        $data['table_id'] = $data['table_id'] ?? ($this->table_id ?? DatabaseManager::connection()->getLastInsertId());
+
+        return parent::populate($data);
     }
 
     public function getAuthor(): bool

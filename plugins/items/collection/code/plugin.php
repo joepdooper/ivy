@@ -1,8 +1,13 @@
 <?php
 
-use Ivy\Template;
+use Ivy\Manager\AssetManager;
+use Ivy\Manager\RouterManager;
+use Ivy\Path;
 
-AssetManager::addCSS(_PLUGIN_PATH . "code/css/code.css");
-AssetManager::addJS(_PLUGIN_PATH . "code/js/rainbow.min.js");
+AssetManager::addCSS(Path::get('PLUGIN_PATH') . "items/collection/code/css/code.css");
+AssetManager::addJS(Path::get('PLUGIN_PATH') . "items/collection/code/js/rainbow.min.js");
 
-include 'routes/routes.php';
+RouterManager::instance()->match('GET|POST', '/code/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Code\CodeController@save');
+RouterManager::instance()->match('GET|POST', '/code/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Code\CodeController@insert');
+RouterManager::instance()->match('GET|POST', '/code/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Code\CodeController@update');
+RouterManager::instance()->match('GET|POST', '/code/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Code\CodeController@delete');

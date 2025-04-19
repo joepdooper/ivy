@@ -1,6 +1,6 @@
 <?php
 
-namespace Items\Collections\Gig;
+namespace Items\Collection\Gig;
 
 use Ivy\Model;
 

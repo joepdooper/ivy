@@ -1,6 +1,6 @@
 <?php
 
-namespace Items\Collections\Image;
+namespace Items\Collection\Image;
 
 use Exception;
 use GUMP;

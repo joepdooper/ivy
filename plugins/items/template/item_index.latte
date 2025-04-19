@@ -1,8 +1,8 @@
 {extends path('PUBLIC_PATH') . file('body.latte')}
 
 {block main}
-    <main class="grow p-4">
-        <div n:if="$items" id="grid" class="columns-3 gap-4">
+    <main class="grow p-4 relative">
+        <div n:if="$items" id="grid" class="grid grid-cols-3 gap-4">
             {foreach $items as $item}
                 {$item->render()}
             {/foreach}

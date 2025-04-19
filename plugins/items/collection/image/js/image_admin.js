@@ -1,4 +1,5 @@
 // Preview image from file input
+
 function previewImage(input, preview, attribute) {
     let fileInput = document.getElementById(input);
     let imagePreview = document.getElementById(preview);
@@ -7,11 +8,11 @@ function previewImage(input, preview, attribute) {
         if (file) {
             if (attribute === 'background') {
                 imagePreview.setAttribute("style", "background-image: url(" + URL.createObjectURL(file) + ");");
-                call_my_function("imageBackgroundPreview");
+                // CallbackHooks.call("imageBackgroundPreview");
             } else if (attribute === 'src') {
                 imagePreview.src = URL.createObjectURL(file);
                 imagePreview.parentNode.style.minHeight = "initial";
-                call_my_function("imageSrcPreview");
+                // CallbackHooks.call("imageSrcPreview");
             }
         }
     }

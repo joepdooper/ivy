@@ -1,18 +1,22 @@
 <?php
-namespace Items\Collections\Code;
+namespace Items\Collection\Code;
 
-use Ivy\Model;
-use Ivy\Template;
+use Ivy\Abstract\Model;
 use HTMLPurifier_Config;
 use HTMLPurifier;
 
-class Item extends Model
+class Code extends Model
 {
-    public int $id;
-    public string $text;
-    private string $token;
-
     protected string $table = "code";
+    protected array $columns = [
+        'code',
+        'language',
+        'token'
+    ];
+
+    protected ?string $code;
+    protected string $language;
+    protected ?string $token;
 
     public function purify($array)
     {
@@ -28,5 +32,3 @@ class Item extends Model
     }
 
 }
-
-?>

@@ -8,5 +8,5 @@ function linkifyTextItems() {
 	);
 }
 
-// linkifyTextItems();
+linkifyTextItems();
 // add_to_function("swupPageView",linkifyTextItems);

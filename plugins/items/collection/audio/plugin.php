@@ -1,31 +1,17 @@
 <?php
 
-use Audio\EditorAudioController;
-use Ivy\User;
+use Ivy\Manager\AssetManager;
+use Ivy\Manager\RouterManager;
+use Ivy\Model\User;
+use Ivy\Path;
 
-AssetManager::addCSS("plugins/audio/css/audio.css");
+AssetManager::addCSS(Path::get('PLUGIN_PATH') . "items/collection/audio/css/audio.css");
 
-function add_audio_admin_js(): void
-{
-    print "<script src='" . Path::get('BASE_PATH') . _PLUGIN_PATH . "audio/js/audio_admin.js'></script>";
+if (User::canEditAsEditor()) {
+    AssetManager::addJS(Path::get('PLUGIN_PATH') . "items/collection/audio/js/audio_admin.js");
 }
 
-Template::hooks()->add_action('add_js_action', 'add_audio_admin_js');
-
-if (User::getAuth()->isLoggedIn()) {
-    if (User::canEditAsEditor()) {
-        global $router;
-
-        $router->match('GET|POST', '/audio/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', function ($id, $template_route = null, $identifier = null) {
-            (new EditorAudioController)->insert($id, $template_route, $identifier);
-        });
-
-        $router->match('GET|POST', '/audio/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', function ($id, $template_route = null, $identifier = null) {
-            (new EditorAudioController)->update($id, $template_route, $identifier);
-        });
-
-        $router->match('GET|POST', '/audio/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', function ($id, $template_route = null, $identifier = null) {
-            (new EditorAudioController)->delete($id, $template_route, $identifier);
-        });
-    }
-}
+RouterManager::instance()->match('GET|POST', '/audio/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@save');
+RouterManager::instance()->match('GET|POST', '/audio/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@insert');
+RouterManager::instance()->match('GET|POST', '/audio/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@update');
+RouterManager::instance()->match('GET|POST', '/audio/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@delete');

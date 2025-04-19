@@ -1,6 +1,6 @@
 <?php
 
-namespace Items\Collections\Documentation;
+namespace Items\Collection\Documentation;
 
 use Ivy\Model;
 

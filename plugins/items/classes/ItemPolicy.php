@@ -4,7 +4,7 @@ namespace Items;
 
 use Ivy\Model\User;
 
-abstract class ItemPolicy
+class ItemPolicy
 {
     public static function post(Item $item): bool
     {

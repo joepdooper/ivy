@@ -1,6 +1,6 @@
 <?php
 
-namespace Items\Collections\Youtube;
+namespace Items\Collection\Youtube;
 
 use Ivy\Model;
 
