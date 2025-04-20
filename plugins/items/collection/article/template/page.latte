@@ -1,4 +1,4 @@
-{layout \Ivy\Path::get('PUBLIC_PATH') . _TEMPLATE_BASE . 'body.latte'}
+{layout path('PUBLIC_PATH') . file('body.latte')}
 
 {block main}
     <main class="grow p-4 w-full max-w-5xl mx-auto">
@@ -7,21 +7,21 @@
             {define #article}
                 <div class="space-y-4">
                     {if isset($article->subject)}
-                        {render(_PLUGIN_PATH . 'tag/template/tag.latte', ['tag' => $tag, 'item' => $item])}
+                        {render(path('PLUGIN_PATH') . 'tag/template/tag.latte', ['tag' => $tag, 'item' => $item])}
                     {/if}
 
                     <!-- Titles -->
                     <div>
                         <h1 class="text-6xl font-bold">
-                            {if auth()->isLoggedIn() && $item->author}
-                                {\Text\Text::set('title', $article->title, 'title')}
+                            {if auth()->isLoggedIn()}
+                                {* \Text\Text::set('title', $article->title, 'title') *}
                             {else}
                                 {$article->title}
                             {/if}
                         </h1>
                         <h2 class="text-6xl">
-                            {if auth()->isLoggedIn() && $item->author}
-                                {\Text\Text::set('subtitle', $article->subtitle, 'subtitle')}
+                            {if auth()->isLoggedIn()}
+                                {* \Text\Text::set('subtitle', $article->subtitle, 'subtitle') *}
                             {else}
                                 {$article->subtitle}
                             {/if}
@@ -30,24 +30,24 @@
 
                     <!-- Author -->
                     <div>
-                        {if (auth()->isLoggedIn() && $item->author)}
+                        {if auth()->isLoggedIn()}
                             <label for="datetime_{$item->id}">
                                 <input class="input input-bordered w-full text-xs" type="datetime-local"
                                        id="datetime_{$item->id}"
                                        name="datetime" value="{$item->date|date:'Y-m-d H:i:s'}">
                             </label>
                         {else}
-                            {\Ivy\Template::render('include/author.latte', ['author' => $author])}
+                            {* render('include/author.latte', ['author' => $author]) *}
                         {/if}
                     </div>
 
                     <!-- Main image -->
                     <div class="relative">
                         {if $article->image}
-                            {\Image\Image::set('image', $article->image)}
-                            {if auth()->isLoggedIn() && $item->author}
+                            {* \Image\Image::set('image', $article->image) *}
+                            {if auth()->isLoggedIn()}
                                 <div class="absolute top-1/2 left-1/2 -mt-5 -ml-5">
-                                    {\Ivy\Button::delete('delete_image', 'main_article_image_' . $item->id, 'delete_image_' . $item->table_id)}
+                                    {* \Ivy\Button::delete('delete_image', 'main_article_image_' . $item->id, 'delete_image_' . $item->table_id) *}
                                 </div>
                             {/if}
                         {else}
@@ -70,13 +70,12 @@
                 </div>
             {/define}
 
-            {if auth()->isLoggedIn() && $item->author}
-                <form action="{= Path::get('BASE_PATH') . 'article/update/' . $item->id . \Ivy\Template::$url}" method="POST"
-                      enctype="multipart/form-data">
+            {if auth()->isLoggedIn()}
+                <form action="{path('BASE_PATH') . 'article/update/' . $item->id}" method="POST" enctype="multipart/form-data">
                     <div class="relative group">
                         {include #article}
-                        <div class="hidden group-hover:block absolute z-10 inset-x-0 -bottom-6 text-center">
-                            {\Ivy\Template::render('include/item_admin_buttons.latte', ['item' => $item])}
+                        <div class="hidden group-hover:block">
+                            {render(path('PLUGIN_PATH') . 'items/template/item_admin_buttons.latte', ['item' => $item])}
                         </div>
                     </div>
                 </form>
@@ -86,8 +85,8 @@
 
             <div class="space-y-4">
                 {if $items}
-                    {foreach $items as $value}
-                        {$value->controller->item($value)}
+                    {foreach $items as $child}
+                        {print_r($child)}
                     {/foreach}
                 {/if}
             </div>
@@ -95,3 +94,4 @@
         </article>
     </main>
 {/block}
+

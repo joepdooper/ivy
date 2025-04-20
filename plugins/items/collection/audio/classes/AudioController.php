@@ -55,7 +55,6 @@ class AudioController extends Controller
             $audio->unlinkFile();
         }
 
-        $item = $this->item->where('id', $id)->fetchOne();
         $audio->update();
         $item->populate(['published' => $this->request->get('publish')])->update();
 
@@ -79,6 +78,7 @@ class AudioController extends Controller
     public function upload($audio): ?string
     {
         $fileName = null;
+
         try {
             $file = new File;
             $file->setName(bin2hex(random_bytes(16)));

@@ -55,7 +55,6 @@ class ImageController extends Controller
             $image->unlinkFile();
         }
 
-        $item = $this->item->where('id', $id)->fetchOne();
         $image->update();
         $item->populate(['published' => $this->request->get('publish')])->update();
 
