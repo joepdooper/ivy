@@ -1,17 +1,23 @@
 <div class="flex flex-col min-h-full antialiased">
+
+    {hook('before_header')}
     {block header}
         {render('include/header.latte')}
+    {/block}
+    {hook('after_header')}
+
+    {block main}
+        {render('include/main.latte')}
     {/block}
 
     {if auth()->isLoggedIn()}
         {render('include/message.latte', ['flashes' => $flashes])}
     {/if}
 
-    {block main}
-        {render('include/main.latte')}
-    {/block}
-
+    {hook('before_footer')}
     {block footer}
         {render('include/footer.latte')}
     {/block}
+    {hook('after_footer')}
+
 </div>
