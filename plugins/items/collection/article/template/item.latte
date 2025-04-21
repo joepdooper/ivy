@@ -1,14 +1,14 @@
 <div class="item item-article relative group" id="item-{$item->id}">
 
-    <a href="{path('BASE_PATH') . 'article/' . $item->slug}" class="card bg-base-100 border">
+    <a href="{path('BASE_PATH') . 'article/' . $item->slug}" class="card border border-base-300">
         <figure>
             {if $article->image}
-                {* \Image\Image::set('image', $article->image) *}
+                {render(path('PLUGIN_PATH') . 'items/collection/image/template/input.TypeImage.latte', ['id' => $article->id, 'name' => 'image', 'file' => $article->image])}
             {/if}
         </figure>
         <div class="card-body">
             <div class="card-actions">
-                <div class="tag">{* $tag->value *}</div>
+                <div class="text-xs font-bold">{$tag->value}</div>
             </div>
             <h2 class="text-3xl font-bold leading-none">
                 {$article->title}
@@ -16,7 +16,10 @@
             <h3 class="text-3xl font-normal leading-none">
                 {$article->subtitle}
             </h3>
-            {* render('include/author.latte', ['author' => $author]) *}
+            {render('include/author.latte', [
+            'author' => $author,
+            'date' => $item->date
+            ])}
         </div>
     </a>
 

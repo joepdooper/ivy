@@ -47,12 +47,12 @@ class ImageController extends Controller
         $item = $this->item->where('id', $id)->fetchOne();
         $image = $this->image->where('id', $item->table_id)->fetchOne();
 
-        if($this->request->files->get('image')){
-            $image->file = $this->upload($this->request->files->get('image'));
+        if($this->request->files->has('image')){
+            $image->file = ImageService::upload($this->request->files->get('image'));
         }
 
         if($this->request->get('remove') !== null){
-            $image->unlinkFile();
+            $image->file = ImageService::unlink($image->file);
         }
 
         $image->update();
@@ -68,33 +68,11 @@ class ImageController extends Controller
 
         $item = $this->item->where('id', $id)->fetchOne();
         $image = $this->image->where('id', $item->table_id)->fetchOne();
-        $image->unlinkFile()->delete();
+        ImageService::unlink($image->file);
+        $image->delete();
         $item->delete();
 
         $this->flashBag->add('success', 'Image successfully deleted');
         $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
-    }
-
-    public function upload($image): ?string
-    {
-        $fileName = null;
-        try {
-            $file = new File;
-            $file->setName(bin2hex(random_bytes(16)));
-            $file->setAllowed(array('image/*'));
-            foreach ((new ImageSize)->fetchAll() as $size) {
-                if($size->value){
-                    $file->setWidth($size->value);
-                }
-                $file->setDirectory(Path::get('PUBLIC_PATH') . Path::get('MEDIA_PATH') . 'item/' . $size->name);
-                $fileName = $file->upload($image);
-                $file->setImageConvert( 'webp');
-                $file->upload($image);
-            }
-        } catch (\Exception $e) {
-            $this->flashBag->add('error', $e->getMessage());
-        }
-
-        return $fileName;
     }
 }

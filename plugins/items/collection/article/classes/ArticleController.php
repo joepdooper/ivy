@@ -2,13 +2,10 @@
 
 namespace Items\Collection\Article;
 
+use Items\Collection\Image\ImageService;
 use Items\Item;
 use Items\ItemHelper;
 use Ivy\Abstract\Controller;
-use Ivy\Model\Profile;
-use Ivy\Model\Setting;
-use Ivy\Path;
-use Ivy\View\LatteView;
 use Tag\Tag;
 
 class ArticleController extends Controller
@@ -39,10 +36,18 @@ class ArticleController extends Controller
         $this->authorize('create', $this->article);
 
         $parent_id = $identifier ? (new Item)->where('slug', $identifier)->fetchOne()->id : null;
-        $slug = ItemHelper::createSlug('Title');
 
-        $this->article->populate(['title' => 'Title', 'subtitle' => 'Subtitle', 'subject' => $this->tag->where('value', 'Article')->fetchOne()->id])->insert();
-        $this->item->populate(['template_id' => $id, 'parent_id' => $parent_id, 'slug' => $slug])->insert();
+        $this->article->populate([
+            'title' => 'Title',
+            'subtitle' => 'Subtitle',
+            'subject' => $this->tag->fetchOne()->id
+        ])->insert();
+
+        $this->item->populate([
+            'template_id' => $id,
+            'parent_id' => $parent_id,
+            'slug' => ItemHelper::createSlug('Title')
+        ])->insert();
 
         $this->flashBag->add('success', 'Article successfully inserted');
         $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
@@ -55,8 +60,35 @@ class ArticleController extends Controller
         $item = $this->item->where('id', $id)->fetchOne();
         $article = $this->article->where('id', $item->table_id)->fetchOne();
 
+        if($this->request->request->has('title')){
+            $article->title = $this->request->request->get('title');
+        }
+
+        if($this->request->request->has('subtitle')){
+            $article->subtitle = $this->request->request->get('subtitle');
+        }
+
+        if($this->request->request->has('tag')){
+            $article->subject = $this->request->request->get('tag');
+        }
+
+        if($this->request->files->has('image')){
+            $article->image = ImageService::upload($this->request->files->get('image'));
+        }
+
+        if($this->request->get('remove') !== null){
+            $article->image = ImageService::unlink($article->image);
+        }
+
         $article->update();
-        $item->populate(['published' => $this->request->get('publish')])->update();
+
+        if($this->request->request->has('datetime')){
+            $item->date = $this->request->request->get('datetime');
+        }
+
+        $item->populate([
+            'published' => $this->request->get('publish'),
+        ])->update();
 
         $this->flashBag->add('success', 'Article successfully updated');
         $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
@@ -67,23 +99,12 @@ class ArticleController extends Controller
         $this->authorize('delete', $this->article);
 
         $item = $this->item->where('id', $id)->fetchOne();
-        $this->article->where('id', $item->table_id)->delete();
+        $article = $this->article->where('id', $item->table_id)->fetchOne();
+        ImageService::unlink($article->image);
+        $article->delete();
         $item->delete();
 
         $this->flashBag->add('success', 'Article successfully deleted');
         $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
-    }
-
-    public function page($slug): void
-    {
-        $this->authorize('read', $this->article);
-
-        $item = $this->item->where('slug', $slug)->fetchOne();
-        $article = $this->article->where('id', $item->table_id)->fetchOne();
-        $tag = (new Tag)->where('id', $article->subject)->fetchOne();
-        $author = (new Profile)->where('id', $item->user_id)->fetchOne();
-        Setting::getStash()['title']->value = Setting::getStash()['title']->value . " - " . $article->title;
-        $items = (new Item)->where('parent_id', $item->id)->sortBy(['sort', 'date', 'id'])->fetchAll();
-        LatteView::render(Path::get('PLUGIN_PATH') . $item->plugin_url . '/template/page.latte', ['item' => $item, 'article' => $article, 'tag' => $tag, 'author' => $author, 'items' => $items]);
     }
 }

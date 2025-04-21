@@ -94,13 +94,13 @@ function setToolbar() {
 }
 
 function inputTextListener(id) {
-    var inputBox = document.getElementById('content' + id);
+    var inputBox = document.getElementById('content_' + id);
     inputBox.addEventListener('input', function () {
         let sanitizedContent = inputBox.innerHTML.trim();
         if (inputBox.lastChild && inputBox.lastChild.tagName === 'BR') {
             sanitizedContent = sanitizedContent.slice(0, -4);
         }
-        document.getElementById('input' + id).value = sanitizedContent;
+        document.getElementById('input_' + id).value = sanitizedContent;
     });
     // Paste plain text //
     inputBox.addEventListener('paste', function (e) {

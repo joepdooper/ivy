@@ -2,6 +2,7 @@
 
 namespace Items\Collection\Article;
 
+use Items\Item;
 use Ivy\Model\User;
 
 class ArticlePolicy
@@ -11,9 +12,13 @@ class ArticlePolicy
         return User::canEditAsAdmin();
     }
 
-    public static function read(Article $article): bool
+    public static function read(Article $article, Item $item): bool
     {
-        return true;
+        if(User::getAuth()->isLoggedIn() || $item->published){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static function update(Article $article): bool

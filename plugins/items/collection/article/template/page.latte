@@ -4,31 +4,42 @@
     <main class="grow p-4 w-full max-w-5xl mx-auto">
         <article>
 
-            {define #article}
+            {define article}
                 <div class="space-y-4">
-                    {if isset($article->subject)}
-                        {render(path('PLUGIN_PATH') . 'tag/template/tag.latte', ['tag' => $tag, 'item' => $item])}
+                    {if $article->subject}
+                        {render(path('PLUGIN_PATH') . 'tag/template/tag.latte', [
+                        'tag' => $tag,
+                        'item' => $item
+                        ])}
                     {/if}
 
-                    <!-- Titles -->
+                    {* Titles *}
                     <div>
                         <h1 class="text-6xl font-bold">
                             {if auth()->isLoggedIn()}
-                                {* \Text\Text::set('title', $article->title, 'title') *}
+                                {render(path('PLUGIN_PATH') . 'items/collection/text/template/input.TypeText.latte', [
+                                'id' => 'title',
+                                'name' => 'title',
+                                'value' => $article->title
+                                ])}
                             {else}
                                 {$article->title}
                             {/if}
                         </h1>
                         <h2 class="text-6xl">
                             {if auth()->isLoggedIn()}
-                                {* \Text\Text::set('subtitle', $article->subtitle, 'subtitle') *}
+                                {render(path('PLUGIN_PATH') . 'items/collection/text/template/input.TypeText.latte', [
+                                'id' => 'subtitle',
+                                'name' => 'subtitle',
+                                'value' => $article->subtitle
+                                ])}
                             {else}
                                 {$article->subtitle}
                             {/if}
                         </h2>
                     </div>
 
-                    <!-- Author -->
+                    {* Author *}
                     <div>
                         {if auth()->isLoggedIn()}
                             <label for="datetime_{$item->id}">
@@ -37,33 +48,40 @@
                                        name="datetime" value="{$item->date|date:'Y-m-d H:i:s'}">
                             </label>
                         {else}
-                            {* render('include/author.latte', ['author' => $author]) *}
+                            {render('include/author.latte', [
+                            'author' => $author,
+                            'date' => $item->date
+                            ])}
                         {/if}
                     </div>
 
-                    <!-- Main image -->
+                    {* Image *}
                     <div class="relative">
                         {if $article->image}
-                            {* \Image\Image::set('image', $article->image) *}
+                            {render(path('PLUGIN_PATH') . 'items/collection/image/template/input.TypeImage.latte', [
+                            'id' => 'image',
+                            'name' => 'image',
+                            'file' => $article->image
+                            ])}
                             {if auth()->isLoggedIn()}
                                 <div class="absolute top-1/2 left-1/2 -mt-5 -ml-5">
-                                    {* \Ivy\Button::delete('delete_image', 'main_article_image_' . $item->id, 'delete_image_' . $item->table_id) *}
+                                    {button type:delete, name:'remove', value:'remove_main_image_' . $item->id, id:$item->id, placeholder:$article->image}
                                 </div>
                             {/if}
                         {else}
-                            <label for="upload_image_{$item->table_id}"
-                                   class="block border border-dashed bg-gray-50 cursor-pointer min-h-72">
-                                <input type="file" id="upload_image_{$item->table_id}" class="hidden"
-                                       name="upload_image"
-                                       accept="image/*">
-                                <img class="text-center" id="upload_image_{$item->table_id}Preview" src="#"
-                                     alt="upload image"/>
-                                <script>
-                                    window.addEventListener('DOMContentLoaded', () => {
-                                        previewImage("upload_image_" + {$item->table_id}, "upload_image_" + {$item->table_id} +"Preview", "src");
-                                    });
-                                </script>
-                            </label>
+                            {if auth()->isLoggedIn()}
+                                <div class="block relative bg-base-200 min-h-72">
+                                    <img class="text-center text-xs w-full" id="upload_main_image_{$item->table_id}Preview" src="#" alt="preview image"/>
+                                    <div class="absolute top-1/2 left-1/2 -mt-5 -ml-5">
+                                        {button type:upload, name:'image', id:'upload_main_image_' . $item->table_id}
+                                    </div>
+                                    <script>
+                                        window.addEventListener('DOMContentLoaded', () => {
+                                            previewImage("upload_main_image_" + {$item->table_id}, "upload_main_image_" + {$item->table_id} +"Preview", "src");
+                                        });
+                                    </script>
+                                </div>
+                            {/if}
                         {/if}
                     </div>
 
@@ -72,15 +90,16 @@
 
             {if auth()->isLoggedIn()}
                 <form action="{path('BASE_PATH') . 'article/update/' . $item->id}" method="POST" enctype="multipart/form-data">
+                    {csrf()}
                     <div class="relative group">
-                        {include #article}
+                        {include article}
                         <div class="hidden group-hover:block">
                             {render(path('PLUGIN_PATH') . 'items/template/item_admin_buttons.latte', ['item' => $item])}
                         </div>
                     </div>
                 </form>
             {else}
-                {include #article}
+                {include article}
             {/if}
 
             <div class="space-y-4">
