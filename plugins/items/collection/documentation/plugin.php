@@ -1,5 +1,6 @@
 <?php
 
+use Ivy\Manager\AssetManager;
 use Ivy\Template;
 
 AssetManager::addCSS("plugins/documentation/css/documentation.css");

@@ -91,9 +91,9 @@
             {if auth()->isLoggedIn()}
                 <form action="{path('BASE_PATH') . 'article/update/' . $item->id}" method="POST" enctype="multipart/form-data">
                     {csrf()}
-                    <div class="relative group">
+                    <div class="relative">
                         {include article}
-                        <div class="hidden group-hover:block">
+                        <div class="text-center pt-4">
                             {render(path('PLUGIN_PATH') . 'items/template/item_admin_buttons.latte', ['item' => $item])}
                         </div>
                     </div>
@@ -112,5 +112,9 @@
 
         </article>
     </main>
+
+    {if canEditAsAdmin()}
+        {render(path('PLUGIN_PATH') . 'items/template/item_template_list_modal.latte')}
+    {/if}
 {/block}
 

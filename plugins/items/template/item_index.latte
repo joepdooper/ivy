@@ -7,8 +7,8 @@
                 {$item->render()}
             {/foreach}
         </div>
-        {if canEditAsAdmin()}
-            {render(path('PLUGIN_PATH') . 'items/template/item_template_list_modal.latte', ['item_templates' => $item_templates])}
-        {/if}
     </main>
+    {if canEditAsAdmin()}
+        {render(path('PLUGIN_PATH') . 'items/template/item_template_list_modal.latte')}
+    {/if}
 {/block}

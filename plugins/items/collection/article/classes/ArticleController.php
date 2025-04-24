@@ -22,22 +22,22 @@ class ArticleController extends Controller
         $this->tag = new Tag();
     }
 
-    public function save($id, $template_route = null, $identifier = null): void
+    public function save($id): void
     {
         if($this->request->get('delete') !== null){
-            $this->delete($id, $template_route, $identifier);
+            $this->delete($id);
         } else {
-            $this->update($id, $template_route, $identifier);
+            $this->update($id);
         }
     }
 
-    public function insert($id, $template_route = null, $identifier = null): void
+    public function insert($id): void
     {
         $this->authorize('create', $this->article);
 
-        $parent_id = $identifier ? (new Item)->where('slug', $identifier)->fetchOne()->id : null;
+        $parent_id = null;
 
-        $this->article->populate([
+        $this->item->table_id = $this->article->populate([
             'title' => 'Title',
             'subtitle' => 'Subtitle',
             'subject' => $this->tag->fetchOne()->id
@@ -50,10 +50,10 @@ class ArticleController extends Controller
         ])->insert();
 
         $this->flashBag->add('success', 'Article successfully inserted');
-        $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
+        $this->redirect();
     }
 
-    public function update($id, $template_route = null, $identifier = null): void
+    public function update($id): void
     {
         $this->authorize('update', $this->article);
 
@@ -91,10 +91,10 @@ class ArticleController extends Controller
         ])->update();
 
         $this->flashBag->add('success', 'Article successfully updated');
-        $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
+        $this->redirect($item->slug ? 'article' . DIRECTORY_SEPARATOR . $item->slug : '');
     }
 
-    public function delete($id, $template_route = null, $identifier = null): void
+    public function delete($id): void
     {
         $this->authorize('delete', $this->article);
 
@@ -105,6 +105,6 @@ class ArticleController extends Controller
         $item->delete();
 
         $this->flashBag->add('success', 'Article successfully deleted');
-        $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
+        $this->redirect();
     }
 }
