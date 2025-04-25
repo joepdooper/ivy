@@ -3,6 +3,7 @@
 namespace Items\Collection\Text;
 
 use Items\Item;
+use Items\ItemHelper;
 use Ivy\Abstract\Controller;
 
 class TextController extends Controller
@@ -17,47 +18,61 @@ class TextController extends Controller
         $this->item = new Item();
     }
 
-    public function save($id, $template_route = null, $identifier = null): void
+    public function save($id): void
     {
         if($this->request->get('delete') !== null){
-            $this->delete($id, $template_route, $identifier);
+            $this->delete($id);
         } else {
-            $this->update($id, $template_route, $identifier);
+            $this->update($id);
         }
     }
 
-    public function insert($id, $template_route = null, $identifier = null): void
+    public function insert($id): void
     {
         $this->authorize('create', $this->text);
 
-        $parent_id = $identifier ? (new Item)->where('slug', $identifier)->fetchOne()->id : null;
-        $this->text->populate(['text' => 'Write…'])->insert();
-        $this->item->populate(['template_id' => $id, 'parent_id' => $parent_id])->insert();
+        $this->item->table_id = $this->text->populate([
+            'text' => 'Write…'
+        ])->insert();
+
+        $this->item->populate([
+            'template_id' => $id,
+            'parent_id' => ItemHelper::getParentId($this->request)
+        ])->insert();
 
         $this->flashBag->add('success', 'Text successfully inserted');
-        $this->redirect(isset($identifier) ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
+        $this->redirect();
     }
 
-    public function update($id, $template_route = null, $identifier = null): void
+    public function update($id): void
     {
         $this->authorize('update', $this->text);
 
         $item = $this->item->where('id', $id)->fetchOne();
-        $this->text->where('id', $item->table_id)->populate(['text' => $this->request->get('text')])->update();
-        $item->populate(['published' => $this->request->get('publish')])->update();
+
+        $this->text->where('id', $item->table_id)->populate([
+            'text' => $this->request->get('text')
+        ])->update();
+
+        $item->populate([
+            'published' => $this->request->get('publish')
+        ])->update();
+
         $this->flashBag->add('success', 'Text successfully updated');
-        $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
+        $this->redirect();
     }
 
-    public function delete($id, $template_route = null, $identifier = null): void
+    public function delete($id): void
     {
         $this->authorize('delete', $this->text);
 
         $item = $this->item->where('id', $id)->fetchOne();
+
         $this->text->where('id', $item->table_id)->delete();
+
         $item->delete();
 
         $this->flashBag->add('success', 'Text successfully deleted');
-        $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
+        $this->redirect();
     }
 }

@@ -3,6 +3,7 @@
 namespace Items\Collection\Image;
 
 use Items\Item;
+use Items\ItemHelper;
 use Ivy\Abstract\Controller;
 use Ivy\File;
 use Ivy\Path;
@@ -19,28 +20,33 @@ class ImageController extends Controller
         $this->item = new Item();
     }
 
-    public function save($id, $template_route = null, $identifier = null): void
+    public function save($id): void
     {
         if($this->request->get('delete') !== null){
-            $this->delete($id, $template_route, $identifier);
+            $this->delete($id);
         } else {
-            $this->update($id, $template_route, $identifier);
+            $this->update($id);
         }
     }
 
-    public function insert($id, $template_route = null, $identifier = null): void
+    public function insert($id): void
     {
         $this->authorize('create', $this->image);
 
-        $parent_id = $identifier ? (new Item)->where('slug', $identifier)->fetchOne()->id : null;
-        $this->image->populate(['file' => ''])->insert();
-        $this->item->populate(['template_id' => $id, 'parent_id' => $parent_id])->insert();
+        $this->item->table_id = $this->image->populate([
+            'file' => ''
+        ])->insert();
+
+        $this->item->populate([
+            'template_id' => $id,
+            'parent_id' => ItemHelper::getParentId($this->request)
+        ])->insert();
 
         $this->flashBag->add('success', 'Image successfully inserted');
-        $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
+        $this->redirect(ItemHelper::getRedirect($this->request));
     }
 
-    public function update($id, $template_route = null, $identifier = null): void
+    public function update($id): void
     {
         $this->authorize('update', $this->image);
 
@@ -56,13 +62,15 @@ class ImageController extends Controller
         }
 
         $image->update();
-        $item->populate(['published' => $this->request->get('publish')])->update();
+        $item->populate([
+            'published' => $this->request->get('publish')
+        ])->update();
 
         $this->flashBag->add('success', 'Image successfully updated');
-        $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
+        $this->redirect(ItemHelper::getRedirect($this->request));
     }
 
-    public function delete($id, $template_route = null, $identifier = null): void
+    public function delete($id): void
     {
         $this->authorize('delete', $this->image);
 
@@ -73,6 +81,6 @@ class ImageController extends Controller
         $item->delete();
 
         $this->flashBag->add('success', 'Image successfully deleted');
-        $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
+        $this->redirect(ItemHelper::getRedirect($this->request));
     }
 }

@@ -3,7 +3,6 @@
 namespace Items\Collection\Article;
 
 use Items\Item;
-use Items\ItemTemplate;
 use Ivy\Model\Profile;
 use Ivy\Model\Setting;
 use Ivy\Path;

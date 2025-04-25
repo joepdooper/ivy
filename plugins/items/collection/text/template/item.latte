@@ -1,4 +1,4 @@
-<div class="item item-text {if !$item->parent_id}{/if}" id="item-{$item->id}">
+<div class="item item-text" id="item-{$item->id}">
     {if auth()->isLoggedIn()}
         <form action="{path('BASE_PATH') . 'text/save/' . $item->id}" method="POST" enctype="multipart/form-data">
             {csrf()}

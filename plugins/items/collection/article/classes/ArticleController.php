@@ -35,22 +35,20 @@ class ArticleController extends Controller
     {
         $this->authorize('create', $this->article);
 
-        $parent_id = null;
-
         $this->item->table_id = $this->article->populate([
             'title' => 'Title',
             'subtitle' => 'Subtitle',
-            'subject' => $this->tag->fetchOne()->id
+            'subject' => $this->tag->fetchOne()->getId()
         ])->insert();
 
         $this->item->populate([
             'template_id' => $id,
-            'parent_id' => $parent_id,
+            'parent_id' => ItemHelper::getParentId($this->request),
             'slug' => ItemHelper::createSlug('Title')
         ])->insert();
 
         $this->flashBag->add('success', 'Article successfully inserted');
-        $this->redirect();
+        $this->redirect(ItemHelper::getRedirect($this->request));
     }
 
     public function update($id): void
@@ -63,20 +61,16 @@ class ArticleController extends Controller
         if($this->request->request->has('title')){
             $article->title = $this->request->request->get('title');
         }
-
         if($this->request->request->has('subtitle')){
             $article->subtitle = $this->request->request->get('subtitle');
         }
-
         if($this->request->request->has('tag')){
             $article->subject = $this->request->request->get('tag');
         }
-
         if($this->request->files->has('image')){
             $article->image = ImageService::upload($this->request->files->get('image'));
         }
-
-        if($this->request->get('remove') !== null){
+        if($this->request->request->has('remove')){
             $article->image = ImageService::unlink($article->image);
         }
 
@@ -91,7 +85,7 @@ class ArticleController extends Controller
         ])->update();
 
         $this->flashBag->add('success', 'Article successfully updated');
-        $this->redirect($item->slug ? 'article' . DIRECTORY_SEPARATOR . $item->slug : '');
+        $this->redirect(ItemHelper::getRedirect($this->request));
     }
 
     public function delete($id): void
@@ -105,6 +99,6 @@ class ArticleController extends Controller
         $item->delete();
 
         $this->flashBag->add('success', 'Article successfully deleted');
-        $this->redirect();
+        $this->redirect(ItemHelper::getRedirect($this->request));
     }
 }
