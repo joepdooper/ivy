@@ -3,6 +3,7 @@
 namespace Items\Collection\Code;
 
 use Items\Item;
+use Items\ItemHelper;
 use Ivy\Abstract\Controller;
 
 class CodeController extends Controller
@@ -17,39 +18,53 @@ class CodeController extends Controller
         $this->item = new Item();
     }
 
-    public function save($id, $template_route = null, $identifier = null): void
+    public function save($id): void
     {
         if($this->request->get('delete') !== null){
-            $this->delete($id, $template_route, $identifier);
+            $this->delete($id);
         } else {
-            $this->update($id, $template_route, $identifier);
+            $this->update($id);
         }
     }
 
-    public function insert($id, $template_route = null, $identifier = null): void
+    public function insert($id): void
     {
         $this->authorize('create', $this->code);
 
-        $parent_id = $identifier ? (new Item)->where('slug', $identifier)->fetchOne()->id : null;
-        $this->code->populate(['code' => 'Insert code…', 'language' => 'php'])->insert();
-        $this->item->populate(['template_id' => $id, 'parent_id' => $parent_id])->insert();
+        $this->item->table_id = $this->code->populate([
+            'code' => 'Insert code…',
+            'language' => 'php'
+        ])->insert();
+
+        $this->item->populate([
+            'template_id' => $id,
+            'parent_id' => ItemHelper::getParentId($this->request)
+        ])->insert();
 
         $this->flashBag->add('success', 'Code successfully inserted');
-        $this->redirect(isset($identifier) ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
+        $this->redirect(ItemHelper::getRedirect($this->request));
     }
 
-    public function update($id, $template_route = null, $identifier = null): void
+    public function update($id): void
     {
         $this->authorize('update', $this->code);
 
         $item = $this->item->where('id', $id)->fetchOne();
-        $this->code->where('id', $item->table_id)->populate(['code' => $this->request->get('code'), 'language' => $this->request->get('language')])->update();
-        $item->populate(['published' => $this->request->get('publish')])->update();
+
+        $this->code->where('id', $item->table_id)->populate([
+            'code' => $this->request->get('code'),
+            'language' => $this->request->get('language')
+        ])->update();
+
+        $item->populate([
+            'published' => $this->request->get('publish')
+        ])->update();
+
         $this->flashBag->add('success', 'Code successfully updated');
-        $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
+        $this->redirect(ItemHelper::getRedirect($this->request));
     }
 
-    public function delete($id, $template_route = null, $identifier = null): void
+    public function delete($id): void
     {
         $this->authorize('delete', $this->code);
 
@@ -58,6 +73,6 @@ class CodeController extends Controller
         $item->delete();
 
         $this->flashBag->add('success', 'Code successfully deleted');
-        $this->redirect($identifier ? htmlentities($template_route) . DIRECTORY_SEPARATOR . htmlentities($identifier) : '');
+        $this->redirect(ItemHelper::getRedirect($this->request));
     }
 }

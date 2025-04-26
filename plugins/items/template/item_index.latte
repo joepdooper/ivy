@@ -2,7 +2,7 @@
 
 {block main}
     <main class="grow p-4 relative">
-        <div n:if="$items" id="grid" class="grid grid-cols-3 gap-4">
+        <div n:if="$items" id="grid" class="grid grid-cols-3 gap-4 items-start">
             {foreach $items as $item}
                 {$item->render()}
             {/foreach}

@@ -41,7 +41,7 @@ class TextController extends Controller
         ])->insert();
 
         $this->flashBag->add('success', 'Text successfully inserted');
-        $this->redirect();
+        $this->redirect(ItemHelper::getRedirect($this->request));
     }
 
     public function update($id): void
@@ -59,7 +59,7 @@ class TextController extends Controller
         ])->update();
 
         $this->flashBag->add('success', 'Text successfully updated');
-        $this->redirect();
+        $this->redirect(ItemHelper::getRedirect($this->request));
     }
 
     public function delete($id): void
@@ -73,6 +73,6 @@ class TextController extends Controller
         $item->delete();
 
         $this->flashBag->add('success', 'Text successfully deleted');
-        $this->redirect();
+        $this->redirect(ItemHelper::getRedirect($this->request));
     }
 }

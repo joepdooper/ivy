@@ -1,0 +1,70 @@
+{define gig}
+    <div class="card border border-base-300">
+        <div class="card-body">
+            <div class="text-xs font-bold">
+            {if $gig->subject}
+                {render(path('PLUGIN_PATH') . 'tag/template/tag.latte', [
+                'tag' => $tag,
+                'item' => $item
+                ])}
+            {/if}
+            </div>
+
+            <div class="flex justify-between items-baseline py-4">
+                {if auth()->isLoggedIn()}
+                    <label for="date_{$item->id}">
+                        <input class="input" type="date" id="date_{$item->id}" name="date" value="{date('Y-m-d', strtotime($gig->datetime))}">
+                    </label>
+                    <label for="time_{$item->id}">
+                        <input class="input" type="time" id="time_{$item->id}" name="time" value="{date('H:i', strtotime($gig->datetime))}">
+                    </label>
+                {else}
+                    <div class="text-3xl font-normal leading-none">
+                        {date('d.m.y', strtotime($gig->datetime))}
+                    </div>
+                    <div class="text-xs font-bold leading-none">
+                        {date('H:i', strtotime($gig->datetime))}
+                    </div>
+                {/if}
+            </div>
+
+            <div>
+                {if auth()->isLoggedIn()}
+                    <span class="font-bold text-xl">
+                        {render(path('PLUGIN_PATH') . 'items/collection/text/template/input.TypeText.latte', [
+                        'id' => 'venue',
+                        'name' => 'venue',
+                        'value' => $gig->venue
+                        ])}
+                    </span>
+                    <span class="text-xl">
+                        {render(path('PLUGIN_PATH') . 'items/collection/text/template/input.TypeText.latte', [
+                        'id' => 'address',
+                        'name' => 'address',
+                        'value' => $gig->address
+                        ])}
+                    </span>
+                {else}
+                    <p class="text-xl">
+                        <span class="font-bold">{$gig->venue}</span><br>
+                        {$gig->address}
+                    </p>
+                {/if}
+            </div>
+        </div>
+    </div>
+{/define}
+
+<div class="item item-gig relative group" id="item-{$item->id}">
+    {if auth()->isLoggedIn()}
+        <form action="{path('BASE_PATH') . 'gig/save/' . $item->id}" method="POST" enctype="multipart/form-data">
+            {csrf()}
+            {include gig}
+            <div class="hidden group-hover:block absolute left-0 bottom-0">
+                {render(path('PLUGIN_PATH') . 'items/template/item_admin_buttons.latte', ['item' => $item])}
+            </div>
+        </form>
+    {else}
+        {include gig}
+    {/if}
+</div>
