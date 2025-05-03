@@ -33,7 +33,14 @@ class ItemHelper
         $referer = $request->headers->get('referer');
         $basePath = $request->getBasePath();
         $path = parse_url($referer, PHP_URL_PATH);
-        return ltrim(substr($path, strlen($basePath)), '/');
+        $trimmedPath = ltrim(substr($path, strlen($basePath)), '/');
+        if(!empty($trimmedPath)){
+            if(!(new Item)->where('slug', basename($trimmedPath))->fetchOne()){
+                $item = (new Item)->where('id', basename($request->getPathInfo()))->fetchOne();
+                $trimmedPath = 'article/' . $item->slug;
+            }
+        }
+        return $trimmedPath;
     }
 
     public static function createSlug($string): string

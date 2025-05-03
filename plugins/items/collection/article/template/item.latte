@@ -10,12 +10,14 @@
             <div class="card-actions">
                 <div class="text-xs font-bold">{$tag->value}</div>
             </div>
-            <h2 class="text-3xl font-bold leading-none">
-                {$article->title}
-            </h2>
-            <h3 class="text-3xl font-normal leading-none">
-                {$article->subtitle}
-            </h3>
+            <div>
+                <h2 class="text-3xl font-bold leading-none">
+                    {$article->title}
+                </h2>
+                <h3 class="text-3xl font-normal leading-none">
+                    {$article->subtitle}
+                </h3>
+            </div>
             {render('include/author.latte', [
             'author' => $author,
             'date' => $item->date
@@ -24,7 +26,7 @@
     </a>
 
     {if auth()->isLoggedIn()}
-        <div class="hidden group-hover:block absolute left-0 bottom-0">
+        <div class="hidden group-hover:block absolute left-1/2 bottom-0 -mb-5 -ml-15">
             <form action="{path('BASE_PATH') . 'article/save/' . $item->id}" method="POST" enctype="multipart/form-data">
                 {csrf()}
                 {render(path('PLUGIN_PATH') . 'items/template/item_admin_buttons.latte', ['item' => $item])}

@@ -45,7 +45,6 @@ class GigController extends Controller
         $this->item->populate([
             'template_id' => $id,
             'parent_id' => ItemHelper::getParentId($this->request),
-            'slug' => ItemHelper::createSlug('Title')
         ])->insert();
 
         $this->flashBag->add('success', 'Gig successfully inserted');

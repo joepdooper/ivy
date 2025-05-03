@@ -22,7 +22,7 @@ try {
             'table' => 'code',
             'plugin_url' => 'items/collection/code',
             'route' => 'code',
-            'namespace' => 'Code',
+            'namespace' => 'Items\Collection\Code',
         ]
     );
 } catch (Exception $e) {

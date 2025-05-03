@@ -22,7 +22,7 @@ try {
             'table' => 'image',
             'plugin_url' => 'items/collection/image',
             'route' => 'image',
-            'namespace' => 'Image',
+            'namespace' => 'Items\Collection\Image',
         ]
     );
 } catch (Exception $e) {

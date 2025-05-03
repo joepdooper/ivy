@@ -29,7 +29,7 @@ try {
             'table' => 'gig',
             'plugin_url' => 'items/collection/gig',
             'route' => 'gig',
-            'namespace' => 'Gig',
+            'namespace' => 'Items\Collection\Gig',
         ]
     );
 } catch (Exception $e) {

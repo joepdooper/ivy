@@ -26,7 +26,7 @@ try {
             'table' => 'article',
             'plugin_url' => 'items/collection/article',
             'route' => 'article',
-            'namespace' => 'Article',
+            'namespace' => 'Items\Collection\Article',
         ]
     );
 } catch (Exception $e) {

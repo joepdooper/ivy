@@ -25,7 +25,7 @@ try {
             'table' => 'audio',
             'plugin_url' => 'items/collection/audio',
             'route' => 'audio',
-            'namespace' => 'Audio',
+            'namespace' => 'Items\Collection\Audio',
         ]
     );
 } catch (Exception $e) {

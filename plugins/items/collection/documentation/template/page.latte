@@ -1,0 +1,101 @@
+{layout path('PUBLIC_PATH') . file('body.latte')}
+
+{block main}
+    <main class="grow p-4 w-full">
+
+        <div class="grid grid-cols-5 gap-4">
+
+            <div>
+                {include 'menu.latte', ['tags' => $tags]}
+            </div>
+
+            <div class="col-span-4">
+        <article>
+            {define documentation}
+                <div class="space-y-4">
+                    <div class="text-xs font-bold">
+                        {if $documentation->subject}
+                            {render(path('PLUGIN_PATH') . 'tag/template/tag.latte', [
+                            'tag' => $tag,
+                            'item' => $item
+                            ])}
+                        {/if}
+                    </div>
+
+                    {* Titles *}
+                    <div>
+                            <h1 class="text-6xl font-bold">
+                                {if auth()->isLoggedIn()}
+                                    {render(path('PLUGIN_PATH') . 'items/collection/text/template/input.TypeText.latte', [
+                                    'id' => 'title',
+                                    'name' => 'title',
+                                    'value' => $documentation->title
+                                    ])}
+                                {else}
+                                    {$documentation->title}
+                                {/if}
+                            </h1>
+                            <h2 class="text-6xl">
+                                {if auth()->isLoggedIn()}
+                                    {render(path('PLUGIN_PATH') . 'items/collection/text/template/input.TypeText.latte', [
+                                    'id' => 'subtitle',
+                                    'name' => 'subtitle',
+                                    'value' => $documentation->subtitle
+                                    ])}
+                                {else}
+                                    {$documentation->subtitle}
+                                {/if}
+                            </h2>
+                    </div>
+
+                    {* Author *}
+                    <div>
+                            {if auth()->isLoggedIn()}
+                                <label for="datetime_{$item->id}">
+                                    <input class="input input-bordered w-full text-xs" type="datetime-local"
+                                           id="datetime_{$item->id}"
+                                           name="datetime" value="{$item->date|date:'Y-m-d H:i:s'}">
+                                </label>
+                            {else}
+                                {render('include/author.latte', [
+                                'author' => $author,
+                                'date' => $item->date
+                                ])}
+                            {/if}
+                    </div>
+                </div>
+            {/define}
+
+            {if auth()->isLoggedIn()}
+                <form action="{path('BASE_PATH') . 'documentation/update/' . $item->id}" method="POST" enctype="multipart/form-data">
+                    {csrf()}
+                    <div class="relative">
+                        {include documentation}
+                        <div class="text-center pt-4">
+                            {render(path('PLUGIN_PATH') . 'items/template/item_admin_buttons.latte', ['item' => $item])}
+                        </div>
+                    </div>
+                </form>
+            {else}
+                {include documentation}
+            {/if}
+
+            <div class="space-y-4">
+                {if $items}
+                    {foreach $items as $child}
+                        {$child->render()}
+                    {/foreach}
+                {/if}
+            </div>
+
+        </article>
+
+            </div>
+
+        </div>
+    </main>
+
+    {if canEditAsAdmin()}
+        {render(path('PLUGIN_PATH') . 'items/template/item_template_list_modal.latte')}
+    {/if}
+{/block}

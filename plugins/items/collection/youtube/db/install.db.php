@@ -22,7 +22,7 @@ try {
             'table' => 'youtube',
             'plugin_url' => 'items/collection/youtube',
             'route' => 'youtube',
-            'namespace' => 'Youtube',
+            'namespace' => 'Items\Collection\Youtube',
         ]
     );
 } catch (Exception $e) {

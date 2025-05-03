@@ -1,0 +1,20 @@
+<ul class="menu w-full">
+    {foreach $tags as $tag}
+        <li>
+            <input id="tag-{$tag->id}" class="is-hidden tag-radio" type="radio" name="tag"
+               {if $documentation->subject === $tag->id}checked{/if}>
+            <label class="tag{if $documentation->subject === $tag->id} active{/if}" for="tag-{$tag->id}">
+                {$tag->value}
+            </label>
+            <ul class="menu w-full">
+                {foreach (new \Items\Collection\Documentation\Documentation)->addJoin('items', 'id', '=', 'table_id')->where('subject', $tag->id)->fetchAll() as $link}
+                    <li class="{if $link->id === $item->id}active{/if}">
+                        <a href="{path('BASE_PATH') . 'documentation/'}">
+                            {$link->title}
+                        </a>
+                    </li>
+                {/foreach}
+            </ul>
+        </li>
+    {/foreach}
+</ul>

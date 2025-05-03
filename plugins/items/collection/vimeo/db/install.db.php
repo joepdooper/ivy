@@ -25,7 +25,7 @@ try {
             'table' => 'vimeo',
             'plugin_url' => 'items/collection/vimeo',
             'route' => 'vimeo',
-            'namespace' => 'Vimeo',
+            'namespace' => 'Items\Collection\Vimeo',
         ]
     );
 } catch (Exception $e) {
