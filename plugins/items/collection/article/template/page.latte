@@ -96,7 +96,7 @@
                     <div class="relative">
                         {include article}
                         <div class="text-center pt-4">
-                            {render(path('PLUGIN_PATH') . 'items/template/item_admin_buttons.latte', ['item' => $item])}
+                            {render(path('PLUGIN_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
                         </div>
                     </div>
                 </form>
@@ -116,7 +116,7 @@
     </main>
 
     {if canEditAsAdmin()}
-        {render(path('PLUGIN_PATH') . 'items/template/item_template_list_modal.latte')}
+        {render(path('PLUGIN_PATH') . 'items/template/template_list_modal.latte')}
     {/if}
 {/block}
 

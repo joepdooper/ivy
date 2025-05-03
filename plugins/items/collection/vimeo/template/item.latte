@@ -15,7 +15,7 @@
                     <input type="text" placeholder="Vimeo video id" name="vimeo_video_id"
                            value="{$vimeo->vimeo_video_id}">
                 </label>
-                {\Ivy\Template::render('include/item_admin_buttons.latte', ['item' => $item])}
+                {\Ivy\Template::render('include/admin_buttons.latte', ['item' => $item])}
             </form>
         {/if}
 

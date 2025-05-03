@@ -9,6 +9,7 @@ CREATE TABLE `documentation` (
   `title` varchar(255) NOT NULL,
   `subtitle` varchar(255) DEFAULT NULL,
   `subject` int(11) NOT NULL,
+  `item_id` int(11) DEFAULT NULL,
   `token` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;

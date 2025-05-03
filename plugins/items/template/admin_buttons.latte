@@ -1,4 +1,4 @@
-<div n:if="$item" class="dissableSortable join">
+<div n:if="$item" class="dissableSortable join relative z-10">
     {button type:visible, name:'publish', value:$item->published, id:$item->id}
     {button type:save, name:'save', id:$item->id}
     {button type:delete, name:'delete', value:'', id:$item->id, placeholder:$item->name}

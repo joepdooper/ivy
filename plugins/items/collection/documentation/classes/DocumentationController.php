@@ -41,11 +41,15 @@ class DocumentationController extends Controller
             'subject' => $this->tag->fetchOne()->getId()
         ])->insert();
 
-        $this->item->populate([
+        $this->item->id = $this->item->populate([
             'template_id' => $id,
             'parent_id' => ItemHelper::getParentId($this->request),
             'slug' => ItemHelper::createSlug('Title')
         ])->insert();
+
+        $this->documentation->where('id', $this->item->table_id)->populate([
+            'item_id' => $this->item->id,
+        ])->update();
 
         $this->flashBag->add('success', 'Documentation successfully inserted');
         $this->redirect(ItemHelper::getRedirect($this->request));
@@ -87,9 +91,7 @@ class DocumentationController extends Controller
         $this->authorize('delete', $this->documentation);
 
         $item = $this->item->where('id', $id)->fetchOne();
-        $documentation = $this->documentation->where('id', $item->table_id)->fetchOne();
-        ImageService::unlink($documentation->image);
-        $documentation->delete();
+        $this->documentation->where('id', $item->table_id)->delete();
         $item->delete();
 
         $this->flashBag->add('success', 'Documentation successfully deleted');

@@ -26,7 +26,7 @@ class ItemController extends Controller
         $this->authorize('index', Item::class);
 
         $items = (new Item)->where('parent_id')->sortBy(['sort', 'date', 'id'])->fetchAll();
-        LatteView::set(Path::get('PLUGIN_PATH') . 'items/template/item_index.latte', ['items' => $items]);
+        LatteView::set(Path::get('PLUGIN_PATH') . 'items/template/index.latte', ['items' => $items]);
     }
 
     public function deleteChildren(): void

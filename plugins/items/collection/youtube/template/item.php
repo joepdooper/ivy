@@ -20,7 +20,7 @@ $youtube = (new \Youtube\Item)->where('id', $item->table_id)->fetchOne();
                     <input type="text" placeholder="Youtube video id" name="youtube_video_id"
                            value="<?= $youtube->youtube_video_id; ?>">
                 </label>
-                <?php \Ivy\Template::render('include/item_admin_buttons.latte', ['item' => $item]); ?>
+                <?php \Ivy\Template::render('include/admin_buttons.latte', ['item' => $item]); ?>
             </form>
         <?php endif; ?>
 
