@@ -109,6 +109,16 @@ class Item extends Model
         $this->plugin_url = $value;
     }
 
+    public function getRoute(): string
+    {
+        return $this->route;
+    }
+
+    public function setRoute($value): void
+    {
+        $this->route = $value;
+    }
+
     public function render(): void
     {
         $itemTemplateClass = "{$this->namespace}\\{$this->name}Template";

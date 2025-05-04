@@ -32,7 +32,7 @@ class DocumentationTemplate
         $item = (new Item)->where('slug', $slug)->fetchOne();
         $documentation = (new Documentation)->where('id', $item->table_id)->fetchOne();
 
-        if(!DocumentationPolicy::read($documentation, $item)){
+        if(!DocumentationPolicy::read($documentation)){
             return;
         }
 

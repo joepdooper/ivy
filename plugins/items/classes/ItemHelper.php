@@ -37,7 +37,7 @@ class ItemHelper
         if(!empty($trimmedPath)){
             if(!(new Item)->where('slug', basename($trimmedPath))->fetchOne()){
                 $item = (new Item)->where('id', basename($request->getPathInfo()))->fetchOne();
-                $trimmedPath = 'article/' . $item->slug;
+                $trimmedPath = $item->route . DIRECTORY_SEPARATOR . $item->slug;
             }
         }
         return $trimmedPath;

@@ -2,7 +2,6 @@
 
 namespace Items\Collection\Documentation;
 
-use Items\Item;
 use Ivy\Model\User;
 
 class DocumentationPolicy
@@ -12,9 +11,9 @@ class DocumentationPolicy
         return User::canEditAsAdmin();
     }
 
-    public static function read(Documentation $documentation, Item $item): bool
+    public static function read(Documentation $documentation): bool
     {
-        if(User::getAuth()->isLoggedIn() || $item->published){
+        if(User::getAuth()->isLoggedIn() || $documentation->item()->published){
             return true;
         } else {
             return false;

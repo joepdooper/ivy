@@ -2,6 +2,7 @@
 
 namespace Items\Collection\Documentation;
 
+use Items\Item;
 use Ivy\Abstract\Model;
 
 class Documentation extends Model
@@ -21,26 +22,12 @@ class Documentation extends Model
     protected ?int $item_id;
     protected ?string $token;
 
-    protected ?int $published;
-    protected ?string $slug;
-
-    protected function setPublished(int $published): void
+    public function item(): ?Model
     {
-        $this->published = $published;
+        return $this->hasOne(Item::class,  'id', 'item_id');
     }
 
-    protected function getPublished(): int
-    {
-        return $this->published;
-    }
-
-    protected function setSlug(string $slug): void
-    {
-        $this->slug = $slug;
-    }
-
-    protected function getSlug(): string
-    {
-        return $this->slug;
+    public function policy($action) {
+        return DocumentationPolicy::{$action}($this);
     }
 }

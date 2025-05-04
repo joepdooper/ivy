@@ -1,24 +1,22 @@
 <ul class="menu w-full">
     {foreach $tags as $tag}
-        <li class="collapse">
-            <input id="tag-{$tag->id}" type="radio" name="tag"
+    <li class="collapse">
+        <input id="tag-{$tag->id}" type="radio" name="tag"
                {if $documentation->subject === $tag->id}checked{/if}>
-            <label class="tag collapse-title{if $documentation->subject === $tag->id} active{/if}" for="tag-{$tag->id}">
-                {$tag->value}
-            </label>
-            <ul class="menu w-full collapse-content">
-                {foreach (new \Items\Collection\Documentation\Documentation)
-                ->select(['documentation.id', 'documentation.title', 'items.published', 'items.slug'])
-                ->addJoin('items', 'item_id', '=', 'id')
-                ->where('subject', $tag->id)
-                ->fetchAll() as $link}
-                    <li class="{if $link->id === $item->id}active{/if}">
-                        <a href="{path('BASE_PATH') . 'documentation/' . $link->slug}">
-                            {$link->title} - {$link->published}
+        <label class="collapse-title{if $documentation->subject === $tag->id} active font-bold{/if}" for="tag-{$tag->id}">
+            {$tag->value}
+        </label>
+        <ul class="menu w-full collapse-content">
+            {foreach (new \Items\Collection\Documentation\Documentation)->where('subject', $tag->id)->fetchAll() as $link}
+                {if $link->item()->published || $link->policy('update')}
+                    <li class="{if $link->item_id === $item->id}font-bold{/if}">
+                        <a href="{path('BASE_PATH') . 'documentation/' . $link->item()->slug}">
+                            {$link->title}
                         </a>
                     </li>
-                {/foreach}
-            </ul>
-        </li>
+                {/if}
+            {/foreach}
+        </ul>
+    </li>
     {/foreach}
 </ul>

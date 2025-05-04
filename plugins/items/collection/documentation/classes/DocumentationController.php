@@ -79,6 +79,7 @@ class DocumentationController extends Controller
         }
 
         $item->populate([
+            'slug' => ItemHelper::createSlug($documentation->title),
             'published' => $this->request->get('publish'),
         ])->update();
 
