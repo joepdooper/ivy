@@ -76,17 +76,16 @@ pre {
 }
 
 code {
-    background-color: var(--fallback-bc, oklch(var(--bc)/0.2)) !important;
-    color: var(--color-darkGrey);
+    background-color: var(--color-base-300) !important;
+    color: var(--color-base-content);
     font-family: monospace, monospace;
-    padding: 0.25em;
-    font-size: 0.85em;
+    font-size: var(--text-sm);
 }
 
 pre code {
     display: block;
-    padding: 1.25em;
-    line-height: 1.33;
+    padding: var(--card-p, 1.5rem);
+    border-radius: var(--radius-box);
 }
 
 /* Styles for loading animation preloader */
@@ -149,7 +148,7 @@ pre .preloader div {
 /* Styles for comments in code */
 pre .comment,
 code .comment {
-    color: var(--c-neutral);
+    color: var(--color-base-300);
 }
 
 /* Styles for keywords, selectors, modules, classes, and functions in code */
@@ -163,16 +162,12 @@ code .selector,
 code .storage.module,
 code .storage.class,
 code .storage.function {
-    /* color: #080; */
-    color: rgb(255, 68, 0);
-    color: #802780;
     font-weight: bold;
 }
 
 /* Styles for operators in code */
 pre .keyword.operator,
 code .keyword.operator {
-    color: var(--c-darkest-color);
     font-weight: normal;
 }
 

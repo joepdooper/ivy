@@ -1,16 +1,15 @@
-<ul class="menu w-full">
+<ul class="menu p-0">
     {foreach $tags as $tag}
     <li class="collapse">
-        <input id="tag-{$tag->id}" type="radio" name="tag"
-               {if $documentation->subject === $tag->id}checked{/if}>
-        <label class="collapse-title{if $documentation->subject === $tag->id} active font-bold{/if}" for="tag-{$tag->id}">
+        <input id="tag-{$tag->id}" type="radio" name="tag" {if $documentation->subject === $tag->id}checked{/if}>
+        <label class="min-h-0! leading-none collapse-title{if $documentation->subject === $tag->id} active font-bold{/if}" for="tag-{$tag->id}">
             {$tag->value}
         </label>
-        <ul class="menu w-full collapse-content">
+        <ul class="collapse-content">
             {foreach (new \Items\Collection\Documentation\Documentation)->where('subject', $tag->id)->fetchAll() as $link}
                 {if $link->item()->published || $link->policy('update')}
-                    <li class="{if $link->item_id === $item->id}font-bold{/if}">
-                        <a href="{path('BASE_PATH') . 'documentation/' . $link->item()->slug}">
+                    <li>
+                        <a class="leading-none{if $link->item_id === $item->id} font-bold{/if}" href="{path('BASE_PATH') . 'documentation/' . $link->item()->slug}">
                             {$link->title}
                         </a>
                     </li>

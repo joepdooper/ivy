@@ -27,7 +27,8 @@ class Documentation extends Model
         return $this->hasOne(Item::class,  'id', 'item_id');
     }
 
-    public function policy($action) {
+    public function policy($action)
+    {
         return DocumentationPolicy::{$action}($this);
     }
 }
