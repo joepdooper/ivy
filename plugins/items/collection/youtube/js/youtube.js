@@ -19,9 +19,9 @@ function onYouTubePlayerAPIReady() {
 }
 
 function onPlayerReady(event) {
-  call_my_function("YoutubePlayerReady");
+  // call_my_function("YoutubePlayerReady");
 }
 
 function onPlayerStateChange(event) {
-  call_my_function("YoutubePlayerStateChange");
+  // call_my_function("YoutubePlayerStateChange");
 }
