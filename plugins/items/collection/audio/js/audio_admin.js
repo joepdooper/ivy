@@ -1,4 +1,3 @@
-// Preview audio from file input
 function previewAudio(input, preview) {
     let fileInput = document.getElementById(input);
     let audioPreview = document.getElementById(preview);

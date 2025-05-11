@@ -13,6 +13,7 @@ AssetManager::addJS("node_modules/linkify-html/dist/linkify-html.min.js");
 AssetManager::addJS(Path::get('PLUGIN_PATH') . "items/collection/text/js/text.js");
 
 if (User::canEditAsEditor()) {
+    AssetManager::addJS("node_modules/@joepdooper/mini-editor/MiniEditor.js");
     AssetManager::addJS(Path::get('PLUGIN_PATH') . "items/collection/text/js/text_admin.js");
     Hookmanager::add('before_footer', function () {
         LatteView::render(Path::get('PLUGIN_PATH') . 'items/collection/text/template/toolbar.latte');

@@ -1,5 +1,3 @@
-// Preview image from file input
-
 function previewImage(input, preview, attribute) {
     let fileInput = document.getElementById(input);
     let imagePreview = document.getElementById(preview);

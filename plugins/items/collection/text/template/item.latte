@@ -10,6 +10,8 @@
             </div>
         </form>
     {else}
-        <p>{$text->text|noescape}</p>
+        <div class="p-6">
+            <p>{$text->text|noescape}</p>
+        </div>
     {/if}
 </div>
