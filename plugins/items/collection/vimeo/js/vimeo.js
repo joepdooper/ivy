@@ -1,3 +1,5 @@
+console.log('vimeo_player');
+
 document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelectorAll('[data-vimeo]').forEach(vimeo_player =>

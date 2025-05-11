@@ -2,24 +2,77 @@
 
 namespace Items\Collection\Vimeo;
 
-use Items\ItemController;
-use Ivy\Template;
+use Items\Item;
+use Items\ItemHelper;
+use Ivy\Abstract\Controller;
 
-class VimeoController extends ItemController
+class VimeoController extends Controller
 {
     private Vimeo $vimeo;
+    private Item $item;
 
     public function __construct()
     {
-        $this->vimeo = new Vimeo;
         parent::__construct();
+        $this->vimeo = new Vimeo();
+        $this->item = new Item();
     }
 
-    public function item(): void
+    public function save($id): void
     {
-        if ($this->item->published || $this->item->author) {
-            $vimeo = $this->vimeo->where('id', $this->item->table_id)->fetchOne();
-            Template::render(_PLUGIN_PATH . $this->item->plugin_url . '/template/item.latte', ['item' => $this->item, 'vimeo' => $vimeo]);
+        if($this->request->get('delete') !== null){
+            $this->delete($id);
+        } else {
+            $this->update($id);
         }
+    }
+
+    public function insert($id): void
+    {
+        $this->authorize('create', $this->vimeo);
+
+        $this->item->table_id = $this->vimeo->populate([
+            'vimeo_video_id' => '876176995'
+        ])->insert();
+
+        $this->item->populate([
+            'template_id' => $id,
+            'parent_id' => ItemHelper::getParentId($this->request)
+        ])->insert();
+
+        $this->flashBag->add('success', 'Vimeo successfully inserted');
+        $this->redirect(ItemHelper::getRedirect($this->request));
+    }
+
+    public function update($id): void
+    {
+        $this->authorize('update', $this->vimeo);
+
+        $item = $this->item->where('id', $id)->fetchOne();
+
+        $this->vimeo->where('id', $item->table_id)->populate([
+            'vimeo_video_id' => $this->request->get('vimeo_video_id')
+        ])->update();
+
+        $item->populate([
+            'published' => $this->request->get('publish')
+        ])->update();
+
+        $this->flashBag->add('success', 'Vimeo successfully updated');
+        $this->redirect(ItemHelper::getRedirect($this->request));
+    }
+
+    public function delete($id): void
+    {
+        $this->authorize('delete', $this->vimeo);
+
+        $item = $this->item->where('id', $id)->fetchOne();
+
+        $this->vimeo->where('id', $item->table_id)->delete();
+
+        $item->delete();
+
+        $this->flashBag->add('success', 'Vimeo successfully deleted');
+        $this->redirect(ItemHelper::getRedirect($this->request));
     }
 }

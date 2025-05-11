@@ -1,21 +1,24 @@
-<div class="item item-vimeo col-12 {if !$item->parent}col-6-md col-4-lg{/if}"
-     id="item-{$item->id}">
-    <div>
+<div class="item item-vimeo" id="item-{$item->id}">
+    <div class="group">
 
-        {if in_array("IframeManager", $_SESSION['plugin_actives'])}
+        {if isPluginActive('IframeManager')}
             <div data-service="vimeo" data-id="{$vimeo->vimeo_video_id}" data-autoscale></div>
         {else}
             <div data-vimeo="{$vimeo->vimeo_video_id}" id="vimeo-{$item->id}"></div>
         {/if}
 
-        {if isLoggedIn() && $item->author}
-            <form action="{= Path::get('BASE_PATH') . 'vimeo/update/' . $item->id . \Ivy\Template::$url}" method="POST"
-                  enctype="multipart/form-data">
-                <label>
-                    <input type="text" placeholder="Vimeo video id" name="vimeo_video_id"
-                           value="{$vimeo->vimeo_video_id}">
-                </label>
-                {\Ivy\Template::render('include/admin_buttons.latte', ['item' => $item])}
+        {if $vimeo->policy('save')}
+            <form action="{path('BASE_PATH') . 'vimeo/save/' . $item->id}" method="POST" enctype="multipart/form-data">
+                {csrf()}
+                <div class="relative">
+                    <label class="input w-full">
+                        <span class="label">vimeo.com/</span>
+                        <input type="text" placeholder="Vimeo video id" name="vimeo_video_id" value="{$vimeo->vimeo_video_id}" />
+                    </label>
+                    <div class="hidden group-hover:block absolute left-1/2 bottom-0 -mb-5 -ml-15">
+                        {render(path('PLUGIN_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
+                    </div>
+                </div>
             </form>
         {/if}
 

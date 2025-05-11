@@ -2,11 +2,20 @@
 
 namespace Items\Collection\Vimeo;
 
-use Ivy\Model;
+use Ivy\Abstract\Model;
 
 class Vimeo extends Model
 {
-    public int $id;
-    public string $token;
     protected string $table = "vimeo";
+    protected array $columns = [
+        'vimeo_video_id',
+        'token'
+    ];
+    public string $vimeo_video_id;
+    public ?string $token;
+
+    public function policy($action)
+    {
+        return VimeoPolicy::{$action}($this);
+    }
 }
