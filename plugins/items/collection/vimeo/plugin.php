@@ -6,7 +6,7 @@ use Ivy\Manager\SessionManager;
 use Ivy\Path;
 
 Hookmanager::add('after_footer', function () {
-    if(!in_array("IframeManager", SessionManager::get('plugin_actives'))){
+    if(in_array("IframeManager", SessionManager::get('plugin_actives'))){
         if (isset($_COOKIE['cc_cookie'])){
             $cc_cookie = json_decode($_COOKIE['cc_cookie']);
             $cc_cookie->necessary = in_array("necessary", $cc_cookie->categories);
@@ -14,6 +14,9 @@ Hookmanager::add('after_footer', function () {
             $cc_cookie->targeting = in_array("targeting", $cc_cookie->categories);
         }
         $scriptAttribute = (isset($cc_cookie) && $cc_cookie->analytics) ?: "type='text/plain' data-cookiecategory='analytics'";
+        print "<script {$scriptAttribute} src='https://unpkg.com/@vimeo/player'></script>";
+        print "<script {$scriptAttribute} src='" . Path::get('BASE_PATH') . Path::get('PLUGIN_PATH') . "items/collection/vimeo/js/vimeo.js'></script>";
+    } else {
         print "<script src='https://unpkg.com/@vimeo/player'></script>";
         print "<script src='" . Path::get('BASE_PATH') . Path::get('PLUGIN_PATH') . "items/collection/vimeo/js/vimeo.js'></script>";
     }

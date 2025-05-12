@@ -1,0 +1,39 @@
+{
+  "name": "@orestbida/iframemanager",
+  "version": "1.3.0",
+  "description": "GDPR friendly iframe manager written in vanilla js",
+  "main": "dist/iframemanager.js",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "dev": "rollup --config ./rollup.config.mjs --watch",
+    "build": "rollup --config ./rollup.config.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orestbida/iframemanager.git"
+  },
+  "keywords": [
+    "gdpr",
+    "iframe",
+    "manager",
+    "cookie"
+  ],
+  "author": "Orest Bida",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/orestbida/iframemanager/issues"
+  },
+  "homepage": "https://github.com/orestbida/iframemanager#readme",
+  "devDependencies": {
+    "@rollup/plugin-eslint": "^9.0.5",
+    "@rollup/plugin-terser": "^0.4.4",
+    "cssnano": "^7.0.6",
+    "postcss-combine-duplicated-selectors": "^10.0.3",
+    "postcss-custom-properties": "^14.0.1",
+    "rollup": "^4.21.2",
+    "rollup-plugin-postcss": "^4.0.2"
+  }
+}
