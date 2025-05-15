@@ -4,6 +4,9 @@
   "collection": true,
   "description": "Add items to homepage",
   "type": "collection",
+  "actions": [
+    {"text": "items.settings", "icon": "feather/settings.svg", "url": "settings"}
+  ],
   "database": {
     "install": "db/install.db.php",
     "uninstall": "db/uninstall.db.php"

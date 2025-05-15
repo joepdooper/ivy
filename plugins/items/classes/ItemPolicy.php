@@ -11,6 +11,11 @@ class ItemPolicy
         return User::canEditAsEditor();
     }
 
+    public static function update(Item $item): bool
+    {
+        return User::canEditAsEditor();
+    }
+
     public static function index(Item $item): bool
     {
         return true;
