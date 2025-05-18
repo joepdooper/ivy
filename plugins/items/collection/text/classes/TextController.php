@@ -29,7 +29,7 @@ class TextController extends Controller
 
     public function insert($id): void
     {
-        $this->authorize('create', $this->text);
+        $this->text->policy('create');
 
         $this->item->table_id = $this->text->populate([
             'text' => 'Write…'
@@ -46,7 +46,7 @@ class TextController extends Controller
 
     public function update($id): void
     {
-        $this->authorize('update', $this->text);
+        $this->text->policy('update');
 
         $item = $this->item->where('id', $id)->fetchOne();
 
@@ -64,7 +64,7 @@ class TextController extends Controller
 
     public function delete($id): void
     {
-        $this->authorize('delete', $this->text);
+        $this->text->policy('delete');
 
         $item = $this->item->where('id', $id)->fetchOne();
 

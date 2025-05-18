@@ -33,7 +33,7 @@ class DocumentationController extends Controller
 
     public function insert($id): void
     {
-        $this->authorize('create', $this->documentation);
+        $this->documentation->policy('create');
 
         $this->item->table_id = $this->documentation->populate([
             'title' => 'Title',
@@ -57,7 +57,7 @@ class DocumentationController extends Controller
 
     public function update($id): void
     {
-        $this->authorize('update', $this->documentation);
+        $this->documentation->policy('update');
 
         $item = $this->item->where('id', $id)->fetchOne();
         $documentation = $this->documentation->where('id', $item->table_id)->fetchOne();
@@ -89,7 +89,7 @@ class DocumentationController extends Controller
 
     public function delete($id): void
     {
-        $this->authorize('delete', $this->documentation);
+        $this->documentation->policy('delete');
 
         $item = $this->item->where('id', $id)->fetchOne();
         $this->documentation->where('id', $item->table_id)->delete();

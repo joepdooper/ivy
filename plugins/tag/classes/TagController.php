@@ -11,9 +11,15 @@ class TagController extends Controller
 {
     protected Tag $tag;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->tag = new Tag;
+    }
+
     public function post(): void
     {
-        $this->authorize('post', Tag::class);
+        $this->tag->policy('post');
 
         $tags_data = $this->request->get('tag') ?? '';
 
@@ -23,7 +29,6 @@ class TagController extends Controller
                     'value' => 'alpha_numeric_dash'
                 ]);
                 if ($validated === true) {
-                    $this->tag = new Tag;
                     $this->tag->save($tag_data);
                 } else {
                     foreach ($validated as $string) {
@@ -36,14 +41,14 @@ class TagController extends Controller
         }
 
         $this->flashBag->add('success', 'Updated successful');
-        $this->redirect($this->tag->path . DIRECTORY_SEPARATOR . 'manage');
+        $this->redirect($this->tag->getPath() . DIRECTORY_SEPARATOR . 'manage');
     }
 
     public function index(): void
     {
-        $this->authorize('index', Tag::class);
+        $this->tag->policy('index');
 
-        $tags = (new Tag)->fetchAll();
+        $tags = $this->tag->fetchAll();
         LatteView::set(Path::get('PLUGIN_PATH') . 'tag/template/manage.latte', ['tags' => $tags]);
     }
 }

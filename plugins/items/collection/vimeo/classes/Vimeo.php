@@ -13,9 +13,4 @@ class Vimeo extends Model
     ];
     public string $vimeo_video_id;
     public ?string $token;
-
-    public function policy($action)
-    {
-        return VimeoPolicy::{$action}($this);
-    }
 }

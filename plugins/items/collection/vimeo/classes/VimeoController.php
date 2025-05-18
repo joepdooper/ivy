@@ -29,7 +29,7 @@ class VimeoController extends Controller
 
     public function insert($id): void
     {
-        $this->authorize('create', $this->vimeo);
+        $this->vimeo->policy('create');
 
         $this->item->table_id = $this->vimeo->populate([
             'vimeo_video_id' => '876176995'
@@ -46,7 +46,7 @@ class VimeoController extends Controller
 
     public function update($id): void
     {
-        $this->authorize('update', $this->vimeo);
+        $this->vimeo->policy('update');
 
         $item = $this->item->where('id', $id)->fetchOne();
 
@@ -64,7 +64,7 @@ class VimeoController extends Controller
 
     public function delete($id): void
     {
-        $this->authorize('delete', $this->vimeo);
+        $this->vimeo->policy('delete');
 
         $item = $this->item->where('id', $id)->fetchOne();
 

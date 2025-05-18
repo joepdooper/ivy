@@ -1,16 +1,14 @@
-{if \Ivy\User::canEditAsEditor() && $item->author}
-    <div>
-        <label>
-            <select class="select select-bordered w-full" name="tag">
-                {foreach (new \Tag\Tag)->get()->all() as $option}
-                    <option value="{$option->id}"
-                            {if isset($tag->id) && $tag->id === $option->id}selected="selected"{/if}>
-                        {$option->value}
-                    </option>
-                {/foreach}
-            </select>
-        </label>
-    </div>
+{if auth()->isLoggedIn()}
+    <label>
+        <select class="select select-bordered text-xs font-bold w-full" name="tag">
+            {foreach (new \Tag\Tag)->fetchAll() as $option}
+                <option value="{$option->id}"
+                        {if $tag->id && $tag->id === $option->id}selected="selected"{/if}>
+                    {$option->value}
+                </option>
+            {/foreach}
+        </select>
+    </label>
 {else}
-    <div class="tag text-xs">{$tag->value}</div>
+    {$tag->value}
 {/if}

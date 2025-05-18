@@ -8,15 +8,7 @@ class ItemHelper
 {
     public static function getParentId($request): ?int
     {
-        $referer = $request->headers->get('referer');
-        $basePath = $request->getBasePath();
-        $path = parse_url($referer, PHP_URL_PATH);
-
-        if (!$path || !$basePath || !str_starts_with($path, $basePath)) {
-            return null;
-        }
-
-        $segments = explode('/', trim(substr($path, strlen($basePath)), '/'));
+        $segments = explode('/', self::getRefererPath($request));
 
         if (count($segments) !== 2) {
             return null;
@@ -30,17 +22,27 @@ class ItemHelper
 
     public static function getRedirect($request): string
     {
-        $referer = $request->headers->get('referer');
-        $basePath = $request->getBasePath();
-        $path = parse_url($referer, PHP_URL_PATH);
-        $trimmedPath = ltrim(substr($path, strlen($basePath)), '/');
+        $trimmedPath = self::getRefererPath($request);
         if(!empty($trimmedPath)){
             if(!(new Item)->where('slug', basename($trimmedPath))->fetchOne()){
                 $item = (new Item)->where('id', basename($request->getPathInfo()))->fetchOne();
-                $trimmedPath = $item->route . DIRECTORY_SEPARATOR . $item->slug;
+                $trimmedPath = $item->route . '/' . $item->slug;
             }
         }
         return $trimmedPath;
+    }
+
+    private static function getRefererPath($request): ?string
+    {
+        $referer = $request->headers->get('referer');
+        $basePath = $request->getBasePath();
+        $path = parse_url($referer, PHP_URL_PATH);
+
+        if (!$path || !$basePath || !str_starts_with($path, $basePath)) {
+            return null;
+        }
+
+        return ltrim(substr($path, strlen($basePath)), '/');
     }
 
     public static function createSlug($string): string

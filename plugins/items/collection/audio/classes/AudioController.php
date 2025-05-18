@@ -30,7 +30,7 @@ class AudioController extends Controller
 
     public function insert($id): void
     {
-        $this->authorize('create', $this->audio);
+        $this->audio->policy('create');
 
         $this->item->table_id = $this->audio->populate([
             'file' => ''
@@ -47,7 +47,7 @@ class AudioController extends Controller
 
     public function update($id): void
     {
-        $this->authorize('update', $this->audio);
+        $this->audio->policy('update');
 
         $item = $this->item->where('id', $id)->fetchOne();
         $audio = $this->audio->where('id', $item->table_id)->fetchOne();
@@ -72,7 +72,7 @@ class AudioController extends Controller
 
     public function delete($id): void
     {
-        $this->authorize('delete', $this->audio);
+        $this->audio->policy('delete');
 
         $item = $this->item->where('id', $id)->fetchOne();
 

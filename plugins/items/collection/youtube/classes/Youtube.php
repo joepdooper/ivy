@@ -13,9 +13,4 @@ class Youtube extends Model
     ];
     public string $youtube_video_id;
     public ?string $token;
-
-    public function policy($action)
-    {
-        return YoutubePolicy::{$action}($this);
-    }
 }

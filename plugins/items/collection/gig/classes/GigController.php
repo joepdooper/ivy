@@ -33,7 +33,7 @@ class GigController extends Controller
 
     public function insert($id): void
     {
-        $this->authorize('create', $this->gig);
+        $this->gig->policy('create');
 
         $this->item->table_id = $this->gig->populate([
             'datetime' => date("Y-m-d H:i:s"),
@@ -53,7 +53,7 @@ class GigController extends Controller
 
     public function update($id): void
     {
-        $this->authorize('update', $this->gig);
+        $this->gig->policy('update');
 
         $item = $this->item->where('id', $id)->fetchOne();
         $gig = $this->gig->where('id', $item->table_id)->fetchOne();
@@ -75,7 +75,7 @@ class GigController extends Controller
 
     public function delete($id): void
     {
-        $this->authorize('delete', $this->gig);
+        $this->gig->policy('delete');
 
         $item = $this->item->where('id', $id)->fetchOne();
 

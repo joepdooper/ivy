@@ -33,7 +33,7 @@ class ArticleController extends Controller
 
     public function insert($id): void
     {
-        $this->authorize('create', $this->article);
+        $this->article->policy('create');
 
         $this->item->table_id = $this->article->populate([
             'title' => 'Title',
@@ -53,7 +53,7 @@ class ArticleController extends Controller
 
     public function update($id): void
     {
-        $this->authorize('update', $this->article);
+        $this->article->policy('update');
 
         $item = $this->item->where('id', $id)->fetchOne();
         $article = $this->article->where('id', $item->table_id)->fetchOne();
@@ -94,7 +94,7 @@ class ArticleController extends Controller
 
     public function delete($id): void
     {
-        $this->authorize('delete', $this->article);
+        $this->article->policy('delete');
 
         $item = $this->item->where('id', $id)->fetchOne();
         $article = $this->article->where('id', $item->table_id)->fetchOne();

@@ -30,5 +30,4 @@ class Code extends Model
         }
         return $array;
     }
-
 }

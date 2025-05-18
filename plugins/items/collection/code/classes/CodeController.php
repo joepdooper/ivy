@@ -29,7 +29,7 @@ class CodeController extends Controller
 
     public function insert($id): void
     {
-        $this->authorize('create', $this->code);
+        $this->code->policy('create');
 
         $this->item->table_id = $this->code->populate([
             'code' => 'Insert code…',
@@ -47,7 +47,7 @@ class CodeController extends Controller
 
     public function update($id): void
     {
-        $this->authorize('update', $this->code);
+        $this->code->policy('update');
 
         $item = $this->item->where('id', $id)->fetchOne();
 
@@ -66,7 +66,7 @@ class CodeController extends Controller
 
     public function delete($id): void
     {
-        $this->authorize('delete', $this->code);
+        $this->code->policy('delete');
 
         $item = $this->item->where('id', $id)->fetchOne();
         $this->code->where('id', $item->table_id)->delete();

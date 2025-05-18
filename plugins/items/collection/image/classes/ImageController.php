@@ -31,7 +31,7 @@ class ImageController extends Controller
 
     public function insert($id): void
     {
-        $this->authorize('create', $this->image);
+        $this->image->policy('create');
 
         $this->item->table_id = $this->image->populate([
             'file' => ''
@@ -48,7 +48,7 @@ class ImageController extends Controller
 
     public function update($id): void
     {
-        $this->authorize('update', $this->image);
+        $this->image->policy('update');
 
         $item = $this->item->where('id', $id)->fetchOne();
         $image = $this->image->where('id', $item->table_id)->fetchOne();
@@ -72,7 +72,7 @@ class ImageController extends Controller
 
     public function delete($id): void
     {
-        $this->authorize('delete', $this->image);
+        $this->image->policy('delete');
 
         $item = $this->item->where('id', $id)->fetchOne();
 

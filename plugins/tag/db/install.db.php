@@ -1,12 +1,12 @@
 <?php
 
-use Ivy\App;
+use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
 use Delight\Db\Throwable\Exception;
 
 if (User::canEditAsSuperAdmin()) {
     try {
-        App::db()->exec("
+        DatabaseManager::connection()->exec("
             CREATE TABLE `tag` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `value` VARCHAR(255) NOT NULL,

@@ -14,9 +14,15 @@ class ItemController extends Controller
     protected Item $item;
     protected ?string $slug = null;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->item = new Item;
+    }
+
     public function post(): void
     {
-        $this->authorize('post', Item::class);
+        $this->item->policy('post');
 
         $itemTemplate = (new ItemTemplate)->where('id', $this->request->get('item_template_id'))->fetchOne();
 
@@ -25,7 +31,7 @@ class ItemController extends Controller
 
     public function index(): void
     {
-        $this->authorize('index', Item::class);
+        $this->item->policy('index');
 
         $items = (new Item)->where('parent_id')->sortBy(['sort', 'date', 'id'])->fetchAll();
         LatteView::set(Path::get('PLUGIN_PATH') . 'items/template/index.latte', ['items' => $items]);
@@ -62,7 +68,7 @@ class ItemController extends Controller
 
     public function settings(): void
     {
-        $this->authorize('update', Item::class);
+        $this->item->policy('update');
 
         $plugin = (new Plugin)->where('url', 'items')->fetchOne();
         $settings = (new Setting)->where('plugin_id', $plugin->id)->fetchAll();
@@ -71,7 +77,7 @@ class ItemController extends Controller
 
     public function sort(): void
     {
-        $this->authorize('update', Item::class);
+        $this->item->policy('update');
 
         $_POST = json_decode(file_get_contents("php://input"), true);
 

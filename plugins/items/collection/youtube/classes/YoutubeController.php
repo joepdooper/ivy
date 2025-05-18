@@ -29,7 +29,7 @@ class YoutubeController extends Controller
 
     public function insert($id): void
     {
-        $this->authorize('create', $this->youtube);
+        $this->youtube->policy('create');
 
         $this->item->table_id = $this->youtube->populate([
             'youtube_video_id' => 'aKydtOXW8mI'
@@ -46,7 +46,7 @@ class YoutubeController extends Controller
 
     public function update($id): void
     {
-        $this->authorize('update', $this->youtube);
+        $this->youtube->policy('update');
 
         $item = $this->item->where('id', $id)->fetchOne();
 
@@ -64,7 +64,7 @@ class YoutubeController extends Controller
 
     public function delete($id): void
     {
-        $this->authorize('delete', $this->youtube);
+        $this->youtube->policy('delete');
 
         $item = $this->item->where('id', $id)->fetchOne();
 
