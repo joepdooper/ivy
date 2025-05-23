@@ -23,11 +23,12 @@ RouterManager::instance()->mount('/admin', function () {
     RouterManager::instance()->get('/user', '\Ivy\Controller\UserController@index');
     // -- PLUGIN index
     RouterManager::instance()->post('/plugin/post', '\Ivy\Controller\PluginController@post');
+    RouterManager::instance()->get('/plugin/([a-z0-9_-]+)/settings', '\Ivy\Controller\SettingController@index');
     RouterManager::instance()->get('/plugin(/[a-z0-9_-]+)?(/collection)?', '\Ivy\Controller\PluginController@index');
     // -- TEMPLATE index
     RouterManager::instance()->post('/template/post', '\Ivy\Controller\TemplateController@post');
     RouterManager::instance()->get('/template', '\Ivy\Controller\TemplateController@index');
     // -- SETTING index
     RouterManager::instance()->post('/setting/post', '\Ivy\Controller\SettingController@post');
-    RouterManager::instance()->get('/setting', '\Ivy\Controller\SettingController@index');;
+    RouterManager::instance()->get('/setting', '\Ivy\Controller\SettingController@index');
 });
