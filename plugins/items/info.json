@@ -2,10 +2,10 @@
   "name": "Items",
   "version": "1.0.0",
   "collection": true,
+  "settings": true,
   "description": "Add items to homepage",
   "type": "collection",
   "actions": [
-    {"text": "items.settings", "icon": "feather/settings.svg", "url": "settings"}
   ],
   "database": {
     "install": "db/install.db.php",

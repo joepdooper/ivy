@@ -4,8 +4,6 @@ namespace Items;
 
 use Ivy\Abstract\Controller;
 use Ivy\Manager\DatabaseManager;
-use Ivy\Model\Plugin;
-use Ivy\Model\Setting;
 use Ivy\Path;
 use Ivy\View\LatteView;
 
@@ -64,15 +62,6 @@ class ItemController extends Controller
                 }
             }
         }
-    }
-
-    public function settings(): void
-    {
-        $this->item->policy('update');
-
-        $plugin = (new Plugin)->where('url', 'items')->fetchOne();
-        $settings = (new Setting)->where('plugin_id', $plugin->id)->fetchAll();
-        LatteView::set('admin/setting.latte', ['settings' => $settings]);
     }
 
     public function sort(): void

@@ -15,7 +15,7 @@ class ItemHelper
         }
 
         return (new Item)
-            ->whereRaw('`item_template`.`table` = :table', ['table' => $segments[0]])
+            ->where('item_template.table', $segments[0])
             ->where('slug', $segments[1])
             ->fetchOne()?->getId();
     }
