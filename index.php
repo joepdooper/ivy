@@ -79,7 +79,7 @@ if (Setting::getStash()['minify_js']->bool) {
 ?>
 
 <?php foreach (AssetManager::getESM() as $esmfile): ?>
-    <script type="module" src="<?= Path::get('BASE_PATH') . TemplateManager::file($esmfile); ?>"></script>
+    <script type="module" src="<?= Path::get('BASE_PATH') . $esmfile; ?>"></script>
 <?php endforeach; ?>
 
 <?php if (Setting::getStash()['minify_js']->bool): ?>

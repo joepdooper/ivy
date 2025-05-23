@@ -1,8 +1,8 @@
-<div class="author flex items-center user-{$author->user_id}">
+<div class="flex items-center user-{$author->user_id}">
     {if $author->user_image}
         <div class="avatar">
             <div class="w-8 rounded-full">
-                <img src="{= Path::get('BASE_PATH') . 'media/item/thumb/' . $author->user_image}"
+                <img src="{path('BASE_PATH') . path('MEDIA_PATH') . 'profile/' . $author->user_image}"
                      alt="{$author->username}"/>
             </div>
         </div>
@@ -15,6 +15,8 @@
     {/if}
     <p class="text-xs ml-2">
         <strong>{$author->username}</strong>
-        {text('misc.on')} {date('d.m.y', strtotime($author->date))}
+        <span n:if="isset($date)">
+            {text('misc.on')} {date('d.m.y', strtotime($date))}
+        </span>
     </p>
 </div>

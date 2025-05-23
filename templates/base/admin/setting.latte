@@ -46,6 +46,8 @@
                                     <td class="text-right">
                                         <input type="hidden" name="setting[{$key}][id]"
                                                value="{$setting->id}">
+                                        <input n:if="$setting->plugin_id" type="hidden" name="setting[{$key}][plugin_id]"
+                                               value="{$setting->plugin_id}">
                                         <div class="join">
                                             {button type:delete, name:"setting[$key][delete]", value:"setting_" . $setting->id, id:$setting->id}
                                         </div>
@@ -53,10 +55,10 @@
                                 </tr>
                             {/if}
                         {/foreach}
-                        <tr>
-                            <td colspan="6">
-                                <label>
-                                    <input class="input input-bordered w-full" type="text" name="setting[][name]" placeholder="{text('setting.add_name')}">
+                            <tr>
+                                <td colspan="6">
+                                    <label>
+                                        <input class="input input-bordered w-full" type="text" name="setting[][name]" placeholder="{text('setting.add_name')}">
                                     </label>
                                 </td>
                             </tr>
