@@ -1,4 +1,3 @@
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -8,12 +7,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-# Export von Tabelle plugin
+# Export von Tabelle plugins
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `plugin`;
+DROP TABLE IF EXISTS `plugins`;
 
-CREATE TABLE `plugin` (
+CREATE TABLE `plugins` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) DEFAULT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
@@ -23,7 +22,6 @@ CREATE TABLE `plugin` (
   `description` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   `active` tinyint(1) DEFAULT '0',
-  `settings` tinyint(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -47,72 +45,73 @@ LOCK TABLES `profiles` WRITE;
 
 INSERT INTO `profiles` (`id`, `user_id`, `user_image`, `last_activity`)
 VALUES
-	(1,1,NULL,'2024-01-01 12:00:00');
+	(1,1,NULL,'2025-01-01 12:00:00');
 
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Export von Tabelle setting
+# Export von Tabelle settings
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `setting`;
+DROP TABLE IF EXISTS `settings`;
 
-CREATE TABLE `setting` (
+CREATE TABLE `settings` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `bool` tinyint(1) NOT NULL DEFAULT '0',
   `value` varchar(255) DEFAULT NULL,
   `info` varchar(255) DEFAULT NULL,
   `token` varchar(255) DEFAULT NULL,
+  `plugin_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `setting` WRITE;
-/*!40000 ALTER TABLE `setting` DISABLE KEYS */;
+LOCK TABLES `settings` WRITE;
+/*!40000 ALTER TABLE `settings` DISABLE KEYS */;
 
-INSERT INTO `setting` (`id`, `name`, `bool`, `value`, `info`, `token`)
+INSERT INTO `settings` (`id`, `name`, `bool`, `value`, `info`, `token`, `plugin_id`)
 VALUES
-	(1,'Private',0,'','Website only accessible on login',NULL),
-	(2,'Minify CSS',0,'','CSS template files as a single minified file',NULL),
-	(3,'Minify JS',0,'','JS template files as a single minified file',NULL),
-	(4,'Registration role',0,'EDITOR','Set automatic role after user registration',NULL),
-	(5,'Name',1,'dooper.io','Meta name',NULL),
-	(6,'Title',1,'ivy','Meta title',NULL),
-	(7,'Description',1,'Yet another sleek simple fast CMS with an effortless template and plugin environment','Meta description',NULL),
-	(8,'Keywords',1,'fast, CMS, design, build, simple, slim, clean, easy, quick, cms-framework, content-management-system, google-page-speed, easy-to-deploy ','Meta keywords',NULL),
-	(9,'Url',1,'http://localhost/ivy/','Meta url',NULL),
-	(10,'Language',1,'en_GB','Meta language',NULL),
-	(11,'Author',1,'Joep Dooper','Meta author',NULL),
-	(12,'Created',1,'2024-01-01','Meta created',NULL),
-	(13,'Available',1,'2024-01-01','Meta available',NULL),
-	(14,'Updated',1,'2024-01-01','Meta updated',NULL);
+	(1,'Private',0,'','Set website to private',NULL,NULL),
+	(2,'Minify CSS',0,'','CSS minifier',NULL,NULL),
+	(3,'Minify JS',0,'','JS minifier',NULL,NULL),
+	(4,'Registration role',0,'EDITOR','After registration set user role',NULL,NULL),
+	(5,'Name',1,'localhost','Website name',NULL,NULL),
+	(6,'Title',1,'ivy','Meta title',NULL,NULL),
+	(7,'Description',1,'Yet another sleek simple fast CMS with an effortless template and plugin environment','Meta description',NULL,NULL),
+	(8,'Keywords',1,'fast, CMS, design, build, simple, slim, clean, easy, quick, cms-framework, content-management-system, google-page-speed, easy-to-deploy ','Meta keywords',NULL,NULL),
+	(9,'Url',1,'http://localhost:8080/ivy/','Meta url',NULL,NULL),
+	(10,'Language',1,'en_GB','Meta language',NULL,NULL),
+	(11,'Author',1,'Joep Dooper','Meta author',NULL,NULL),
+	(12,'Created',1,'2025-01-01','Meta created date',NULL,NULL),
+	(13,'Available',1,'2025-01-01','Meta available date',NULL,NULL),
+	(14,'Updated',1,'2025-01-01','Meta updated date',NULL,NULL);
 
-/*!40000 ALTER TABLE `setting` ENABLE KEYS */;
+/*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Export von Tabelle template
+# Export von Tabelle templates
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `template`;
+DROP TABLE IF EXISTS `templates`;
 
-CREATE TABLE `template` (
+CREATE TABLE `templates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `template` WRITE;
-/*!40000 ALTER TABLE `template` DISABLE KEYS */;
+LOCK TABLES `templates` WRITE;
+/*!40000 ALTER TABLE `templates` DISABLE KEYS */;
 
-INSERT INTO `template` (`id`, `type`, `value`)
+INSERT INTO `templates` (`id`, `type`, `value`)
 VALUES
 	(1,'base','base'),
 	(2,'sub','DEMO');
 
-/*!40000 ALTER TABLE `template` ENABLE KEYS */;
+/*!40000 ALTER TABLE `templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
