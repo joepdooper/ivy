@@ -10,7 +10,7 @@
                 <label class="w-full">
                     <select name="item_template_id" class="select select-bordered w-full join-item">
                         <option disabled selected>Select type of item to add</option>
-                        {foreach (new \Items\ItemTemplate)->select(['id', 'name', 'plugin.active'])->addJoin('plugin', 'plugin_url', '=', 'url')->fetchAll() as $item_template}
+                        {foreach (new \Items\ItemTemplate)->select(['id', 'name', 'plugins.active'])->addJoin('plugins', 'plugin_url', '=', 'url')->fetchAll() as $item_template}
                             {if $item_template->active}
                                 <option value="{$item_template->id}">{$item_template->name}</option>
                             {/if}

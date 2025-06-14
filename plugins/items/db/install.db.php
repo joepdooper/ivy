@@ -1,7 +1,6 @@
 <?php
 
 use Ivy\Manager\DatabaseManager;
-use Ivy\Model\Setting;
 use Ivy\Model\User;
 
 if(User::canEditAsSuperAdmin()) {
@@ -41,11 +40,5 @@ if(User::canEditAsSuperAdmin()) {
     } catch (Exception $e) {
         error_log("Failed to create table `item_template`: " . $e->getMessage());
     }
-
-    $settings = new Setting();
-    $settings->populate([
-        'name' => 'Sort items',
-        'info' => 'Sort items by drag and drop'
-    ])->update();
 }
 

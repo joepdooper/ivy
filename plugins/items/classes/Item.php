@@ -52,11 +52,11 @@ class Item extends Model
         `item_template`.`route`,
         `item_template`.`table`,
         `item_template`.`namespace`,
-        `plugin`.`url`,
-        `plugin`.`active` FROM `items`
+        `plugins`.`url`,
+        `plugins`.`active` FROM `items`
         INNER JOIN `item_template` ON `item_template`.`id` = `items`.`template_id`
-        INNER JOIN `plugin` ON `plugin`.`url` = `item_template`.`plugin_url`
-        WHERE `plugin`.`active` != '0'";
+        INNER JOIN `plugins` ON `plugins`.`url` = `item_template`.`plugin_url`
+        WHERE `plugins`.`active` != '0'";
     }
 
     // -- insert

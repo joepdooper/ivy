@@ -1,7 +1,6 @@
 {
   "name": "Image",
   "version": "1.0.0",
-  "settings": true,
   "description": "Image item",
   "type": "item",
   "database": {

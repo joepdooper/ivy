@@ -11,6 +11,12 @@
     "install": "db/install.db.php",
     "uninstall": "db/uninstall.db.php"
   },
+  "settingsNew": [
+    {
+      "name": "Sort items",
+      "info": "Sort items by drag and drop"
+    }
+  ],
   "dependencies": [
     "Tag"
   ]

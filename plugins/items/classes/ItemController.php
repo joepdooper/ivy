@@ -22,9 +22,13 @@ class ItemController extends Controller
     {
         $this->item->policy('post');
 
-        $itemTemplate = (new ItemTemplate)->where('id', $this->request->get('item_template_id'))->fetchOne();
-
-        $this->redirect($itemTemplate->route . '/insert/' . $this->request->get('item_template_id'));
+        if(!$this->request->get('item_template_id')) {
+            $this->flashBag->add('warning', 'No template was selected');
+            $this->redirect(ItemHelper::getRedirect($this->request));
+        } else {
+            $itemTemplate = (new ItemTemplate)->where('id', $this->request->get('item_template_id'))->fetchOne();
+            $this->redirect($itemTemplate->route . '/insert/' . $this->request->get('item_template_id'));
+        }
     }
 
     public function index(): void
