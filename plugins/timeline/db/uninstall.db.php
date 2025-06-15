@@ -3,13 +3,14 @@
 use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
 
+
 if(User::canEditAsSuperAdmin()) {
     try {
         DatabaseManager::connection()->delete(
             'item_template',
             [
                 // where
-                'plugin_url' => 'text'
+                'plugin_url' => 'timeline'
             ]
         );
     } catch (Exception $e) {
@@ -19,7 +20,7 @@ if(User::canEditAsSuperAdmin()) {
     try {
         DatabaseManager::connection()->exec(
             "
-        DROP TABLE `text`;
+        DROP TABLE `timeline`;
         "
         );
     } catch (Exception $e) {

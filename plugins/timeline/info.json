@@ -1,0 +1,17 @@
+{
+  "name": "Timeline",
+  "version": "1.0.0",
+  "settings": true,
+  "description": "Create a timeline of items",
+  "type": "filter",
+  "actions": [
+  ],
+  "database": {
+    "install": "db/install.db.php",
+    "uninstall": "db/uninstall.db.php"
+  },
+  "dependencies": [
+    "Tag",
+    "Items"
+  ]
+}
