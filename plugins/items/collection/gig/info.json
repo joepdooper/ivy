@@ -1,7 +1,6 @@
 {
   "name": "Gig",
   "version": "1.0.0",
-  "settings": false,
   "description": "Gig item",
   "type": "item",
   "database": {

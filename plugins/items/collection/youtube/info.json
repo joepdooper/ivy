@@ -1,7 +1,6 @@
 {
   "name": "Youtube",
   "version": "1.0.0",
-  "settings": false,
   "description": "Youtube player",
   "type": "item",
   "database": {

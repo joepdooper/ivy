@@ -1,7 +1,6 @@
 {
   "name": "Code",
   "version": "1.0.0",
-  "settings": false,
   "description": "Code item",
   "type": "item",
   "database": {

@@ -1,7 +1,6 @@
 {
   "name": "Vimeo",
   "version": "1.0.0",
-  "settings": false,
   "description": "Vimeo SDK",
   "type": "item",
   "database": {

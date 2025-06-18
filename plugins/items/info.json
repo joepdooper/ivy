@@ -2,7 +2,6 @@
   "name": "Items",
   "version": "1.0.0",
   "collection": true,
-  "settings": true,
   "description": "Add items to homepage",
   "type": "collection",
   "actions": [
@@ -11,10 +10,14 @@
     "install": "db/install.db.php",
     "uninstall": "db/uninstall.db.php"
   },
-  "settingsNew": [
+  "settings": [
     {
-      "name": "Sort items",
+      "name": "Sort",
       "info": "Sort items by drag and drop"
+    },
+    {
+      "name": "Timeline",
+      "info": "Show items in a timeline"
     }
   ],
   "dependencies": [

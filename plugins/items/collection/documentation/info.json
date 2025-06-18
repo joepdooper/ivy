@@ -1,7 +1,6 @@
 {
   "name": "Documentation",
   "version": "1.0.0",
-  "settings": false,
   "description": "Documentation item",
   "type": "item",
   "database": {

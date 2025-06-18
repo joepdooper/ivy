@@ -1,7 +1,6 @@
 {
   "name": "Audio",
   "version": "1.0.0",
-  "settings": false,
   "description": "Audio item",
   "type": "item",
   "database": {

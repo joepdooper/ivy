@@ -1,11 +1,13 @@
 <div class="item item-article relative group" id="item-{$item->id}">
 
-    <a href="{path('BASE_PATH') . 'article/' . $item->slug}" class="card border border-base-300">
-        <figure>
-            {if $article->image}
-                {render(path('PLUGIN_PATH') . 'items/collection/image/template/input.TypeImage.latte', ['id' => $article->id, 'name' => 'image', 'file' => $article->image])}
-            {/if}
-        </figure>
+    <a href="{path('BASE_PATH') . 'article/' . $item->slug}" class="card {if enabled('timeline')}card-side{/if} border border-base-300">
+        {if !enabled('timeline')}
+            <figure>
+                {if $article->image}
+                    {render(path('PLUGIN_PATH') . 'items/collection/image/template/input.TypeImage.latte', ['id' => $article->id, 'name' => 'image', 'file' => $article->image])}
+                {/if}
+            </figure>
+        {/if}
         <div class="card-body">
             <div class="card-actions">
                 <div class="text-xs font-bold">{$tag->value}</div>
@@ -23,6 +25,13 @@
             'date' => $item->date
             ])}
         </div>
+        {if enabled('timeline')}
+        <figure>
+            {if $article->image}
+                {render(path('PLUGIN_PATH') . 'items/collection/image/template/input.TypeImage.latte', ['id' => $article->id, 'name' => 'image', 'file' => $article->image])}
+            {/if}
+        </figure>
+        {/if}
     </a>
 
     {if auth()->isLoggedIn()}
