@@ -1,7 +1,6 @@
 {
   "name": "Items",
   "version": "1.0.0",
-  "collection": true,
   "description": "Add items to homepage",
   "type": "collection",
   "actions": [
@@ -19,6 +18,17 @@
       "name": "Timeline",
       "info": "Show items in a timeline"
     }
+  ],
+  "collection": [
+    "Article",
+    "Audio",
+    "code",
+    "Documentation",
+    "Gig",
+    "Image",
+    "Text",
+    "Vimeo",
+    "Youtube"
   ],
   "dependencies": [
     "Tag"
