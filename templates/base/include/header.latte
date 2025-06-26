@@ -54,11 +54,11 @@
                                     {text('menu.users')}
                                 </a>
                             </li>
-                            {if isPluginActive('Tag')}
+                            {if isPluginActive('Tags')}
                                 <li>
-                                    <a href="{path('BASE_PATH') . 'plugin/tag/manage'}">
+                                    <a href="{path('BASE_PATH') . 'admin/plugin/tags/manage'}">
                                         {icon("feather/tag.svg")|noescape}
-                                        {text('tag.tag.tags')}
+                                        {text('tags.tags.tags')}
                                     </a>
                                 </li>
                             {/if}

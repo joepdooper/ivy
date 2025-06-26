@@ -40,13 +40,13 @@
                                                 href="{path('BASE_PATH') . 'admin' . DIRECTORY_SEPARATOR . 'plugin' . DIRECTORY_SEPARATOR . $plugin->url . DIRECTORY_SEPARATOR . $action['url']}">
                                                 {icon($action['icon'])|noescape}
                                         </a>
-                                        <a n:if="$plugin->active && $plugin->getInfo()->getCollection()"
+                                        <a n:if="$plugin->active && $plugin->getInfo()->hasCollection()"
                                                 class="btn btn-neutral btn-square join-item"
                                                 title="{text('plugin.collection')}"
                                                 href="{path('BASE_PATH') . 'admin' . DIRECTORY_SEPARATOR . 'plugin' . DIRECTORY_SEPARATOR . $plugin->url . DIRECTORY_SEPARATOR . 'collection'}">
                                             {icon("feather/package.svg")|noescape}
                                         </a>
-                                        <a n:if="$plugin->active && $plugin->getInfo()->getSettings()"
+                                        <a n:if="$plugin->active && $plugin->getInfo()->hasSettings()"
                                                 class="btn btn-neutral btn-square join-item"
                                                 title="{text('setting.settings')}"
                                                 href="{path('BASE_PATH') . 'admin' . DIRECTORY_SEPARATOR . 'plugin' . DIRECTORY_SEPARATOR . $plugin->url . DIRECTORY_SEPARATOR . 'settings'}">
