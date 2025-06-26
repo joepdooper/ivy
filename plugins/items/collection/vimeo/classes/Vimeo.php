@@ -6,7 +6,7 @@ use Ivy\Abstract\Model;
 
 class Vimeo extends Model
 {
-    protected string $table = "vimeo";
+    protected string $table = "vimeos";
     protected array $columns = [
         'vimeo_video_id',
         'token'

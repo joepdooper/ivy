@@ -5,7 +5,7 @@ use Ivy\Manager\DatabaseManager;
 try {
     DatabaseManager::connection()->exec(
         "
-    CREATE TABLE `vimeo` (
+    CREATE TABLE `vimeos` (
       `id` int(11) NOT NULL AUTO_INCREMENT,
       `vimeo_video_id` varchar(255) DEFAULT NULL,
       `token` int(11) DEFAULT NULL,
@@ -18,7 +18,7 @@ try {
 
 try {
     DatabaseManager::connection()->insert(
-        'item_template',
+        'item_templates',
         [
             // set
             'name' => 'Vimeo',

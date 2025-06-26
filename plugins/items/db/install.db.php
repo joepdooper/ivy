@@ -27,7 +27,7 @@ if(User::canEditAsSuperAdmin()) {
 
     try {
         DatabaseManager::connection()->exec(
-            'CREATE TABLE `item_template` (
+            'CREATE TABLE `item_templates` (
 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `table` varchar(255) DEFAULT NULL,
@@ -38,7 +38,7 @@ if(User::canEditAsSuperAdmin()) {
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;'
         );
     } catch (Exception $e) {
-        error_log("Failed to create table `item_template`: " . $e->getMessage());
+        error_log("Failed to create table `item_templates`: " . $e->getMessage());
     }
 }
 

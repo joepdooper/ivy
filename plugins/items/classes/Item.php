@@ -47,15 +47,15 @@ class Item extends Model
 
         $this->query = "SELECT
         `items`.*,
-        `item_template`.`name`,
-        `item_template`.`plugin_url`,
-        `item_template`.`route`,
-        `item_template`.`table`,
-        `item_template`.`namespace`,
+        `item_templates`.`name`,
+        `item_templates`.`plugin_url`,
+        `item_templates`.`route`,
+        `item_templates`.`table`,
+        `item_templates`.`namespace`,
         `plugins`.`url`,
         `plugins`.`active` FROM `items`
-        INNER JOIN `item_template` ON `item_template`.`id` = `items`.`template_id`
-        INNER JOIN `plugins` ON `plugins`.`url` = `item_template`.`plugin_url`
+        INNER JOIN `item_templates` ON `item_templates`.`id` = `items`.`template_id`
+        INNER JOIN `plugins` ON `plugins`.`url` = `item_templates`.`plugin_url`
         WHERE `plugins`.`active` != '0'";
     }
 

@@ -4,7 +4,7 @@ use Ivy\Manager\DatabaseManager;
 
 DatabaseManager::connection()->exec(
     "
-  CREATE TABLE `gig` (
+  CREATE TABLE `gigs` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `datetime` datetime DEFAULT CURRENT_TIMESTAMP,
     `venue` varchar(255) DEFAULT NULL,
@@ -22,7 +22,7 @@ DatabaseManager::connection()->exec(
 
 try {
     DatabaseManager::connection()->insert(
-        'item_template',
+        'item_templates',
         [
             // set
             'name' => 'Gig',
@@ -37,7 +37,7 @@ try {
 
 try {
     DatabaseManager::connection()->insert(
-        'tag',
+        'tags',
         [
             // set
             'value' => 'Gig'

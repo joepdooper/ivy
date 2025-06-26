@@ -7,7 +7,7 @@ use HTMLPurifier;
 
 class Code extends Model
 {
-    protected string $table = "code";
+    protected string $table = "codes";
     protected array $columns = [
         'code',
         'language',

@@ -6,7 +6,7 @@ use Ivy\Abstract\Model;
 
 class Article extends Model
 {
-    protected string $table = "article";
+    protected string $table = "articles";
     protected array $columns = [
         'title',
         'subtitle',

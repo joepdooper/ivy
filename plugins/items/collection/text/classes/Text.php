@@ -8,7 +8,7 @@ use Ivy\Abstract\Model;
 
 class Text extends Model
 {
-    protected string $table = "text";
+    protected string $table = "texts";
     protected array $columns = [
         'text',
         'token'

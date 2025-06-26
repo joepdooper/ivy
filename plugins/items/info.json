@@ -22,7 +22,7 @@
   "collection": [
     "Article",
     "Audio",
-    "code",
+    "Code",
     "Documentation",
     "Gig",
     "Image",
@@ -31,6 +31,6 @@
     "Youtube"
   ],
   "dependencies": [
-    "Tag"
+    "Tags"
   ]
 }

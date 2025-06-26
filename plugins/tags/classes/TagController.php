@@ -1,6 +1,6 @@
 <?php
 
-namespace Tag;
+namespace Tags;
 
 use GUMP;
 use Ivy\Abstract\Controller;
@@ -49,6 +49,6 @@ class TagController extends Controller
         $this->tag->policy('index');
 
         $tags = $this->tag->fetchAll();
-        LatteView::set(Path::get('PLUGIN_PATH') . 'tag/template/manage.latte', ['tags' => $tags]);
+        LatteView::set(Path::get('PLUGIN_PATH') . 'tags/template/manage.latte', ['tags' => $tags]);
     }
 }

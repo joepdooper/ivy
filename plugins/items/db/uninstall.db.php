@@ -14,9 +14,9 @@ if(User::canEditAsSuperAdmin()) {
 
     try {
         DatabaseManager::connection()->exec(
-            'DROP TABLE `item_template`;'
+            'DROP TABLE `item_templates`;'
         );
     } catch (Exception $e) {
-        error_log("Failed to drop table `item_template`: " . $e->getMessage());
+        error_log("Failed to drop table `item_templates`: " . $e->getMessage());
     }
 }

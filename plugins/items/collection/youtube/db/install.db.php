@@ -4,7 +4,7 @@ use Ivy\Manager\DatabaseManager;
 
 DatabaseManager::connection()->exec(
     "
-CREATE TABLE `youtube` (
+CREATE TABLE `youtubes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `youtube_video_id` varchar(255) DEFAULT NULL,
   `token` int(11) DEFAULT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE `youtube` (
 
 try {
     DatabaseManager::connection()->insert(
-        'item_template',
+        'item_templates',
         [
             // set
             'name' => 'Youtube',

@@ -4,7 +4,7 @@ use Ivy\Manager\DatabaseManager;
 
 try {
     DatabaseManager::connection()->delete(
-        'item_template',
+        'item_templates',
         [
             // where
             'plugin_url' => 'Code'
@@ -15,6 +15,6 @@ try {
 
 DatabaseManager::connection()->exec(
     "
-    DROP TABLE `code`;
+    DROP TABLE `codes`;
     "
 );

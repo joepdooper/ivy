@@ -6,7 +6,7 @@ use Ivy\Model\User;
 if(User::canEditAsSuperAdmin()) {
     try {
         DatabaseManager::connection()->delete(
-            'item_template',
+            'item_templates',
             [
                 // where
                 'plugin_url' => 'text'
@@ -19,7 +19,7 @@ if(User::canEditAsSuperAdmin()) {
     try {
         DatabaseManager::connection()->exec(
             "
-        DROP TABLE `text`;
+        DROP TABLE `texts`;
         "
         );
     } catch (Exception $e) {

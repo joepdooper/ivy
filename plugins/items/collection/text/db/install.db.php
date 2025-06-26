@@ -7,7 +7,7 @@ if(User::canEditAsSuperAdmin()) {
 
     DatabaseManager::connection()->exec(
         "
-CREATE TABLE `text` (
+CREATE TABLE `texts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `text` TEXT NOT NULL,
   `token` int(11) DEFAULT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE `text` (
 
     try {
         DatabaseManager::connection()->insert(
-            'item_template',
+            'item_templates',
             [
                 // set
                 'name' => 'Text',

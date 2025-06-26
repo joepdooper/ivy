@@ -1,12 +1,12 @@
 <?php
 
-namespace Tag;
+namespace Tags;
 
 use Ivy\Abstract\Model;
 
 class Tag extends Model
 {
-    protected string $table = 'tag';
+    protected string $table = 'tags';
     protected string $path = 'plugin/tag';
     protected array $columns = [
         'value'

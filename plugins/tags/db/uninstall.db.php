@@ -7,7 +7,7 @@ if(User::canEditAsSuperAdmin()) {
     try {
         DatabaseManager::connection()->exec(
             "
-        DROP TABLE `tag`;
+        DROP TABLE `tags`;
         "
         );
     } catch (\Delight\Db\Throwable\Exception $e) {

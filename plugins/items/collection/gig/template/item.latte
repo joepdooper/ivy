@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="text-xs font-bold">
             {if $gig->subject}
-                {render(path('PLUGIN_PATH') . 'tag/template/tag.latte', [
+                {render(path('PLUGIN_PATH') . 'tags/template/tag.latte', [
                 'tag' => $tag,
                 'item' => $item
                 ])}

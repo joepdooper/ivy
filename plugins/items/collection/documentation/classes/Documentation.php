@@ -7,7 +7,7 @@ use Ivy\Abstract\Model;
 
 class Documentation extends Model
 {
-    protected string $table = "documentation";
+    protected string $table = "documentations";
     protected array $columns = [
         'title',
         'subtitle',

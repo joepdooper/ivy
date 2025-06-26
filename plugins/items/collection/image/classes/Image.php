@@ -6,7 +6,7 @@ use Ivy\Abstract\Model;
 
 class Image extends Model
 {
-    protected string $table = 'image';
+    protected string $table = 'images';
     protected array $columns = [
         'file',
         'token'

@@ -7,7 +7,7 @@ use Ivy\Path;
 
 class Audio extends Model
 {
-    protected string $table = 'audio';
+    protected string $table = 'audios';
     protected array $columns = [
         'file',
         'token'

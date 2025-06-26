@@ -6,7 +6,7 @@ use Ivy\Abstract\Model;
 
 class Gig extends Model
 {
-    protected string $table = "gig";
+    protected string $table = "gigs";
     protected array $columns = [
         'datetime',
         'venue',

@@ -6,7 +6,7 @@ use Ivy\Abstract\Model;
 
 class ItemTemplate extends Model
 {
-    protected string $table = 'item_template';
+    protected string $table = 'item_templates';
     protected array $columns = [
         'name',
         'plugin_url',

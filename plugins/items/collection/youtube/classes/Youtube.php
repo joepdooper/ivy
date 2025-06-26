@@ -6,7 +6,7 @@ use Ivy\Abstract\Model;
 
 class Youtube extends Model
 {
-    protected string $table = "youtube";
+    protected string $table = "youtubes";
     protected array $columns = [
         'youtube_video_id',
         'token'

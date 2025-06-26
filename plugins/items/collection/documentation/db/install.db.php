@@ -4,7 +4,7 @@ use Ivy\Manager\DatabaseManager;
 
 DatabaseManager::connection()->exec(
     "
-CREATE TABLE `documentation` (
+CREATE TABLE `documentations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `subtitle` varchar(255) DEFAULT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE `documentation` (
 
 try {
     DatabaseManager::connection()->insert(
-        'item_template',
+        'item_templates',
         [
             // set
             'name' => 'Documentation',
@@ -33,7 +33,7 @@ try {
 
 try {
     DatabaseManager::connection()->insert(
-        'tag',
+        'tags',
         [
             // set
             'value' => 'Documentation'

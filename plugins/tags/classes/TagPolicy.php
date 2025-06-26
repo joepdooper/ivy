@@ -1,6 +1,6 @@
 <?php
 
-namespace Tag;
+namespace Tags;
 
 use Ivy\Model\User;
 

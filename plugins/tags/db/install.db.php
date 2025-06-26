@@ -7,7 +7,7 @@ use Delight\Db\Throwable\Exception;
 if (User::canEditAsSuperAdmin()) {
     try {
         DatabaseManager::connection()->exec("
-            CREATE TABLE `tag` (
+            CREATE TABLE `tags` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `value` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`)

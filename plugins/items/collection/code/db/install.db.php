@@ -3,7 +3,7 @@
 use Ivy\Manager\DatabaseManager;
 
 DatabaseManager::connection()->exec('
-CREATE TABLE `code` (
+CREATE TABLE `codes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` TEXT NOT NULL,
   `language` varchar(255) DEFAULT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE `code` (
 
 try {
     DatabaseManager::connection()->insert(
-        'item_template',
+        'item_templates',
         [
             // set
             'name' => 'Code',
