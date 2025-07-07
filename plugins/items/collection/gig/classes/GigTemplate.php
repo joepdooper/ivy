@@ -4,8 +4,8 @@ namespace Items\Collection\Gig;
 
 use Ivy\Model\Profile;
 use Ivy\Path;
-use Ivy\View\LatteView;
-use Tag\Tag;
+use Ivy\View\View;
+use Tags\Tag;
 
 class GigTemplate
 {
@@ -17,7 +17,7 @@ class GigTemplate
             return;
         }
 
-        LatteView::render(Path::get('PLUGIN_PATH') . $item->plugin_url . '/template/item.latte', [
+        View::render(Path::get('PLUGIN_PATH') . $item->plugin_url . '/template/item.latte', [
             'item' => $item,
             'gig' => $gig,
             'tag' => (new Tag)->where('id', $gig->subject)->fetchOne(),

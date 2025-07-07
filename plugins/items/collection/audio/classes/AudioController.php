@@ -19,15 +19,6 @@ class AudioController extends Controller
         $this->item = new Item();
     }
 
-    public function save($id): void
-    {
-        if($this->request->get('delete') !== null){
-            $this->delete($id);
-        } else {
-            $this->update($id);
-        }
-    }
-
     public function insert($id): void
     {
         $this->audio->policy('create');

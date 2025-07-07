@@ -2,22 +2,24 @@
 
 namespace Items\Collection\Article;
 
+use Items\ItemTrait;
 use Ivy\Abstract\Model;
+use Tags\TagTrait;
 
 class Article extends Model
 {
+    use ItemTrait, TagTrait;
+
     protected string $table = "articles";
     protected array $columns = [
         'title',
         'subtitle',
-        'subject',
         'image',
         'token'
     ];
 
     protected string $title;
     protected ?string $subtitle;
-    protected int $subject;
     protected ?string $image;
     protected ?string $token;
 }

@@ -10,7 +10,11 @@
         {/if}
         <div class="card-body">
             <div class="card-actions">
-                <div class="text-xs font-bold">{$tag->value}</div>
+                {foreach $article->fetchAllEntityTags() as $tag}
+                    <div class="text-xs font-bold">
+                        {$tag->value}
+                    </div>
+                {/foreach}
             </div>
             <div>
                 <h2 class="text-3xl font-bold leading-none">

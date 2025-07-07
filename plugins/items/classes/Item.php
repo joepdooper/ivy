@@ -4,9 +4,12 @@ namespace Items;
 
 use Ivy\Abstract\Model;
 use Ivy\Manager\DatabaseManager;
+use Tags\TagTrait;
 
 class Item extends Model
 {
+    use TagTrait;
+
     protected string $table = 'items';
     protected array $columns = [
         'user_id',

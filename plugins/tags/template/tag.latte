@@ -1,7 +1,7 @@
 {if auth()->isLoggedIn()}
     <label>
         <select class="select select-bordered text-xs font-bold w-full" name="tag">
-            {foreach (new \Tag\Tag)->fetchAll() as $option}
+            {foreach (new \Tags\Tag)->fetchAll() as $option}
                 <option value="{$option->id}"
                         {if $tag->id && $tag->id === $option->id}selected="selected"{/if}>
                     {$option->value}

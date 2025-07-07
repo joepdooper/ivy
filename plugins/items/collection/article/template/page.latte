@@ -7,12 +7,12 @@
             {define article}
                 <div class="space-y-4 mb-4">
                     <div class="text-xs font-bold">
-                    {if $article->subject}
+                    {foreach $article->fetchAllEntityTags() as $tag}
                         {render(path('PLUGIN_PATH') . 'tags/template/tag.latte', [
                         'tag' => $tag,
                         'item' => $item
                         ])}
-                    {/if}
+                    {/foreach}
                     </div>
 
                     {* Titles *}

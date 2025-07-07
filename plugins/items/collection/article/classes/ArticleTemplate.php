@@ -3,47 +3,43 @@
 namespace Items\Collection\Article;
 
 use Items\Item;
+use Ivy\Model\Info;
 use Ivy\Model\Profile;
-use Ivy\Model\Setting;
 use Ivy\Path;
-use Ivy\View\LatteView;
-use Tag\Tag;
+use Ivy\View\View;
 
 class ArticleTemplate
 {
     public function render($item): void
     {
-        $article = (new Article)->where('id', $item->table_id)->fetchOne();
+        $article = (new Article)->fetchOneWithItem($item);
 
-        if(!ArticlePolicy::read($article, $item)){
+        if(!ArticlePolicy::read($article)){
             return;
         }
 
-        LatteView::render(Path::get('PLUGIN_PATH') . $item->plugin_url . '/template/item.latte', [
+        View::render(Path::get('PLUGIN_PATH') . $item->plugin_url . '/template/item.latte', [
             'item' => $item,
             'article' => $article,
-            'tag' => (new Tag)->where('id', $article->subject)->fetchOne(),
             'author' => (new Profile)->where('id', $item->user_id)->fetchOne()
         ]);
     }
 
     public function page($slug): void
     {
-        $item = (new Item)->where('slug', $slug)->fetchOne();
-        $article = (new Article)->where('id', $item->table_id)->fetchOne();
+        $article = (new Article)->fetchOneWithSlug($slug);
 
-        if(!ArticlePolicy::read($article, $item)){
+        if(!ArticlePolicy::read($article)){
             return;
         }
 
-        Setting::getStash()['title']->value = Setting::getStash()['title']->value . " - " . $article->title;
+        Info::getStash()['title']->value = Info::getStash()['title']->value . " - " . $article->title;
 
-        LatteView::set(Path::get('PLUGIN_PATH') . $item->plugin_url . '/template/page.latte', [
-            'item' => $item,
+        View::set(Path::get('PLUGIN_PATH') . $article->getItem()->plugin_url . '/template/page.latte', [
+            'item' => $article->getItem(),
             'article' => $article,
-            'tag' => (new Tag)->where('id', $article->subject)->fetchOne(),
-            'author' => (new Profile)->where('id', $item->user_id)->fetchOne(),
-            'items' => (new Item)->where('parent_id', $item->id)->sortBy(['sort', 'date', 'id'])->fetchAll()
+            'author' => (new Profile)->where('id', $article->getItem()->user_id)->fetchOne(),
+            'items' => (new Item)->where('parent_id', $article->getItem()->id)->sortBy(['sort', 'date', 'id'])->fetchAll()
         ]);
     }
 }

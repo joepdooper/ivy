@@ -6,7 +6,7 @@ use Items\Collection\Image\ImageService;
 use Items\Item;
 use Items\ItemHelper;
 use Ivy\Abstract\Controller;
-use Tag\Tag;
+use Tags\Tag;
 
 class ArticleController extends Controller
 {
@@ -22,30 +22,21 @@ class ArticleController extends Controller
         $this->tag = new Tag();
     }
 
-    public function save($id): void
-    {
-        if($this->request->get('delete') !== null){
-            $this->delete($id);
-        } else {
-            $this->update($id);
-        }
-    }
-
     public function insert($id): void
     {
         $this->article->policy('create');
 
-        $this->item->table_id = $this->article->populate([
-            'title' => 'Title',
-            'subtitle' => 'Subtitle',
-            'subject' => $this->tag->fetchOne()->getId()
-        ])->insert();
-
-        $this->item->populate([
-            'template_id' => $id,
-            'parent_id' => ItemHelper::getParentId($this->request),
-            'slug' => ItemHelper::createSlug('Title')
-        ])->insert();
+        $this->article->insertWithItem(
+            [
+                'title' => 'Title',
+                'subtitle' => 'Subtitle',
+            ],
+            [
+                'template_id' => $id,
+                'parent_id' => ItemHelper::getParentId($this->request),
+                'slug' => ItemHelper::createSlug('Title'),
+            ]
+        )->attachTag($this->tag->fetchOne()->getId());
 
         $this->flashBag->add('success', 'Article successfully inserted');
         $this->redirect(ItemHelper::getRedirect($this->request));
@@ -55,21 +46,20 @@ class ArticleController extends Controller
     {
         $this->article->policy('update');
 
-        $item = $this->item->where('id', $id)->fetchOne();
-        $article = $this->article->where('id', $item->table_id)->fetchOne();
+        $article = $this->article->fetchOneWithItem($id);
 
         if($this->request->request->has('title')){
             $article->title = $this->request->request->get('title');
             $slug = ItemHelper::slugify($this->request->request->get('title'));
-            if($item->slug !== $slug){
-                $item->slug = $slug;
+            if($this->article->getItem()->slug !== $slug){
+                $this->article->getItem()->slug = $slug;
             }
         }
         if($this->request->request->has('subtitle')){
             $article->subtitle = $this->request->request->get('subtitle');
         }
         if($this->request->request->has('tag')){
-            $article->subject = $this->request->request->get('tag');
+            // tag
         }
         if($this->request->files->has('image')){
             $article->image = ImageService::upload($this->request->files->get('image'));
@@ -81,10 +71,10 @@ class ArticleController extends Controller
         $article->update();
 
         if($this->request->request->has('datetime')){
-            $item->date = $this->request->request->get('datetime');
+            $this->article->getItem()->date = $this->request->request->get('datetime');
         }
 
-        $item->populate([
+        $this->article->getItem()->populate([
             'published' => $this->request->get('publish'),
         ])->update();
 

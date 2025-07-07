@@ -6,7 +6,7 @@ use Items\Collection\Image\ImageService;
 use Items\Item;
 use Items\ItemHelper;
 use Ivy\Abstract\Controller;
-use Tag\Tag;
+use Tags\Tag;
 
 class GigController extends Controller
 {
@@ -20,15 +20,6 @@ class GigController extends Controller
         $this->gig = new Gig();
         $this->item = new Item();
         $this->tag = new Tag();
-    }
-
-    public function save($id): void
-    {
-        if($this->request->get('delete') !== null){
-            $this->delete($id);
-        } else {
-            $this->update($id);
-        }
     }
 
     public function insert($id): void

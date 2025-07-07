@@ -8,7 +8,6 @@ try {
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `subtitle` varchar(255) NOT NULL,
-  `subject` int(11) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
   `token` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)

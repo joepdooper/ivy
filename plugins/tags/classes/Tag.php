@@ -7,7 +7,7 @@ use Ivy\Abstract\Model;
 class Tag extends Model
 {
     protected string $table = 'tags';
-    protected string $path = 'plugin/tag';
+    protected string $path = 'plugin/tags';
     protected array $columns = [
         'value'
     ];

@@ -2,6 +2,7 @@
 
 use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
+use Ivy\Path;
 
 if(User::canEditAsSuperAdmin()) {
     try {
@@ -18,5 +19,17 @@ if(User::canEditAsSuperAdmin()) {
         );
     } catch (Exception $e) {
         error_log("Failed to drop table `item_templates`: " . $e->getMessage());
+    }
+
+    $mediaPath = Path::get('PUBLIC_PATH') . Path::get('MEDIA_PATH') . 'items';
+    if (is_dir($mediaPath)) {
+        $files = glob($mediaPath . '/*');
+        $files = array_merge($files ?: [], glob($mediaPath . '/.*') ?: []);
+        foreach ($files as $file) {
+            if (is_file($file) && basename($file) !== '.' && basename($file) !== '..') {
+                unlink($file);
+            }
+        }
+        rmdir($mediaPath);
     }
 }

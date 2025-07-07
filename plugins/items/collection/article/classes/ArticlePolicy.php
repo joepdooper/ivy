@@ -12,9 +12,9 @@ class ArticlePolicy
         return User::canEditAsAdmin();
     }
 
-    public static function read(Article $article, Item $item): bool
+    public static function read(Article $article): bool
     {
-        if(User::getAuth()->isLoggedIn() || $item->published){
+        if(User::getAuth()->isLoggedIn() || $article->getItem()->published){
             return true;
         } else {
             return false;
