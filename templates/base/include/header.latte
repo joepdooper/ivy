@@ -31,6 +31,12 @@
                         </li>
                         {if canEditAsAdmin()}
                             <li>
+                                <a href="{path('BASE_PATH') . 'admin/info'}">
+                                    {icon("feather/info.svg")|noescape}
+                                    {text('menu.infos')}
+                                </a>
+                            </li>
+                            <li>
                                 <a href="{path('BASE_PATH') . 'admin/setting'}">
                                     {icon("feather/sliders.svg")|noescape}
                                     {text('menu.settings')}

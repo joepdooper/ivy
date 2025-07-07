@@ -31,4 +31,7 @@ RouterManager::instance()->mount('/admin', function () {
     // -- SETTING index
     RouterManager::instance()->post('/setting/post', '\Ivy\Controller\SettingController@post');
     RouterManager::instance()->get('/setting', '\Ivy\Controller\SettingController@index');
+    // -- INFO index
+    RouterManager::instance()->post('/info/post', '\Ivy\Controller\InfoController@post');
+    RouterManager::instance()->get('/info', '\Ivy\Controller\InfoController@index');
 });

@@ -3,9 +3,10 @@
 use Ivy\App;
 use Ivy\Manager\AssetManager;
 use Ivy\Manager\TemplateManager;
+use Ivy\Model\Info;
 use Ivy\Path;
 use Ivy\Model\Setting;
-use Ivy\View\LatteView;
+use Ivy\View\View;
 
 error_reporting(E_ALL);
 ini_set('ignore_repeated_errors', TRUE);
@@ -22,10 +23,10 @@ $app->run();
 ?>
 
 <!DOCTYPE html>
-<html lang="<?= substr(Setting::getStash()['language']->value, 0, 2); ?>" data-color-mode="dark">
+<html lang="<?= substr(Info::getStash()['language']->value, 0, 2); ?>" data-color-mode="dark">
 <head>
 
-    <?php LatteView::head('head.latte'); ?>
+    <?php View::head('head.latte'); ?>
 
     <script>
         const _SUBFOLDER = "<?= Path::get('SUBFOLDER'); ?>";
@@ -59,7 +60,7 @@ $app->run();
 </head>
 <body>
 
-<?php LatteView::body('body.latte'); ?>
+<?php View::body('body.latte'); ?>
 
 <?php
 if (Setting::getStash()['minify_js']->bool) {

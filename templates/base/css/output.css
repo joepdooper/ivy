@@ -2026,9 +2026,6 @@
   .h-4 {
     height: calc(var(--spacing) * 4);
   }
-  .h-5 {
-    height: calc(var(--spacing) * 5);
-  }
   .h-10 {
     height: calc(var(--spacing) * 10);
   }
@@ -2049,9 +2046,6 @@
   }
   .w-4 {
     width: calc(var(--spacing) * 4);
-  }
-  .w-5 {
-    width: calc(var(--spacing) * 5);
   }
   .w-8 {
     width: calc(var(--spacing) * 8);
@@ -2153,16 +2147,6 @@
   .overflow-x-auto {
     overflow-x: auto;
   }
-  .timeline-box {
-    border: var(--border) solid;
-    border-radius: var(--radius-box);
-    border-color: var(--color-base-300);
-    background-color: var(--color-base-100);
-    padding-inline: calc(0.25rem * 4);
-    padding-block: calc(0.25rem * 2);
-    font-size: 0.75rem;
-    box-shadow: 0 1px 2px 0 oklch(0% 0 0/0.05);
-  }
   .rounded {
     border-radius: 0.25rem;
   }
@@ -2231,9 +2215,6 @@
   }
   .p-1 {
     padding: calc(var(--spacing) * 1);
-  }
-  .p-2 {
-    padding: calc(var(--spacing) * 2);
   }
   .p-3 {
     padding: calc(var(--spacing) * 3);
@@ -2352,9 +2333,17 @@
     --inidicator-b: 50%;
     --indicator-y: -50%;
   }
+  .badge-neutral {
+    --badge-color: var(--color-neutral);
+    --badge-fg: var(--color-neutral-content);
+  }
   .badge-primary {
     --badge-color: var(--color-primary);
     --badge-fg: var(--color-primary-content);
+  }
+  .badge-secondary {
+    --badge-color: var(--color-secondary);
+    --badge-fg: var(--color-secondary-content);
   }
   .btn-error {
     --btn-color: var(--color-error);
