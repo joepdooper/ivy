@@ -2,20 +2,17 @@
 
 namespace Items\Collection\Text;
 
-use Items\Item;
+use Items\CollectionController;
 use Items\ItemHelper;
-use Ivy\Abstract\Controller;
 
-class TextController extends Controller
+class TextController extends CollectionController
 {
     private Text $text;
-    private Item $item;
 
     public function __construct()
     {
         parent::__construct();
         $this->text = new Text();
-        $this->item = new Item();
     }
 
     public function insert($id): void

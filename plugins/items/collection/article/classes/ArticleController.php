@@ -3,22 +3,20 @@
 namespace Items\Collection\Article;
 
 use Items\Collection\Image\ImageService;
+use Items\CollectionController;
 use Items\Item;
 use Items\ItemHelper;
-use Ivy\Abstract\Controller;
 use Tags\Tag;
 
-class ArticleController extends Controller
+class ArticleController extends CollectionController
 {
     private Article $article;
-    private Item $item;
     private Tag $tag;
 
     public function __construct()
     {
         parent::__construct();
         $this->article = new Article();
-        $this->item = new Item();
         $this->tag = new Tag();
     }
 
@@ -26,17 +24,21 @@ class ArticleController extends Controller
     {
         $this->article->policy('create');
 
-        $this->article->insertWithItem(
-            [
-                'title' => 'Title',
-                'subtitle' => 'Subtitle',
-            ],
-            [
-                'template_id' => $id,
-                'parent_id' => ItemHelper::getParentId($this->request),
-                'slug' => ItemHelper::createSlug('Title'),
-            ]
-        )->attachTag($this->tag->fetchOne()->getId());
+        $articleId = $this->article->populate([
+            'title' => 'Title',
+            'subtitle' => 'Subtitle',
+        ])->insert();
+
+        $this->item = (new Item)->populate([
+            'template_id' => $id,
+            'parent_id' => ItemHelper::getParentId($this->request),
+            'slug' => ItemHelper::createSlug('Title'),
+            'table_id' => $articleId,
+        ]);
+
+        $this->item->insert();
+
+        $this->article->attachTag($this->tag->fetchOne()->getId());
 
         $this->flashBag->add('success', 'Article successfully inserted');
         $this->redirect(ItemHelper::getRedirect($this->request));

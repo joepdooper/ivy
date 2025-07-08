@@ -11,19 +11,6 @@ trait ItemTrait
         return $this->item;
     }
 
-    public function insertWithItem(array $articleData, array $itemData): static
-    {
-        $articleId = $this->populate($articleData)->insert();
-
-        $this->item = (new Item)->populate(array_merge($itemData, [
-            'table_id' => $articleId,
-        ]));
-
-        $this->item->insert();
-
-        return $this;
-    }
-
     public function fetchOneWithItem(int|Item $item): static
     {
         $item = $this->resolveItem($item);
