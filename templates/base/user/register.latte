@@ -2,7 +2,7 @@
 
 {block main}
     <main class="grow p-4">
-        <form action="{path('BASE_PATH') . 'admin/user/register/'}" method="POST" enctype="multipart/form-data"
+        <form action="{path('BASE_PATH') . 'user/register/'}" method="POST" enctype="multipart/form-data"
               class="max-w-xl mx-auto" autocomplete="off">
             {csrf()}
 
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="text-center">
-                    <a class="text-xs" href="{path('BASE_PATH') . 'admin/login'}">{text('register.link.login')}</a>
+                    <a class="text-xs" href="{path('BASE_PATH') . 'user/login'}">{text('register.link.login')}</a>
                 </div>
 
             </div>

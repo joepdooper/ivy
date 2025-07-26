@@ -5,7 +5,7 @@ return [
     'setting' => 'Setting',
     'name' => 'Name',
     'value' => 'Value',
-    'info' => 'Info',
+    'description' => 'Description',
     'add_name' => 'Add setting name',
     'none_defined' => 'No settings defined',
 ];

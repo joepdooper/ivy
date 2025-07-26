@@ -70,7 +70,7 @@
                             {/if}
                         {/if}
                         <li>
-                            <a href="{path('BASE_PATH') . 'admin/logout'}">
+                            <a href="{path('BASE_PATH') . 'user/logout'}">
                                 {icon("feather/log-out.svg")|noescape}
                                 {text('logout.logout')}
                             </a>
@@ -78,7 +78,7 @@
                     </ul>
                 </div>
             {else}
-                {button type:link, url:path('BASE_PATH') . 'admin/login', text:null, icon:'feather/user.svg', label:text('login.login')}
+                {button type:link, url:path('BASE_PATH') . 'user/login', text:null, icon:'feather/user.svg', label:text('login.login')}
             {/if}
         </div>
     </div>
