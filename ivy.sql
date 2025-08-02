@@ -7,6 +7,42 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
+# Export von Tabelle infos
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `infos`;
+
+CREATE TABLE `infos` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `info` varchar(255) DEFAULT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `plugin_id` int(11) DEFAULT NULL,
+  `is_default` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `infos` WRITE;
+/*!40000 ALTER TABLE `infos` DISABLE KEYS */;
+
+INSERT INTO `infos` (`id`, `name`, `value`, `info`, `token`, `plugin_id`, `is_default`)
+VALUES
+	(1,'Name','localhost','Website name',NULL,NULL,1),
+	(2,'Title','ivy','Meta title',NULL,NULL,1),
+	(3,'Description','Yet another sleek simple fast CMS with an effortless template and plugin environment','Meta description',NULL,NULL,1),
+	(4,'Keywords','fast, CMS, design, build, simple, slim, clean, easy, quick, cms-framework, content-management-system, google-page-speed, easy-to-deploy ','Meta keywords',NULL,NULL,1),
+	(5,'Url','http://localhost:8888/blog/','Meta url',NULL,NULL,1),
+	(6,'Language','en_GB','Meta language',NULL,NULL,1),
+	(7,'Author','Joep Dooper','Meta author',NULL,NULL,1),
+	(8,'Created','2024-01-01','Meta created date',NULL,NULL,1),
+	(9,'Available','2024-01-01','Meta available date',NULL,NULL,1),
+	(10,'Updated','2024-01-01','Meta updated date',NULL,NULL,1);
+
+/*!40000 ALTER TABLE `infos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Export von Tabelle plugins
 # ------------------------------------------------------------
 
@@ -64,28 +100,20 @@ CREATE TABLE `settings` (
   `info` varchar(255) DEFAULT NULL,
   `token` varchar(255) DEFAULT NULL,
   `plugin_id` int(11) DEFAULT NULL,
+  `is_default` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
 
-INSERT INTO `settings` (`id`, `name`, `bool`, `value`, `info`, `token`, `plugin_id`)
+INSERT INTO `settings` (`id`, `name`, `bool`, `value`, `info`, `token`, `plugin_id`, `is_default`)
 VALUES
-	(1,'Private',0,'','Set website to private',NULL,NULL),
-	(2,'Minify CSS',0,'','CSS minifier',NULL,NULL),
-	(3,'Minify JS',0,'','JS minifier',NULL,NULL),
-	(4,'Registration role',0,'EDITOR','After registration set user role',NULL,NULL),
-	(5,'Name',1,'localhost','Website name',NULL,NULL),
-	(6,'Title',1,'ivy','Meta title',NULL,NULL),
-	(7,'Description',1,'Yet another sleek simple fast CMS with an effortless template and plugin environment','Meta description',NULL,NULL),
-	(8,'Keywords',1,'fast, CMS, design, build, simple, slim, clean, easy, quick, cms-framework, content-management-system, google-page-speed, easy-to-deploy ','Meta keywords',NULL,NULL),
-	(9,'Url',1,'http://localhost:8080/ivy/','Meta url',NULL,NULL),
-	(10,'Language',1,'en_GB','Meta language',NULL,NULL),
-	(11,'Author',1,'Joep Dooper','Meta author',NULL,NULL),
-	(12,'Created',1,'2025-01-01','Meta created date',NULL,NULL),
-	(13,'Available',1,'2025-01-01','Meta available date',NULL,NULL),
-	(14,'Updated',1,'2025-01-01','Meta updated date',NULL,NULL);
+	(1,'Private',0,'','Set website to private',NULL,NULL,1),
+	(2,'Minify CSS',0,'','CSS minifier',NULL,NULL,1),
+	(3,'Minify JS',0,'','JS minifier',NULL,NULL,1),
+	(4,'Registration role',0,'EDITOR','After registration set user role',NULL,NULL,1),
+	(44,'Test',0,'EDITOR','',NULL,NULL,0);
 
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
