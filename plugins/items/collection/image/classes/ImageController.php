@@ -2,29 +2,24 @@
 
 namespace Items\Collection\Image;
 
-use Items\Item;
+use Items\CollectionController;
 use Items\ItemHelper;
-use Ivy\Abstract\Controller;
-use Ivy\File;
-use Ivy\Path;
 
-class ImageController extends Controller
+class ImageController extends CollectionController
 {
     private Image $image;
-    private Item $item;
 
     public function __construct()
     {
         parent::__construct();
         $this->image = new Image();
-        $this->item = new Item();
     }
 
     public function insert($id): void
     {
         $this->image->policy('create');
 
-        $this->item->table_id = $this->image->populate([
+        $table_id = $this->image->populate([
             'file' => ''
         ])->insert();
 
@@ -53,6 +48,7 @@ class ImageController extends Controller
         }
 
         $image->update();
+
         $item->populate([
             'published' => $this->request->get('publish')
         ])->update();

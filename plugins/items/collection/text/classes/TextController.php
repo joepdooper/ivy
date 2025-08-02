@@ -19,7 +19,7 @@ class TextController extends CollectionController
     {
         $this->text->policy('create');
 
-        $this->item->table_id = $this->text->populate([
+        $table_id = $this->text->populate([
             'text' => 'Write…'
         ])->insert();
 

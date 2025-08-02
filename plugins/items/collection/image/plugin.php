@@ -3,12 +3,12 @@
 use Ivy\Manager\AssetManager;
 use Ivy\Manager\RouterManager;
 use Ivy\Model\User;
-use Ivy\Path;
+use Ivy\Core\Path;
 
-AssetManager::addCSS(Path::get('PLUGIN_PATH') . "items/collection/image/css/image.css");
+AssetManager::addCSS(Path::get('PLUGINS_PATH') . "items/collection/image/css/image.css");
 
 if (User::canEditAsEditor()) {
-    AssetManager::addJS(Path::get('PLUGIN_PATH') . "items/collection/image/js/image_admin.js");
+    AssetManager::addJS(Path::get('PLUGINS_PATH') . "items/collection/image/js/image_admin.js");
 }
 
 //if (User::getAuth()->isLoggedIn()) {
@@ -16,7 +16,7 @@ if (User::canEditAsEditor()) {
 //
 //        $router->get('/plugin/image', function () {
 //            $image_sizes = (new \Image\ImageSize)->get()->all();
-//            Template::view(_PLUGIN_PATH . 'image/template/image_sizes.latte', ['image_sizes' => $image_sizes]);
+//            Template::view(_PLUGINS_PATH . 'image/template/image_sizes.latte', ['image_sizes' => $image_sizes]);
 //        });
 //
 //        $router->post('/image_sizes/post', '\Image\SettingController@post');

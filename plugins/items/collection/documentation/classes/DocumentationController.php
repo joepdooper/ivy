@@ -3,22 +3,21 @@
 namespace Items\Collection\Documentation;
 
 use Items\Collection\Image\ImageService;
+use Items\CollectionController;
 use Items\Item;
 use Items\ItemHelper;
 use Ivy\Abstract\Controller;
 use Tags\Tag;
 
-class DocumentationController extends Controller
+class DocumentationController extends CollectionController
 {
     private Documentation $documentation;
-    private Item $item;
     private Tag $tag;
 
     public function __construct()
     {
         parent::__construct();
         $this->documentation = new Documentation();
-        $this->item = new Item();
         $this->tag = new Tag();
     }
 
@@ -32,14 +31,14 @@ class DocumentationController extends Controller
             'subject' => $this->tag->fetchOne()->getId()
         ])->insert();
 
-        $this->item->id = $this->item->populate([
+        $item_id = $this->item->populate([
             'template_id' => $id,
             'parent_id' => ItemHelper::getParentId($this->request),
             'slug' => ItemHelper::createSlug('Title')
         ])->insert();
 
-        $this->documentation->where('id', $this->item->table_id)->populate([
-            'item_id' => $this->item->id,
+        $this->documentation->where('id', $table_id)->populate([
+            'item_id' => $item_id,
         ])->update();
 
         $this->flashBag->add('success', 'Documentation successfully inserted');

@@ -1,0 +1,4 @@
+Options -Indexes
+<FilesMatch "\.(php|php5|phtml|js)$">
+Deny from all
+</FilesMatch>

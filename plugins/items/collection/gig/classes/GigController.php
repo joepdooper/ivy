@@ -3,22 +3,21 @@
 namespace Items\Collection\Gig;
 
 use Items\Collection\Image\ImageService;
+use Items\CollectionController;
 use Items\Item;
 use Items\ItemHelper;
 use Ivy\Abstract\Controller;
 use Tags\Tag;
 
-class GigController extends Controller
+class GigController extends CollectionController
 {
     private Gig $gig;
-    private Item $item;
     private Tag $tag;
 
     public function __construct()
     {
         parent::__construct();
         $this->gig = new Gig();
-        $this->item = new Item();
         $this->tag = new Tag();
     }
 
@@ -26,7 +25,7 @@ class GigController extends Controller
     {
         $this->gig->policy('create');
 
-        $this->item->table_id = $this->gig->populate([
+        $table_id = $this->gig->populate([
             'datetime' => date("Y-m-d H:i:s"),
             'venue' => 'Venue',
             'address' => 'Address',

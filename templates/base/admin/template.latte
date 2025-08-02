@@ -29,8 +29,8 @@
                             <td>
                                 <label>
                                     <select class="select select-bordered w-full" name="template[1][value]">
-                                        {foreach array_diff(scandir(path('PUBLIC_PATH') . path('TEMPLATES_PATH')), array('.', '..', '.DS_Store')) as $val}
-                                            {php $theme = json_decode(file_get_contents(path('PUBLIC_PATH') . path('TEMPLATES_PATH') . $val . '/info.json'))}
+                                        {foreach array_diff(scandir(path('TEMPLATES_PATH')), array('.', '..', '.DS_Store')) as $val}
+                                            {php $theme = json_decode(file_get_contents(path('TEMPLATES_PATH') . $val . '/info.json'))}
                                             <option value="{$theme->url}" {basename(_TEMPLATE_BASE) != $theme->url ?: 'selected'}>
                                                 {$theme->name . ' (' . $theme->description . ')'}
                                             </option>
@@ -50,8 +50,8 @@
                             <td>
                                 <label>
                                     <select class="select select-bordered w-full" name="template[2][value]">
-                                        {foreach array_diff(scandir(path('PUBLIC_PATH') . path('TEMPLATES_PATH')), array('.', '..', '.DS_Store')) as $val}
-                                            {php $theme = json_decode(file_get_contents(path('PUBLIC_PATH') . path('TEMPLATES_PATH') . $val . '/info.json'))}
+                                        {foreach array_diff(scandir(path('TEMPLATES_PATH')), array('.', '..', '.DS_Store')) as $val}
+                                            {php $theme = json_decode(file_get_contents(path('TEMPLATES_PATH') . $val . '/info.json'))}
                                             <option value="{$theme->url}" {basename(_TEMPLATE_SUB) != $theme->url ?: 'selected'}>
                                                 {$theme->name . ' (' . $theme->description . ')'}
                                             </option>

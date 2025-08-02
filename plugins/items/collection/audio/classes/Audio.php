@@ -3,7 +3,7 @@
 namespace Items\Collection\Audio;
 
 use Ivy\Abstract\Model;
-use Ivy\Path;
+use Ivy\Core\Path;
 
 class Audio extends Model
 {
@@ -19,7 +19,7 @@ class Audio extends Model
     public function unlinkFile(): static
     {
         if($this->file){
-            unlink(Path::get('PUBLIC_PATH') . Path::get('MEDIA_PATH') . 'item/audio/' . $this->file);
+            unlink(Path::get('MEDIA_PATH') . 'item/audio/' . $this->file);
         }
         $this->file = '';
         return $this;

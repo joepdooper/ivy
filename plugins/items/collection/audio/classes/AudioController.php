@@ -3,20 +3,19 @@
 namespace Items\Collection\Audio;
 
 use Items\Collection\Image\ImageService;
+use Items\CollectionController;
 use Items\Item;
 use Items\ItemHelper;
 use Ivy\Abstract\Controller;
 
-class AudioController extends Controller
+class AudioController extends CollectionController
 {
     private Audio $audio;
-    private Item $item;
 
     public function __construct()
     {
         parent::__construct();
         $this->audio = new Audio();
-        $this->item = new Item();
     }
 
     public function insert($id): void

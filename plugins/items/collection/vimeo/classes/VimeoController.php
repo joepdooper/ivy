@@ -2,27 +2,26 @@
 
 namespace Items\Collection\Vimeo;
 
+use Items\CollectionController;
 use Items\Item;
 use Items\ItemHelper;
 use Ivy\Abstract\Controller;
 
-class VimeoController extends Controller
+class VimeoController extends CollectionController
 {
     private Vimeo $vimeo;
-    private Item $item;
 
     public function __construct()
     {
         parent::__construct();
         $this->vimeo = new Vimeo();
-        $this->item = new Item();
     }
 
     public function insert($id): void
     {
         $this->vimeo->policy('create');
 
-        $this->item->table_id = $this->vimeo->populate([
+        $table_id = $this->vimeo->populate([
             'vimeo_video_id' => '876176995'
         ])->insert();
 

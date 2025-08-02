@@ -12,7 +12,7 @@
                     <textarea class="rounded bg-base-300 w-full border-0 p-4" name="code" placeholder="Your code here…">{$code->code}</textarea>
                 </label>
                 <div class="hidden group-hover:block absolute left-0 bottom-0">
-                    {render(path('PLUGIN_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
+                    {render(path('PLUGINS_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
                 </div>
             </div>
         </form>

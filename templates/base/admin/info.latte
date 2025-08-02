@@ -45,7 +45,9 @@
                                         <input n:if="$info->plugin_id" type="hidden" name="info[{$key}][plugin_id]"
                                                value="{$info->plugin_id}">
                                         <div class="join">
-                                            {button type:delete, name:"info[$key][delete]", value:"info_" . $info->id, id:$info->id}
+                                            {if !$info->is_default && !$info->plugin_id}
+                                                {button type:delete, name:"info[$key][delete]", value:"info_" . $info->id, id:$info->id}
+                                            {/if}
                                         </div>
                                     </td>
                                 </tr>

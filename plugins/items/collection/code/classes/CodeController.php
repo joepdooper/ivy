@@ -2,20 +2,18 @@
 
 namespace Items\Collection\Code;
 
+use Items\CollectionController;
 use Items\Item;
 use Items\ItemHelper;
 use Ivy\Abstract\Controller;
 
-class CodeController extends Controller
+class CodeController extends CollectionController
 {
     private Code $code;
-    private Item $item;
-
     public function __construct()
     {
         parent::__construct();
         $this->code = new Code();
-        $this->item = new Item();
     }
 
     public function insert($id): void

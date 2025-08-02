@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="text-xs font-bold">
             {if $gig->subject}
-                {render(path('PLUGIN_PATH') . 'tags/template/tag.latte', [
+                {render(path('PLUGINS_PATH') . 'tags/template/tag.latte', [
                 'tag' => $tag,
                 'item' => $item
                 ])}
@@ -31,14 +31,14 @@
             <div>
                 {if auth()->isLoggedIn()}
                     <span class="font-bold text-xl">
-                        {render(path('PLUGIN_PATH') . 'items/collection/text/template/input.TypeText.latte', [
+                        {render(path('PLUGINS_PATH') . 'items/collection/text/template/input.TypeText.latte', [
                         'id' => 'venue',
                         'name' => 'venue',
                         'value' => $gig->venue
                         ])}
                     </span>
                     <span class="text-xl">
-                        {render(path('PLUGIN_PATH') . 'items/collection/text/template/input.TypeText.latte', [
+                        {render(path('PLUGINS_PATH') . 'items/collection/text/template/input.TypeText.latte', [
                         'id' => 'address',
                         'name' => 'address',
                         'value' => $gig->address
@@ -61,7 +61,7 @@
             {csrf()}
             {include gig}
             <div class="hidden group-hover:block absolute left-1/2 bottom-0 -mb-5 -ml-15">
-                {render(path('PLUGIN_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
+                {render(path('PLUGINS_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
             </div>
         </form>
     {else}

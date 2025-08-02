@@ -2,8 +2,8 @@
 
 namespace Items\Collection\Image;
 
-use Ivy\File;
-use Ivy\Path;
+use Ivy\Core\Path;
+use Ivy\Helper\File;
 
 class ImageService
 {
@@ -18,7 +18,7 @@ class ImageService
                 if($size->value){
                     $file->setWidth($size->value);
                 }
-                $file->setDirectory(Path::get('PUBLIC_PATH') . Path::get('MEDIA_PATH') . 'item/' . $size->name);
+                $file->setDirectory(Path::get('MEDIA_PATH') . 'item/' . $size->name);
                 $fileName = $file->upload($image);
                 $file->setImageConvert( 'webp');
                 $file->upload($image);
@@ -34,8 +34,8 @@ class ImageService
     {
         if($image){
             foreach ((new ImageSize)->fetchAll() as $size) {
-                unlink(Path::get('PUBLIC_PATH') . 'media/item/' . $size->name . '/' . $image);
-                unlink(Path::get('PUBLIC_PATH') . 'media/item/' . $size->name . '/' . pathinfo($image)['filename'] . '.webp');
+                unlink(Path::get('PROJECT_PATH') . 'media/item/' . $size->name . '/' . $image);
+                unlink(Path::get('PROJECT_PATH') . 'media/item/' . $size->name . '/' . pathinfo($image)['filename'] . '.webp');
             }
         }
         return '';

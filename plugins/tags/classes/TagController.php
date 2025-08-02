@@ -4,7 +4,7 @@ namespace Tags;
 
 use GUMP;
 use Ivy\Abstract\Controller;
-use Ivy\Path;
+use Ivy\Core\Path;
 use Ivy\View\View;
 
 class TagController extends Controller
@@ -49,6 +49,6 @@ class TagController extends Controller
         $this->tag->policy('index');
 
         $tags = $this->tag->fetchAll();
-        View::set(Path::get('PLUGIN_PATH') . 'tags/template/manage.latte', ['tags' => $tags]);
+        View::set(Path::get('PLUGINS_PATH') . 'tags/template/manage.latte', ['tags' => $tags]);
     }
 }

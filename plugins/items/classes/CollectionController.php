@@ -8,6 +8,8 @@ abstract class CollectionController extends Controller
 {
     protected Item $item;
 
+    protected int $item_table_id;
+
     public function __construct()
     {
         parent::__construct();
@@ -26,8 +28,4 @@ abstract class CollectionController extends Controller
     abstract protected function insert($id): void;
     abstract protected function update($id): void;
     abstract protected function delete($id): void;
-
-    abstract protected function getModel(): object;
-    abstract protected function getInsertData(): array;
-    abstract protected function getUpdateData(): array;
 }

@@ -3,9 +3,9 @@
         <form action="{path('BASE_PATH') . 'text/save/' . $item->id}" method="POST" enctype="multipart/form-data">
             {csrf()}
             <div class="relative group">
-                {render(path('PLUGIN_PATH') . 'items/collection/text/template/input.TypeText.latte', ['id' => $text->id, 'name' => 'text', 'value' => $text->text])}
+                {render(path('PLUGINS_PATH') . 'items/collection/text/template/input.TypeText.latte', ['id' => $text->id, 'name' => 'text', 'value' => $text->text])}
                 <div class="hidden group-hover:block absolute left-1/2 bottom-0 -mb-5 -ml-15">
-                    {render(path('PLUGIN_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
+                    {render(path('PLUGINS_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
                 </div>
             </div>
         </form>

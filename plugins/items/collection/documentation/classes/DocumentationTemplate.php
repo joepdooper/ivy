@@ -5,7 +5,7 @@ namespace Items\Collection\Documentation;
 use Items\Item;
 use Ivy\Model\Profile;
 use Ivy\Model\Setting;
-use Ivy\Path;
+use Ivy\Core\Path;
 use Ivy\View\View;
 use Tags\Tag;
 
@@ -19,7 +19,7 @@ class DocumentationTemplate
             return;
         }
 
-        View::render(Path::get('PLUGIN_PATH') . $item->plugin_url . '/template/item.latte', [
+        View::render(Path::get('PLUGINS_PATH') . $item->plugin_url . '/template/item.latte', [
             'item' => $item,
             'documentation' => $documentation,
             'tag' => (new Tag)->where('id', $documentation->subject)->fetchOne(),
@@ -38,7 +38,7 @@ class DocumentationTemplate
 
         Setting::getStash()['title']->value = Setting::getStash()['title']->value . " - " . $documentation->title;
 
-        View::set(Path::get('PLUGIN_PATH') . $item->plugin_url . '/template/page.latte', [
+        View::set(Path::get('PLUGINS_PATH') . $item->plugin_url . '/template/page.latte', [
             'item' => $item,
             'items' => (new Item)->where('parent_id', $item->id)->sortBy(['sort', 'date', 'id'])->fetchAll(),
             'documentation' => $documentation,

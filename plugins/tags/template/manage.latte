@@ -1,8 +1,8 @@
-{extends \Ivy\Path::get('PUBLIC_PATH') . _TEMPLATE_BASE . 'body.latte'}
+{extends \Ivy\Core\Path::get('PROJECT_PATH') . _TEMPLATE_BASE . 'body.latte'}
 
 {block main}
     <main class="grow p-4 w-full max-w-5xl mx-auto">
-        <form action="{= \Ivy\Path::get('BASE_PATH') . 'tag/post'}" method="POST" enctype="multipart/form-data">
+        <form action="{= \Ivy\Core\Path::get('BASE_PATH') . 'tag/post'}" method="POST" enctype="multipart/form-data">
             {csrf()}
 
             <div class="space-y-4">

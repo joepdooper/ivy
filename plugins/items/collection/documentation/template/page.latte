@@ -1,4 +1,4 @@
-{layout path('PUBLIC_PATH') . file('body.latte')}
+{layout path('PROJECT_PATH') . file('body.latte')}
 
 {block main}
     <main class="grow p-4 w-full">
@@ -15,7 +15,7 @@
                         <div class="space-y-4 mt-8 mb-12">
                             <div class="text-xs font-bold">
                                 {if $documentation->subject}
-                                    {render(path('PLUGIN_PATH') . 'tags/template/tag.latte', [
+                                    {render(path('PLUGINS_PATH') . 'tags/template/tag.latte', [
                                     'tag' => $tag,
                                     'item' => $item
                                     ])}
@@ -26,7 +26,7 @@
                     <div>
                                     <h1 class="text-6xl font-bold">
                                         {if auth()->isLoggedIn()}
-                                            {render(path('PLUGIN_PATH') . 'items/collection/text/template/input.TypeText.latte', [
+                                            {render(path('PLUGINS_PATH') . 'items/collection/text/template/input.TypeText.latte', [
                                             'id' => 'title',
                                             'name' => 'title',
                                             'value' => $documentation->title
@@ -37,7 +37,7 @@
                                     </h1>
                                     <h2 class="text-6xl">
                                         {if auth()->isLoggedIn()}
-                                            {render(path('PLUGIN_PATH') . 'items/collection/text/template/input.TypeText.latte', [
+                                            {render(path('PLUGINS_PATH') . 'items/collection/text/template/input.TypeText.latte', [
                                             'id' => 'subtitle',
                                             'name' => 'subtitle',
                                             'value' => $documentation->subtitle
@@ -72,7 +72,7 @@
                             <div class="relative">
                                 {include documentation}
                                 <div class="text-center pt-4">
-                                    {render(path('PLUGIN_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
+                                    {render(path('PLUGINS_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
                                 </div>
                             </div>
                         </form>
@@ -98,6 +98,6 @@
     </main>
 
     {if canEditAsAdmin()}
-        {render(path('PLUGIN_PATH') . 'items/template/template_list_modal.latte')}
+        {render(path('PLUGINS_PATH') . 'items/template/template_list_modal.latte')}
     {/if}
 {/block}

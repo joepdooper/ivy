@@ -3,12 +3,12 @@
 use Ivy\Manager\AssetManager;
 use Ivy\Manager\RouterManager;
 use Ivy\Manager\SessionManager;
-use Ivy\Path;
+use Ivy\Core\Path;
 
-AssetManager::addCSS(Path::get('PLUGIN_PATH') . "items/collection/youtube/css/youtube.css");
+AssetManager::addCSS(Path::get('PLUGINS_PATH') . "items/collection/youtube/css/youtube.css");
 
 if(!in_array("IframeManager", SessionManager::get('plugin_actives'))) {
-    AssetManager::addJS(Path::get('PLUGIN_PATH') . "items/collection/youtube/js/youtube.js");
+    AssetManager::addJS(Path::get('PLUGINS_PATH') . "items/collection/youtube/js/youtube.js");
 }
 
 RouterManager::instance()->match('GET|POST', '/youtube/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Youtube\YoutubeController@insert');

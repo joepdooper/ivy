@@ -1,4 +1,4 @@
-{extends path('PUBLIC_PATH') . file('body.latte')}
+{extends path('PROJECT_PATH') . file('body.latte')}
 
 {block main}
     <main class="grow p-4 relative">
@@ -29,6 +29,6 @@
         {/if}
     </main>
     {if canEditAsAdmin()}
-        {render(path('PLUGIN_PATH') . 'items/template/template_list_modal.latte')}
+        {render(path('PLUGINS_PATH') . 'items/template/template_list_modal.latte')}
     {/if}
 {/block}

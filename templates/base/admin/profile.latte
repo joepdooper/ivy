@@ -20,7 +20,7 @@
                         {if $profile->user_image}
 
                             <div class="w-36 rounded-full">
-                                <img src="{path('BASE_PATH') . path('MEDIA_PATH') . 'profile/' . $profile->user_image}"
+                                <img src="{media('profile/' . $profile->user_image)}"
                                      alt="{auth()->getUsername()}"/>
                             </div>
                             <div class="join">

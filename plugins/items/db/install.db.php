@@ -2,7 +2,7 @@
 
 use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
-use Ivy\Path;
+use Ivy\Core\Path;
 
 if(User::canEditAsSuperAdmin()) {
     try {
@@ -42,7 +42,7 @@ if(User::canEditAsSuperAdmin()) {
         error_log("Failed to create table `item_templates`: " . $e->getMessage());
     }
 
-    $mediaPath = Path::get('PUBLIC_PATH') . Path::get('MEDIA_PATH') . 'items';
+    $mediaPath = Path::get('MEDIA_PATH') . 'items';
     if (!file_exists($mediaPath)) {
         mkdir($mediaPath, 0755, true);
         file_put_contents("$mediaPath/.htaccess", "Options -Indexes\n<FilesMatch \"\.(php|php5|phtml|js)$\">\nDeny from all\n</FilesMatch>");

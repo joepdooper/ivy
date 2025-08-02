@@ -4,7 +4,6 @@ namespace Items\Collection\Article;
 
 use Items\Collection\Image\ImageService;
 use Items\CollectionController;
-use Items\Item;
 use Items\ItemHelper;
 use Tags\Tag;
 
@@ -24,19 +23,17 @@ class ArticleController extends CollectionController
     {
         $this->article->policy('create');
 
-        $articleId = $this->article->populate([
+        $this->item_table_id = $this->article->populate([
             'title' => 'Title',
             'subtitle' => 'Subtitle',
         ])->insert();
 
-        $this->item = (new Item)->populate([
+        $this->item->populate([
             'template_id' => $id,
             'parent_id' => ItemHelper::getParentId($this->request),
             'slug' => ItemHelper::createSlug('Title'),
-            'table_id' => $articleId,
-        ]);
-
-        $this->item->insert();
+            'table_id' => $this->item_table_id,
+        ])->insert();
 
         $this->article->attachTag($this->tag->fetchOne()->getId());
 
@@ -88,12 +85,7 @@ class ArticleController extends CollectionController
     {
         $this->article->policy('delete');
 
-        $item = $this->item->where('id', $id)->fetchOne();
-        $article = $this->article->where('id', $item->table_id)->fetchOne();
-        ImageService::unlink($article->image);
-        $article->delete();
-        $item->delete();
-
+        $this->article->fetchOneWithItem($id)->delete();
         $this->flashBag->add('success', 'Article successfully deleted');
         $this->redirect(ItemHelper::getRedirect($this->request));
     }

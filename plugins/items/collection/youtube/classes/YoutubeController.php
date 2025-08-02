@@ -2,27 +2,26 @@
 
 namespace Items\Collection\Youtube;
 
+use Items\CollectionController;
 use Items\Item;
 use Items\ItemHelper;
 use Ivy\Abstract\Controller;
 
-class YoutubeController extends Controller
+class YoutubeController extends CollectionController
 {
     private Youtube $youtube;
-    private Item $item;
 
     public function __construct()
     {
         parent::__construct();
         $this->youtube = new Youtube();
-        $this->item = new Item();
     }
 
     public function insert($id): void
     {
         $this->youtube->policy('create');
 
-        $this->item->table_id = $this->youtube->populate([
+        $table_id = $this->youtube->populate([
             'youtube_video_id' => 'aKydtOXW8mI'
         ])->insert();
 

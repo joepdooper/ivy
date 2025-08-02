@@ -7,15 +7,14 @@
         </div>
         <div class="flex gap-x-4 px-2">
             {if isPluginActive('DarkMode')}
-                {render(Path::get('PLUGIN_PATH') . "darkmode/template/buttons.latte")}
+                {render(Path::get('PLUGINS_PATH') . "darkmode/template/buttons.latte")}
             {/if}
             {if auth()->isLoggedIn()}
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="avatar">
                         {if profile()->user_image}
                             <div class="w-10 rounded-full">
-                                <img alt="{profile()->username}"
-                                     src="{path('BASE_PATH') . path('MEDIA_PATH') . 'profile/' . profile()->user_image}"/>
+                                <img alt="{profile()->username}" src="{media('profile/' . profile()->user_image)}"/>
                             </div>
                         {else}
                             {icon("feather/user.svg")|noescape}
@@ -78,7 +77,7 @@
                     </ul>
                 </div>
             {else}
-                {button type:link, url:path('BASE_PATH') . 'user/login', text:null, icon:'feather/user.svg', label:text('login.login')}
+                {button type:link, url:path('PUBLIC_URL') . 'user/login', text:null, icon:'feather/user.svg', label:text('login.login')}
             {/if}
         </div>
     </div>

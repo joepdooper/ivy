@@ -3,12 +3,12 @@
 use Ivy\Manager\AssetManager;
 use Ivy\Manager\RouterManager;
 use Ivy\Model\User;
-use Ivy\Path;
+use Ivy\Core\Path;
 
-AssetManager::addCSS(Path::get('PLUGIN_PATH') . "items/collection/audio/css/audio.css");
+AssetManager::addCSS(Path::get('PLUGINS_PATH') . "items/collection/audio/css/audio.css");
 
 if (User::canEditAsEditor()) {
-    AssetManager::addJS(Path::get('PLUGIN_PATH') . "items/collection/audio/js/audio_admin.js");
+    AssetManager::addJS(Path::get('PLUGINS_PATH') . "items/collection/audio/js/audio_admin.js");
 }
 
 RouterManager::instance()->match('GET|POST', '/audio/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@insert');

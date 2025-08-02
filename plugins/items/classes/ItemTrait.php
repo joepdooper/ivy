@@ -39,4 +39,9 @@ trait ItemTrait
             ? $item
             : (new Item())->where('id', $item)->fetchOne();
     }
+
+    public function delete():string|int|bool {
+        $this->item->delete();
+        return parent::delete();
+    }
 }

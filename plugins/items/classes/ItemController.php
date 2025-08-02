@@ -4,7 +4,7 @@ namespace Items;
 
 use Ivy\Abstract\Controller;
 use Ivy\Manager\DatabaseManager;
-use Ivy\Path;
+use Ivy\Core\Path;
 use Ivy\View\View;
 
 class ItemController extends Controller
@@ -36,7 +36,7 @@ class ItemController extends Controller
         $this->item->policy('index');
 
         $items = (new Item)->where('parent_id')->sortBy(['sort', 'date', 'id'])->fetchAll();
-        View::set(Path::get('PLUGIN_PATH') . 'items/template/index.latte', ['items' => $items]);
+        View::set(Path::get('PLUGINS_PATH') . 'items/template/index.latte', ['items' => $items]);
     }
 
     public function deleteChildren(): void

@@ -2,10 +2,10 @@
 
 use Ivy\Manager\AssetManager;
 use Ivy\Manager\RouterManager;
-use Ivy\Path;
+use Ivy\Core\Path;
 
-AssetManager::addCSS(Path::get('PLUGIN_PATH') . "items/collection/code/css/code.css");
-AssetManager::addJS(Path::get('PLUGIN_PATH') . "items/collection/code/js/rainbow.min.js");
+AssetManager::addCSS(Path::get('PLUGINS_PATH') . "items/collection/code/css/code.css");
+AssetManager::addJS(Path::get('PLUGINS_PATH') . "items/collection/code/js/rainbow.min.js");
 
 RouterManager::instance()->match('GET|POST', '/code/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Code\CodeController@insert');
 

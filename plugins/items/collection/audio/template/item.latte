@@ -3,7 +3,7 @@
     {define item}
         <div class="relative">
             {if $audio->file}
-                {render(path('PLUGIN_PATH') . 'items/collection/audio/template/input.TypeAudio.latte', ['file' => $audio->file])}
+                {render(path('PLUGINS_PATH') . 'items/collection/audio/template/input.TypeAudio.latte', ['file' => $audio->file])}
             {/if}
         </div>
     {/define}
@@ -31,7 +31,7 @@
                     </div>
                 {/if}
                 <div class="hidden group-hover:block ">
-                    {render(path('PLUGIN_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
+                    {render(path('PLUGINS_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
                 </div>
             </div>
         </form>
