@@ -11,27 +11,17 @@
   "minimum-stability": "dev",
   "require": {
     "php": ">=8.3.0",
-    "joepdooper/ivy-roots": "dev-main",
-    "matthiasmullie/minify": "^1.3",
-    "php-curl-class/php-curl-class": "^9.6",
-    "bainternet/php-hooks": "^1.0",
-    "samdark/sitemap": "^2.4",
-    "predis/predis": "^3.0@alpha",
-    "ezyang/htmlpurifier": "dev-master",
-    "wixel/gump": "^2.2"
+    "joepdooper/ivy-roots": "dev-main"
   },
   "scripts": {
     "post-create-project-cmd": [
       "npm install"
     ]
   },
-  "require-dev": {
-    "pestphp/pest": "3.x-dev",
-    "phpstan/phpstan": "2.0.x-dev",
-    "kint-php/kint": "dev-master",
-    "joepdooper/ivy-cultivate": "dev-main"
-  },
   "config": {
+    "platform": {
+      "php": "8.3.0"
+    },
     "allow-plugins": {
       "pestphp/pest-plugin": true
     }
