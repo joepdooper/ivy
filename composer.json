@@ -19,9 +19,18 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "require-dev": {
+    "pestphp/pest": "3.x-dev",
+    "phpstan/phpstan": "2.0.x-dev",
+    "kint-php/kint": "dev-master",
+    "joepdooper/ivy-cultivate": "dev-main"
+  },
   "config": {
     "platform": {
       "php": "8.3.0"
+    },
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
     }
   }
 }
