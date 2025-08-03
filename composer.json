@@ -8,7 +8,6 @@
       "name": "Joep Dooper"
     }
   ],
-  "minimum-stability": "dev",
   "require": {
     "php": ">=8.3.0",
     "joepdooper/ivy-roots": "dev-main"
@@ -18,12 +17,11 @@
       "npm install"
     ]
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "config": {
     "platform": {
       "php": "8.3.0"
-    },
-    "allow-plugins": {
-      "pestphp/pest-plugin": true
     }
   }
 }
