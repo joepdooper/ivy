@@ -6,6 +6,7 @@ RouterManager::instance()->mount('/admin', function () {
     // -- USER profile
     RouterManager::instance()->post('/profile/post', '\Ivy\Controller\ProfileController@post');
     RouterManager::instance()->get('/profile', '\Ivy\Controller\ProfileController@user');
+    RouterManager::instance()->get('/profile(/[^/]+)?(/[^/]+)?', '\Ivy\Controller\ProfileController@verify');
     // -- USER index
     RouterManager::instance()->post('/user/post', '\Ivy\Controller\UserController@post');
     RouterManager::instance()->get('/user', '\Ivy\Controller\UserController@index');
