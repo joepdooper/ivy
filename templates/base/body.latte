@@ -10,9 +10,7 @@
         {render('include/main.latte')}
     {/block}
 
-    {if auth()->isLoggedIn()}
-        {render('include/message.latte', ['flashes' => $flashes])}
-    {/if}
+    {render('include/message.latte', ['flashes' => $flashes])}
 
     {hook('before_footer')}
     {block footer}
