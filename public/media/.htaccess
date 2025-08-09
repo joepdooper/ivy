@@ -1,0 +1,14 @@
+Options -Indexes
+
+<FilesMatch "^\.(htaccess|htpasswd|env)$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\.(php[0-9]?|phps|phtml|sh|pl|cgi|inc|ini|log|sql)$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\.(zip|rar|7z|tar|gz|bz2|docx?|xlsx?|pptx?|csv)$">
+    ForceType application/octet-stream
+    Header set Content-Disposition attachment
+</FilesMatch>
