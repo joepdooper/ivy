@@ -10,7 +10,7 @@ RouterManager::instance()->mount('/user', function () {
     RouterManager::instance()->before('GET|POST', '/reset', '\Ivy\Controller\UserController@beforeReset');
 });
 RouterManager::instance()->mount('/admin', function () {
-    RouterManager::instance()->before('GET|POST', '/profile', '\Ivy\Controller\ProfileController@before');
     RouterManager::instance()->before('GET|POST', '/.*', '\Ivy\Controller\AdminController@before');
+    RouterManager::instance()->before('GET|POST', '/profile', '\Ivy\Controller\ProfileController@before');
 });
 RouterManager::instance()->before('GET|POST', '/plugin/.*', '\Ivy\Controller\PluginController@before');
