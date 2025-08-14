@@ -38,7 +38,9 @@
                                         <input type="hidden" name="user[{$key}][id]"
                                                value="{$user->id}">
                                         <div class="join">
-                                            {button type:delete, name:"user[$key][delete]", value:"user_" . $user->id, id:$user->id}
+                                            {if $user->id != auth()->id() && canEditAsSuperAdmin()}
+                                                {button type:delete, name:"user[$key][delete]", value:"user_" . $user->id, id:$user->id}
+                                            {/if}
                                         </div>
                                     </td>
                                 </tr>
