@@ -36,7 +36,7 @@ jobs:
       with:
         path: routes/
         php_version: 8.3
-        level: 8
+        level: 6
 
     - name: PestPHP (Run Pest Tests)
     # You may pin to the exact commit or the version.
