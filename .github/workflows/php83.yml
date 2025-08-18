@@ -32,6 +32,12 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
+    - uses: php-actions/phpstan@v3
+      with:
+        path: routes/
+        php_version: 8.3
+        level: 1
+
     - name: PestPHP (Run Pest Tests)
     # You may pin to the exact commit or the version.
       uses: NWBY/pest-action@v1.2.0
