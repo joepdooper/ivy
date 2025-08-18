@@ -1,4 +1,4 @@
-name: PHP Composer
+name: CI
 
 on:
   push:
@@ -17,18 +17,19 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Setup PHP
+    - name: Setup PHP 8.3
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.3'
-        coverage: none # or pcov/xdebug if you need coverage
         tools: composer:v2
+
+    - name: Show PHP version
+      run: php -v
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
     - name: Cache Composer packages
-      id: composer-cache
       uses: actions/cache@v3
       with:
         path: vendor
@@ -37,20 +38,14 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+      run: composer install --prefer-dist --no-progress --no-suggest
 
-    - uses: php-actions/phpstan@v3
+    - name: Run PHPStan
+      uses: php-actions/phpstan@v3
       with:
         path: routes/
         php_version: 8.3
         level: 1
 
-    - name: PestPHP (Run Pest Tests)
-    # You may pin to the exact commit or the version.
-      uses: NWBY/pest-action@v1.2.0
-
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    # - name: Run test suite
-    #   run: composer run-script test
+    - name: Run Pest tests
+      run: vendor/bin/pest
