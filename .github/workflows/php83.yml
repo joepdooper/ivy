@@ -37,8 +37,11 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
 
-    - name: Install dependencies
+    - name: Install Composer dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
+
+    - name: Verify Composer dependencies
+      run: composer check-platform-reqs
 
     - name: Run PHPStan
       uses: php-actions/phpstan@v3
@@ -48,4 +51,4 @@ jobs:
         level: 1
 
     - name: Run Pest tests
-      run: vendor/bin/pest --no-cache
+      run: vendor/bin/pest
