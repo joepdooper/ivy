@@ -51,4 +51,4 @@ jobs:
         level: 1
 
     - name: Run Pest tests
-      run: vendor/bin/pest
+      run: composer exec pest
