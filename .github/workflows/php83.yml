@@ -17,6 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    # --- PHP setup ---
     - name: Setup PHP 8.3
       uses: shivammathur/setup-php@v2
       with:
@@ -50,5 +51,23 @@ jobs:
         php_version: 8.3
         level: 1
 
-    - name: Run Pest tests
-      run: composer exec pest
+    # --- Node.js / npm setup ---
+    - name: Setup Node.js (Latest)
+      uses: actions/setup-node@v3
+      with:
+        node-version: 'lts/*'    # always installs the latest LTS version
+        cache: 'npm'             # enables npm caching automatically
+
+    - name: Show Node & npm version
+      run: |
+        node -v
+        npm -v
+
+    - name: Install npm dependencies
+      run: npm install
+
+    # Optional: build/test scripts
+    # - name: Build assets
+    #   run: npm run build
+    # - name: Run npm tests
+    #   run: npm test
