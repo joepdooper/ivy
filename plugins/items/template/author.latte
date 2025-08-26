@@ -1,0 +1,22 @@
+<div class="flex items-center user-{$author->user_id}">
+    {if $author->user_image}
+        <div class="avatar">
+            <div class="w-8 rounded-full">
+                <img src="{media('profile/' . $author->user_image)}"
+                     alt="{$author->username}"/>
+            </div>
+        </div>
+    {else}
+        <div class="avatar placeholder">
+            <div class="bg-neutral text-neutral-content w-8 rounded-full">
+                <span class="text-xs"></span>
+            </div>
+        </div>
+    {/if}
+    <p class="text-xs ml-2">
+        <strong>{$author->username}</strong>
+        <span n:if="isset($date)">
+            {text('misc.on')} {date('d.m.y', strtotime($date))}
+        </span>
+    </p>
+</div>

@@ -1,0 +1,36 @@
+{
+  "name": "Items",
+  "version": "1.0.0",
+  "description": "Add items to homepage",
+  "type": "collection",
+  "actions": [
+  ],
+  "database": {
+    "install": "db/install.db.php",
+    "uninstall": "db/uninstall.db.php"
+  },
+  "settings": [
+    {
+      "name": "Sort",
+      "info": "Sort items by drag and drop"
+    },
+    {
+      "name": "Timeline",
+      "info": "Show items in a timeline"
+    }
+  ],
+  "collection": [
+    "Article",
+    "Audio",
+    "Code",
+    "Documentation",
+    "Gig",
+    "Image",
+    "Text",
+    "Vimeo",
+    "Youtube"
+  ],
+  "dependencies": [
+    "Tags"
+  ]
+}
