@@ -26,10 +26,6 @@ $app->run();
 
     <?php View::head('head.latte'); ?>
 
-    <script>
-        const _SUBFOLDER = "<?= Path::get('SUBFOLDER'); ?>";
-    </script>
-
     <?php foreach (AssetManager::getCss() as $cssfile): ?>
         <link href="<?= $cssfile; ?>" rel="stylesheet" type="text/css">
     <?php endforeach; ?>
