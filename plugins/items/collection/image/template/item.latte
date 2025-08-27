@@ -1,0 +1,42 @@
+<div class="item item-image" id="item-{$item->id}">
+
+    {define item}
+        <div class="relative">
+            {if $image->file}
+                {render(path('PLUGINS_PATH') . 'items/collection/image/template/input.TypeImage.latte', ['id' => $image->id, 'name' => 'image', 'file' => $image->file])}
+            {/if}
+        </div>
+    {/define}
+
+    {if auth()->isLoggedIn()}
+        <form action="{path('BASE_PATH') . 'image/save/' . $item->id}" method="POST" enctype="multipart/form-data">
+            {csrf()}
+            <div class="relative group">
+                {include item}
+                {if $image->file}
+                    <div class="absolute top-1/2 left-1/2 -mt-5 -ml-5">
+                        {button type:delete, name:'remove', value:'remove_image_' . $item->id, id:$item->id, placeholder:$image->file}
+                    </div>
+                {else}
+                    <div class="block relative bg-base-200 min-h-72">
+                        <img class="text-center text-xs" id="upload_image_{$item->id}Preview" src="#" alt="preview image"/>
+                        <div class="absolute top-1/2 left-1/2 -mt-5 -ml-5">
+                            {button type:upload, name:'image', id:'upload_image_' . $item->id}
+                        </div>
+                        <script>
+                            window.addEventListener('DOMContentLoaded', () => {
+                                previewImage("upload_image_" + {$item->id}, "upload_image_" + {$item->id} +"Preview", "src");
+                            });
+                        </script>
+                    </div>
+                {/if}
+                <div class="hidden group-hover:block absolute left-1/2 bottom-0 -mb-5 -ml-15">
+                    {render(path('PLUGINS_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
+                </div>
+            </div>
+        </form>
+    {else}
+        {include item}
+    {/if}
+
+</div>

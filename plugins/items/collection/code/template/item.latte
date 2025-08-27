@@ -1,0 +1,22 @@
+<div class="item item-code" id="item-{$item->id}">
+    {if auth()->isLoggedIn()}
+        <form action="{path('BASE_PATH') . 'code/save/' . $item->id}" method="POST" enctype="multipart/form-data">
+            {csrf()}
+            <label>
+                <select class="select bg-base-300 -mb-1 border-0 w-full" name="language">
+                    <option n:foreach="$languages as $language" {if $language === $code->language}selected{/if} value="{$language}">{$language}</option>
+                </select>
+            </label>
+            <div class="relative group">
+                <label>
+                    <textarea class="rounded bg-base-300 w-full border-0 p-4" name="code" placeholder="Your code here…">{$code->code}</textarea>
+                </label>
+                <div class="hidden group-hover:block absolute left-0 bottom-0">
+                    {render(path('PLUGINS_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
+                </div>
+            </div>
+        </form>
+    {else}
+        <pre><code data-language="{$code->language}">{$code->code|noescape}</code></pre>
+    {/if}
+</div>

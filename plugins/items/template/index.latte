@@ -1,0 +1,34 @@
+{extends file('body.latte')}
+
+{block main}
+    <main class="grow p-4 relative">
+        {if enabled('timeline')}
+            <ul n:if="$items" class="timeline timeline-vertical">
+                {foreach $items as $item}
+                    <li class="item item-timeline relative group" id="item-{$item->id}">
+                        <div class="timeline-start">
+                            <div class="font-bold leading-none">
+                                {date('d.m.y', strtotime($item->date))}
+                            </div>
+                        </div>
+                        <div class="timeline-middle px-2 py-1">
+                            {icon("feather/arrow-up-circle.svg")|noescape}
+                        </div>
+                        <div class="timeline-end">
+                            {$item->render()}
+                        </div>
+                    </li>
+                {/foreach}
+            </ul>
+        {else}
+            <div n:if="$items" id="grid" class="grid grid-cols-3 gap-4 items-start">
+                {foreach $items as $item}
+                    {$item->render()}
+                {/foreach}
+            </div>
+        {/if}
+    </main>
+    {if canEditAsAdmin()}
+        {render(path('PLUGINS_PATH') . 'items/template/template_list_modal.latte')}
+    {/if}
+{/block}

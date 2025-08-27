@@ -1,0 +1,13 @@
+{
+  "name": "Tags",
+  "version": "1.0.0",
+  "description": "Create tags for items",
+  "type": "filter",
+  "actions": [
+    {"text": "tags.manage", "icon": "feather/tag.svg", "url": "manage"}
+  ],
+  "database": {
+    "install": "db/install.db.php",
+    "uninstall": "db/uninstall.db.php"
+  }
+}
