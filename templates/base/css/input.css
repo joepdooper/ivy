@@ -52,20 +52,20 @@ html, body {
 }
 
 .form-check-input:checked ~ .switch .slider {
-    background-color: var(--color-base-content);
+    background-color: var(--color-accent);
 }
 
-@media (prefers-color-scheme: dark) {
-    .slider {
-        background-color: var(--color-base-300);
-    }
-    .slider:before {
-        background-color: var(--color-base-100);
-    }
-    .form-check-input:checked ~ .switch .slider {
-        background-color: var(--color-base-content);
-    }
-}
+/*@media (prefers-color-scheme: dark) {*/
+/*    .slider {*/
+/*        background-color: var(--color-base-300);*/
+/*    }*/
+/*    .slider:before {*/
+/*        background-color: var(--color-base-100);*/
+/*    }*/
+/*    .form-check-input:checked ~ .switch .slider {*/
+/*        background-color: var(--color-primary);*/
+/*    }*/
+/*}*/
 
 .form-check-input:checked ~ .switch .slider:before {
     -ms-transform: translateX(15px);

@@ -2,5 +2,5 @@
 
 return [
     'delete' => 'Delete',
-    'delete_question' => 'Do you want to delete :placeholder ?'
+    'delete_question' => 'Do you want to delete :placeholder?'
 ];

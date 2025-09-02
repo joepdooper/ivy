@@ -8,7 +8,7 @@
             <div class="space-y-4">
                 <h1 class="leading-none text-6xl font-bold">{text('info.infos')}</h1>
 
-                <div n:if="$infos" class="overflow-x-auto">
+                <div n:if="$infos" class="overflow-x-auto rounded-box border border-base-content/5">
                     <table class="table">
                         <thead>
                         <tr>
@@ -46,7 +46,7 @@
                                                value="{$info->plugin_id}">
                                         <div class="join">
                                             {if !$info->is_default && !$info->plugin_id}
-                                                {button type:delete, name:"info[$key][delete]", value:"info_" . $info->id, id:$info->id}
+                                                {button type:delete, name:"info[$key][delete]", value:"info_" . $info->id, id:$info->id, placeholder:$info->name}
                                             {/if}
                                         </div>
                                     </td>

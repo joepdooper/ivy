@@ -8,7 +8,7 @@
             <div class="space-y-4">
                 <h1 class="leading-none text-6xl font-bold">{text('user.users')}</h1>
 
-                    <div n:ifset="$users" class="overflow-x-auto">
+                    <div n:ifset="$users" class="overflow-x-auto rounded-box border border-base-content/5">
                         <table class="table">
                             <thead>
                             <tr>
@@ -39,7 +39,7 @@
                                                value="{$user->id}">
                                         <div class="join">
                                             {if $user->id != auth()->id() && canEditAsSuperAdmin()}
-                                                {button type:delete, name:"user[$key][delete]", value:"user_" . $user->id, id:$user->id}
+                                                {button type:delete, name:"user[$key][delete]", value:"user_" . $user->id, id:$user->id, placeholder:$user->username}
                                             {/if}
                                         </div>
                                     </td>
