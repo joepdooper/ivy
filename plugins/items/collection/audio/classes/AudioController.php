@@ -2,16 +2,12 @@
 
 namespace Items\Collection\Audio;
 
-use Items\Collection\Image\ImageService;
 use Items\CollectionController;
-use Items\Item;
 use Items\ItemHelper;
-use Ivy\Abstract\Controller;
 
 class AudioController extends CollectionController
 {
     private Audio $audio;
-
     public function __construct()
     {
         parent::__construct();
@@ -43,12 +39,10 @@ class AudioController extends CollectionController
         $item = $this->item->where('id', $id)->fetchOne();
         $audio = $this->audio->where('id', $item->table_id)->fetchOne();
 
-        if($this->request->files->get('audio')){
-            $audio->file = ImageService::upload($this->request->files->get('audio'));
-        }
-
-        if($this->request->get('remove') !== null){
-            AudioService::unlink($audio->file);
+        if($this->request->files->has('upload')){
+            $audio->file = (new AudioFile($this->request->files->get('upload')))
+                ->process()
+                ->getFileName();
         }
 
         $audio->update();
@@ -65,14 +59,7 @@ class AudioController extends CollectionController
     {
         $this->audio->policy('delete');
 
-        $item = $this->item->where('id', $id)->fetchOne();
-
-        $audio = $this->audio->where('id', $item->table_id)->fetchOne();
-        AudioService::unlink($audio->file);
-        $audio->delete();
-
-        $item->delete();
-
+        $this->audio->fetchOneWithItem($id)->delete();
         $this->flashBag->add('success', 'Audio successfully deleted');
         $this->redirect(ItemHelper::getRedirect($this->request));
     }

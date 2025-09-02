@@ -1,42 +1,26 @@
-<div class="item item-audio {if !$item->parent_id}{/if}" id="item-{$item->id}">
+<div class="item item-audio relative group" id="item-{$item->id}">
 
-    {define item}
-        <div class="relative">
-            {if $audio->file}
-                {render(path('PLUGINS_PATH') . 'items/collection/audio/template/input.TypeAudio.latte', ['file' => $audio->file])}
-            {/if}
+    {if $audio->file}
+        {render(path('PLUGINS_PATH') . 'items/collection/audio/template/input.TypeAudio.latte', ['file' => $audio->file])}
+    {/if}
+        {if !$audio->file}
+        <div class="block relative bg-base-200 min-h-10">
+            <div class="text-center text-xs" id="upload_{$item->id}Preview"></div>
         </div>
-    {/define}
+    {/if}
 
     {if $audio->policy('update')}
-        <form action="{path('BASE_PATH') . 'audio/save/' . $item->id}" method="POST" enctype="multipart/form-data">
-            {csrf()}
-            <div class="relative group">
-                {include item}
-                {if $audio->file}
-                    <div class="absolute top-1/2 left-1/2 -mt-5 -ml-5">
-                        {button type:delete, name:'remove', value:'remove_audio_' . $item->id, id:$item->id, placeholder:$audio->file}
-                    </div>
-                {else}
-                    <div class="block relative bg-base-200 min-h-10">
-                        <div class="text-center text-xs" id="upload_audio_{$item->id}Preview"></div>
-                        <div class="absolute top-1/2 left-1/2 -mt-5 -ml-5">
-                            {button type:upload, name:'audio', id:'upload_audio_' . $item->id}
-                        </div>
-                        <script nonce="{\Ivy\Manager\SecurityManager::getNonce()}">
-                            window.addEventListener('DOMContentLoaded', () => {
-                                previewAudio("upload_audio_" + {$item->id}, "upload_audio_" + {$item->id} +"Preview");
-                            });
-                        </script>
-                    </div>
-                {/if}
-                <div class="hidden group-hover:block ">
-                    {render(path('PLUGINS_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
-                </div>
-            </div>
-        </form>
-    {else}
-        {include item}
+        <div class="hidden group-hover:block absolute left-1/2 bottom-0 -mb-5 -ml-15">
+            <form action="{path('BASE_PATH') . 'audio/save/' . $item->id}" method="POST" enctype="multipart/form-data">
+                {csrf()}
+                {render(path('PLUGINS_PATH') . 'items/template/admin_buttons.latte', ['item' => $item, 'upload' => !$audio->file])}
+                <script nonce="{\Ivy\Manager\SecurityManager::getNonce()}">
+                    window.addEventListener('DOMContentLoaded', () => {
+                        previewAudio("upload_" + {$item->id}, "upload_" + {$item->id} +"Preview");
+                    });
+                </script>
+            </form>
+        </div>
     {/if}
 
 </div>

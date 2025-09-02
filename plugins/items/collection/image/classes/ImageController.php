@@ -62,14 +62,7 @@ class ImageController extends CollectionController
     {
         $this->image->policy('delete');
 
-        $item = $this->item->where('id', $id)->fetchOne();
-
-        $image = $this->image->where('id', $item->table_id)->fetchOne();
-        ImageService::unlink($image->file);
-        $image->delete();
-
-        $item->delete();
-
+        $this->image->fetchOneWithItem($id)->delete();
         $this->flashBag->add('success', 'Image successfully deleted');
         $this->redirect(ItemHelper::getRedirect($this->request));
     }
