@@ -40,9 +40,8 @@ class AudioController extends CollectionController
         $audio = $this->audio->where('id', $item->table_id)->fetchOne();
 
         if($this->request->files->has('upload')){
-            $audio->file = (new AudioFile($this->request->files->get('upload')))
-                ->process()
-                ->getFileName();
+            $file = new AudioFile($this->request->files->get('upload'));
+            $audio->file = $file->process()->getFileName();
         }
 
         $audio->update();

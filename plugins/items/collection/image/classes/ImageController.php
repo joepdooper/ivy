@@ -41,11 +41,13 @@ class ImageController extends CollectionController
         $image = $this->image->where('id', $item->table_id)->fetchOne();
 
         if($this->request->files->has('image')){
-            $image->file = ImageService::upload($this->request->files->get('image'));
+            $file = new ImageFile($this->request->files->get('image'));
+            $image->file = $file->process()->getFileName();
         }
 
         if($this->request->get('remove') !== null){
-            $image->file = ImageService::unlink($image->file);
+            $file = new ImageFile();
+            $file->remove($image->file);
         }
 
         $image->update();

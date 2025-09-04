@@ -19,7 +19,6 @@ class Image extends Model
     protected ?string $token;
 
     public function delete():string|int|bool {
-        ImageService::unlink($this->file);
         $this->item->delete();
         return parent::delete();
     }

@@ -26,27 +26,8 @@ class Article extends Model
     protected ?string $image;
     protected ?string $token;
 
-    protected string $itemMediaPath = 'item/article';
-
-    public function getItemMediaPath(): string
-    {
-        return $this->itemMediaPath;
-    }
-
     public function delete():string|int|bool {
-        $this->unlinkImage();
         $this->item->delete();
         return parent::delete();
-    }
-
-    public function unlinkImage(): string
-    {
-        if($this->image){
-            foreach ((new ImageSize)->fetchAll() as $size) {
-                unlink(Path::get('MEDIA_PATH') . 'item/' . $size->name . DIRECTORY_SEPARATOR . $this->image);
-                unlink(Path::get('MEDIA_PATH') . 'item/' . $size->name . '/' . pathinfo($this->image)['filename'] . '.webp');
-            }
-        }
-        return '';
     }
 }
