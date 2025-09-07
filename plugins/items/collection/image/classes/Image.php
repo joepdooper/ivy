@@ -19,6 +19,10 @@ class Image extends Model
     protected ?string $token;
 
     public function delete():string|int|bool {
+        $file = new ImageFile();
+        foreach ((new ImageSize)->fetchAll() as $imageSize) {
+            $file->setUploadPath('item'. DIRECTORY_SEPARATOR . $imageSize->name)->remove($this->file);
+        }
         $this->item->delete();
         return parent::delete();
     }

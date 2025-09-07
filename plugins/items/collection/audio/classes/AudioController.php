@@ -4,6 +4,7 @@ namespace Items\Collection\Audio;
 
 use Items\CollectionController;
 use Items\ItemHelper;
+use Ivy\Service\FileService;
 
 class AudioController extends CollectionController
 {
@@ -41,7 +42,15 @@ class AudioController extends CollectionController
 
         if($this->request->files->has('upload')){
             $file = new AudioFile($this->request->files->get('upload'));
-            $audio->file = $file->process()->getFileName();
+            $audio->file = $file->generateFileName();
+
+            (new FileService)->add($file)->upload();
+        }
+
+        if($this->request->request->has('remove')){
+            $file = new AudioFile();
+            $file->remove($audio->file);
+            $audio->file = '';
         }
 
         $audio->update();
@@ -59,6 +68,7 @@ class AudioController extends CollectionController
         $this->audio->policy('delete');
 
         $this->audio->fetchOneWithItem($id)->delete();
+
         $this->flashBag->add('success', 'Audio successfully deleted');
         $this->redirect(ItemHelper::getRedirect($this->request));
     }

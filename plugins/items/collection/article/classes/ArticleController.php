@@ -2,18 +2,14 @@
 
 namespace Items\Collection\Article;
 
-use Items\Collection\Image\ImageService;
+use Items\Collection\Image\ImageFile;
 use Items\Collection\Image\ImageSize;
 use Items\CollectionController;
 use Items\ItemHelper;
-use Ivy\Trait\ImageProcess;
-use Ivy\Trait\MediaUpload;
 use Tags\Tag;
 
 class ArticleController extends CollectionController
 {
-    use MediaUpload, ImageProcess;
-
     private Article $article;
     private Tag $tag;
 
@@ -22,10 +18,6 @@ class ArticleController extends CollectionController
         parent::__construct();
         $this->article = new Article();
         $this->tag = new Tag();
-
-        $this->allowedMimeTypes = ['image/*'];
-        $this->allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-        $this->uploadMediaPath = [];
     }
 
     public function insert($id): void
@@ -70,20 +62,14 @@ class ArticleController extends CollectionController
             // tag
         }
         if($this->request->files->has('image')){
-            $article->image = ImageService::upload($this->request->files->get('image'));
+            $file = new ImageFile($this->request->files->get('image'));
+            $article->image = $file->process()->getFileName();
         }
-        if($this->request->files->has('image')){
-            $maxWidths = [];
-            foreach ((new ImageSize)->fetchAll() as $size) {
-                $this->uploadMediaPath[] = 'item' . DIRECTORY_SEPARATOR . $size->name;
-                $maxWidths[] = $size->value;
-            }
-            $article->image = $this->uploadMedia($this->request->files->get('image'))
-                ->resizeImage($maxWidths, null)
-                ->fileName();
-        }
+
         if($this->request->request->has('remove')){
-            $article->image = ImageService::unlink($article->image);
+            $file = new ImageFile();
+            $file->remove($article->image);
+            $article->image = '';
         }
 
         $article->update();
@@ -105,6 +91,7 @@ class ArticleController extends CollectionController
         $this->article->policy('delete');
 
         $this->article->fetchOneWithItem($id)->delete();
+
         $this->flashBag->add('success', 'Article successfully deleted');
         $this->redirect(ItemHelper::getRedirect($this->request));
     }

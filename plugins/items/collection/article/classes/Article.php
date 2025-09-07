@@ -2,11 +2,8 @@
 
 namespace Items\Collection\Article;
 
-use Items\Collection\Image\ImageService;
-use Items\Collection\Image\ImageSize;
 use Items\ItemTrait;
 use Ivy\Abstract\Model;
-use Ivy\Core\Path;
 use Tags\TagTrait;
 
 class Article extends Model
@@ -27,6 +24,7 @@ class Article extends Model
     protected ?string $token;
 
     public function delete():string|int|bool {
+        (new \Items\Collection\Image\ImageFile)->remove($this->image);
         $this->item->delete();
         return parent::delete();
     }

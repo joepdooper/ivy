@@ -6,10 +6,7 @@ use Ivy\Abstract\File;
 
 class AudioFile extends File
 {
-    public function getUploadPath(): string|array
-    {
-        return 'item' . DIRECTORY_SEPARATOR . 'audio';
-    }
+    protected string $uploadPath = 'item' . DIRECTORY_SEPARATOR . 'audio';
 
     public function getAllowedMimeTypes(): array
     {

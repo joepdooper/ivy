@@ -2,16 +2,14 @@
 
 namespace Items\Collection\Image;
 
-use Ivy\Abstract\File;
+use Items\Collection\Image\ImageSize;
+use \Ivy\Abstract\File;
 use Ivy\Core\Path;
-use RuntimeException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageFile extends File
 {
-    public function getUploadPath(): string|array
-    {
-        return 'item/images';
-    }
+    protected ?int $imageWidth;
 
     public function getAllowedMimeTypes(): array
     {
@@ -23,74 +21,23 @@ class ImageFile extends File
         return ['jpg', 'jpeg', 'png', 'gif'];
     }
 
-    protected function upload(): void
+    public function getImageWidth(): int|null
     {
-        $tmpPath = $this->uploadFile->getPathname();
-        [$origWidth, $origHeight, $type] = getimagesize($tmpPath);
-
-        if (!$origWidth || !$origHeight) {
-            throw new RuntimeException("Failed to read image dimensions");
-        }
-
-        switch ($type) {
-            case IMAGETYPE_JPEG: $src = imagecreatefromjpeg($tmpPath); break;
-            case IMAGETYPE_PNG:  $src = imagecreatefrompng($tmpPath); break;
-            case IMAGETYPE_GIF:  $src = imagecreatefromgif($tmpPath); break;
-            default: throw new RuntimeException("Unsupported image type");
-        }
-
-        foreach ((new ImageSize)->fetchAll() as $size) {
-            $targetDir = Path::get('MEDIA_PATH') . DIRECTORY_SEPARATOR . 'item' . DIRECTORY_SEPARATOR . $size->name;
-            if (!is_dir($targetDir)) {
-                mkdir($targetDir, 0755, true);
-            }
-
-            $targetPath = $targetDir . DIRECTORY_SEPARATOR . $this->fileName;
-
-            if (empty($size->value)) {
-                copy($tmpPath, $targetPath);
-                $webpPath = $targetDir . DIRECTORY_SEPARATOR . pathinfo($this->fileName, PATHINFO_FILENAME) . '.webp';
-                imagewebp($src, $webpPath, 80);
-                continue;
-            }
-
-            $maxWidth  = (int) $size->value;
-            $ratio     = $origWidth / $origHeight;
-            $newWidth  = $maxWidth;
-            $newHeight = (int) round($maxWidth / $ratio);
-
-            $dst = imagecreatetruecolor($newWidth, $newHeight);
-
-            if (in_array($type, [IMAGETYPE_PNG, IMAGETYPE_GIF], true)) {
-                imagecolortransparent($dst, imagecolorallocatealpha($dst, 0, 0, 0, 127));
-                imagealphablending($dst, false);
-                imagesavealpha($dst, true);
-            }
-
-            imagecopyresampled($dst, $src, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
-
-            switch ($type) {
-                case IMAGETYPE_JPEG: imagejpeg($dst, $targetPath, 90); break;
-                case IMAGETYPE_PNG:  imagepng($dst, $targetPath, 8); break;
-                case IMAGETYPE_GIF:  imagegif($dst, $targetPath); break;
-            }
-
-            $webpPath = $targetDir . DIRECTORY_SEPARATOR . pathinfo($this->fileName, PATHINFO_FILENAME) . '.webp';
-            imagewebp($dst, $webpPath, 80);
-
-            imagedestroy($dst);
-        }
-
-        imagedestroy($src);
+        return $this->imageWidth;
     }
 
-    public function remove($file):void
+    public function setImageWidth(?int $width = null): static
     {
-        if($file){
-            foreach ((new ImageSize)->fetchAll() as $size) {
-                unlink(Path::get('MEDIA_PATH') . $size->name . DIRECTORY_SEPARATOR . $file);
-                unlink(Path::get('MEDIA_PATH') . $size->name . '/' . pathinfo($file)['filename'] . '.webp');
-            }
+        $this->imageWidth = $width;
+
+        return $this;
+    }
+
+    public function remove(?string $fileName = null): void
+    {
+        if($fileName){
+            unlink(Path::get('MEDIA_PATH') . trim($this->getUploadPath(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $fileName);
+            unlink(Path::get('MEDIA_PATH') . trim($this->getUploadPath(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . pathinfo($fileName)['filename'] . '.webp');
         }
     }
 }
