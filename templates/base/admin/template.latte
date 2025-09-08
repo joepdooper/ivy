@@ -13,7 +13,6 @@
                         <thead>
                         <tr>
                             <th>{text('template.name')}</th>
-                            <th>{text('template.code')}</th>
                             <th>{text('template.select')}</th>
                         </tr>
                         </thead>
@@ -24,14 +23,11 @@
                                 Base
                             </td>
                             <td>
-                                <pre><code>_TEMPLATE_BASE</code></pre>
-                            </td>
-                            <td>
                                 <label>
                                     <select class="select select-bordered w-full" name="template[1][value]">
                                         {foreach array_diff(scandir(path('TEMPLATES_PATH')), array('.', '..', '.DS_Store')) as $val}
                                             {php $theme = json_decode(file_get_contents(path('TEMPLATES_PATH') . $val . '/info.json'))}
-                                            <option value="{$theme->url}" {basename(_TEMPLATE_BASE) != $theme->url ?: 'selected'}>
+                                            <option value="{$theme->url}" {$templateBase != $theme->url ?: 'selected'}>
                                                 {$theme->name . ' (' . $theme->description . ')'}
                                             </option>
                                         {/foreach}
@@ -45,14 +41,11 @@
                                 Sub
                             </td>
                             <td>
-                                <pre><code>_TEMPLATE_SUB</code></pre>
-                            </td>
-                            <td>
                                 <label>
                                     <select class="select select-bordered w-full" name="template[2][value]">
                                         {foreach array_diff(scandir(path('TEMPLATES_PATH')), array('.', '..', '.DS_Store')) as $val}
                                             {php $theme = json_decode(file_get_contents(path('TEMPLATES_PATH') . $val . '/info.json'))}
-                                            <option value="{$theme->url}" {basename(_TEMPLATE_SUB) != $theme->url ?: 'selected'}>
+                                            <option value="{$theme->url}" {$templateSub != $theme->url ?: 'selected'}>
                                                 {$theme->name . ' (' . $theme->description . ')'}
                                             </option>
                                         {/foreach}
