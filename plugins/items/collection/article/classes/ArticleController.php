@@ -3,6 +3,7 @@
 namespace Items\Collection\Article;
 
 use Items\Collection\Image\ImageFile;
+use Items\Collection\Image\ImageFileService;
 use Items\Collection\Image\ImageSize;
 use Items\CollectionController;
 use Items\ItemHelper;
@@ -62,13 +63,23 @@ class ArticleController extends CollectionController
             // tag
         }
         if($this->request->files->has('image')){
+            $files = [];
             $file = new ImageFile($this->request->files->get('image'));
-            $article->image = $file->process()->getFileName();
+            $file->generateFileName();
+            foreach ((new ImageSize)->fetchAll() as $imageSize) {
+                $files[] = clone $file
+                    ->setUploadPath('item'. DIRECTORY_SEPARATOR . $imageSize->name)
+                    ->setImageWidth($imageSize->value);
+            }
+            $article->image = $file->getFileName();
+            (new ImageFileService)->add($files)->upload();
         }
 
         if($this->request->request->has('remove')){
             $file = new ImageFile();
-            $file->remove($article->image);
+            foreach ((new ImageSize)->fetchAll() as $imageSize) {
+                $file->setUploadPath('item'. DIRECTORY_SEPARATOR . $imageSize->name)->remove($article->image);
+            }
             $article->image = '';
         }
 

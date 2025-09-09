@@ -2,6 +2,8 @@
 
 namespace Items\Collection\Article;
 
+use Items\Collection\Image\ImageFile;
+use Items\Collection\Image\ImageSize;
 use Items\ItemTrait;
 use Ivy\Abstract\Model;
 use Tags\TagTrait;
@@ -24,7 +26,10 @@ class Article extends Model
     protected ?string $token;
 
     public function delete():string|int|bool {
-        (new \Items\Collection\Image\ImageFile)->remove($this->image);
+        $file = new ImageFile();
+        foreach ((new ImageSize)->fetchAll() as $imageSize) {
+            $file->setUploadPath('item'. DIRECTORY_SEPARATOR . $imageSize->name)->remove($this->image);
+        }
         $this->item->delete();
         return parent::delete();
     }

@@ -53,7 +53,7 @@ class ImageController extends CollectionController
             (new ImageFileService)->add($files)->upload();
         }
 
-        if($this->request->get('remove') !== null){
+        if($this->request->request->has('remove') !== null){
             $file = new ImageFile();
             foreach ((new ImageSize)->fetchAll() as $imageSize) {
                 $file->setUploadPath('item'. DIRECTORY_SEPARATOR . $imageSize->name)->remove($image->file);
