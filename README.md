@@ -40,6 +40,22 @@ Rename the `example.env` file to `.env` and update it with your database credent
 
 Make sure your web server points to the `public/` folder inside this project.
 
+```
+<VirtualHost *:80>
+    ServerName localhost
+    DocumentRoot /var/www/public
+    DirectoryIndex index.php index.html index.htm
+
+    <Directory /var/www/public>
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
 ## Login
 
 #### Accessing the backend
