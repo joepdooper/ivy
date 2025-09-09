@@ -36,6 +36,10 @@ mysql -u your_database_username -p your_database_name < ivy.sql
 
 Rename the `example.env` file to `.env` and update it with your database credentials.
 
+#### 4. Set the document root
+
+Make sure your web server points to the `public/` folder inside this project.
+
 ## Login
 
 #### Accessing the backend
