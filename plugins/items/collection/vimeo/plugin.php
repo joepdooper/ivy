@@ -6,7 +6,7 @@ use Ivy\Manager\RouterManager;
 use Ivy\Manager\SecurityManager;
 use Ivy\Manager\SessionManager;
 
-Hookmanager::add('after_footer', function () {
+HookManager::add('after_footer', function () {
     if(in_array("IframeManager", SessionManager::get('plugin_actives'))){
         if (isset($_COOKIE['cc_cookie'])){
             $cc_cookie = json_decode($_COOKIE['cc_cookie']);

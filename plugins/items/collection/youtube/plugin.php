@@ -5,11 +5,10 @@ use Ivy\Manager\HookManager;
 use Ivy\Manager\RouterManager;
 use Ivy\Manager\SecurityManager;
 use Ivy\Manager\SessionManager;
-use Ivy\Core\Path;
 
 AssetManager::addCSS("plugins/items/collection/youtube/css/youtube.css");
 
-Hookmanager::add('after_footer', function () {
+HookManager::add('after_footer', function () {
     if(in_array("IframeManager", SessionManager::get('plugin_actives'))){
         if (isset($_COOKIE['cc_cookie'])){
             $cc_cookie = json_decode($_COOKIE['cc_cookie']);

@@ -1,9 +1,12 @@
 <?php
 
 use Ivy\Manager\DatabaseManager;
+use Ivy\Model\User;
 
-DatabaseManager::connection()->exec(
-    "
+if(User::canEditAsSuperAdmin()) {
+    try{
+    DatabaseManager::connection()->exec(
+        "
 CREATE TABLE `images` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `file` varchar(255) DEFAULT NULL,
@@ -11,25 +14,30 @@ CREATE TABLE `images` (
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
   "
-);
-
-try {
-    DatabaseManager::connection()->insert(
-        'item_templates',
-        [
-            // set
-            'name' => 'Image',
-            'table' => 'image',
-            'plugin_url' => 'items/collection/image',
-            'route' => 'image',
-            'namespace' => 'Items\Collection\Image',
-        ]
     );
-} catch (Exception $e) {
-}
+    } catch (Exception $e) {
+        error_log("Failed to create table `images`: " . $e->getMessage());
+    }
 
-DatabaseManager::connection()->exec(
-    "
+    try {
+        DatabaseManager::connection()->insert(
+            'item_templates',
+            [
+                // set
+                'name' => 'Image',
+                'table' => 'image',
+                'plugin_url' => 'items/collection/image',
+                'route' => 'image',
+                'namespace' => 'Items\Collection\Image',
+            ]
+        );
+    } catch (Exception $e) {
+        error_log("Failed to insert Image into `item_templates`: " . $e->getMessage());
+    }
+
+    try{
+    DatabaseManager::connection()->exec(
+        "
 CREATE TABLE `image_sizes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255),
@@ -39,69 +47,78 @@ CREATE TABLE `image_sizes` (
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
   "
-);
-
-try {
-    DatabaseManager::connection()->insert(
-        'image_sizes',
-        [
-            // set
-            'name' => 'original',
-            'bool' => '1',
-            'value' => NULL
-        ]
     );
-} catch (Exception $e) {
-}
+    } catch (Exception $e) {
+        error_log("Failed to create table `image_sizes`: " . $e->getMessage());
+    }
 
-try {
-    DatabaseManager::connection()->insert(
-        'image_sizes',
-        [
-            // set
-            'name' => 'large',
-            'bool' => '1',
-            'value' => '1320'
-        ]
-    );
-} catch (Exception $e) {
-}
+    try {
+        DatabaseManager::connection()->insert(
+            'image_sizes',
+            [
+                // set
+                'name' => 'original',
+                'bool' => '1',
+                'value' => NULL
+            ]
+        );
+    } catch (Exception $e) {
+        error_log("Failed to insert into `image_sizes`: " . $e->getMessage());
+    }
 
-try {
-    DatabaseManager::connection()->insert(
-        'image_sizes',
-        [
-            // set
-            'name' => 'small',
-            'bool' => '1',
-            'value' => '640'
-        ]
-    );
-} catch (Exception $e) {
-}
+    try {
+        DatabaseManager::connection()->insert(
+            'image_sizes',
+            [
+                // set
+                'name' => 'large',
+                'bool' => '1',
+                'value' => '1320'
+            ]
+        );
+    } catch (Exception $e) {
+        error_log("Failed to insert into `image_sizes`: " . $e->getMessage());
+    }
 
-try {
-    DatabaseManager::connection()->insert(
-        'image_sizes',
-        [
-            // set
-            'name' => 'thumb',
-            'bool' => '1',
-            'value' => '200'
-        ]
-    );
-} catch (Exception $e) {
-}
+    try {
+        DatabaseManager::connection()->insert(
+            'image_sizes',
+            [
+                // set
+                'name' => 'small',
+                'bool' => '1',
+                'value' => '640'
+            ]
+        );
+    } catch (Exception $e) {
+        error_log("Failed to insert into `image_sizes`: " . $e->getMessage());
+    }
 
-try {
-    DatabaseManager::connection()->insert(
-        'image_sizes',
-        [
-            // set
-            'name' => 'icon',
-            'bool' => '1',
-            'value' => '60'
-        ]
-    );
-} catch (Exception $e) {
+    try {
+        DatabaseManager::connection()->insert(
+            'image_sizes',
+            [
+                // set
+                'name' => 'thumb',
+                'bool' => '1',
+                'value' => '200'
+            ]
+        );
+    } catch (Exception $e) {
+        error_log("Failed to insert into `image_sizes`: " . $e->getMessage());
+    }
+
+    try {
+        DatabaseManager::connection()->insert(
+            'image_sizes',
+            [
+                // set
+                'name' => 'icon',
+                'bool' => '1',
+                'value' => '60'
+            ]
+        );
+    } catch (Exception $e) {
+        error_log("Failed to insert into `image_sizes`: " . $e->getMessage());
+    }
 }

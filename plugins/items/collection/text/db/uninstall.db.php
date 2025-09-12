@@ -13,7 +13,7 @@ if(User::canEditAsSuperAdmin()) {
             ]
         );
     } catch (Exception $e) {
-        error_log($e->getMessage());
+        error_log("Failed to remove text from item_templates: " . $e->getMessage());
     }
 
     try {
@@ -23,6 +23,6 @@ if(User::canEditAsSuperAdmin()) {
         "
         );
     } catch (Exception $e) {
-        error_log($e->getMessage());
+        error_log("Failed to drop table `texts`: " . $e->getMessage());
     }
 }

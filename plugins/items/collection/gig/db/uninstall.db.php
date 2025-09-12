@@ -1,20 +1,30 @@
 <?php
 
 use Ivy\Manager\DatabaseManager;
+use Ivy\Model\User;
 
-try {
-    DatabaseManager::connection()->delete(
-        'item_templates',
-        [
-            // where
-            'plugin_url' => 'Gig'
-        ]
-    );
-} catch (Exception $e) {
-}
+if(User::canEditAsSuperAdmin()) {
 
-DatabaseManager::connection()->exec(
-    "
+    try {
+        DatabaseManager::connection()->delete(
+            'item_templates',
+            [
+                // where
+                'plugin_url' => 'gig'
+            ]
+        );
+    } catch (Exception $e) {
+        error_log("Failed to remove gig from item_templates: " . $e->getMessage());
+    }
+
+    try{
+        DatabaseManager::connection()->exec(
+        "
     DROP TABLE `gigs`;
     "
-);
+        );
+    } catch (Exception $e) {
+        error_log("Failed to drop table `gigs`: " . $e->getMessage());
+    }
+
+}

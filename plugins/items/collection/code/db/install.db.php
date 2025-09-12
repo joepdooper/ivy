@@ -1,8 +1,12 @@
 <?php
 
 use Ivy\Manager\DatabaseManager;
+use Ivy\Model\User;
 
-DatabaseManager::connection()->exec('
+if(User::canEditAsSuperAdmin()) {
+
+    try {
+        DatabaseManager::connection()->exec('
 CREATE TABLE `codes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` TEXT NOT NULL,
@@ -11,19 +15,25 @@ CREATE TABLE `codes` (
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
   '
-);
-
-try {
-    DatabaseManager::connection()->insert(
-        'item_templates',
-        [
-            // set
-            'name' => 'Code',
-            'table' => 'code',
-            'plugin_url' => 'items/collection/code',
-            'route' => 'code',
-            'namespace' => 'Items\Collection\Code',
-        ]
     );
-} catch (Exception $e) {
+    } catch (Exception $e) {
+        error_log("Failed to create table `codes`: " . $e->getMessage());
+    }
+
+    try {
+        DatabaseManager::connection()->insert(
+            'item_templates',
+            [
+                // set
+                'name' => 'Code',
+                'table' => 'code',
+                'plugin_url' => 'items/collection/code',
+                'route' => 'code',
+                'namespace' => 'Items\Collection\Code',
+            ]
+        );
+    } catch (Exception $e) {
+        error_log("Failed to insert Code into `item_templates`: " . $e->getMessage());
+    }
+
 }

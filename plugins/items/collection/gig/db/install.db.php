@@ -1,9 +1,14 @@
 <?php
 
 use Ivy\Manager\DatabaseManager;
+use Ivy\Model\User;
+use Tags\Tag;
 
-DatabaseManager::connection()->exec(
-    "
+if(User::canEditAsSuperAdmin()) {
+
+    try{
+        DatabaseManager::connection()->exec(
+        "
   CREATE TABLE `gigs` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `datetime` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -18,30 +23,29 @@ DatabaseManager::connection()->exec(
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
     "
-);
+        );
+    } catch (Exception $e) {
+        error_log("Failed to create table `gigs`: " . $e->getMessage());
+    }
 
-try {
-    DatabaseManager::connection()->insert(
-        'item_templates',
-        [
-            // set
-            'name' => 'Gig',
-            'table' => 'gig',
-            'plugin_url' => 'items/collection/gig',
-            'route' => 'gig',
-            'namespace' => 'Items\Collection\Gig',
-        ]
-    );
-} catch (Exception $e) {
-}
+    try {
+        DatabaseManager::connection()->insert(
+            'item_templates',
+            [
+                // set
+                'name' => 'Gig',
+                'table' => 'gig',
+                'plugin_url' => 'items/collection/gig',
+                'route' => 'gig',
+                'namespace' => 'Items\Collection\Gig',
+            ]
+        );
+    } catch (Exception $e) {
+        error_log("Failed to insert Gig into `item_templates`: " . $e->getMessage());
+    }
 
-try {
-    DatabaseManager::connection()->insert(
-        'tags',
-        [
-            // set
-            'value' => 'Gig'
-        ]
-    );
-} catch (Exception $e) {
+    $existing = (new Tag)->where('value', 'Gig')->fetchOne();
+    if (!$existing) {
+        (new Tag)->populate(['value' => 'Gig'])->insert();
+    }
 }

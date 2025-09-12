@@ -1,9 +1,14 @@
 <?php
 
 use Ivy\Manager\DatabaseManager;
+use Ivy\Model\User;
+use Tags\Tag;
 
-DatabaseManager::connection()->exec(
-    "
+if(User::canEditAsSuperAdmin()) {
+
+    try{
+    DatabaseManager::connection()->exec(
+        "
 CREATE TABLE `documentations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
@@ -14,30 +19,30 @@ CREATE TABLE `documentations` (
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
   "
-);
-
-try {
-    DatabaseManager::connection()->insert(
-        'item_templates',
-        [
-            // set
-            'name' => 'Documentation',
-            'table' => 'documentation',
-            'plugin_url' => 'items/collection/documentation',
-            'route' => 'documentation',
-            'namespace' => 'Items\Collection\Documentation',
-        ]
     );
-} catch (Exception $e) {
-}
+    } catch (Exception $e) {
+        error_log("Failed to create table `documentations`: " . $e->getMessage());
+    }
 
-try {
-    DatabaseManager::connection()->insert(
-        'tags',
-        [
-            // set
-            'value' => 'Documentation'
-        ]
-    );
-} catch (Exception $e) {
+    try {
+        DatabaseManager::connection()->insert(
+            'item_templates',
+            [
+                // set
+                'name' => 'Documentation',
+                'table' => 'documentation',
+                'plugin_url' => 'items/collection/documentation',
+                'route' => 'documentation',
+                'namespace' => 'Items\Collection\Documentation',
+            ]
+        );
+    } catch (Exception $e) {
+        error_log("Failed to insert Documentation into `item_templates`: " . $e->getMessage());
+    }
+
+    $existing = (new Tag)->where('value', 'Documentation')->fetchOne();
+    if (!$existing) {
+        (new Tag)->populate(['value' => 'Documentation'])->insert();
+    }
+
 }
