@@ -5,6 +5,7 @@ use Ivy\Model\User;
 
 if(User::canEditAsSuperAdmin()) {
 
+    try{
     DatabaseManager::connection()->exec(
         "
 CREATE TABLE `texts` (
@@ -15,6 +16,9 @@ CREATE TABLE `texts` (
   ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
   "
     );
+    } catch (Exception $e) {
+        error_log("Failed to create table `texts`: " . $e->getMessage());
+    }
 
     try {
         DatabaseManager::connection()->insert(
@@ -29,6 +33,6 @@ CREATE TABLE `texts` (
             ]
         );
     } catch (Exception $e) {
-        error_log($e->getMessage());
+        error_log("Failed to insert Text into `item_templates`: " . $e->getMessage());
     }
 }
