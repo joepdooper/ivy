@@ -8,7 +8,7 @@
             <div class="space-y-4">
                 <h1 class="leading-none text-6xl font-bold">{text('tags.tags.tags')}</h1>
 
-                <div class="overflow-x-auto">
+                <div n:if="$tags" class="overflow-x-auto rounded-box border border-base-content/5">
                     <table class="table">
                         <thead>
                         <tr>
@@ -33,16 +33,18 @@
                                 </td>
                             </tr>
                         {/foreach}
-                        <tr>
-                            <td colspan="2">
-                                <label>
-                                    <input class="input input-bordered w-full" type="text" name="tag[][value]"
-                                           placeholder="Add tag">
-                                </label>
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
+                </div>
+                <div n:else class="text-center">
+                    {text('tags.tags.none_defined')}
+                </div>
+
+                <div>
+                    <label>
+                        <input class="input input-bordered w-full" type="text" name="tag[][value]"
+                               placeholder="Add tag">
+                    </label>
                 </div>
 
                 <div class="text-center">
