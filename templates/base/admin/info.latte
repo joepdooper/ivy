@@ -53,17 +53,18 @@
                                 </tr>
                             {/if}
                         {/foreach}
-                            <tr>
-                                <td colspan="6">
-                                    <label>
-                                        <input class="input input-bordered w-full" type="text" name="info[][name]" placeholder="{text('info.add_name')}">
-                                    </label>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
-                <div n:else class="text-center">{text('info.none_defined')}</div>
+                <div n:else class="text-center">
+                    {text('info.none_defined')}
+                </div>
+
+                <div>
+                    <label>
+                        <input class="input input-bordered w-full" type="text" name="info[][name]" placeholder="{text('info.add_name')}">
+                    </label>
+                </div>
 
                 <div class="text-center">
                     {button type:submit, text:text('button.update')}
