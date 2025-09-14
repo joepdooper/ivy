@@ -8,23 +8,28 @@
             <div class="space-y-4">
                 <h1 class="leading-none text-6xl font-bold">{text('user.users')}</h1>
 
-                    <div n:ifset="$users" class="overflow-x-auto rounded-box border border-base-content/5">
-                        <table class="table">
-                            <thead>
+                <div n:ifset="$users" class="overflow-x-auto rounded-box border border-base-content/5">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            {if canEditAsSuperAdmin()}
+                                <th></th>
+                            {/if}
+                            <th>{text('user.super_admin')}</th>
+                            <th>{text('user.admin')}</th>
+                            <th>{text('user.editor')}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach $users as $key => $user}
                             <tr>
-                                <th></th>
-                                <th></th>
-                                <th>{text('user.super_admin')}</th>
-                                <th>{text('user.admin')}</th>
-                                <th>{text('user.editor')}</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {foreach $users as $key => $user}
-                                <tr>
-                                    <td>{$user->username}</td>
-                                    <td>{$user->email}</td>
+                                <td>{$user->username}</td>
+                                {if canEditAsSuperAdmin()}
+                                    <td>
+                                        {$user->email}
+                                    </td>
                                     <td>
                                         {button type:switch, name:"user[$key][super_admin]", value:auth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::SUPER_ADMIN)}
                                     </td>
@@ -34,24 +39,43 @@
                                     <td>
                                         {button type:switch, name:"user[$key][editor]", value:auth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::EDITOR)}
                                     </td>
-                                    <td class="text-right">
-                                        <input type="hidden" name="user[{$key}][id]"
-                                               value="{$user->id}">
-                                        <div class="join">
-                                            {if $user->id != auth()->id() && canEditAsSuperAdmin()}
-                                                {button type:delete, name:"user[$key][delete]", value:"user_" . $user->id, id:$user->id, placeholder:$user->username}
-                                            {/if}
-                                        </div>
+                                {else}
+                                    <td>
+                                        {if auth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::SUPER_ADMIN)}
+                                            <div class="text-success">{icon("feather/check-square.svg")|noescape}</div>
+                                        {/if}
                                     </td>
-                                </tr>
-                            {/foreach}
-                            </tbody>
-                        </table>
-                    </div>
+                                    <td>
+                                        {if auth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::ADMIN)}
+                                            <div class="text-success">{icon("feather/check-square.svg")|noescape}</div>
+                                        {/if}
+                                    </td>
+                                    <td>
+                                        {if auth()->admin()->doesUserHaveRole($user->id, \Delight\Auth\Role::EDITOR)}
+                                            <div class="text-success">{icon("feather/check-square.svg")|noescape}</div>
+                                        {/if}
+                                    </td>
+                                {/if}
+                                <td class="text-right">
+                                    <input type="hidden" name="user[{$key}][id]"
+                                           value="{$user->id}">
+                                    <div class="join">
+                                        {if $user->id != auth()->id() && canEditAsSuperAdmin()}
+                                            {button type:delete, name:"user[$key][delete]", value:"user_" . $user->id, id:$user->id, placeholder:$user->username}
+                                        {/if}
+                                    </div>
+                                </td>
+                            </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+                </div>
 
+                {if canEditAsSuperAdmin()}
                     <div class="text-center">
                         {button type:submit, text:text('button.update')}
                     </div>
+                {/if}
 
             </div>
         </form>

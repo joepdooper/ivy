@@ -1,4 +1,7 @@
-<label class="btn btn-soft btn-primary btn-square shadow-none join-item" title="{text('button.delete') . ' ' . ($placeholder ?? $id)}" for="modal_{$name}_{$id}">
+<label class="btn btn-soft btn-primary btn-square shadow-none join-item"
+       title="{text('button.delete') . ' ' . ($placeholder ?? $id)}"
+       for="modal_{$name}_{$id}"
+       {if isset($disabled) && $disabled}disabled="disabled"{/if}>
     {icon("feather/trash-2.svg")|noescape}
 </label>
 
