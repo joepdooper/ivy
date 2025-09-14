@@ -9,41 +9,43 @@
             <div class="space-y-4">
                 <h1 class="leading-none text-6xl font-bold">{text('user.profile')}</h1>
 
-                <div>
+                <div class="space-x-2">
                     {foreach auth()->getRoles() as $role}
-                        <span class="badge p-3">{text('user.'.strtolower($role))}</span>
+                        <span class="badge badge-soft badge-info">{text('user.'.strtolower($role))}</span>
                     {/foreach}
                 </div>
 
-                <div class="form-group">
-                    <div class="avatar">
-                        {if $profile->user_image}
+                {if isPluginActive('Image')}
+                    <div class="form-group">
+                        <div class="avatar">
+                            {if $profile->user_image}
 
-                            <div class="w-36 rounded-full">
-                                <img src="{media('profile/' . $profile->user_image)}"
-                                     alt="{auth()->getUsername()}"/>
-                            </div>
-                            <div class="join">
-                                {button type:delete, name:"avatar", value:"delete", id:$profile->id, placeholder:$profile->user_image}
-                            </div>
-
-                        {else}
-
-                            <div class="indicator h-36 w-36 rounded-full border dark:border-gray-700">
-                                <div class="indicator-item indicator-middle indicator-center w-10 h-10">
-                                    {button type:upload, name:"avatar", value:"upload"}
+                                <div class="w-36 rounded-full">
+                                    <img src="{media('profile/' . $profile->user_image)}"
+                                         alt="{auth()->getUsername()}"/>
                                 </div>
-                                <div id="userImagePreview" class="h-36 w-36"></div>
-                                <script>
-                                    window.addEventListener('DOMContentLoaded', () => {
-                                        previewImage("avatar", "userImagePreview", "background");
-                                    });
-                                </script>
-                            </div>
+                                <div class="join">
+                                    {button type:delete, name:"avatar", value:"delete", id:$profile->id, placeholder:$profile->user_image}
+                                </div>
 
-                        {/if}
+                            {else}
+
+                                <div class="indicator h-36 w-36 rounded-full border dark:border-gray-700">
+                                    <div class="indicator-item indicator-middle indicator-center w-10 h-10">
+                                        {button type:upload, name:"avatar", value:"upload"}
+                                    </div>
+                                    <div id="userImagePreview" class="h-36 w-36"></div>
+                                    <script>
+                                        window.addEventListener('DOMContentLoaded', () => {
+                                            previewImage("avatar", "userImagePreview", "background");
+                                        });
+                                    </script>
+                                </div>
+
+                            {/if}
+                        </div>
                     </div>
-                </div>
+                {/if}
                 <div>
                     <label>
                         <input class="input input-bordered w-full" name="username" type="text" placeholder="{text('placeholder.name')}"
