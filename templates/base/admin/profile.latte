@@ -11,7 +11,7 @@
 
                 <div class="space-x-2">
                     {foreach auth()->getRoles() as $role}
-                        <span class="badge badge-soft badge-info">{text('user.'.strtolower($role))}</span>
+                        <span class="badge badge-soft badge-info badge-sm font-bold p-3">{text('user.'.strtolower($role))}</span>
                     {/foreach}
                 </div>
 
