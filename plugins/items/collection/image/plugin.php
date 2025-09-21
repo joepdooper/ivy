@@ -8,7 +8,7 @@ use Ivy\Core\Path;
 AssetManager::addCSS("plugins/items/collection/image/css/image.css");
 
 if (User::canEditAsEditor()) {
-    AssetManager::addJS("plugins/items/collection/image/js/image_admin.js");
+    AssetManager::addViteEntry("plugins/items/collection/image/js/image_admin.js");
 }
 
 //if (User::getAuth()->isLoggedIn()) {

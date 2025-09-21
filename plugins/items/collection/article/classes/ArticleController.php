@@ -62,7 +62,7 @@ class ArticleController extends CollectionController
         if($this->request->request->has('tag')){
             // tag
         }
-        if($this->request->files->has('image')){
+        if($this->request->files->get('image')){
             $files = [];
             $file = new ImageFile($this->request->files->get('image'));
             $file->generateFileName();

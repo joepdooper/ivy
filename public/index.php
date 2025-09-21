@@ -6,12 +6,6 @@ use Ivy\Model\Info;
 use Ivy\Core\Path;
 use Ivy\View\View;
 
-error_reporting(E_ALL);
-ini_set('ignore_repeated_errors', TRUE);
-ini_set('display_errors', TRUE);
-ini_set('log_errors', TRUE);
-ini_set('error_log', __DIR__ . '/../logs/php_error.txt');
-
 // Autoloader
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../autoloader.php';
@@ -21,7 +15,7 @@ $app->run();
 ?>
 
 <!DOCTYPE html>
-<html lang="<?= substr(Info::getStash()['language']->value, 0, 2); ?>" data-color-mode="dark">
+<html lang="<?= substr(Info::stashGet('language')->value, 0, 2); ?>" data-color-mode="dark">
 <head>
 
     <?php View::head('head.latte'); ?>
@@ -35,8 +29,8 @@ $app->run();
 
 <?php View::body('body.latte'); ?>
 
-<?php foreach (AssetManager::getESM() as $esmfile): ?>
-    <script type="module" src="<?= Path::get('BASE_PATH') . $esmfile; ?>"></script>
+<?php foreach (AssetManager::getViteEntry() as $esmfile): ?>
+    <script type="module" src="<?= $esmfile; ?>"></script>
 <?php endforeach; ?>
 
 <?php foreach (AssetManager::getJS() as $jsfile): ?>

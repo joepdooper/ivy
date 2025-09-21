@@ -39,7 +39,7 @@ class DocumentationTemplate
 
         $documentation = (new Documentation)->where('id', $item->table_id)->fetchOne();
 
-        Info::getStash()['title']->value = Info::getStash()['title']->value . " - " . $documentation->title;
+        Info::stashGet('title')->value = Info::stashGet('title')->value . " - " . $documentation->title;
 
         View::set(Path::get('PLUGINS_PATH') . $item->plugin_url . '/template/page.latte', [
             'item' => $item,

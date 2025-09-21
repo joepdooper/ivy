@@ -1,3 +1,6 @@
+import * as linkify from "linkifyjs";
+import linkifyHtml from "linkify-html";
+
 function linkifyTextItems() {
 	document.querySelectorAll('.item-text p').forEach(item_text => {
 		if(linkify.find(item_text.innerHTML).length){

@@ -6,7 +6,6 @@ use Items\Item;
 use Ivy\Model\Info;
 use Ivy\Model\Profile;
 use Ivy\Core\Path;
-use Ivy\Model\User;
 use Ivy\View\View;
 
 class ArticleTemplate
@@ -36,7 +35,7 @@ class ArticleTemplate
 
         $article = (new Article)->fetchOneWithSlug($slug);
 
-        Info::getStash()['title']->value = Info::getStash()['title']->value . " - " . $article->title;
+        Info::stashGet('title')->value = Info::stashGet('title')->value . " - " . $article->title;
 
         View::set(Path::get('PLUGINS_PATH') . $article->getItem()->plugin_url . '/template/page.latte', [
             'item' => $article->getItem(),

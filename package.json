@@ -12,6 +12,12 @@
     "tailwindcss": "^4.0.12"
   },
   "devDependencies": {
-    "daisyui": "^5.0.0"
+    "daisyui": "^5.0.0",
+    "vite": "^7.1.5"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   }
 }

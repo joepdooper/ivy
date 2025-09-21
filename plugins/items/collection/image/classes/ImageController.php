@@ -40,7 +40,7 @@ class ImageController extends CollectionController
         $item = $this->item->where('id', $id)->fetchOne();
         $image = $this->image->where('id', $item->table_id)->fetchOne();
 
-        if($this->request->files->has('image')){
+        if($this->request->files->get('image')){
             $files = [];
             $file = new ImageFile($this->request->files->get('image'));
             $file->generateFileName();
@@ -53,7 +53,7 @@ class ImageController extends CollectionController
             (new ImageFileService)->add($files)->upload();
         }
 
-        if($this->request->request->has('remove') !== null){
+        if($this->request->request->has('remove')){
             $file = new ImageFile();
             foreach ((new ImageSize)->fetchAll() as $imageSize) {
                 $file->setUploadPath('item'. DIRECTORY_SEPARATOR . $imageSize->name)->remove($image->file);

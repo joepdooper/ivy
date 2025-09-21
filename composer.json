@@ -15,8 +15,8 @@
     "symfony/mime": "^7.3"
   },
   "scripts": {
-    "post-create-project-cmd": [
-      "npm install"
+    "post-install-cmd": [
+      "[ \"$COMPOSER_DEV_MODE\" = \"1\" ] && npm install || npm install --production"
     ]
   },
   "minimum-stability": "dev",
