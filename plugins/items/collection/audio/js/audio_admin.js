@@ -1,4 +1,4 @@
-function previewAudio(input, preview) {
+window.previewAudio = function(input, preview) {
     let fileInput = document.getElementById(input);
     let audioPreview = document.getElementById(preview);
     fileInput.onchange = evt => {

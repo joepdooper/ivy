@@ -13,10 +13,6 @@
     {
       "name": "Sort",
       "info": "Sort items by drag and drop"
-    },
-    {
-      "name": "Timeline",
-      "info": "Show items in a timeline"
     }
   ],
   "collection": [
@@ -28,9 +24,11 @@
     "Image",
     "Text",
     "Vimeo",
-    "Youtube"
+    "Youtube",
+    "Moment"
   ],
   "dependencies": [
-    "Tags"
+    "Tags",
+    "Search"
   ]
 }

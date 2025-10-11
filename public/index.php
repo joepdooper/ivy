@@ -2,6 +2,7 @@
 
 use Ivy\Core\App;
 use Ivy\Manager\AssetManager;
+use Ivy\Manager\SecurityManager;
 use Ivy\Model\Info;
 use Ivy\Core\Path;
 use Ivy\View\View;
@@ -23,19 +24,17 @@ $app->run();
     <?php foreach (AssetManager::getCss() as $cssfile): ?>
         <link href="<?= $cssfile; ?>" rel="stylesheet" type="text/css">
     <?php endforeach; ?>
-
 </head>
 <body>
 
 <?php View::body('body.latte'); ?>
 
-<?php foreach (AssetManager::getViteEntry() as $esmfile): ?>
-    <script type="module" src="<?= $esmfile; ?>"></script>
-<?php endforeach; ?>
-
 <?php foreach (AssetManager::getJS() as $jsfile): ?>
-    <script src="<?= Path::get('BASE_PATH') . $jsfile; ?>"></script>
+    <script nonce="<?= SecurityManager::getNonce(); ?>" src="<?= Path::get('PUBLIC_URL') . $jsfile; ?>"></script>
 <?php endforeach; ?>
 
+<?php foreach (AssetManager::getViteEntry() as $viteEntry): ?>
+    <script nonce="<?= SecurityManager::getNonce(); ?>" type="module" src="<?= $viteEntry; ?>"></script>
+<?php endforeach; ?>
 </body>
 </html>

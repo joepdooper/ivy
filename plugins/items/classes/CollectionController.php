@@ -18,7 +18,7 @@ abstract class CollectionController extends Controller
 
     public function save($id): void
     {
-        if($this->request->get('delete') !== null){
+        if($this->request->request->has('delete')){
             $this->delete($id);
         } else {
             $this->update($id);

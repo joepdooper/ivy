@@ -23,7 +23,7 @@
                         <div class="absolute top-1/2 left-1/2 -mt-5 -ml-5">
                             {button type:upload, name:'image', id:'upload_image_' . $item->id}
                         </div>
-                        <script>
+                        <script nonce="{csp()}">
                             window.addEventListener('DOMContentLoaded', () => {
                                 previewImage("upload_image_" + {$item->id}, "upload_image_" + {$item->id} +"Preview", "src");
                             });

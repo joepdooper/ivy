@@ -4,5 +4,6 @@ return [
     'name' => 'Name',
     'username' => 'Username',
     'email' => 'Email',
-    'password' => 'Password'
+    'password' => 'Password',
+    'birthday' => 'Birthday'
 ];

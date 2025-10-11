@@ -12,7 +12,8 @@
     "php": ">=8.3.0",
     "joepdooper/ivy-roots": "dev-main",
     "wixel/gump": "^2.2",
-    "symfony/mime": "^7.3"
+    "symfony/mime": "^7.3",
+    "nesbot/carbon": "^3.10"
   },
   "scripts": {
     "post-install-cmd": [

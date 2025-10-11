@@ -8,7 +8,7 @@ use Ivy\Core\Path;
 AssetManager::addCSS("plugins/items/collection/audio/css/audio.css");
 
 if (User::canEditAsEditor()) {
-    AssetManager::addJS("plugins/items/collection/audio/js/audio_admin.js");
+    AssetManager::addViteEntry("plugins/items/collection/audio/js/audio_admin.js");
 }
 
 RouterManager::instance()->match('GET|POST', '/audio/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@insert');

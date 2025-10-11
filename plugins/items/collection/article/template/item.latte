@@ -1,13 +1,11 @@
 <div class="item item-article relative group" id="item-{$item->id}">
 
     <a href="{path('PUBLIC_URL') . 'article/' . $item->slug}" class="card {if enabled('timeline')}card-side{/if} border border-base-300">
-        {if !enabled('timeline')}
-            <figure>
-                {if $article->image}
-                    {render(path('PLUGINS_PATH') . 'items/collection/image/template/input.TypeImage.latte', ['id' => $article->id, 'name' => 'image', 'file' => $article->image])}
-                {/if}
-            </figure>
-        {/if}
+        <figure>
+            {if $article->image}
+                {render(path('PLUGINS_PATH') . 'items/collection/image/template/input.TypeImage.latte', ['id' => $article->id, 'name' => 'image', 'file' => $article->image])}
+            {/if}
+        </figure>
         <div class="card-body">
             <div class="card-actions">
                 {foreach $article->fetchAllEntityTags() as $tag}
@@ -29,13 +27,6 @@
             'date' => $item->date
             ])}
         </div>
-        {if enabled('timeline')}
-        <figure>
-            {if $article->image}
-                {render(path('PLUGINS_PATH') . 'items/collection/image/template/input.TypeImage.latte', ['id' => $article->id, 'name' => 'image', 'file' => $article->image])}
-            {/if}
-        </figure>
-        {/if}
     </a>
 
     {if $article->policy('update')}

@@ -1,13 +1,21 @@
 <header>
     <div class="border-b border-base-300 navbar">
-        <div class="flex-1 px-2">
-            <a href="{path('BASE_PATH')}" class="leading-none text-xl font-bold">
+        <div class="navbar-start px-2">
+            <a href="{path('PUBLIC_URL')}" class="leading-none text-xl font-bold">
                 {info('name')}
             </a>
         </div>
-        <div class="flex gap-x-4 px-2">
+        <div class="navbar-center px-2">
+{*            {if isPluginActive('Search')}*}
+{*                {render(path('PLUGINS_FOLDER') . "search/template/form.latte")}*}
+{*            {/if}*}
+        </div>
+        <div class="navbar-end gap-x-4 px-2">
+            <label for="filter_moment_modal" class="cursor-pointer">
+                {icon("feather/search.svg")|noescape}
+            </label>
             {if isPluginActive('DarkMode')}
-                {render(Path::get('PLUGINS_PATH') . "darkmode/template/buttons.latte")}
+                {render(path('PLUGINS_FOLDER') . "darkmode/template/buttons.latte")}
             {/if}
             {if auth()->isLoggedIn()}
                 <div class="dropdown dropdown-end">

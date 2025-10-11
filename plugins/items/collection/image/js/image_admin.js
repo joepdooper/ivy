@@ -1,13 +1,13 @@
-import {CallbackHooks} from "callbackhooks";
+import { CallbackHooks } from "callbackhooks";
 
-function previewImage(input, preview, attribute) {
+window.previewImage = function(input, preview, attribute) {
     let fileInput = document.getElementById(input);
     let imagePreview = document.getElementById(preview);
     fileInput.onchange = evt => {
-        let [file] = fileInput.files
+        let [file] = fileInput.files;
         if (file) {
             if (attribute === 'background') {
-                imagePreview.setAttribute("style", "background-image: url(" + URL.createObjectURL(file) + ");");
+                imagePreview.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
                 CallbackHooks.call("imageBackgroundPreview");
             } else if (attribute === 'src') {
                 imagePreview.src = URL.createObjectURL(file);

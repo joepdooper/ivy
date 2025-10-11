@@ -1,0 +1,10 @@
+<form action="{path('PUBLIC_URL') . 'search/post'}" method="POST" enctype="multipart/form-data">
+    {csrf()}
+    <label class="input rounded-full px-4">
+        <input name="search" type="search" required placeholder="{text('search.search.search')}" />
+    </label>
+{*{php $period = CarbonPeriod::create((Profile::getUserProfile()->birthday ?? Carbon::create('1980')), '1 year', Carbon::now())}*}
+{*    {foreach $period as $date}*}
+{*        {$date->format('Y')}*}
+{*    {/foreach}*}
+</form>
