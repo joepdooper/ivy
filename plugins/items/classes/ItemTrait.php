@@ -49,7 +49,7 @@ trait ItemTrait
         $item = (new Item)->populate([
             'template_id' => (new ItemTemplate)->where('table', $this->table)->fetchOne()->getId(),
             'parent_id'   => ItemHelper::getParentId($request),
-            'slug' => $this->slug ? ItemHelper::createSlug($request->get($this->slug)) : null,
+            'slug' => $this->slug ? ItemHelper::createSlug(!empty($request->get($this->slug)) ? $request->get($this->slug) : $this->{$this->slug}) : null,
             'table_id'    => $this->getId(),
         ])->insert();
 
@@ -58,17 +58,10 @@ trait ItemTrait
         return $this;
     }
 
-    public function insertWithItem(Request $request): static
-    {
-        $data = $request->request->all();
-        $this->populate($data)->insert();
-        return $this->insertItem($request);
-    }
-
     public function createItemFromRequest(Request $request): void
     {
         $this->createFromRequest($request->request->all());
-        $this->insertWithItem($request);
+        $this->insertItem($request);
     }
 
     public function updateItemFromRequest(Request $request): void

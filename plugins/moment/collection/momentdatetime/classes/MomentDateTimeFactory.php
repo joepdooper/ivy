@@ -1,19 +1,16 @@
 <?php
 
-namespace Items\Collection\Moment;
+namespace Moment\Collection\MomentDateTime;
 
 use Carbon\Carbon;
+use Moment\Moment;
 
-class MomentFactory
+class MomentDateTimeFactory
 {
     public function defaults(): array
     {
         return [
-            'title' => array_rand([
-                'Yet another moment to define!',
-                'Yet another moment lived!',
-                'Yet another moment gathered!'
-            ]),
+            'moment_id' => Moment::factory(),
             'start_date' => Carbon::now()->format('Y-m-d'),
             'end_date' => null,
             'start_time' => null,

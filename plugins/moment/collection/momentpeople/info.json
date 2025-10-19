@@ -1,0 +1,13 @@
+{
+  "name": "MomentPeople",
+  "version": "1.0.0",
+  "description": "People item for the moment plugin",
+  "type": "filter",
+  "database": {
+    "install": "db/install.db.php",
+    "uninstall": "db/uninstall.db.php"
+  },
+  "dependencies": [
+    "Moment"
+  ]
+}

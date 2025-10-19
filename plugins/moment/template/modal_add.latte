@@ -1,0 +1,31 @@
+<input type="checkbox" id="modal_add_moment" class="modal-toggle"/>
+<div class="modal" role="dialog">
+    <div class="modal-box">
+        <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-10" for="modal_add_moment">✕</label>
+        <form action="{path('BASE_PATH') . 'moment/create'}" method="POST" enctype="multipart/form-data">
+            {csrf()}
+            <div class="space-y-4">
+                {include 'calendar.latte',
+                'calendar' => 'moment',
+                'startYear' => profile()?->birthday ? datetime()::parse(profile()->birthday)->year : 2000,
+                'endYear' => datetime()::now()->year + 5
+                }
+                <div class="flex items-center w-full">
+                    <label class="input">
+                        <input name="start_time" type="time"/>
+                    </label>
+                    <div class="text-xs px-4 h-auto uppercase">{text('misc.to')}</div>
+                    <label class="input">
+                        <input name="end_time" type="time"/>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-action">
+                <button class="btn btn-primary w-full shadow-none leading-none px-4"
+                        name="submit" type="submit" value="create">
+                    {text('moment.moment.add')}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

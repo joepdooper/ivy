@@ -1,0 +1,170 @@
+{extends file('body.latte')}
+
+{block main}
+    <div class="grid grid-cols-3 divide-x-1 divide-base-300">
+
+        {* DateTime *}
+        <div class="px-2 pt-2 relative group">
+                <div class="p-2 text-base-content/60 text-xs">
+                    {text('moment.moment.date')}
+                </div>
+                <div class="px-2 flex justify-between items-center">
+                    <div class="text-secondary text-3xl">
+                        <div n:if="$momentDateTime" class="font-bold">
+                            <span n:if="$momentDateTime->start_date">{$momentDateTime->start_date|date:'d.m.y'}</span>
+                            <span n:if="$momentDateTime->end_date" class="uppercase text-xs font-bold">{text('misc.to')}</span>
+                            <span n:if="$momentDateTime->end_date">{$momentDateTime->end_date|date:'d.m.y'}</span>
+                        </div>
+                    </div>
+                    <div class="text-secondary ml-4">
+                        {icon("feather/calendar.svg")|noescape}
+                    </div>
+                </div>
+                <div class="px-2">
+                    <div class="text-secondary text-3xl">
+                        <div n:if="$momentDateTime" class="font-normal">
+                            <span n:if="$momentDateTime->start_time">{$momentDateTime->start_time|date:'H:m'}</span>
+                            <span n:if="$momentDateTime->end_time" class="uppercase text-xs font-bold">{text('misc.to')}</span>
+                            <span n:if="$momentDateTime->end_time">{$momentDateTime->end_time|date:'H:m'}</span>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        {* Location *}
+        <div class="px-2 pt-2 relative group">
+                <div class="p-2 text-base-content/60 text-xs">
+                    {text('moment.moment.location')}
+                </div>
+                <div class="px-2 flex justify-between items-center">
+                    <div class="text-secondary text-3xl">
+                        <div n:if="$momentLocation" class="font-bold">
+                            {$momentLocation->city}
+                        </div>
+                    </div>
+                    <div class="text-secondary ml-4">
+                        {icon("feather/map-pin.svg")|noescape}
+                    </div>
+                </div>
+                <div class="px-2">
+                    <div class="text-secondary text-3xl">
+                        <div n:if="$momentLocation" class="font-normal">
+                            {$momentLocation->country}
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        {* People *}
+        <div class="px-2 pt-2 relative group">
+            <div class="p-2 text-base-content/60 text-xs">
+                {text('moment.moment.people')}
+            </div>
+            <div class="px-2 flex justify-between items-center">
+                <div class="space-x-2">
+                    {foreach $moment->getPeople() as $person}
+                        <div class="avatar">
+                            <div class="w-10 rounded-full bg-secondary">
+                                {if $person->user_image}
+                                    <img alt="{$person->username}" src="{media('profile/' . $person->user_image)}"/>
+                                {else}
+                                    <div class="ml-2 mt-2">
+                                        {icon("feather/user.svg")|noescape}
+                                    </div>
+                                {/if}
+                            </div>
+                        </div>
+                    {/foreach}
+                </div>
+                <div class="text-secondary ml-4">
+                    {icon("feather/user.svg")|noescape}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {*    <div class="flex items-center justify-center space-x-2 border-b border-base-300 p-4 text-accent">*}
+    {*        <div class="icon">{icon("feather/calendar.svg")|noescape}</div>*}
+    {*        <div>{$moment->start_date|date:'d M Y'}</div>*}
+    {*        <div n:if="$moment->end_date" class="uppercase text-xs">{text('misc.to')}</div>*}
+    {*        <div n:if="$moment->end_date">{$moment->end_date|date:'d M Y'}</div>*}
+    {*                                        <label for="start_date">*}
+    {*                                    <input class="input" type="date"*}
+    {*                                           id="start_date"*}
+    {*                                           name="start_date" value="{$moment->start_date|date:'Y-m-d'}">*}
+    {*                                </label>*}
+    {*                                <label for="end_date">*}
+    {*                                    <input class="input" type="date" id="end_date"*}
+    {*                                           name="end_date" value="{$moment->end_date|date:'Y-m-d'}">*}
+    {*                                </label>*}
+    {*                                <div n:if="$moment->start_time" class="icon">{icon("feather/clock.svg")|noescape}</div>*}
+    {*                                <div n:if="$moment->start_time">{$moment->start_time|date:'H:i'}</div>*}
+    {*                                <div n:if="$moment->end_time" class="uppercase text-xs">{text('misc.to')}</div>*}
+    {*                                <div n:if="$moment->end_time">{$moment->end_time|date:'H:i'}</div>*}
+    {*                                <label for="start_time">*}
+    {*                                    <input class="input" type="time" id="start_time"*}
+    {*                                           name="start_time" value="{$moment->start_time|date:'H:i'}">*}
+    {*                                </label>*}
+    {*                                <label for="end_time">*}
+    {*                                    <input class="input" type="time" id="end_time"*}
+    {*                                           name="end_time" value="{$moment->end_time|date:'H:i'}">*}
+    {*                                </label>*}
+    {*    </div>*}
+
+    <main class="grow p-4 w-full max-w-5xl mx-auto">
+        <article>
+
+            {define moment}
+                <div class="space-y-4 mb-8">
+
+                    <div class="space-x-2">
+                        {foreach $moment->fetchAllEntityTags() as $tag}
+                            <div class="badge badge-soft badge-info badge-sm font-bold p-3">{$tag->value}</div>
+                            {*                            <input class="btn" type="checkbox" name="tags" aria-label="{$tag->value}"/>*}
+                        {/foreach}
+                    </div>
+
+                    <h1 class="text-6xl font-bold leading-none">
+                        {*                            {if auth()->isLoggedIn()}*}
+{*                                {render(path('PLUGINS_PATH') . 'items/collection/text/template/input.TypeText.latte', [*}
+{*                                'id' => 'title',*}
+{*                                'name' => 'title',*}
+{*                                'value' => $moment->title*}
+{*                                ])}*}
+{*                            {/if}*}
+                            {$moment->title}
+                    </h1>
+                </div>
+            {/define}
+
+            {if $moment->policy('update')}
+                <form action="{path('BASE_PATH') . 'moment/update/' . $item->id}" method="POST" enctype="multipart/form-data">
+                    {csrf()}
+                    <div class="relative">
+                        {include moment}
+{*                        <div class="text-center pt-4">*}
+{*                            {render(path('PLUGINS_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}*}
+{*                        </div>*}
+                    </div>
+                </form>
+            {else}
+                {include moment}
+            {/if}
+
+            <div class="space-y-4">
+                {if $items}
+                    {foreach $items as $child}
+                        {$child->render()}
+                    {/foreach}
+                {/if}
+            </div>
+
+        </article>
+    </main>
+
+    {if canEditAsAdmin()}
+        {render(path('PLUGINS_PATH') . 'items/template/template_list_modal.latte')}
+    {/if}
+{/block}
+

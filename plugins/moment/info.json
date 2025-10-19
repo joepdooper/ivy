@@ -1,0 +1,20 @@
+{
+  "name": "Moment",
+  "version": "1.0.0",
+  "description": "Add moment items",
+  "type": "collection",
+  "database": {
+    "install": "db/install.db.php",
+    "uninstall": "db/uninstall.db.php"
+  },
+  "collection": [
+    "MomentDateTime",
+    "MomentLocation",
+    "MomentPeople"
+  ],
+  "dependencies": [
+    "Items",
+    "Tags",
+    "Search"
+  ]
+}

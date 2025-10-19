@@ -1,21 +1,18 @@
 <?php
 
-namespace Items\Collection\Moment;
+namespace Moment\Collection\MomentDateTime;
 
-use Items\ItemTrait;
 use Ivy\Abstract\Model;
 use Ivy\Trait\Factory;
-use Tags\TagTrait;
 
-class Moment extends Model
+class MomentDateTime extends Model
 {
-    use ItemTrait, TagTrait, Factory;
+    use Factory;
 
-    protected string $table = "moments";
-    protected string $slug = "title";
+    protected string $table = "moments_date_time";
 
     protected array $columns = [
-        'title',
+        'moment_id',
         'start_date',
         'end_date',
         'start_time',
@@ -23,7 +20,7 @@ class Moment extends Model
         'token'
     ];
 
-    protected string $title;
+    protected int $moment_id;
     protected string $start_date;
     protected ?string $end_date;
     protected ?string $start_time;

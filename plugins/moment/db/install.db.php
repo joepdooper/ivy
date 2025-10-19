@@ -2,25 +2,19 @@
 
 use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
+use Ivy\Core\Path;
+use Tags\Tag;
 
 if(User::canEditAsSuperAdmin()) {
-
-    try{
-    DatabaseManager::connection()->exec(
-        "
-CREATE TABLE `moments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(255) NOT NULL,
-  `start_date` date NOT NULL,
-  `end_date` date DEFAULT NULL,
-  `start_time` time DEFAULT NULL,
-  `end_time` time DEFAULT NULL,
-  `location` varchar(255) DEFAULT NULL,
-  `token` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-  "
-    );
+    try {
+        DatabaseManager::connection()->exec(
+            'CREATE TABLE `moments` (
+    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `title` varchar(255) DEFAULT NULL,
+    `token` int(11) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;'
+        );
     } catch (Exception $e) {
         error_log("Failed to create table `moments`: " . $e->getMessage());
     }
@@ -33,11 +27,17 @@ CREATE TABLE `moments` (
                 'name' => 'Moment',
                 'table' => 'moments',
                 'route' => 'moment',
-                'plugin_url' => 'items/collection/moment',
-                'namespace' => 'Items\Collection\Moment',
+                'plugin_url' => 'moment',
+                'namespace' => 'Moment',
             ]
         );
     } catch (Exception $e) {
         error_log("Failed to insert Moment into `item_templates`: " . $e->getMessage());
     }
+
+    $existing = (new Tag)->where('value', 'Moment')->fetchOne();
+    if (!$existing) {
+        (new Tag)->populate(['value' => 'Moment'])->insert();
+    }
 }
+

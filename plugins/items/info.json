@@ -24,8 +24,7 @@
     "Image",
     "Text",
     "Vimeo",
-    "Youtube",
-    "Moment"
+    "Youtube"
   ],
   "dependencies": [
     "Tags",

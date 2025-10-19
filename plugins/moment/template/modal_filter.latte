@@ -1,0 +1,27 @@
+<input type="checkbox" id="filter_moment_modal" class="modal-toggle"/>
+<div class="modal" role="dialog">
+    <div class="modal-box">
+        <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-10" for="filter_moment_modal">✕</label>
+
+        <form action="{path('BASE_PATH') . 'moment/filter'}" method="POST" enctype="multipart/form-data">
+            {csrf()}
+            <div class="space-y-4">
+                <label class="input w-full">
+                    <input name="search" type="search" placeholder="{text('search.search.search')}" />
+                </label>
+                <div>
+                    {foreach (new \Tags\Tag)->fetchAll() as $tag}
+                        <input class="btn" type="checkbox" name="tags" aria-label="{$tag->value}"/>
+                    {/foreach}
+                </div>
+            </div>
+            <div class="modal-action">
+                <input class="btn" type="reset" value="{text('reset.reset')}"/>
+                <button class="btn btn-primary shadow-none leading-none"
+                        name="submit" type="submit" value="create">
+                    {text('moment.moment.filter')}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

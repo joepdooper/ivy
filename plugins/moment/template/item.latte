@@ -1,0 +1,52 @@
+<div class="item item-article relative group" id="item-{$item->id}">
+
+    <a href="{path('PUBLIC_URL') . 'moment/' . $item->slug}" class="card {if enabled('timeline')}card-side{/if} border border-base-300">
+        <div class="card-body">
+            <div class="card-actions">
+                {foreach $moment->fetchAllEntityTags() as $tag}
+                <div class="badge badge-soft badge-info badge-sm font-bold p-3">
+                    {$tag->value}
+                </div>
+                {/foreach}
+            </div>
+            <div>
+                <h2 class="text-3xl font-bold">
+                    {$moment->title}
+                </h2>
+                <p n:if="$momentDateTime" class="text-3xl font-bold text-secondary">
+                    <span n:if="$momentDateTime->start_date">{$momentDateTime->start_date|date:'d-m-Y'}</span>
+                    <span n:if="$momentDateTime->end_date">{text('misc.to')}</span>
+                    <span n:if="$momentDateTime->end_date">{$momentDateTime->end_date|date:'d-m-Y'}</span>
+                </p>
+                <p n:if="$momentLocation" class="text-3xl font-bold text-secondary">
+                    <span n:if="$momentLocation->city">{$momentLocation->city},</span>
+                    <span n:if="$momentLocation->country">{$momentLocation->country}</span>
+                </p>
+            </div>
+            <div class="space-x-2">
+                {foreach $moment->getPeople() as $person}
+                    <div class="avatar">
+                        <div class="w-10 rounded-full bg-secondary">
+                            {if $person->user_image}
+                                <img alt="{$person->username}" src="{media('profile/' . $person->user_image)}"/>
+                            {else}
+                                <div class="ml-2 mt-2">
+                                    {icon("feather/user.svg")|noescape}
+                                </div>
+                            {/if}
+                        </div>
+                    </div>
+                {/foreach}
+            </div>
+        </div>
+    </a>
+
+    {if $moment->policy('update')}
+        <div class="hidden group-hover:block absolute left-1/2 bottom-0 -mb-5 -ml-15">
+            <form action="{path('BASE_PATH') . 'moment/save/' . $item->id}" method="POST" enctype="multipart/form-data">
+                {csrf()}
+                {render(path('PLUGINS_PATH') . 'items/template/admin_buttons.latte', ['item' => $item])}
+            </form>
+        </div>
+    {/if}
+</div>
