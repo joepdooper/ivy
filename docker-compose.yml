@@ -4,8 +4,11 @@ services:
     image: php:8.3-apache
     container_name: ivy_apache
     command: >
-      bash -c "apt-get update &&
-        apt-get install -y libicu-dev libjpeg-dev libpng-dev libwebp-dev libfreetype6-dev &&
+      bash -c "
+        apt-get update &&
+        apt-get install -y libicu-dev libjpeg-dev libpng-dev libwebp-dev libfreetype6-dev curl &&
+        curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &&
+        apt-get install -y nodejs &&
         docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype &&
         docker-php-ext-install intl pdo_mysql gd &&
         a2enmod rewrite headers deflate expires &&
@@ -16,9 +19,6 @@ services:
     volumes:
       - ./public:/var/www/html
       - ./custom.ini:/usr/local/etc/php/conf.d/custom.ini
-      - /usr/local/bin/node:/usr/local/bin/node
-      - /usr/local/bin/npm:/usr/local/bin/npm
-      - /usr/local/bin/npx:/usr/local/bin/npx
     depends_on:
       - mysql
       - mailcatcher
