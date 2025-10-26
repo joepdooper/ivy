@@ -1,37 +1,59 @@
-version: '3.8'
-
 services:
 
   apache:
     image: php:8.3-apache
-    container_name: apache
+    container_name: ivy_apache
     command: >
-      bash -c "apt-get update && apt-get install -y libicu-dev libjpeg-dev libpng-dev libwebp-dev libfreetype6-dev && docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype && docker-php-ext-install intl pdo_mysql gd && a2enmod rewrite headers deflate expires && apache2-foreground"
+      bash -c "apt-get update &&
+        apt-get install -y libicu-dev libjpeg-dev libpng-dev libwebp-dev libfreetype6-dev &&
+        docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype &&
+        docker-php-ext-install intl pdo_mysql gd &&
+        a2enmod rewrite headers deflate expires &&
+        apache2-foreground
+      "
     ports:
-      - "8080:80"
+      - "${SERVER_PORT:-8080}:80"
     volumes:
-      - ./localhost/html/ivy:/var/www
-      - ./localhost/sites-available:/etc/apache2/sites-available
-      - ./localhost/sites-enabled:/etc/apache2/sites-enabled
-      - ./localhost/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ./public:/var/www/html
+      - ./custom.ini:/usr/local/etc/php/conf.d/custom.ini
       - /usr/local/bin/node:/usr/local/bin/node
       - /usr/local/bin/npm:/usr/local/bin/npm
       - /usr/local/bin/npx:/usr/local/bin/npx
+    depends_on:
+      - mysql
+      - mailcatcher
+    networks:
+      - ivy-network
 
   mysql:
     image: mysql:5.7
-    container_name: mysql
+    container_name: ${DB_HOST:-ivy_mysql}
+    restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_DATABASE: ${DB_DATABASE:-ivy}
+      MYSQL_USER: ${DB_USERNAME:-root}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-root}
     volumes:
-      - ./localhost/mysql:/var/lib/mysql
+      - ivy_mysql_data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "${DB_PORT:-3306}:3306"
+    networks:
+      - ivy-network
 
   mailcatcher:
     image: dockage/mailcatcher
-    container_name: mailcatcher
-    hostname: mailcatcher.local
+    container_name: ${MAIL_HOST:-ivy_mailcatcher}
+    hostname: ${MAIL_HOST:-ivy_mailcatcher}
     ports:
-      - "1080:1080" # Web UI
-      - "1025:1025" # SMTP
+      - "1080:1080"
+      - "1025:1025"
+    networks:
+      - ivy-network
+
+volumes:
+  ivy_mysql_data:
+
+networks:
+  ivy-network:
+    driver: bridge
