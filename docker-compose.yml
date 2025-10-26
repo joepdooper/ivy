@@ -28,7 +28,6 @@ services:
   mysql:
     image: mysql:5.7
     container_name: ${DB_HOST:-ivy_mysql}
-    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
       MYSQL_DATABASE: ${DB_DATABASE:-ivy}
