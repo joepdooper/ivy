@@ -17,7 +17,8 @@ services:
     ports:
       - "${SERVER_PORT:-8080}:80"
     volumes:
-      - ./public:/var/www/html
+      - ./:/var/www
+      - ./apache.conf:/etc/apache2/sites-available/000-default.conf
       - ./custom.ini:/usr/local/etc/php/conf.d/custom.ini
     depends_on:
       - mysql
