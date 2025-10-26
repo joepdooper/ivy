@@ -12,9 +12,9 @@ if(User::canEditAsSuperAdmin()) {
 CREATE TABLE `moments_location` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `moment_id` int(11) NOT NULL,
-  `city` VARCHAR(255) NOT NULL,
-  `country` CHAR(255) NOT NULL,
-  `country_code` VARCHAR(3) NOT NULL,
+  `city` VARCHAR(255) DEFAULT NULL,
+  `country` CHAR(255) DEFAULT NULL,
+  `country_code` VARCHAR(3) DEFAULT NULL,
   `latitude` DECIMAL(10, 7) NOT NULL,
   `longitude` DECIMAL(10, 7) NOT NULL,
   `token` int(11) DEFAULT NULL,

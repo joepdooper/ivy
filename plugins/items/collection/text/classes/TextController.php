@@ -44,7 +44,7 @@ class TextController extends CollectionController
         ])->update();
 
         $item->populate([
-            'published' => $this->request->get('publish')
+            'publish' => $this->request->get('publish')
         ])->update();
 
         $this->flashBag->add('success', 'Text successfully updated');

@@ -22,7 +22,7 @@ class MomentLocation extends Model
     ];
 
     protected int $moment_id;
-    protected string $city;
+    protected ?string $city;
     protected ?string $country;
     protected ?string $country_code;
     protected ?float $latitude;

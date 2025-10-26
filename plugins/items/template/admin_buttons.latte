@@ -2,7 +2,7 @@
     {if $upload ?? false}
         {button type:upload, name:'upload', id:'upload_' . $item->id}
     {else}
-        {button type:visible, name:'publish', value:$item->published, id:'publish_'.$item->id}
+        {button type:visible, name:'publish', value:$item->publish, id:'publish_'.$item->id}
     {/if}
     {button type:save, name:'save', id:'save_'.$item->id}
     {button type:delete, name:'delete', value:'', id:'delete_'.$item->id, placeholder:$item->name}

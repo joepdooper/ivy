@@ -1,9 +1,13 @@
 class Calendar {
     constructor(root) {
         this.root = root;
-        this.start = null;
-        this.end = null;
         this.current = new Date();
+
+        const yyyy = this.current.getFullYear();
+        const mm = this.current.getMonth() + 1; // 1-based
+        const dd = this.current.getDate();
+        this.start = `${yyyy}-${String(mm).padStart(2, "0")}-${String(dd).padStart(2, "0")}`;
+        this.end = null;
 
         this.grid = root.querySelector("[data-calendar='grid']");
 
@@ -21,6 +25,12 @@ class Calendar {
         this.id = root.dataset.calendarId || "default";
 
         this.initEvents();
+
+        const startInput = document.querySelector(`[data-calendar='start'][data-calendar-id='${this.id}']`);
+        if (startInput) startInput.value = this.start;
+        const endInput = document.querySelector(`[data-calendar='end'][data-calendar-id='${this.id}']`);
+        if (endInput) endInput.value = "";
+
         this.render();
     }
 

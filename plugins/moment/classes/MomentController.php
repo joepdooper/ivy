@@ -4,15 +4,12 @@ namespace Moment;
 
 use Items\CollectionController;
 use Items\ItemHelper;
-use Ivy\Model\User;
 use Moment\Collection\MomentDateTime\MomentDateTime;
 use Moment\Collection\MomentLocation\MomentLocation;
 use Moment\Collection\MomentPeople\MomentPeople;
-use Tags\Tag;
 
 class MomentController extends CollectionController
 {
-    private Tag $tag;
     private Moment $moment;
     private MomentDateTime $momentDateTime;
     private MomentLocation $momentLocation;
@@ -21,7 +18,7 @@ class MomentController extends CollectionController
     public function __construct()
     {
         parent::__construct();
-        $this->tag = new Tag();
+
         $this->moment = new Moment();
         $this->momentDateTime = new MomentDateTime();
         $this->momentLocation = new MomentLocation();
@@ -33,27 +30,36 @@ class MomentController extends CollectionController
         $this->moment->policy('create');
 
         if ($this->validate([
-            'title' => 'string',
+            'title' => 'between_len,5;100',
             'start_date' => 'required|date',
             'end_date' => 'date',
             'start_time' => 'valid_time',
-            'end_time' => 'valid_time'
+            'end_time' => 'valid_time',
+            'city' => 'between_len,2;100',
+            'country' => 'between_len,2;100'
         ])) {
             $this->moment->createItemFromRequest($this->request);
 
             $this->momentDateTime->populate([
                 'moment_id' => $this->moment->getId()
             ])->createFromRequest($this->request->request->all());
-            $this->momentLocation->populate([
-                'moment_id' => $this->moment->getId()
-            ])->createFromRequest($this->request->request->all());
 
-            $this->momentPeople->populate([
-                'moment_id' => $this->moment->getId(),
-                'user_id' => User::getAuth()->getUserId()
-            ])->insert();
+            if(!empty($this->request->request->get('city')) || !empty($this->request->request->get('country'))){
+                $this->momentLocation->populate([
+                    'moment_id' => $this->moment->getId()
+                ])->createFromRequest($this->request->request->all());
+            }
 
-            $this->moment->attachTag($this->tag->where('value', 'Moment')->fetchOne()->getId());
+            if(!empty($this->request->request->all('people'))){
+                foreach ($this->request->request->all('people') as $user_id) {
+                    $this->momentPeople->populate([
+                        'moment_id' => $this->moment->getId(),
+                        'user_id' => $user_id
+                    ])->insert();
+                }
+            }
+
+            $this->moment->attachTags($this->request->request->all('tags'));
 
             $this->flashBag->add('success', 'Moment successfully inserted');
         }

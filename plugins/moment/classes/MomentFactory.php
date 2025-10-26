@@ -2,17 +2,13 @@
 
 namespace Moment;
 
-use Carbon\Carbon;
+use Ivy\Core\Language;
 
 class MomentFactory
 {
     public function defaults(): array
     {
-        $titles = [
-            'Yet another moment defined!',
-            'Yet another moment lived!',
-            'Yet another moment registered!'
-        ];
+        $titles = Language::translate('moment.moment.factory.titles');
 
         return [
             'title' => $titles[array_rand($titles)],

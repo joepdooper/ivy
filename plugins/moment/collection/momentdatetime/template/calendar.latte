@@ -3,15 +3,15 @@
         <div data-calendar="prev" class="btn btn-soft btn-square btn-primary join-item">
             {icon("feather/chevron-left.svg")|noescape}
         </div>
-        <label class="flex-1">
-            <select data-calendar="monthSelect" class="select join-item">
+        <label class="flex-1 select join-item">
+            <select data-calendar="monthSelect">
                 {for $i = 1; $i <= 12; $i++}
                     <option value="{$i}">{datetime()::create()->month($i)->format('F')}</option>
                 {/for}
             </select>
         </label>
-        <label class="flex-1">
-            <select data-calendar="yearSelect" class="select join-item">
+        <label class="flex-1 select join-item">
+            <select data-calendar="yearSelect">
                 {for $year = $startYear; $year <= $endYear; $year++}
                     <option value="{$year}" n:attr="selected => $year === datetime()::now()->year">
                         {$year}

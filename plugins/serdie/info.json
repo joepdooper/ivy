@@ -1,0 +1,11 @@
+{
+  "name": "Serdie",
+  "version": "1.0.0",
+  "settings": true,
+  "description": "30 seconds",
+  "type": "game",
+  "database": {
+    "install": "db/install.db.php",
+    "uninstall": "db/uninstall.db.php"
+  }
+}

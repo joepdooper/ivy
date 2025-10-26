@@ -45,6 +45,30 @@ trait TagTrait
     }
 
     /**
+     * Add multiple tags to this model instance.
+     *
+     * @param int[] $tag_ids
+     * @return int Number of successfully attached tags
+     */
+    public function attachTags(array $tag_ids): int
+    {
+        $count = 0;
+
+        foreach ($tag_ids as $tag_id) {
+            if (!is_numeric($tag_id)) {
+                continue;
+            }
+
+            if ($this->attachTag((int) $tag_id)) {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
+
+
+    /**
      * Remove a tag from this model instance.
      *
      * @param int $tag_id

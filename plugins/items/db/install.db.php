@@ -13,7 +13,7 @@ if(User::canEditAsSuperAdmin()) {
     `table_id` int(11) DEFAULT NULL,
     `parent_id` int(11) DEFAULT NULL,
     `template_id` int(11) DEFAULT NULL,
-    `published` int(11) DEFAULT NULL,
+    `publish` int(11) DEFAULT NULL,
     `token` int(11) DEFAULT NULL,
     `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `sort` int(11) DEFAULT NULL,

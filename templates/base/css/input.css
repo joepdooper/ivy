@@ -72,7 +72,8 @@ html, body {
     transform: translateX(15px);
 }
 
-.btn svg {
+.btn svg,
+.icon svg {
     max-height: 20px;
 }
 

@@ -56,7 +56,7 @@ class AudioController extends CollectionController
         $audio->update();
 
         $item->populate([
-            'published' => $this->request->get('publish')
+            'publish' => $this->request->get('publish')
         ])->update();
 
         $this->flashBag->add('success', 'Audio successfully updated');

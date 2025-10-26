@@ -1,10 +1,9 @@
-/* Define a transition duration during page visits */
-html.is-changing .transition-fade {
-    transition: opacity 0.25s;
-    opacity: 1;
-}
+/*
+ This file is for adding extra personal styles that extend or override
+ the default Tailwind CSS styles.
 
-/* Define the styles for the unloaded pages */
-html.is-animating .transition-fade {
-    opacity: 0;
-}
+ If the subtemplate includes a CSS file with the same name, that file
+ will take precedence and can overwrite these styles.
+
+ Keep this file lightweight and focused on necessary customizations.
+ */

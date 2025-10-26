@@ -71,7 +71,7 @@ class DocumentationController extends CollectionController
 
         $item->populate([
             'slug' => ItemHelper::createSlug($documentation->title),
-            'published' => $this->request->get('publish'),
+            'publish' => $this->request->get('publish'),
         ])->update();
 
         $this->flashBag->add('success', 'Documentation successfully updated');

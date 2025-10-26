@@ -15,7 +15,7 @@ class DocumentationTemplate
 {
     public function render($item): void
     {
-        if (!(User::getAuth()->isLoggedIn() || $item->published)) {
+        if (!(User::getAuth()->isLoggedIn() || $item->publish)) {
             return;
         }
 
@@ -33,7 +33,7 @@ class DocumentationTemplate
     {
         $item = (new Item)->where('slug', $slug)->fetchOne();
 
-        if (!(User::getAuth()->isLoggedIn() || $item->published)) {
+        if (!(User::getAuth()->isLoggedIn() || $item->publish)) {
             return;
         }
 

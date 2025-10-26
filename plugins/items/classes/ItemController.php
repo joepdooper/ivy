@@ -39,6 +39,41 @@ class ItemController extends Controller
         View::set(Path::get('PLUGINS_FOLDER') . 'items/template/index.latte', ['items' => $items]);
     }
 
+    public function save($id): void
+    {
+        if($this->request->request->has('delete')){
+            $this->delete($id);
+        } else {
+            $this->update($id);
+        }
+    }
+
+    public function update($id): void
+    {
+        $item = $this->item->where('id', $id)->fetchOne();
+        $item->updateFromRequest($this->request->request->all());
+
+        $this->redirect(ItemHelper::getRedirect($this->request));
+    }
+
+    public function delete($id): void
+    {
+        $item = $this->item->where('id', $id)->fetchOne();
+
+        $nameSpace = '\\' . $item->namespace . '\\' . $item->name;
+        $class = new $nameSpace();
+
+        if (method_exists($class, 'policy') && method_exists($class, 'delete')) {
+            if($class->policy('delete')){
+                $model = $class->fetchOneWithItem($item);
+                $model->delete();
+                $this->flashBag->add('success', "{$item->name} successfully deleted");
+            }
+        }
+
+        $this->redirect(ItemHelper::getRedirect($this->request));
+    }
+
     public function deleteChildren(): void
     {
         $children = (new Item())->where('parent',  $this->item->id)->fetchAll();

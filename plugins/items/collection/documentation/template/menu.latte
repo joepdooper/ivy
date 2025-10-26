@@ -7,7 +7,7 @@
         </label>
         <ul class="collapse-content pb-0! mb-4">
             {foreach (new \Items\Collection\Documentation\Documentation)->where('subject', $tag->id)->fetchAll() as $link}
-                {if $link->item()->published || $link->policy('update')}
+                {if $link->item()->publish || $link->policy('update')}
                     <li>
                         <a class="{if $link->item_id === $item->id}font-bold{/if}" href="{path('BASE_PATH') . 'documentation/' . $link->item()->slug}">
                             {$link->title}

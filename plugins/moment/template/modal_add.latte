@@ -4,28 +4,130 @@
         <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-10" for="modal_add_moment">✕</label>
         <form action="{path('BASE_PATH') . 'moment/create'}" method="POST" enctype="multipart/form-data">
             {csrf()}
-            <div class="space-y-4">
-                {include 'calendar.latte',
-                'calendar' => 'moment',
-                'startYear' => profile()?->birthday ? datetime()::parse(profile()->birthday)->year : 2000,
-                'endYear' => datetime()::now()->year + 5
-                }
-                <div class="flex items-center w-full">
-                    <label class="input">
-                        <input name="start_time" type="time"/>
-                    </label>
-                    <div class="text-xs px-4 h-auto uppercase">{text('misc.to')}</div>
-                    <label class="input">
-                        <input name="end_time" type="time"/>
-                    </label>
+
+            <div class="tabs justify-between">
+                {* Title *}
+                <label class="tab mb-4">
+                        {icon("feather/type.svg")|noescape}
+                        <input type="radio" name="modal_add_tabs" />
+                </label>
+                <div class="tab-content">
+                        <label class="input w-full">
+                            {php $momentFactoryTitles = text('moment.moment.factory.titles')}
+                            <input placeholder="{text('moment.moment.title')}" name="title" type="text" value="{$momentFactoryTitles[array_rand($momentFactoryTitles)]}"/>
+                        </label>
+                </div>
+                {* Calendar *}
+                <label class="tab mb-4 btn-primary">
+                        {icon("feather/calendar.svg")|noescape}
+                        <input type="radio" name="modal_add_tabs" checked="checked" />
+                </label>
+                <div class="tab-content">
+                        <div class="space-y-4">
+                            {include 'calendar.latte',
+                            'calendar' => 'moment',
+                            'startYear' => profile()?->birthday ? datetime()::parse(profile()->birthday)->year : 2000,
+                            'endYear' => datetime()::now()->year + 5
+                            }
+                            <div class="flex gap-4 items-center w-full mt-4">
+                                <label class="input">
+                                    <input name="start_time" type="time"/>
+                                </label>
+                                <div class="text-xs h-auto uppercase">{text('misc.to')}</div>
+                                <label class="input">
+                                    <input name="end_time" type="time"/>
+                                </label>
+                            </div>
+                        </div>
+                </div>
+                {* Location *}
+                <label class="tab">
+                        {icon("feather/map-pin.svg")|noescape}
+                        <input type="radio" name="modal_add_tabs" />
+                </label>
+                <div class="tab-content">
+                        <div class="space-y-4">
+                            <label class="input w-full">
+                                <input placeholder="{text('moment.moment.city')}" name="city" type="text"/>
+                            </label>
+                            <label class="input w-full">
+                                <input placeholder="{text('moment.moment.country')}" name="country" type="text"/>
+                            </label>
+                        </div>
+                </div>
+                {* People *}
+                <label class="tab">
+                        {icon("feather/user.svg")|noescape}
+                        <input type="radio" name="modal_add_tabs" />
+                </label>
+                <div class="tab-content">
+                        <div class="flex flex-wrap gap-4">
+                            {foreach (new \Ivy\Model\Profile)->fetchAll() as $person}
+                                <label class="swap">
+                                    <input
+                                            type="checkbox"
+                                            name="people[]"
+                                            value="{$person->user_id}"
+                                            {if $person->user_id === \Ivy\Model\User::getAuth()->getUserId()}checked{/if}
+                                    />
+                                    <span class="swap-off overflow-hidden w-10 h-10 rounded-full bg-primary/10 text-primary border-2 border-transparent">
+                                        {if $person->user_image}
+                                            <img alt="{$person->username}" src="{media('profile/' . $person->user_image)}"/>
+                                        {else}
+                                            <span class="inline-block ml-1.5 mt-1.5">
+                                                {icon("feather/user.svg")|noescape}
+                                            </span>
+                                        {/if}
+                                    </span>
+                                    <span class="swap-on overflow-hidden w-10 h-10 rounded-full bg-accent text-primary border-2 border-accent">
+                                        {if $person->user_image}
+                                            <img alt="{$person->username}" src="{media('profile/' . $person->user_image)}"/>
+                                        {else}
+                                            <span class="inline-block ml-1.5 mt-1.5">
+                                                {icon("feather/user.svg")|noescape}
+                                            </span>
+                                        {/if}
+                                    </span>
+                                </label>
+                            {/foreach}
+                        </div>
+                </div>
+                {* Tags *}
+                <label class="tab">
+                    {icon("feather/tag.svg")|noescape}
+                    <input type="radio" name="modal_add_tabs" />
+                </label>
+                <div class="tab-content">
+                    <div class="flex flex-wrap gap-4">
+                        {foreach (new \Tags\Tag)->fetchAll() as $tag}
+                            <label class="swap">
+                                <input
+                                        type="checkbox"
+                                        name="tags[]"
+                                        value="{$tag->id}"
+                                        {if $tag->value === 'Moment'}checked{/if}
+                                />
+                                <span class="swap-off badge badge-sm badge-soft badge-primary font-bold p-3">
+                                    {$tag->value}
+                                </span>
+                                <span class="swap-on badge badge-sm badge-accent text-primary font-bold p-3">
+                                    {$tag->value}
+                                </span>
+                            </label>
+                        {/foreach}
+                    </div>
                 </div>
             </div>
+
             <div class="modal-action">
                 <button class="btn btn-primary w-full shadow-none leading-none px-4"
                         name="submit" type="submit" value="create">
                     {text('moment.moment.add')}
                 </button>
             </div>
+            <input name="country_code" type="hidden"/>
+            <input name="longitude" type="hidden"/>
+            <input name="latitude" type="hidden"/>
         </form>
     </div>
 </div>

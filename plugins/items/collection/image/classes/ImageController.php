@@ -64,7 +64,7 @@ class ImageController extends CollectionController
         $image->update();
 
         $item->populate([
-            'published' => $this->request->get('publish')
+            'publish' => $this->request->get('publish')
         ])->update();
 
         $this->flashBag->add('success', 'Image successfully updated');

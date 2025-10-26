@@ -1,0 +1,12 @@
+<label class="swap swap-rotate">
+    <input type="checkbox" id="dark-mode" name="dark-mode" class="theme-controller" value="dark"
+           {if $checked}checked{/if} />
+
+    <div class="swap-off fill-current">
+        {icon("feather/sun.svg")|noescape}
+    </div>
+
+    <div class="swap-on fill-current">
+        {icon("feather/moon.svg")|noescape}
+    </div>
+</label>

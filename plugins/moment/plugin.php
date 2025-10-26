@@ -1,6 +1,14 @@
 <?php
 
+use Ivy\Manager\AssetManager;
 use Ivy\Manager\RouterManager;
+use Ivy\Model\User;
+
+if (User::canEditAsEditor()) {
+    if (RouterManager::instance()->getCurrentUri() === '/') {
+        AssetManager::addViteEntry("plugins/moment/js/add_moment_admin.js");
+    }
+}
 
 RouterManager::instance()->mount('/moment', function () {
     RouterManager::instance()->get('/([a-z0-9_-]+)', '\Moment\MomentTemplate@page');

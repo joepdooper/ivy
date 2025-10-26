@@ -4,12 +4,13 @@ namespace Items;
 
 use Ivy\Abstract\Model;
 use Ivy\Manager\DatabaseManager;
+use Ivy\Trait\Factory;
 use Ivy\Trait\Filter;
 use Tags\TagTrait;
 
 class Item extends Model
 {
-    use TagTrait, Filter;
+    use TagTrait, Filter, Factory;
 
     protected string $table = 'items';
     protected array $columns = [
@@ -18,7 +19,7 @@ class Item extends Model
         'parent_id',
         'template_id',
         'position_id',
-        'published',
+        'publish',
         'token',
         'date',
         'sort',
@@ -29,7 +30,7 @@ class Item extends Model
     protected int $table_id;
     protected ?int $parent_id;
     protected int $template_id;
-    protected int $published;
+    protected int $publish;
 
     protected ?string $token;
     protected string $date;
@@ -66,7 +67,7 @@ class Item extends Model
     // -- insert
     public function populate(array $data): static
     {
-        $data['published'] = $data['published'] ?? 0;
+        $data['publish'] = $data['publish'] ?? 0;
         $data['user_id'] = $data['user_id'] ?? $_SESSION['auth_user_id'];
         $data['table_id'] = $data['table_id'] ?? ($this->table_id ?? DatabaseManager::connection()->getLastInsertId());
 

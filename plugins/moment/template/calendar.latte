@@ -1,17 +1,17 @@
 <div class="form-control w-full space-y-4 calendar" data-calendar-id="{$calendar}">
-    <div class="flex w-full join">
-        <div data-calendar="prev" class="btn btn-soft btn-square btn-primary join-item">
+    <div class="flex w-full gap-4">
+        <div data-calendar="prev" class="btn btn-soft btn-square btn-primary">
             {icon("feather/chevron-left.svg")|noescape}
         </div>
         <label class="flex-1">
-            <select data-calendar="monthSelect" class="select join-item">
+            <select data-calendar="monthSelect" class="select">
                 {for $i = 1; $i <= 12; $i++}
                     <option value="{$i}">{datetime()::create()->month($i)->format('F')}</option>
                 {/for}
             </select>
         </label>
         <label class="flex-1">
-            <select data-calendar="yearSelect" class="select join-item">
+            <select data-calendar="yearSelect" class="select">
                 {for $year = $startYear; $year <= $endYear; $year++}
                     <option value="{$year}" n:attr="selected => $year === datetime()::now()->year">
                         {$year}
@@ -19,7 +19,7 @@
                 {/for}
             </select>
         </label>
-        <div data-calendar="next" class="btn btn-soft btn-square btn-primary join-item">
+        <div data-calendar="next" class="btn btn-soft btn-square btn-primary">
             {icon("feather/chevron-right.svg")|noescape}
         </div>
     </div>

@@ -11,7 +11,7 @@ class ImageTemplate
 {
     public function render($item): void
     {
-        if (!(User::getAuth()->isLoggedIn() || $item->published)) {
+        if (!(User::getAuth()->isLoggedIn() || $item->publish)) {
             return;
         }
 
