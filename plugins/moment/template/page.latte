@@ -115,8 +115,14 @@
         </article>
     </main>
 
-    {if canEditAsAdmin()}
-        {render(path('PLUGINS_PATH') . 'items/template/template_list_modal.latte')}
+    {if canEditAsEditor()}
+        {render(path('PLUGINS_FOLDER') . 'moment/template/modal_add.latte', ['moment' => $moment])}
+        {render(path('PLUGINS_FOLDER') . 'items/template/template_list_modal.latte')}
+        <div class="text-center p-4">
+            <label for="template_list_modal" class="btn btn-square btn-primary shadow-none">
+                {icon("feather/plus.svg")|noescape}
+            </label>
+        </div>
     {/if}
 {/block}
 
