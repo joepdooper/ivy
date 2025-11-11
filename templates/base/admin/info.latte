@@ -42,10 +42,12 @@
                                     <td class="text-right">
                                         <input type="hidden" name="info[{$key}][id]"
                                                value="{$info->id}">
+                                        <input type="hidden" name="info[{$key}][name]"
+                                               value="{$info->name}">
                                         <input n:if="$info->plugin_id" type="hidden" name="info[{$key}][plugin_id]"
                                                value="{$info->plugin_id}">
                                         <div class="join">
-                                            {if !$info->is_default && !$info->plugin_id}
+                                            {if $info->policy('delete')}
                                                 {button type:delete, name:"info[$key][delete]", value:"info_" . $info->id, id:$info->id, placeholder:$info->name}
                                             {/if}
                                         </div>
