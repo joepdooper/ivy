@@ -41,7 +41,7 @@ class DocumentationTemplate
 
         Info::stashGet('title')->value = Info::stashGet('title')->value . " - " . $documentation->title;
 
-        View::set(Path::get('PLUGINS_PATH') . $item->plugin_url . '/template/page.latte', [
+        View::set(Path::get('PLUGINS_PATH') . $item->plugin_url . 'template/page.latte', [
             'item' => $item,
             'items' => (new Item)->where('parent_id', $item->id)->sortBy(['sort', 'date', 'id'])->fetchAll(),
             'documentation' => $documentation,

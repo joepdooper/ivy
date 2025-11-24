@@ -5,7 +5,9 @@ namespace Items;
 use Ivy\Abstract\Controller;
 use Ivy\Manager\DatabaseManager;
 use Ivy\Core\Path;
+use Ivy\Model\User;
 use Ivy\View\View;
+use Tags\Tag;
 
 class ItemController extends Controller
 {
@@ -35,8 +37,26 @@ class ItemController extends Controller
     {
         $this->item->policy('index');
 
-        $items = (new Item)->where('parent_id')->sortBy(['sort', 'date', 'id'])->fetchAll();
-        View::set(Path::get('PLUGINS_FOLDER') . 'items/template/index.latte', ['items' => $items]);
+        $items = Item::query()
+            ->with(['plugins', 'authors'])
+            ->filter([
+                'user_id' => User::getAuth()->getUserId(),
+            ])
+            ->when($this->request->request->has('search'), function ($query) {
+                $terms = str_getcsv($this->request->request->get('search'), ' ', "'");
+                foreach ($terms as $term) {
+                    $query->orFilter($term);
+                }
+            })
+            ->sortBy('date')
+            ->fetchAll();
+
+        $tags = Tag::query()->fetchAll();
+
+        View::set(Path::get('PLUGINS_FOLDER') . 'items/template/index.latte', [
+            'items' => $items,
+            'tags' => $tags
+        ]);
     }
 
     public function save($id): void
@@ -53,25 +73,24 @@ class ItemController extends Controller
         $item = $this->item->where('id', $id)->fetchOne();
         $item->updateFromRequest($this->request->request->all());
 
-        $this->redirect(ItemHelper::getRedirect($this->request));
+        $this->redirect(ItemHelper::getRedirect($this->request, $item));
     }
 
     public function delete($id): void
     {
-        $item = $this->item->where('id', $id)->fetchOne();
+        $item = $this->item->with(['plugins'])->where('id', $id)->fetchOne();
 
-        $nameSpace = '\\' . $item->namespace . '\\' . $item->name;
-        $class = new $nameSpace();
-
-        if (method_exists($class, 'policy') && method_exists($class, 'delete')) {
-            if($class->policy('delete')){
-                $model = $class->fetchOneWithItem($item);
-                $model->delete();
-                $this->flashBag->add('success', "{$item->name} successfully deleted");
+        if (method_exists($item->plugin, 'policy') && method_exists($item->plugin, 'delete')) {
+            if($item->plugin->policy('delete')){
+                $message = $item->plugin->getSlug() ? $item->plugin->{$item->plugin->getSlug()} : $item->id;
+                $item->plugin->delete();
+                $this->flashBag->add('success', "$message successfully deleted");
             }
+        } else {
+            $item->delete();
         }
 
-        $this->redirect(ItemHelper::getRedirect($this->request));
+        $this->redirect(ItemHelper::getRedirect($this->request, $item));
     }
 
     public function deleteChildren(): void

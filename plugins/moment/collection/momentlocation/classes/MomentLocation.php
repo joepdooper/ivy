@@ -27,5 +27,5 @@ class MomentLocation extends Model
     protected ?string $country_code;
     protected ?float $latitude;
     protected ?float $longitude;
-    protected ?string $token;
+    protected ?string $token = null;
 }

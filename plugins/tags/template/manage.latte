@@ -28,7 +28,7 @@
                                 <td class="text-right">
                                     <input type="hidden" name="tag[{$key}][id]" value="{$tag->id}">
                                     <div class="join">
-                                        {button type:delete, name:"tag[$key][delete]", value:"tag_" . $tag->id, id:$tag->id}
+                                        {button type:delete, name:"tag[$key][delete]", value:"tag_" . $tag->id, id:$tag->id, placeholder:$tag->value}
                                     </div>
                                 </td>
                             </tr>

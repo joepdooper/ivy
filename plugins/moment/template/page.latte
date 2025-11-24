@@ -23,9 +23,9 @@
                 <div class="px-2">
                     <div class="text-secondary text-3xl">
                         <div class="font-normal">
-                            <span n:if="$momentDateTime->start_time">{$momentDateTime->start_time|date:'H:m'}</span>
+                            <span n:if="$momentDateTime->start_time">{$momentDateTime->start_time|date:'H:i'}</span>
                             <span n:if="$momentDateTime->end_time" class="uppercase text-xs font-bold">{text('misc.to')}</span>
-                            <span n:if="$momentDateTime->end_time">{$momentDateTime->end_time|date:'H:m'}</span>
+                            <span n:if="$momentDateTime->end_time">{$momentDateTime->end_time|date:'H:i'}</span>
                         </div>
                     </div>
                 </div>
@@ -56,13 +56,13 @@
         </div>
 
         {* People *}
-        <div class="px-2 pt-2 relative group">
+        <div n:if="$momentPeople" class="px-2 pt-2 relative group">
             <div class="p-2 text-base-content/60 text-xs">
                 {text('moment.moment.people')}
             </div>
             <div class="px-2 flex justify-between items-center">
                 <div class="space-x-2">
-                    {foreach $moment->getPeople() as $person}
+                    {foreach $momentPeople as $person}
                         <div class="avatar">
                             <div class="w-10 rounded-full bg-secondary">
                                 {if $person->user_image}
@@ -89,7 +89,7 @@
 
             <div class="space-y-4 mb-8">
                 <div class="space-x-2">
-                    {foreach $moment->fetchAllEntityTags() as $tag}
+                    {foreach $moment->tags() as $tag}
                         <div class="badge badge-soft badge-info badge-sm font-bold p-3">{$tag->value}</div>
                     {/foreach}
                 </div>
@@ -107,7 +107,7 @@
             <div class="space-y-4">
                 {if $items}
                     {foreach $items as $child}
-                        {$child->render()}
+                        {$child->plugin->render()}
                     {/foreach}
                 {/if}
             </div>
@@ -116,10 +116,17 @@
     </main>
 
     {if canEditAsEditor()}
-        {render(path('PLUGINS_FOLDER') . 'moment/template/modal_add.latte', ['moment' => $moment])}
-        {render(path('PLUGINS_FOLDER') . 'items/template/template_list_modal.latte')}
-        <div class="text-center p-4">
-            <label for="template_list_modal" class="btn btn-square btn-primary shadow-none">
+        {render(path('PLUGINS_FOLDER') . 'moment/template/modal_add.latte', [
+        'moment' => $moment,
+        'item' => $item,
+        'tags' => $tags
+         ])}
+        {* render(path('PLUGINS_FOLDER') . 'items/template/template_list_modal.latte') *}
+        <div class="text-center p-4 join justify-center">
+            <label for="modal_add_moment" class="btn btn-square btn-primary shadow-none cursor-pointer join-item">
+                {icon("feather/edit.svg")|noescape}
+            </label>
+            <label for="template_list_modal" class="btn btn-square btn-primary shadow-none cursor-pointer join-item">
                 {icon("feather/plus.svg")|noescape}
             </label>
         </div>

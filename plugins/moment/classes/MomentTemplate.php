@@ -6,49 +6,47 @@ use Items\Item;
 use Ivy\Model\Info;
 use Ivy\Model\Profile;
 use Ivy\Core\Path;
-use Ivy\Model\User;
 use Ivy\View\View;
-use Moment\Collection\MomentDateTime\MomentDateTime;
+use Tags\Tag;
 
 class MomentTemplate
 {
-    public function render($item): void
+    public static function render($moment): void
     {
-        if (!(User::getAuth()->isLoggedIn() || $item->publish)) {
+        if (!$moment->item->policy('read')) {
             return;
         }
 
-        $moment = (new Moment)->where('id', $item->table_id)->fetchOne();
-        $author = (new Profile)->where('id', $item->user_id)->populate(['date' => $item->date])->fetchOne();
-
-        View::render(Path::get('PLUGINS_PATH') . $item->plugin_url . '/template/item.latte', [
-            'item' => $item,
+        View::render(Path::get('PLUGINS_PATH') . '/moment/template/item.latte', [
+            'item' => $moment->item,
             'moment' => $moment,
             'momentDateTime' => $moment->getDateTime(),
             'momentLocation' => $moment->getLocation(),
-            'author' => $author
+            'momentPeople'   => $moment->getPeople(),
         ]);
     }
 
     public function page($slug): void
     {
-        $item = (new Item)->where('slug', $slug)->fetchOne();
+        $item = Item::query()->where('slug', $slug)->fetchOne();
 
         if (!$item->policy('read')) {
             return;
         }
 
-        $moment = (new Moment)->where('id', $item->table_id)->fetchOne();
+        $moment = Moment::query()->where('item_id', $item->id)->fetchOne();
 
         Info::stashGet('title')->value = Info::stashGet('title')->value . " - " . $moment->title;
 
-        View::set(Path::get('PLUGINS_PATH') . $item->plugin_url . '/template/page.latte', [
+        View::set(Path::get('PLUGINS_PATH') . 'moment/template/page.latte', [
             'item' => $item,
             'moment' => $moment,
             'momentDateTime' => $moment->getDateTime(),
             'momentLocation' => $moment->getLocation(),
-            'author' => (new Profile)->where('id', $item->user_id)->fetchOne(),
-            'items' => (new Item)->where('parent_id', $item->id)->sortBy(['sort', 'date', 'id'])->fetchAll()
+            'momentPeople' => $moment->getPeople(),
+            'author' => $item->author,
+            'items' => (new Item)->where('parent_id', $item->id)->sortBy(['sort', 'date', 'id'])->fetchAll(),
+            'tags' => (new Tag)->fetchAll(),
         ]);
     }
 }

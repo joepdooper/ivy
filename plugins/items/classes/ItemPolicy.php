@@ -13,7 +13,7 @@ class ItemPolicy
 
     public static function read(Item $item): bool
     {
-        if (User::getAuth()->isLoggedIn() || $item->published) {
+        if (User::canEditAsSuperAdmin() || ($item->author->user_id === User::getAuth()->getUserId()) || $item->publish) {
             return true;
         } else {
             return false;

@@ -8,10 +8,12 @@
             {/foreach}
         </div>
     </main>
-    {if canEditAsAdmin()}
-        {render(path('PLUGINS_PATH') . 'items/template/template_list_modal.latte')}
+    {if canEditAsEditor()}
+        {render(path('PLUGINS_FOLDER') . 'moment/template/modal_add.latte', ['moment' => null, 'tags' => $tags])}
+        {render(path('PLUGINS_FOLDER') . 'moment/template/modal_filter.latte', ['tags' => $tags])}
+
         <div class="text-center p-4">
-            <label for="template_list_modal" class="btn btn-square btn-primary shadow-none">
+            <label for="modal_add_moment" class="btn btn-square shadow-none btn-primary">
                 {icon("feather/plus.svg")|noescape}
             </label>
         </div>

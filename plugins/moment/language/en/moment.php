@@ -8,7 +8,8 @@ return [
             'Forgot to close certain browser tabs… again',
             'Forgot to buy toilet paper… again',
             'Cancelled fitness subscription… again',
-            'Started an unhealthy relationship… again'
+            'Started a toxic relationship… again',
+            'Stopped procrastinating for good… again'
         ]
     ],
     'date' => 'Date',
@@ -19,5 +20,7 @@ return [
     'route' => 'Route',
     'create' => 'Create a new moment',
     'add' => 'Add a new moment',
-    'filter' => 'Filter moments'
+    'update' => 'Update moment',
+    'filter' => 'Filter moments',
+    'fetch_current_location' => 'Get current location'
 ];

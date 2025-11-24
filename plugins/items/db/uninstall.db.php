@@ -13,14 +13,6 @@ if(User::canEditAsSuperAdmin()) {
         error_log("Failed to drop table `items`: " . $e->getMessage());
     }
 
-    try {
-        DatabaseManager::connection()->exec(
-            'DROP TABLE `item_templates`;'
-        );
-    } catch (Exception $e) {
-        error_log("Failed to drop table `item_templates`: " . $e->getMessage());
-    }
-
     $mediaPath = Path::get('MEDIA_PATH') . 'items';
     if (is_dir($mediaPath)) {
         $files = glob($mediaPath . '/*');

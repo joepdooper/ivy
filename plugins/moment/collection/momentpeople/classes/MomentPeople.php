@@ -19,7 +19,7 @@ class MomentPeople extends Model
     ];
 
     protected int $moment_id;
-    protected ?string $user_id;
-    protected ?string $contact_id;
-    protected ?string $token;
+    protected ?string $user_id = null;
+    protected ?string $contact_id = null;
+    protected ?string $token = null;
 }

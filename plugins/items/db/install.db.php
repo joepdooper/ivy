@@ -7,12 +7,10 @@ use Ivy\Core\Path;
 if(User::canEditAsSuperAdmin()) {
     try {
         DatabaseManager::connection()->exec(
-            'CREATE TABLE `items` (
-    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+            'CREATE TABLE IF NOT EXISTS `items` (
+    `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `user_id` int(11) DEFAULT NULL,
-    `table_id` int(11) DEFAULT NULL,
     `parent_id` int(11) DEFAULT NULL,
-    `template_id` int(11) DEFAULT NULL,
     `publish` int(11) DEFAULT NULL,
     `token` int(11) DEFAULT NULL,
     `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -20,26 +18,10 @@ if(User::canEditAsSuperAdmin()) {
     `slug` varchar(255) DEFAULT NULL,
     PRIMARY KEY (`id`),
     KEY `userid` (`user_id`)
-                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;'
+                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;'
         );
     } catch (Exception $e) {
         error_log("Failed to create table `items`: " . $e->getMessage());
-    }
-
-    try {
-        DatabaseManager::connection()->exec(
-            'CREATE TABLE `item_templates` (
-    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-    `name` varchar(255) DEFAULT NULL,
-    `table` varchar(255) DEFAULT NULL,
-    `plugin_url` varchar(255) DEFAULT NULL,
-    `route` varchar(255) DEFAULT NULL,
-    `namespace` varchar(255) DEFAULT NULL,
-    PRIMARY KEY (`id`)
-                              ) ENGINE=InnoDB DEFAULT CHARSET=utf8;'
-        );
-    } catch (Exception $e) {
-        error_log("Failed to create table `item_templates`: " . $e->getMessage());
     }
 
     $mediaPath = Path::get('MEDIA_PATH') . 'items';

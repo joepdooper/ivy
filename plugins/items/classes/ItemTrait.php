@@ -6,69 +6,62 @@ use Symfony\Component\HttpFoundation\Request;
 
 trait ItemTrait
 {
-    protected ?Item $item = null;
-
-    public function getItem(): ?Item
+    public function item(): ?Item
     {
-        return $this->item;
+        return $this->hasOne(Item::class, 'id');
     }
 
-    public function fetchOneWithItem(int|Item $item): static
-    {
-        $item = $this->resolveItem($item);
-        return $this->fetchFromItem($item);
+    public function getSlug() {
+        return $this->slug;
     }
 
-    public function fetchOneWithSlug(string $slug): static
+    public function delete(): bool
     {
-        $item = (new Item())->where('slug', $slug)->fetchOne();
-        return $this->fetchFromItem($item);
-    }
-
-    protected function fetchFromItem(Item $item): static
-    {
-        $this->item = $item;
-        $result = $this->where('id', $item->table_id)->fetchOne();
-        $result->item = $item;
-        return $result;
-    }
-
-    protected function resolveItem(int|Item $item): Item
-    {
-        return $item instanceof Item ? $item : (new Item())->where('id', $item)->fetchOne();
-    }
-
-    public function delete(): string|int|bool
-    {
-        $this->item?->delete();
+        $this->item->delete();
         return parent::delete();
     }
 
     public function insertItem(Request $request): static
     {
-        $item = (new Item)->populate([
-            'template_id' => (new ItemTemplate)->where('table', $this->table)->fetchOne()->getId(),
-            'parent_id'   => ItemHelper::getParentId($request),
-            'slug' => $this->slug ? ItemHelper::createSlug(!empty($request->get($this->slug)) ? $request->get($this->slug) : $this->{$this->slug}) : null,
-            'table_id'    => $this->getId(),
+        $slugValue = $this->slug
+            ? ItemHelper::createSlug($request->get($this->slug) ?? $this->{$this->slug})
+            : null;
+
+        $item = (new Item())->populate([
+            'parent_id' => ItemHelper::getParentId($request),
+            'slug'      => $slugValue,
         ])->insert();
 
-        $this->item = $this->resolveItem((int)$item);
+        $this->item = $item;
 
         return $this;
     }
 
     public function createItemFromRequest(Request $request): void
     {
-        $this->createFromRequest($request->request->all());
         $this->insertItem($request);
+        $request->request->set('item_id', $this->item->id);
+        $this->createFromRequest($request->request->all());
     }
 
     public function updateItemFromRequest(Request $request): void
     {
         $this->updateFromRequest($request->request->all());
-        $this->item->populate([
-            'published' => $request->get('publish')
-        ])->update();
+
+        if (!$this->item) return;
+
+        $newSlug = $this->slug
+            ? ItemHelper::slugify($request->get($this->slug) ?? $this->{$this->slug})
+            : null;
+
+        $data = [
+            'publish' => $request->get('publish', $this->item->publish)
+        ];
+
+        if ($newSlug !== $this->item->slug) {
+            $data['slug'] = $newSlug;
+        }
+
+        $this->item->populate($data)->update();
     }
 }

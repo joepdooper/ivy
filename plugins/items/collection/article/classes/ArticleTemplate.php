@@ -37,7 +37,7 @@ class ArticleTemplate
 
         Info::stashGet('title')->value = Info::stashGet('title')->value . " - " . $article->title;
 
-        View::set(Path::get('PLUGINS_PATH') . $article->getItem()->plugin_url . '/template/page.latte', [
+        View::set(Path::get('PLUGINS_PATH') . $article->getItem()->plugin_url . 'template/page.latte', [
             'item' => $article->getItem(),
             'article' => $article,
             'author' => (new Profile)->where('id', $article->getItem()->user_id)->fetchOne(),

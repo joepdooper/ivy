@@ -2,21 +2,10 @@
 <div class="modal" role="dialog">
     <div class="modal-box">
         <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-10" for="modal_add_moment">✕</label>
-        <form action="{path('BASE_PATH') . 'moment/create'}" method="POST" enctype="multipart/form-data">
+        <form action="{path('BASE_PATH') . ($moment ? 'moment/update/' . $item->id : 'moment/create')}" method="POST" enctype="multipart/form-data">
             {csrf()}
 
             <div class="tabs justify-between">
-                {* Title *}
-                <label class="tab mb-4">
-                        {icon("feather/type.svg")|noescape}
-                        <input type="radio" name="modal_add_tabs" />
-                </label>
-                <div class="tab-content">
-                        <label class="input w-full">
-                            {php $momentFactoryTitles = text('moment.moment.factory.titles')}
-                            <input placeholder="{text('moment.moment.title')}" name="title" type="text" value="{$moment?->title ?? $momentFactoryTitles[array_rand($momentFactoryTitles)]}"/>
-                        </label>
-                </div>
                 {* Calendar *}
                 <label class="tab mb-4 btn-primary">
                         {icon("feather/calendar.svg")|noescape}
@@ -28,8 +17,10 @@
                             'calendar' => 'moment',
                             'startYear' => profile()?->birthday ? datetime()::parse(profile()->birthday)->year : 2000,
                             'endYear' => datetime()::now()->year + 5,
-                            'startDate' => $moment?->getDateTime()?->start_date ?? datetime()::now(),
-                            'endDate' => $moment?->getDateTime()?->start_date
+                            'selectYear' => $moment ? datetime()::parse($moment->getDateTime()->start_date)->year : datetime()::now()->year,
+                            'selectMonth' => $moment ? datetime()::parse($moment->getDateTime()->start_date)->month : datetime()::now()->month,
+                            'startDate' => $moment?->getDateTime()?->start_date ?? datetime()::now()->toDateString(),
+                            'endDate' => $moment?->getDateTime()?->end_date
                             }
                             <div class="flex gap-4 items-center w-full mt-4">
                                 <label class="input">
@@ -41,6 +32,17 @@
                                 </label>
                             </div>
                         </div>
+                </div>
+                {* Title *}
+                <label class="tab mb-4">
+                        {icon("feather/type.svg")|noescape}
+                        <input type="radio" name="modal_add_tabs" />
+                </label>
+                <div class="tab-content">
+                        <label class="input w-full">
+                            {php $momentFactoryTitles = text('moment.moment.factory.titles')}
+                            <input placeholder="{text('moment.moment.title')}" name="title" type="text" value="{$moment?->id ? $moment->title : $momentFactoryTitles[array_rand($momentFactoryTitles)]}"/>
+                        </label>
                 </div>
                 {* Location *}
                 <label class="tab">
@@ -55,6 +57,9 @@
                             <label class="input w-full">
                                 <input placeholder="{text('moment.moment.country')}" name="country" type="text" value="{$moment?->getLocation()?->country}"/>
                             </label>
+                            <button type="button" class="btn btn-outline btn-primary w-full shadow-none leading-none px-4" data-action="enable-geolocation">
+                                {text('moment.moment.fetch_current_location')}
+                            </button>
                         </div>
                 </div>
                 {* People *}
@@ -64,14 +69,14 @@
                 </label>
                 <div class="tab-content">
                         <div class="flex flex-wrap gap-4">
-                            {var $peopleIds = array_map(fn($p) => $p->user_id, $moment->getPeople() ?? [])}
+                            {var $peopleIds = array_map(fn($p) => $p->user_id, $moment?->getPeople() ?? [])}
                             {foreach (new \Ivy\Model\Profile)->fetchAll() as $person}
                                 <label class="swap">
                                     <input
                                             type="checkbox"
                                             name="people[]"
                                             value="{$person->user_id}"
-                                            {if in_array($person->user_id, $peopleIds) || $person->user_id === auth()->getUserId()}checked{/if}
+                                            {if in_array($person->user_id, $peopleIds) || (!$moment && $person->user_id === auth()->getUserId())}checked{/if}
                                     />
                                     <span class="swap-off overflow-hidden w-10 h-10 rounded-full bg-primary/10 text-primary border-2 border-transparent">
                                         {if $person->user_image}
@@ -102,14 +107,14 @@
                 </label>
                 <div class="tab-content">
                     <div class="flex flex-wrap gap-4">
-                        {var $tagIds = array_map(fn($t) => $t->id, $moment->fetchAllEntityTags() ?? [])}
-                        {foreach (new \Tags\Tag)->fetchAll() as $tag}
+                        {var $tagIds = array_map(fn($t) => $t->id, $moment?->tags() ?? [])}
+                        {foreach $tags as $tag}
                             <label class="swap">
                                 <input
                                         type="checkbox"
                                         name="tags[]"
                                         value="{$tag->id}"
-                                        {if in_array($tag->id, $tagIds) || $tag->value === 'Moment'}checked{/if}
+                                        {if in_array($tag->id, $tagIds) || (!$moment && $tag->value === 'Moment')}checked{/if}
                                 />
                                 <span class="swap-off badge badge-sm badge-soft badge-primary font-bold p-3">
                                     {$tag->value}
@@ -126,7 +131,7 @@
             <div class="modal-action">
                 <button class="btn btn-primary w-full shadow-none leading-none px-4"
                         name="submit" type="submit" value="create">
-                    {text('moment.moment.add')}
+                    {$moment ? text('moment.moment.update') : text('moment.moment.add')}
                 </button>
             </div>
             <input name="country_code" type="hidden"/>

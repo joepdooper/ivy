@@ -27,7 +27,7 @@
                                     <select class="select select-bordered w-full" name="template[1][value]">
                                         {foreach array_diff(scandir(path('TEMPLATES_PATH')), array('.', '..', '.DS_Store')) as $val}
                                             {php $theme = json_decode(file_get_contents(path('TEMPLATES_PATH') . $val . '/info.json'))}
-                                            <option value="{$theme->url}" {$templateBase != $theme->url ?: 'selected'}>
+                                            <option value="{$theme->url}" {$templateBase === $theme->url ? 'selected' : ''}>
                                                 {$theme->name . ' (' . $theme->description . ')'}
                                             </option>
                                         {/foreach}
@@ -45,7 +45,7 @@
                                     <select class="select select-bordered w-full" name="template[2][value]">
                                         {foreach array_diff(scandir(path('TEMPLATES_PATH')), array('.', '..', '.DS_Store')) as $val}
                                             {php $theme = json_decode(file_get_contents(path('TEMPLATES_PATH') . $val . '/info.json'))}
-                                            <option value="{$theme->url}" {$templateSub != $theme->url ?: 'selected'}>
+                                            <option value="{$theme->url}" {$templateSub === $theme->url ? 'selected' : ''}>
                                                 {$theme->name . ' (' . $theme->description . ')'}
                                             </option>
                                         {/foreach}

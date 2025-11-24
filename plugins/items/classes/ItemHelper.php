@@ -20,16 +20,20 @@ class ItemHelper
             ->fetchOne()?->getId();
     }
 
-    public static function getRedirect($request): string
+    public static function getRedirect($request, ?Item $item = null): string
     {
         $trimmedPath = self::getRefererPath($request);
-        if(!empty($trimmedPath)){
-            if(!(new Item)->where('slug', basename($trimmedPath))->fetchOne()){
-                $item = (new Item)->where('id', basename($request->getPathInfo()))->fetchOne();
-                $trimmedPath = $item->route . '/' . $item->slug;
-            }
+
+        if (empty($trimmedPath)) {
+            return $trimmedPath;
         }
-        return $trimmedPath;
+
+        $segments = explode('/', $trimmedPath);
+        array_pop($segments);
+
+        $segments[] = $item?->slug;
+
+        return implode('/', $segments);
     }
 
     private static function getRefererPath($request): string

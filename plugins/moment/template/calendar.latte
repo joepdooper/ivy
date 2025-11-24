@@ -6,14 +6,16 @@
         <label class="flex-1">
             <select data-calendar="monthSelect" class="select">
                 {for $i = 1; $i <= 12; $i++}
-                    <option value="{$i}">{datetime()::create()->month($i)->format('F')}</option>
+                    <option value="{$i}" n:attr="selected => $i === $selectMonth">
+                        {datetime()::create()->month($i)->format('F')}
+                    </option>
                 {/for}
             </select>
         </label>
         <label class="flex-1">
             <select data-calendar="yearSelect" class="select">
                 {for $year = $startYear; $year <= $endYear; $year++}
-                    <option value="{$year}" n:attr="selected => $year === datetime()::now()->year">
+                    <option value="{$year}" n:attr="selected => $year === $selectYear">
                         {$year}
                     </option>
                 {/for}
@@ -42,5 +44,5 @@
         </div>
     </div>
 </div>
-<input type="date" name="start_date" data-calendar="start" data-calendar-id="{$calendar}" value="{$startDate}">
-<input type="date" name="end_date" data-calendar="end" data-calendar-id="{$calendar}" value="{$endDate}">
+<input type="hidden" name="start_date" data-calendar="start" data-calendar-id="{$calendar}" value="{$startDate}">
+<input type="hidden" name="end_date" data-calendar="end" data-calendar-id="{$calendar}" value="{$endDate}">

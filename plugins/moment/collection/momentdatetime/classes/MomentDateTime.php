@@ -25,5 +25,5 @@ class MomentDateTime extends Model
     protected ?string $end_date;
     protected ?string $start_time;
     protected ?string $end_time;
-    protected ?string $token;
+    protected ?string $token = null;
 }

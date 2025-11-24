@@ -31,10 +31,11 @@ class ArticleController extends CollectionController
         ])->insert();
 
         $this->item->populate([
-            'template_id' => $id,
-            'parent_id' => ItemHelper::getParentId($this->request),
-            'slug' => ItemHelper::createSlug('Title'),
             'table_id' => $item_table_id,
+            'parent_id' => ItemHelper::getParentId($this->request),
+            'template_id' => $id,
+            'type' => 'article',
+            'slug' => ItemHelper::createSlug('Title'),
         ])->insert();
 
         $this->article->attachTag($this->tag->fetchOne()->getId());

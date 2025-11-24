@@ -42,4 +42,34 @@ export class Location {
             throw error;
         }
     }
+
+    static async getCoordinatesFromQuery(query) {
+        if (!query) throw new Error("No location query provided.");
+
+        const url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=${encodeURIComponent(query)}&limit=1`;
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Failed to fetch coordinates.");
+
+        const results = await response.json();
+        if (results.length === 0) throw new Error("No results found for the given location.");
+
+        const place = results[0];
+        const address = place.address || {};
+
+        return {
+            latitude: parseFloat(place.lat),
+            longitude: parseFloat(place.lon),
+            country: address.country || null,
+            countryCode: address.country_code ? address.country_code.toUpperCase() : null,
+            city:
+                address.city ||
+                address.town ||
+                address.village ||
+                address.hamlet ||
+                address.municipality ||
+                address.county ||
+                null,
+        };
+    }
 }

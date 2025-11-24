@@ -5,6 +5,7 @@ namespace Tags;
 use GUMP;
 use Ivy\Abstract\Controller;
 use Ivy\Core\Path;
+use Ivy\Model\Setting;
 use Ivy\View\View;
 
 class TagController extends Controller
@@ -21,20 +22,29 @@ class TagController extends Controller
     {
         $this->tag->policy('post');
 
-        $tags_data = $this->request->get('tag') ?? '';
-
-        foreach ($tags_data as $tag_data) {
+        foreach ($this->request->get('tag') as $data) {
             try {
-                $validated = GUMP::is_valid($tag_data, [
+                $validated = GUMP::is_valid($data, [
                     'value' => 'alpha_numeric_dash'
                 ]);
-                if ($validated === true) {
-                    $this->tag->save($tag_data);
-                } else {
-                    foreach ($validated as $string) {
-                        $this->flashBag->add('error', $string);
-                    }
+
+                if ($validated !== true) {
+                    foreach ($validated as $msg) $this->flashBag->add('error', $msg);
+                    continue;
                 }
+
+                if (empty($data['value'])) continue;
+
+                $tag = !empty($data['id'])
+                    ? (new Tag())->where('id', $data['id'])->fetchOne()
+                    : new Tag();
+
+                if (isset($data['delete']) && !empty($data['id'])) {
+                    $tag?->delete();
+                } else {
+                    $tag->populate($data)->save();
+                }
+
             } catch (\Exception $e) {
                 $this->flashBag->add('error', $e->getMessage());
             }
@@ -46,7 +56,7 @@ class TagController extends Controller
 
     public function index(): void
     {
-        // $this->tag->policy('index');
+        $this->tag->policy('index');
 
         $tags = $this->tag->fetchAll();
         View::set(Path::get('PLUGINS_PATH') . 'tags/template/manage.latte', ['tags' => $tags]);

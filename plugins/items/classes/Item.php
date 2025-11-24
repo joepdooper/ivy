@@ -3,133 +3,105 @@
 namespace Items;
 
 use Ivy\Abstract\Model;
-use Ivy\Manager\DatabaseManager;
 use Ivy\Trait\Factory;
-use Ivy\Trait\Filter;
+use Ivy\Trait\HasFilters;
 use Tags\TagTrait;
 
 class Item extends Model
 {
-    use TagTrait, Filter, Factory;
+    use TagTrait, HasFilters, Factory;
 
     protected string $table = 'items';
+
     protected array $columns = [
         'user_id',
-        'table_id',
         'parent_id',
-        'template_id',
-        'position_id',
         'publish',
         'token',
-        'date',
         'sort',
         'slug'
     ];
 
     protected int $user_id;
-    protected int $table_id;
-    protected ?int $parent_id;
-    protected int $template_id;
-    protected int $publish;
+    protected ?int $parent_id = null;
+    protected int $publish = 0;
 
-    protected ?string $token;
-    protected string $date;
-    protected ?int $sort;
-    protected ?string $slug;
+    protected ?string $token = null;
+    protected ?string $date = null;
+    protected ?int $sort = null;
+    protected ?string $slug = null;
 
-    protected bool $author;
-    protected string $namespace;
-    protected string $name;
-    protected ?string $plugin_url;
+    protected bool $loadPlugins = false;
+    protected bool $loadAuthors = false;
 
-    protected string $route;
-    protected string $url;
-
-
-    public function __construct()
+    public function plugin(): ?object
     {
-        parent::__construct();
-
-        $this->query = "SELECT
-        `items`.*,
-        `item_templates`.`name`,
-        `item_templates`.`plugin_url`,
-        `item_templates`.`route`,
-        `item_templates`.`table`,
-        `item_templates`.`namespace`,
-        `plugins`.`url`,
-        `plugins`.`active` FROM `items`
-        INNER JOIN `item_templates` ON `item_templates`.`id` = `items`.`template_id`
-        INNER JOIN `plugins` ON `plugins`.`url` = `item_templates`.`plugin_url`
-        WHERE `plugins`.`active` != '0'";
+        return $this->getRelation('plugin');
     }
 
-    // -- insert
+    public function author(): ?Profile
+    {
+        return $this->getRelation('author');
+    }
+
+    public function getDate(): ?string
+    {
+        return $this->date;
+    }
+
     public function populate(array $data): static
     {
         $data['publish'] = $data['publish'] ?? 0;
         $data['user_id'] = $data['user_id'] ?? $_SESSION['auth_user_id'];
-        $data['table_id'] = $data['table_id'] ?? ($this->table_id ?? DatabaseManager::connection()->getLastInsertId());
 
         return parent::populate($data);
     }
 
-    public function getAuthor(): bool
+    public function with(array $relations): static
     {
-        return $this->author;
-    }
-
-    public function setAuthor($value): void
-    {
-        $this->author = $value;
-    }
-
-    public function getNamespace(): string
-    {
-        return $this->namespace;
-    }
-
-    public function setNamespace($value): void
-    {
-        $this->namespace = $value;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function setName($value): void
-    {
-        $this->name = $value;
-    }
-
-    public function getPluginUrl(): string
-    {
-        return $this->plugin_url;
-    }
-
-    public function setPluginUrl($value): void
-    {
-        $this->plugin_url = $value;
-    }
-
-    public function getRoute(): string
-    {
-        return $this->route;
-    }
-
-    public function setRoute($value): void
-    {
-        $this->route = $value;
-    }
-
-    public function render(): void
-    {
-        $itemTemplateClass = "{$this->namespace}\\{$this->name}Template";
-        if (class_exists($itemTemplateClass)) {
-            (new $itemTemplateClass)->render($this);
+        if (in_array('plugins', $relations, true)) {
+            $this->loadPlugins = true;
         }
+
+        if (in_array('authors', $relations, true)) {
+            $this->loadAuthors = true;
+        }
+
+        $native = array_diff($relations, ['plugins', 'authors']);
+        if (!empty($native)) {
+            parent::with($native);
+        }
+
+        return $this;
     }
 
+    public function fetchAll(): array
+    {
+        $items = parent::fetchAll();
+
+        if ($this->loadPlugins || $this->loadAuthors) {
+            ItemLoader::attach($items, [
+                'plugins' => $this->loadPlugins,
+                'authors' => $this->loadAuthors
+            ]);
+        }
+
+        return $items;
+    }
+
+    public function fetchOne(): ?static
+    {
+        $item = parent::fetchOne();
+
+        if ($item && ($this->loadPlugins || $this->loadAuthors)) {
+            $items = [$item];
+            ItemLoader::attach($items, [
+                'plugins' => $this->loadPlugins,
+                'authors' => $this->loadAuthors
+            ]);
+            return $items[0];
+        }
+
+        return $item;
+    }
 }

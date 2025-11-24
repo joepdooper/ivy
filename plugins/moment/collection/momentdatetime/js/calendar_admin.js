@@ -1,15 +1,32 @@
 class Calendar {
     constructor(root) {
         this.root = root;
-        this.current = new Date();
+        this.id = root.dataset.calendarId || "default";
 
-        const yyyy = this.current.getFullYear();
-        const mm = this.current.getMonth() + 1; // 1-based
-        const dd = this.current.getDate();
-        this.start = `${yyyy}-${String(mm).padStart(2, "0")}-${String(dd).padStart(2, "0")}`;
-        this.end = null;
+        const startInput = document.querySelector(`[data-calendar='start'][data-calendar-id='${this.id}']`);
+        const endInput = document.querySelector(`[data-calendar='end'][data-calendar-id='${this.id}']`);
 
         this.grid = root.querySelector("[data-calendar='grid']");
+        this.monthSelect = root.querySelector("[data-calendar='monthSelect']");
+        this.yearSelect = root.querySelector("[data-calendar='yearSelect']");
+        this.prevBtn = root.querySelector("[data-calendar='prev']");
+        this.nextBtn = root.querySelector("[data-calendar='next']");
+
+        const selectedYear = parseInt(this.yearSelect?.value ?? new Date().getFullYear(), 10);
+        const selectedMonth = parseInt(this.monthSelect?.value ?? new Date().getMonth() + 1, 10) - 1;
+
+        this.current = new Date(selectedYear, selectedMonth, 1);
+
+        const yyyy = selectedYear;
+        const mm = selectedMonth + 1;
+        const dd = new Date().getDate();
+        const today = `${yyyy}-${String(mm).padStart(2, "0")}-${String(dd).padStart(2, "0")}`;
+
+        this.start = startInput?.value || today;
+        this.end = endInput?.value || null;
+
+        if (startInput) startInput.value = this.start;
+        if (endInput) endInput.value = this.end ?? "";
 
         this.templates = {};
         this.grid.querySelectorAll("[data-template]").forEach(tpl => {
@@ -17,20 +34,7 @@ class Calendar {
             tpl.remove();
         });
 
-        this.monthSelect = root.querySelector("[data-calendar='monthSelect']");
-        this.yearSelect = root.querySelector("[data-calendar='yearSelect']");
-        this.prevBtn = root.querySelector("[data-calendar='prev']");
-        this.nextBtn = root.querySelector("[data-calendar='next']");
-
-        this.id = root.dataset.calendarId || "default";
-
         this.initEvents();
-
-        const startInput = document.querySelector(`[data-calendar='start'][data-calendar-id='${this.id}']`);
-        if (startInput) startInput.value = this.start;
-        const endInput = document.querySelector(`[data-calendar='end'][data-calendar-id='${this.id}']`);
-        if (endInput) endInput.value = "";
-
         this.render();
     }
 

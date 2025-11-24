@@ -3,15 +3,27 @@
     <div class="modal-box">
         <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-10" for="filter_moment_modal">✕</label>
 
-        <form action="{path('BASE_PATH') . 'moment/filter'}" method="POST" enctype="multipart/form-data">
+        <form action="{path('PUBLIC_URL')}" method="POST" enctype="multipart/form-data">
             {csrf()}
             <div class="space-y-4">
                 <label class="input w-full">
                     <input name="search" type="search" placeholder="{text('search.search.search')}" />
                 </label>
-                <div>
-                    {foreach (new \Tags\Tag)->fetchAll() as $tag}
-                        <input class="btn" type="checkbox" name="tags" aria-label="{$tag->value}"/>
+                <div class="flex flex-wrap gap-4">
+                        {foreach $tags as $tag}
+                        <label class="swap">
+                            <input
+                                    type="checkbox"
+                                    name="tags[]"
+                                    value="{$tag->id}"
+                            />
+                            <span class="swap-off badge badge-sm badge-soft badge-primary font-bold p-3">
+                                    {$tag->value}
+                                </span>
+                            <span class="swap-on badge badge-sm badge-accent text-primary font-bold p-3">
+                                    {$tag->value}
+                                </span>
+                        </label>
                     {/foreach}
                 </div>
             </div>

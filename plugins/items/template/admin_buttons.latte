@@ -5,5 +5,5 @@
         {button type:visible, name:'publish', value:$item->publish, id:'publish_'.$item->id}
     {/if}
     {button type:save, name:'save', id:'save_'.$item->id}
-    {button type:delete, name:'delete', value:'', id:'delete_'.$item->id, placeholder:$item->name}
+    {button type:delete, name:'delete', value:'', id:'delete_'.$item->id, placeholder:($placeholder ?? $item->id)}
 </div>

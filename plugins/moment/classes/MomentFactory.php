@@ -2,6 +2,7 @@
 
 namespace Moment;
 
+use Items\Item;
 use Ivy\Core\Language;
 
 class MomentFactory
@@ -12,6 +13,7 @@ class MomentFactory
 
         return [
             'title' => $titles[array_rand($titles)],
+            'item' => Item::class,
             'token' => null,
         ];
     }
