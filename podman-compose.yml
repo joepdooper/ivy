@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+
+  apache:
+    image: docker.io/php:8.4-apache
+    container_name: ivy_apache
+    command: >
+      bash -c "apt-get update && apt-get install -y libicu-dev libjpeg-dev libpng-dev libwebp-dev libfreetype6-dev &&
+      docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype &&
+      docker-php-ext-install intl pdo_mysql gd &&
+      a2enmod rewrite headers deflate expires &&
+      apache2-foreground"
+    ports:
+      - "${SERVER_PORT:-8080}:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/sites-available:/etc/apache2/sites-available
+      - ./docker/sites-enabled:/etc/apache2/sites-enabled
+      - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      - /usr/bin/node:/usr/local/bin/node  # Path for Node.js
+      - /usr/bin/npm:/usr/local/bin/npm    # Path for NPM
+      - /usr/bin/npx:/usr/local/bin/npx    # Path for npx
+
+  mysql:
+    image: docker.io/mysql
+    container_name: ${DB_HOST:-ivy_mysql}
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - ./docker/mysql:/docker-entrypoint-initdb.d
+
+  mailcatcher:
+    image: docker.io/dockage/mailcatcher
+    container_name: ${MAIL_HOST:-ivy_mailcatcher}
+    hostname: ${MAIL_HOST:-ivy_mailcatcher}
+    ports:
+      - "1080:1080" # Web UI
+      - "1025:1025" # SMTP
