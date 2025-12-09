@@ -3,34 +3,50 @@ version: '3.8'
 services:
 
   apache:
-    image: docker.io/php:8.4-apache
+    image: docker.io/php:8.4-apache-bullseye
     container_name: ivy_apache
     command: >
-      bash -c "apt-get update && apt-get install -y libicu-dev libjpeg-dev libpng-dev libwebp-dev libfreetype6-dev &&
-      docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype &&
-      docker-php-ext-install intl pdo_mysql gd &&
-      a2enmod rewrite headers deflate expires &&
-      apache2-foreground"
+      bash -c "apt-get update && apt-get install -y \
+        libicu-dev libjpeg-dev libpng-dev libwebp-dev libfreetype6-dev curl \
+        && curl -sL https://deb.nodesource.com/setup_current.x | bash - \
+        && apt-get install -y nodejs \
+        && docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype \
+        && docker-php-ext-install intl pdo_mysql gd \
+        && a2enmod rewrite headers deflate expires \
+        && echo 'Creating Apache configuration...' && \
+            echo '<VirtualHost *:80>' > /etc/apache2/sites-available/000-default.conf && \
+            echo '    DocumentRoot /var/www/public' >> /etc/apache2/sites-available/000-default.conf && \
+            echo '    <Directory /var/www/public>' >> /etc/apache2/sites-available/000-default.conf && \
+            echo '        Options Indexes FollowSymLinks' >> /etc/apache2/sites-available/000-default.conf && \
+            echo '        AllowOverride All' >> /etc/apache2/sites-available/000-default.conf && \
+            echo '        Require all granted' >> /etc/apache2/sites-available/000-default.conf && \
+            echo '    </Directory>' >> /etc/apache2/sites-available/000-default.conf && \
+            echo '    ErrorLog ${APACHE_LOG_DIR}/error.log' >> /etc/apache2/sites-available/000-default.conf && \
+            echo '    CustomLog ${APACHE_LOG_DIR}/access.log combined' >> /etc/apache2/sites-available/000-default.conf && \
+            echo '</VirtualHost>' >> /etc/apache2/sites-available/000-default.conf && \
+            a2ensite 000-default && apache2-foreground"
     ports:
       - "${SERVER_PORT:-8080}:80"
+    environment:
+      APACHE_DOCUMENT_ROOT: /var/www/public
     volumes:
       - ./:/var/www
       - ./docker/sites-available:/etc/apache2/sites-available
       - ./docker/sites-enabled:/etc/apache2/sites-enabled
       - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
-      - /usr/bin/node:/usr/local/bin/node  # Path for Node.js
-      - /usr/bin/npm:/usr/local/bin/npm    # Path for NPM
-      - /usr/bin/npx:/usr/local/bin/npx    # Path for npx
 
   mysql:
     image: docker.io/mysql
     container_name: ${DB_HOST:-ivy_mysql}
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DB_DATABASE:-ivy_db}
+      MYSQL_USER: ${DB_USERNAME:-ivy_db_username}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-ivy_db_password}
     ports:
       - "${DB_PORT:-3306}:3306"
     volumes:
-      - ./docker/mysql:/docker-entrypoint-initdb.d
+      - ./ivy.sql:/docker-entrypoint-initdb.d/ivy.sql
 
   mailcatcher:
     image: docker.io/dockage/mailcatcher
