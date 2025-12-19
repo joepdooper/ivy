@@ -1,25 +1,23 @@
 services:
 
   apache:
-    image: php:8.3-apache
+    image: php:8.4-apache
     container_name: ivy_apache
     command: >
-      bash -c "
-        apt-get update &&
-        apt-get install -y libicu-dev libjpeg-dev libpng-dev libwebp-dev libfreetype6-dev curl &&
-        curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &&
-        apt-get install -y nodejs &&
-        docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype &&
-        docker-php-ext-install intl pdo_mysql gd &&
-        a2enmod rewrite headers deflate expires &&
-        apache2-foreground
-      "
+      bash -c "apt-get update && apt-get install -y \
+        libicu-dev libjpeg-dev libpng-dev libwebp-dev libfreetype6-dev curl \
+        && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+        && apt-get install -y nodejs \
+        && docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype \
+        && docker-php-ext-install intl pdo_mysql gd \
+        && a2enmod rewrite headers deflate expires \
+        && apache2-foreground"
     ports:
       - "${SERVER_PORT:-8080}:80"
     volumes:
       - ./:/var/www
-      - ./apache.conf:/etc/apache2/sites-available/000-default.conf
-      - ./custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ./docker/apache.conf:/etc/apache2/sites-available/000-default.conf
+      - ./docker/custom.ini:/usr/local/etc/php/conf.d/custom.ini
     depends_on:
       - mysql
       - mailcatcher
@@ -27,17 +25,17 @@ services:
       - ivy-network
 
   mysql:
-    image: mysql:5.7
+    image: mysql
     container_name: ${DB_HOST:-ivy_mysql}
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
       MYSQL_DATABASE: ${DB_DATABASE:-ivy}
       MYSQL_USER: ${DB_USERNAME:-root}
       MYSQL_PASSWORD: ${DB_PASSWORD:-root}
-    volumes:
-      - ivy_mysql_data:/var/lib/mysql
     ports:
       - "${DB_PORT:-3306}:3306"
+    volumes:
+      - ./ivy.sql:/docker-entrypoint-initdb.d/ivy.sql
     networks:
       - ivy-network
 
@@ -50,9 +48,6 @@ services:
       - "1025:1025"
     networks:
       - ivy-network
-
-volumes:
-  ivy_mysql_data:
 
 networks:
   ivy-network:

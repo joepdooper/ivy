@@ -1,4 +1,4 @@
-/vendor/
 .env
-apache.conf
-custom.ini
+/vendor/
+/node_modules/
+/docker/
