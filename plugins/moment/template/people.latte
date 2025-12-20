@@ -1,0 +1,53 @@
+{extends file('body.latte')}
+
+{block main}
+    <main class="grow p-4 w-full max-w-5xl mx-auto">
+        <form action="{path('PUBLIC_URL') . 'admin/plugin/moment/collection/momentpeople/post'}" method="POST" enctype="multipart/form-data">
+            {csrf()}
+
+            <div class="space-y-4">
+                <h1 class="leading-none text-6xl font-bold">{text('moment.moment.people')}</h1>
+                <div n:if="$people" class="overflow-x-auto rounded-box border border-base-content/5">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>{text('moment.moment.persons_name')}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach $people as $key => $person}
+                            <tr>
+                                <td>
+                                    <strong>{$person->name}</strong>
+                                </td>
+                                <td class="text-right">
+                                    <input type="hidden" name="people[{$key}][id]" value="{$person->id}">
+                                    <div class="join">
+                                        {button type:delete, name:"people[$key][delete]", value:"person_" . $person->id, id:$person->id, placeholder:$person->name}
+                                    </div>
+                                </td>
+                            </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+                </div>
+                <div n:else class="text-center">
+                    {text('moment.moment.no_people_defined')}
+                </div>
+
+                <div>
+                    <label>
+                        <input class="input input-bordered w-full" type="text" name="people[][name]"
+                               placeholder="{text('moment.moment.add_persons_name')}">
+                    </label>
+                </div>
+
+                <div class="text-center">
+                    {button type:submit, text:text('button.save')}
+                </div>
+
+            </div>
+        </form>
+    </main>
+{/block}

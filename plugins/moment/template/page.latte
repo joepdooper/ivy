@@ -63,7 +63,7 @@
             <div class="px-2 flex justify-between items-center">
                 <div class="space-x-2">
                     {foreach $momentPeople as $person}
-                        <div class="avatar">
+                        <div class="avatar tooltip" data-tip="{$person->username}">
                             <div class="w-10 rounded-full bg-secondary">
                                 {if $person->user_image}
                                     <img alt="{$person->username}" src="{media('profile/' . $person->user_image)}"/>
@@ -121,7 +121,7 @@
         'item' => $item,
         'tags' => $tags
          ])}
-        {* render(path('PLUGINS_FOLDER') . 'items/template/template_list_modal.latte') *}
+        {render(path('PLUGINS_FOLDER') . 'items/template/template_list_modal.latte')}
         <div class="text-center p-4 join justify-center">
             <label for="modal_add_moment" class="btn btn-square btn-primary shadow-none cursor-pointer join-item">
                 {icon("feather/edit.svg")|noescape}

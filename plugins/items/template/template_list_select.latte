@@ -1,13 +1,9 @@
-{php $itemTemplates = (new \Items\ItemTemplate)->with(['plugin'])->fetchAll()}
-
 <div class="join w-full">
     <label class="w-full">
-        <select name="item_template_id" class="select select-bordered w-full join-item">
-            <option disabled selected>Select type of item to add</option>
-            {foreach $itemTemplates as $item_template}
-                {if $item_template->plugin()->active}
-                    <option value="{$item_template->id}">{$item_template->name}</option>
-                {/if}
+        <select name="item_registry" class="select select-bordered w-full join-item">
+            <option disabled selected>{text('items.modal.insert_selected_item')}</option>
+            {foreach \Items\ItemRegistry::all() as $itemRegistryKey => $itemRegistryModel}
+                <option value="{$itemRegistryKey}">{$itemRegistryKey}</option>
             {/foreach}
         </select>
     </label>

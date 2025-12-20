@@ -1,0 +1,17 @@
+{
+  "name": "Contacts",
+  "version": "1.0.0",
+  "description": "Manage contacts",
+  "type": "utility",
+  "actions": [
+    {
+      "text": "contacts.manage",
+      "icon": "feather/user-plus.svg",
+      "url": "manage"
+    }
+  ],
+  "database": {
+    "install": "db/install.db.php",
+    "uninstall": "db/uninstall.db.php"
+  }
+}

@@ -20,16 +20,19 @@ class ItemController extends Controller
         $this->item = new Item;
     }
 
-    public function post(): void
+    public function insert(): void
     {
-        $this->item->policy('post');
+        $this->item->policy('insert');
+
+        $itemRegistry = ItemRegistry::get($this->request->request->get('item_registry'));
+
+        d($itemRegistry);die;
 
         if(!$this->request->get('item_template_id')) {
             $this->flashBag->add('warning', 'No template was selected');
             $this->redirect(ItemHelper::getRedirect($this->request));
         } else {
-            $itemTemplate = (new ItemTemplate)->where('id', $this->request->get('item_template_id'))->fetchOne();
-            $this->redirect($itemTemplate->route . '/insert/' . $this->request->get('item_template_id'));
+            // $this->redirect($itemTemplate->route . '/insert/' . $this->request->get('item_template_id'));
         }
     }
 
@@ -37,16 +40,43 @@ class ItemController extends Controller
     {
         $this->item->policy('index');
 
+        $itemIds = [];
+
         $items = Item::query()
             ->with(['plugins', 'authors'])
-            ->filter([
-                'user_id' => User::getAuth()->getUserId(),
-            ])
-            ->when($this->request->request->has('search'), function ($query) {
-                $terms = str_getcsv($this->request->request->get('search'), ' ', "'");
-                foreach ($terms as $term) {
-                    $query->orFilter($term);
+            ->where('user_id', User::getAuth()->getUserId())
+            ->when(
+                $this->request->request->has('search') &&
+                is_string($this->request->request->get('search')),
+                function () use (&$itemIds) {
+                    $ids = ItemHelper::searchItemIds(
+                        $this->request->request->get('search')
+                    );
+                    $itemIds = empty($itemIds) ? $ids : array_intersect($itemIds, $ids);
                 }
+            )
+            ->when(
+                $this->request->request->has('tags') &&
+                !empty($this->request->request->all('tags')),
+                function () use (&$itemIds) {
+                    $ids = ItemHelper::filterItemTags(
+                        $this->request->request->all('tags')
+                    );
+                    $itemIds = empty($itemIds) ? $ids : array_intersect($itemIds, $ids);
+                }
+            )
+            ->when(
+                isset($itemIds) &&
+                empty($itemIds) &&
+                ( $this->request->request->has('search') ||
+                    $this->request->request->has('tags')
+                ),
+                function ($query) {
+                    return $query->where('id', -1);
+                }
+            )
+            ->when(!empty($itemIds), function ($query) use (&$itemIds) {
+                $query->whereIn('id', $itemIds);
             })
             ->sortBy('date')
             ->fetchAll();

@@ -9,5 +9,8 @@
   },
   "dependencies": [
     "Moment"
+  ],
+  "actions": [
+    {"text": "moment.people", "icon": "feather/users.svg", "url": "index"}
   ]
 }

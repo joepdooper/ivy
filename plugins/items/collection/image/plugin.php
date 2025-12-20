@@ -1,5 +1,7 @@
 <?php
 
+use Items\Collection\Image\Image;
+use Items\ItemRegistry;
 use Ivy\Manager\AssetManager;
 use Ivy\Manager\RouterManager;
 use Ivy\Model\User;
@@ -31,3 +33,5 @@ RouterManager::instance()->post('/image/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\I
 
 RouterManager::instance()->post('/image/sizes/post', '\Items\Collection\Image\ImageController@post');
 RouterManager::instance()->post('/image/sizes/index', '\Items\Collection\Image\ImageController@index');
+
+ItemRegistry::register('image', Image::class);

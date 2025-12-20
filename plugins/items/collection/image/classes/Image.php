@@ -12,13 +12,15 @@ class Image extends Model
     protected string $table = 'images';
     protected array $columns = [
         'file',
+        'item_id',
         'token'
     ];
 
     protected ?string $file;
+    protected int $item_id;
     protected ?string $token;
 
-    public function delete():string|int|bool {
+    public function delete():bool {
         $file = new ImageFile();
         foreach ((new ImageSize)->fetchAll() as $imageSize) {
             $file->setUploadPath('item'. DIRECTORY_SEPARATOR . $imageSize->name)->remove($this->file);

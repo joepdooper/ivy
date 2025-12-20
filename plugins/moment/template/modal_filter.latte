@@ -26,10 +26,47 @@
                         </label>
                     {/foreach}
                 </div>
+                <div class="flex flex-wrap gap-4">
+                    {foreach (new \Ivy\Model\Profile)->fetchAll() as $person}
+                        <label class="swap">
+                            <input
+                                    type="checkbox"
+                                    name="moment_people[]"
+                                    value="{$person->user_id}"
+                            />
+                            <span class="swap-off overflow-hidden w-11 h-11 rounded-full bg-primary/10 text-primary border-2 border-transparent">
+                                {if $person->user_image}
+                                    <img alt="{$person->username}" src="{media('profile/' . $person->user_image)}"/>
+                                {else}
+                                    <span class="inline-block ml-2 mt-2">
+                                        {icon("feather/user.svg")|noescape}
+                                    </span>
+                                {/if}
+                            </span>
+                            <span class="swap-on overflow-hidden w-11 h-11 rounded-full bg-accent text-primary border-2 border-accent">
+                                {if $person->user_image}
+                                    <img alt="{$person->username}" src="{media('profile/' . $person->user_image)}"/>
+                                {else}
+                                    <span class="inline-block ml-2 mt-2">
+                                        {icon("feather/user.svg")|noescape}
+                                    </span>
+                                {/if}
+                            </span>
+                        </label>
+                    {/foreach}
+                </div>
+                <div class="relative h-7">
+                    <label class="absolute w-full top-0">
+                        <input type="range" min="0" max="100" value="0" class="w-full range range-xs range-primary" />
+                    </label>
+                    <label class="absolute w-full top-0">
+                        <input type="range" min="0" max="100" value="100" class="w-full range range-xs range-primary [--range-fill:0]" />
+                    </label>
+                </div>
+                <input class="btn btn-outline btn-primary w-full shadow-none leading-none px-4" type="reset" value="{text('reset.reset')}"/>
             </div>
             <div class="modal-action">
-                <input class="btn" type="reset" value="{text('reset.reset')}"/>
-                <button class="btn btn-primary shadow-none leading-none"
+                <button class="btn btn-primary w-full shadow-none leading-none"
                         name="submit" type="submit" value="create">
                     {text('moment.moment.filter')}
                 </button>

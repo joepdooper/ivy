@@ -13,13 +13,21 @@ class MomentPeople extends Model
 
     protected array $columns = [
         'moment_id',
-        'user_id',
-        'contact_id',
+        'people_id',
         'token'
     ];
 
     protected int $moment_id;
-    protected ?string $user_id = null;
-    protected ?string $contact_id = null;
+    protected int $people_id;
     protected ?string $token = null;
+
+    public function getPeople(): array
+    {
+        return $this->hasMany(People::class, 'people_id');
+    }
+
+    public function getMoment(): array
+    {
+        return $this->hasMany(Moment::class, 'moment_id');
+    }
 }

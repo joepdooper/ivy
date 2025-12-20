@@ -49,22 +49,14 @@
                 <div>
                     <label>
                         <input class="input input-bordered w-full" name="username" type="text" placeholder="{text('placeholder.name')}"
-                               value="{$profile->username}">
+                               value="{$profile->user->username}">
                     </label>
                 </div>
 
                 <div>
                     <label>
                         <input class="input input-bordered w-full" name="email" type="email" placeholder="{text('placeholder.email')}"
-                               value="{$profile->email}">
-                    </label>
-                </div>
-
-                <div>
-                    <label>
-
-                        <input class="input input-bordered w-full" name="birthday" type="date" placeholder="{text('placeholder.birthday')}"
-                               value="{$profile->birthday}">
+                               value="{$profile->user->email}">
                     </label>
                 </div>
 

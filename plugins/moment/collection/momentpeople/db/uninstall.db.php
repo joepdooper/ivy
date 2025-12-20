@@ -13,4 +13,13 @@ if(User::canEditAsSuperAdmin()) {
     } catch (Exception $e) {
         error_log("Failed to drop table 'moments_people': " . $e->getMessage());
     }
+    try {
+        DatabaseManager::connection()->exec(
+            "
+        DROP TABLE `people`;
+        "
+        );
+    } catch (Exception $e) {
+        error_log("Failed to drop table 'people': " . $e->getMessage());
+    }
 }

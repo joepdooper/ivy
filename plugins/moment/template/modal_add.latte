@@ -71,6 +71,7 @@
                         <div class="flex flex-wrap gap-4">
                             {var $peopleIds = array_map(fn($p) => $p->user_id, $moment?->getPeople() ?? [])}
                             {foreach (new \Ivy\Model\Profile)->fetchAll() as $person}
+                            <div class="tooltip" data-tip="{$person->username}">
                                 <label class="swap">
                                     <input
                                             type="checkbox"
@@ -97,6 +98,7 @@
                                         {/if}
                                     </span>
                                 </label>
+                            </div>
                             {/foreach}
                         </div>
                 </div>

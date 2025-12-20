@@ -1,5 +1,7 @@
 <?php
 
+use Items\Collection\Youtube\Youtube;
+use Items\ItemRegistry;
 use Ivy\Manager\AssetManager;
 use Ivy\Manager\HookManager;
 use Ivy\Manager\RouterManager;
@@ -30,3 +32,5 @@ RouterManager::instance()->match('GET|POST', '/youtube/insert/(\d+)(/\w+)?(/[a-z
 RouterManager::instance()->post('/youtube/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Youtube\YoutubeController@save');
 RouterManager::instance()->post('/youtube/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Youtube\YoutubeController@update');
 RouterManager::instance()->post('/youtube/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Youtube\YoutubeController@delete');
+
+ItemRegistry::register('image', Youtube::class);

@@ -4,19 +4,6 @@ use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
 
 if(User::canEditAsSuperAdmin()) {
-
-    try {
-        DatabaseManager::connection()->delete(
-            'item_templates',
-            [
-                // where
-                'plugin_url' => 'image'
-            ]
-        );
-    } catch (Exception $e) {
-        error_log("Failed to remove image from item_templates: " . $e->getMessage());
-    }
-
     try {
         DatabaseManager::connection()->exec(
             "

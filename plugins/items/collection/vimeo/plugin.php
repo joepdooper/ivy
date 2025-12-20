@@ -1,5 +1,7 @@
 <?php
 
+use Items\Collection\Vimeo\Vimeo;
+use Items\ItemRegistry;
 use Ivy\Manager\AssetManager;
 use Ivy\Manager\HookManager;
 use Ivy\Manager\RouterManager;
@@ -28,3 +30,5 @@ RouterManager::instance()->match('GET|POST', '/vimeo/insert/(\d+)(/\w+)?(/[a-z0-
 RouterManager::instance()->post('/vimeo/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Vimeo\VimeoController@save');
 RouterManager::instance()->post('/vimeo/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Vimeo\VimeoController@update');
 RouterManager::instance()->post('/vimeo/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Vimeo\VimeoController@delete');
+
+ItemRegistry::register('image', Vimeo::class);

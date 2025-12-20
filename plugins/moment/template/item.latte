@@ -1,6 +1,6 @@
-<div class="item item-article relative group" id="item-{$item->id}">
+<div class="item item-moment relative group flex" id="item-{$item->id}">
 
-    <a href="{path('PUBLIC_URL') . 'moment/' . $item->slug}" class="card {if enabled('timeline')}card-side{/if} border border-base-300">
+    <a href="{path('PUBLIC_URL') . 'moment/' . $item->slug}" class="card {if enabled('timeline')}card-side{/if} border border-base-300 self-stretch">
         <div class="card-body">
             <div class="card-actions">
                 {foreach $moment->tags() as $tag}
@@ -9,10 +9,12 @@
                 </div>
                 {/foreach}
             </div>
-            <div>
+            <div class="mb-auto">
                 <h2 class="text-3xl font-bold">
                     {$moment->title}
                 </h2>
+            </div>
+            <div>
                 <p n:if="$momentDateTime" class="text-3xl font-bold text-secondary">
                     <span n:if="$momentDateTime->start_date">{$momentDateTime->start_date|date:'d-m-Y'}</span>
                     <span n:if="$momentDateTime->end_date">{text('misc.to')}</span>
@@ -52,4 +54,5 @@
             </form>
         </div>
     {/if}
+
 </div>

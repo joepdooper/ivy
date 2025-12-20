@@ -1,17 +1,18 @@
 {extends file('body.latte')}
 
 {block main}
-    <main class="grow p-4 relative">
-        <div n:if="$items" id="grid" class="grid grid-cols-3 gap-4 items-start">
+    <main class="flex grow p-4 relative">
+        <div n:if="$items" class="carousel carousel-end rounded-box gap-4">
             {foreach $items as $item}
-                {$item->plugin->render()}
+                <div class="carousel-item w-1/4">
+                    {$item->plugin->render()}
+                </div>
             {/foreach}
         </div>
     </main>
     {if canEditAsEditor()}
         {render(path('PLUGINS_FOLDER') . 'moment/template/modal_add.latte', ['moment' => null, 'tags' => $tags])}
         {render(path('PLUGINS_FOLDER') . 'moment/template/modal_filter.latte', ['tags' => $tags])}
-
         <div class="text-center p-4">
             <label for="modal_add_moment" class="btn btn-square shadow-none btn-primary">
                 {icon("feather/plus.svg")|noescape}

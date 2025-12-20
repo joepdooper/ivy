@@ -1,6 +1,6 @@
 <?php
 
-use Items\Collection\Article\Article;
+use Items\Collection\Audio\Audio;
 use Items\ItemRegistry;
 use Ivy\Manager\AssetManager;
 use Ivy\Manager\RouterManager;
@@ -19,4 +19,4 @@ RouterManager::instance()->mount('/audio', function () {
     RouterManager::instance()->post('/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@delete');
 });
 
-ItemRegistry::register('article', Article::class);
+ItemRegistry::register('audio', Audio::class);

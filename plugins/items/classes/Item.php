@@ -3,6 +3,7 @@
 namespace Items;
 
 use Ivy\Abstract\Model;
+use Ivy\Model\Profile;
 use Ivy\Trait\Factory;
 use Ivy\Trait\HasFilters;
 use Tags\TagTrait;
@@ -19,6 +20,10 @@ class Item extends Model
         'publish',
         'token',
         'sort',
+        'slug'
+    ];
+
+    protected array $filterable = [
         'slug'
     ];
 

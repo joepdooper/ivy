@@ -22,5 +22,8 @@ return [
     'add' => 'Add a new moment',
     'update' => 'Update moment',
     'filter' => 'Filter moments',
-    'fetch_current_location' => 'Get current location'
+    'fetch_current_location' => 'Get current location',
+    'no_people_defined' => 'No people defined',
+    'add_persons_name' => "Add person's name",
+    'persons_name' => 'Name'
 ];

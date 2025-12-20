@@ -71,4 +71,53 @@ class ItemHelper
         $string = preg_replace('/-+/', '-', $string);
         return trim($string, '-');
     }
+
+    public static function searchItemIds(string $search): array
+    {
+        $terms = str_getcsv($search, ' ', "'");
+        $ids = [];
+        $registry = ItemRegistry::all();
+
+        foreach ($registry as $modelClass) {
+            $model = new $modelClass;
+
+            if (!property_exists($model, 'searchable') || empty($model->getSearchable())) {
+                continue;
+            }
+
+            $query = $modelClass::query()->select('item_id');
+
+            foreach ($terms as $term) {
+                $firstColumn = true;
+                foreach ($model->getSearchable() as $column) {
+                    if ($firstColumn) {
+                        $query->where($column, "%$term%", 'LIKE');
+                        $firstColumn = false;
+                    } else {
+                        $query->orWhere($column, "%$term%", 'LIKE');
+                    }
+                }
+            }
+
+            $rows = $query->fetchAllRaw();
+            $ids = array_merge($ids, array_column($rows, 'item_id'));
+        }
+
+        return array_unique($ids);
+    }
+
+    public static function filterItemTags(array $tagIds): array
+    {
+        $ids = [];
+        $registry = ItemRegistry::all();
+
+        foreach ($registry as $modelClass) {
+            $rows = $modelClass::query()->select('item_id')
+                ->wherePivotHasAll('entity_tags', 'tag_id', $tagIds)
+                ->fetchAllRaw();
+            $ids = array_merge($ids, array_column($rows, 'item_id'));
+        }
+
+        return array_unique($ids);
+    }
 }

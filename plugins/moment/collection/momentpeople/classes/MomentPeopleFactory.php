@@ -11,7 +11,7 @@ class MomentPeopleFactory
     {
         return [
             'moment_id' => Moment::factory(),
-            'people_id' => 1,
+            'people_id' => People::factory(),
             'token' => null,
         ];
     }

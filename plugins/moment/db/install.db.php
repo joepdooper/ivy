@@ -2,7 +2,6 @@
 
 use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
-use Ivy\Core\Path;
 use Tags\Tag;
 
 if(User::canEditAsSuperAdmin()) {

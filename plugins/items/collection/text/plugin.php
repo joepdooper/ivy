@@ -1,5 +1,7 @@
 <?php
 
+use Items\Collection\Text\Text;
+use Items\ItemRegistry;
 use Ivy\Manager\AssetManager;
 use Ivy\Manager\HookManager;
 use Ivy\Manager\RouterManager;
@@ -21,3 +23,5 @@ RouterManager::instance()->match('GET|POST', '/text/insert/(\d+)(/\w+)?(/[a-z0-9
 RouterManager::instance()->post('/text/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Text\TextController@save');
 RouterManager::instance()->post('/text/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Text\TextController@update');
 RouterManager::instance()->post('/text/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Text\TextController@delete');
+
+ItemRegistry::register('text', Text::class);

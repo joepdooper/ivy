@@ -9,10 +9,12 @@ if(User::canEditAsSuperAdmin()) {
         DatabaseManager::connection()->exec(
             "
 CREATE TABLE `audios` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `file` varchar(255) DEFAULT NULL,
-  `token` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+    `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `item_id` int(11) UNSIGNED NOT NULL,
+    `file` varchar(255) DEFAULT NULL,
+    `token` int(11) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`item_id`) REFERENCES `items`(`id`) ON DELETE CASCADE
   ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
   "
         );

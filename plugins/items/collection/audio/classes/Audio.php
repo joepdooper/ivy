@@ -18,7 +18,7 @@ class Audio extends Model
     protected ?string $file;
     protected ?string $token;
 
-    public function delete():string|int|bool {
+    public function delete():bool {
         (new AudioFile)->remove($this->file);
         $this->item->delete();
         return parent::delete();

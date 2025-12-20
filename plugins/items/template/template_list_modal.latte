@@ -3,7 +3,7 @@
     <div class="modal-box">
         <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" for="template_list_modal">✕</label>
         <h3 class="text-lg font-bold">{text('items.modal.insert_item')}</h3>
-        <form action="{path('BASE_PATH') . 'item_template/insert'}" method="POST" enctype="multipart/form-data">
+        <form action="{path('BASE_PATH') . 'item/insert'}" method="POST" enctype="multipart/form-data">
             {csrf()}
             {render(path('PLUGINS_PATH') . 'items/template/template_list_select.latte')}
         </form>

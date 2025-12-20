@@ -17,7 +17,7 @@ class Moment extends Model
     use ItemTrait, TagTrait, Factory, HasFilters;
 
     protected string $table = "moments";
-    protected string $slug = "title";
+    protected string|array $slug = "title";
 
     protected array $columns = [
         'title',
@@ -25,8 +25,8 @@ class Moment extends Model
         'token'
     ];
 
-    protected array $filterable = [
-        'title',
+    protected array $searchable = [
+        'title'
     ];
 
     protected ?string $title;

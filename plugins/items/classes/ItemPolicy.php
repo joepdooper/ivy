@@ -6,7 +6,7 @@ use Ivy\Model\User;
 
 class ItemPolicy
 {
-    public static function post(Item $item): bool
+    public static function insert(Item $item): bool
     {
         return User::canEditAsEditor();
     }

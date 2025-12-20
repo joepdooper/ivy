@@ -23,9 +23,17 @@ trait ItemTrait
 
     public function insertItem(Request $request): static
     {
-        $slugValue = $this->slug
-            ? ItemHelper::createSlug($request->get($this->slug) ?? $this->{$this->slug})
-            : null;
+        if(!is_array($this->slug)) {
+            $slugKeys = [$this->slug];
+        } else {
+            $slugKeys = $this->slug;
+        }
+
+        foreach ($slugKeys as $slug) {
+            $slugValue = $slug
+                ? ItemHelper::createSlug($request->get($slug) ?? $this->{$slug})
+                : null;
+        }
 
         $item = (new Item())->populate([
             'parent_id' => ItemHelper::getParentId($request),
@@ -63,5 +71,10 @@ trait ItemTrait
         }
 
         $this->item->populate($data)->update();
+    }
+
+    public function getSearchable(): array
+    {
+        return $this->searchable ?? [];
     }
 }
