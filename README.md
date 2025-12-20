@@ -1,12 +1,10 @@
-<div style="max-height:48px;width:auto;color:#F40">
-  <img src="https://dooper.io/ivy/templates/ivy/images/logo.svg" alt="ivy logo" height="48">
-</div>
+#ivy
 
 Yet another sleek simple fast CMS with an effortless template and plugin environment
 
 [![Composer](https://img.shields.io/badge/Composer-222)](https://getcomposer.org/)
 [![npm](https://img.shields.io/badge/npm-222)](https://www.npmjs.com/)
-[![PHP](https://img.shields.io/badge/PHP-v8.3.0-222)](https://www.php.net/)
+[![PHP](https://img.shields.io/badge/PHP-v8.4.0-222)](https://www.php.net/)
 
 ## Install
 
@@ -26,35 +24,26 @@ Use [Composer](https://getcomposer.org/) to create a new project with **ivy**:
 composer create-project joepdooper/ivy .
 ```
 
-#### 3. Set up the database
+#### 3.A Start the containers (recommended)
 
-Create a database for **ivy** and import the provided `ivy.sql` file:
+If you have Docker or Podman run:
 
 ```bash
-mysql -u your_database_username -p your_database_name < ivy.sql
+docker compose -f docker/docker-compose.yml up
 ```
 
-Rename the `example.env` file to `.env` and update it with your database credentials.
+#### 3.B Set up the database
 
-#### 4. Set the document root
+Create a database for **ivy** and import the provided [`ivy.sql`](docker/mysql/ivy.sql) file:
 
-Make sure your web server points to the `public/` folder inside this project.
-
+```bash
+mysql -u your_database_username -p your_database_name < docker/mysql/ivy.sql
 ```
-<VirtualHost *:80>
-    ServerName localhost
-    DocumentRoot /var/www/public
-    DirectoryIndex index.php index.html index.htm
 
-    <Directory /var/www/public>
-        AllowOverride All
-        Require all granted
-    </Directory>
+#### 4. Configure
 
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-```
+Rename the `example.env` file to `.env` and update it with your database credentials. If you are not using the provided Docker or Podman compose files, make sure your web server points to the `public/` folder inside this project [`000-default.conf`](docker/sites-available/000-default.conf)
+
 
 ## Login
 
@@ -77,4 +66,4 @@ Open the `.env` file and update it with your mailbox credentials. If you've modi
 
 ## Documentation
 
-[Documentation](https://dooper.io/ivy) coming up
+[Documentation](https://ivy.dooper.io) coming up
