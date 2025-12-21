@@ -1,0 +1,9 @@
+parameters:
+    paths:
+        - routes
+
+    excludePaths:
+        - vendor/*
+        - docker/*
+        - logs/*
+        - plugins/*
