@@ -5,9 +5,11 @@ parameters:
     paths:
         - routes
 
+    scanDirectories:
+        - vendor/joepdooper/ivy-roots/src
+
     excludePaths:
         - vendor/*
-        - !vendor/joepdooper/ivy-roots/*
         - docker/*
         - logs/*
         - plugins/*
