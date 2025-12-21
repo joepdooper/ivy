@@ -1,7 +1,7 @@
 parameters:
-    autoload_files:
+    bootstrapFiles:
         - vendor/autoload.php
-        
+
     paths:
         - routes
 
