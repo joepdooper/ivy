@@ -3,5 +3,3 @@ parameters:
         - routes
     scanDirectories:
         - vendor/joepdooper/ivy-roots/src
-    excludePaths:
-        - vendor/joepdooper/ivy-roots/src/tests
