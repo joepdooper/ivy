@@ -2,6 +2,5 @@ parameters:
     paths:
         - routes
         - templates
-        - plugins
     scanDirectories:
         - vendor/joepdooper/ivy-roots/src
