@@ -42,7 +42,7 @@ mysql -u your_database_username -p your_database_name < docker/mysql/ivy.sql
 
 #### 4. Configure
 
-Rename the `example.env` file to `.env` and update it with your database credentials. If you are not using the provided Docker or Podman compose files, make sure your web server points to the `public/` folder inside this project [`000-default.conf`](docker/sites-available/000-default.conf)
+Rename the `example.env` file to `.env` and update it with your database credentials. If you are not using the provided Docker or Podman compose files, make sure your web server points to the `public/` folder inside this project [`000-default.conf`](docker/sites-available/000-default.conf). Additionally, ensure that the `public/` and `cache/` folders have the proper permissions so your web server can read and write to them as needed.
 
 
 ## Login
