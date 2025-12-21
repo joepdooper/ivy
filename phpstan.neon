@@ -1,12 +1,7 @@
 parameters:
-    level: 1
     paths:
         - routes
+    scanDirectories:
+        - vendor/joepdooper/ivy-roots/src
     excludePaths:
-        - vendor/*
-        - plugins/*
-        - templates/*
-        - logs/*
-        - docker/*
-    bootstrapFiles:
-        - vendor/autoload.php
+        - vendor/joepdooper/ivy-roots/src/tests
