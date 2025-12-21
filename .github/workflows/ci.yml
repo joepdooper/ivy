@@ -47,7 +47,6 @@ jobs:
     - name: Run PHPStan
       uses: php-actions/phpstan@v3
       with:
-        path: .
         php_version: 8.4
         level: 1
 

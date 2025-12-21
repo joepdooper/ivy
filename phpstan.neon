@@ -7,3 +7,5 @@ parameters:
         - docker/*
         - logs/*
         - plugins/*
+        - public/*
+        - autoloader.php
