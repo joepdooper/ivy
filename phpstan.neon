@@ -1,17 +1,25 @@
-parameters:
-    bootstrapFiles:
-        - vendor/autoload.php
+# phpstan.neon
+includes:
+    # Optional: bleeding edge PHPStan features
+    # - vendor/phpstan/phpstan/conf/bleedingEdge.neon
 
+parameters:
+    # PHPStan level (can increase as you mature)
+    level: 1
+
+    # Paths PHPStan will analyze
     paths:
         - routes
+        - plugins   # add if you want to analyze plugins
+        - templates # add if you want to analyze templates
 
-    scanDirectories:
-        - vendor/joepdooper/ivy-roots/src
-
+    # Paths to exclude from analysis
     excludePaths:
         - vendor/*
         - docker/*
         - logs/*
-        - plugins/*
-        - public/*
-        - autoloader.php
+
+    # Autoload files (PHPStan will load them before analyzing your code)
+    autoload_files:
+        - vendor/autoload.php     # Composer autoloader for Ivy roots
+        - autoloader.php          # Your custom autoloader for plugins/templates
