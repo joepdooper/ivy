@@ -25,19 +25,19 @@
                                          alt="{auth()->getUsername()}"/>
                                 </div>
                                 <div class="join">
-                                    {button type:delete, name:"avatar", value:"delete", id:$profile->id, placeholder:$profile->user_image}
+                                    {button type:delete, name:"delete_user_image", value:"delete", id:$profile->id, placeholder:$profile->user_image}
                                 </div>
 
                             {else}
 
                                 <div class="indicator h-36 w-36 rounded-full border dark:border-gray-700">
                                     <div class="indicator-item indicator-middle indicator-center w-10 h-10">
-                                        {button type:upload, name:"avatar", value:"upload"}
+                                        {button type:upload, name:"user_image", value:"upload"}
                                     </div>
                                     <div id="userImagePreview" class="h-36 w-36"></div>
                                     <script>
                                         window.addEventListener('DOMContentLoaded', () => {
-                                            previewImage("avatar", "userImagePreview", "background");
+                                            previewImage("user_image", "userImagePreview", "background");
                                         });
                                     </script>
                                 </div>

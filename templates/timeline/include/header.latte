@@ -27,7 +27,7 @@
                     <div tabindex="0" role="button" class="avatar">
                         {if profile()->user_image}
                             <div class="w-10 rounded-full">
-                                <img alt="{profile()->username}" src="{media('profile/' . profile()->user_image)}"/>
+                                <img alt="{profile()->user->username}" src="{media('profile/' . profile()->user_image)}"/>
                             </div>
                         {else}
                             {icon("feather/user.svg")|noescape}
