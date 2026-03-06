@@ -24,7 +24,9 @@ Use [Composer](https://getcomposer.org/) to create a new project with **ivy**:
 composer create-project joepdooper/ivy .
 ```
 
-#### 3.A Start the containers (recommended)
+#### 3 Setup
+
+### Option A - Start the containers (recommended)
 
 If you have Docker or Podman run:
 
@@ -32,7 +34,7 @@ If you have Docker or Podman run:
 docker compose -f docker/docker-compose.yml up
 ```
 
-#### 3.B Set up the database
+### Option B - Start webserver and set up the database
 
 Create a database for **ivy** and import the provided [`ivy.sql`](docker/mysql/ivy.sql) file:
 
