@@ -3,29 +3,30 @@ version: '3.8'
 services:
 
   apache:
-    image: docker.io/php:8.4-apache-bullseye
+    build: .
     container_name: ${APACHE_HOST:-ivy_apache}
-    command: >
-      bash -c "apt-get update && apt-get install -y \
-        libicu-dev libjpeg-dev libpng-dev libwebp-dev libfreetype6-dev curl \
-        && curl -sL https://deb.nodesource.com/setup_current.x | bash - \
-        && apt-get install -y nodejs \
-        && docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype \
-        && docker-php-ext-install intl pdo_mysql gd \
-        && a2enmod rewrite headers deflate expires \
-        && apache2-foreground"
-    ports:
-      - "${SERVER_PORT:-8080}:80"
     environment:
       APACHE_DOCUMENT_ROOT: /var/www/public
+    ports:
+      - "${SERVER_PORT:-8080}:80"
     volumes:
-      - ../:/var/www
+      - ../:/var/www:Z
       - ./sites-available:/etc/apache2/sites-available
       - ./sites-enabled:/etc/apache2/sites-enabled
       - ./php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
 
+  node:
+    image: docker.io/node:latest
+    container_name: ${NODE_HOST:-ivy_node}
+    working_dir: /var/www
+    ports:
+      - "${VITE_PORT:-5173}:5173"
+    volumes:
+      - ../:/var/www:Z
+    command: tail -f /dev/null
+
   mysql:
-    image: docker.io/mysql
+    image: docker.io/mysql:latest
     container_name: ${DB_HOST:-ivy_mysql}
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -42,5 +43,5 @@ services:
     container_name: ${MAIL_HOST:-ivy_mailcatcher}
     hostname: ${MAIL_HOST:-ivy_mailcatcher}
     ports:
-      - "1080:1080" # Web UI
-      - "1025:1025" # SMTP
+      - "1080:1080"
+      - "${MAIL_PORT:-1025}:1025"
