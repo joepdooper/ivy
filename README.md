@@ -24,14 +24,20 @@ Use [Composer](https://getcomposer.org/) to create a new project with **ivy**:
 composer create-project joepdooper/ivy .
 ```
 
-#### 3 Setup
+#### 3. Configure
+
+Rename the `example.env` file to `.env`. 
+
+If you are not using the provided Docker or Podman compose files, update the .env file with your database credentials and make sure your web server points to the `public/` folder inside this project [`000-default.conf`](docker/sites-available/000-default.conf). Additionally, ensure that the `public/` and `cache/` folders have the proper permissions so your web server can read and write to them as needed.
+
+#### 4 Setup
 
 ##### Option A - Start the containers (recommended)
 
 If you have Docker or Podman run:
 
 ```bash
-docker compose -f docker/docker-compose.yml up
+./vendor/bin/cultivate
 ```
 
 ##### Option B - Start webserver and set up the database
@@ -41,10 +47,6 @@ Create a database for **ivy** and import the provided [`ivy.sql`](docker/mysql/i
 ```bash
 mysql -u your_database_username -p your_database_name < docker/mysql/ivy.sql
 ```
-
-#### 4. Configure
-
-Rename the `example.env` file to `.env` and update it with your database credentials. If you are not using the provided Docker or Podman compose files, make sure your web server points to the `public/` folder inside this project [`000-default.conf`](docker/sites-available/000-default.conf). Additionally, ensure that the `public/` and `cache/` folders have the proper permissions so your web server can read and write to them as needed.
 
 
 ## Login
