@@ -22,9 +22,6 @@ RUN docker-php-ext-configure gd \
         pdo_mysql \
         gd
 
-# Install Composer (official method)
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
 # Enable Apache modules
 RUN a2enmod rewrite headers deflate expires
 
