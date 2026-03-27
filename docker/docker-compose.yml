@@ -34,6 +34,7 @@ services:
     ports:
       - "${DB_PORT:-3306}:3306"
     volumes:
+      - ivy_mysql_data:/var/lib/mysql
       - ./mysql/ivy.sql:/docker-entrypoint-initdb.d/ivy.sql
 
   mailcatcher:
@@ -43,3 +44,6 @@ services:
     ports:
       - "1080:1080" # Web UI
       - "${MAIL_PORT:-1025}:1025" # SMTP
+
+volumes:
+  ivy_mysql_data:
