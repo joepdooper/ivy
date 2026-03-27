@@ -10,7 +10,7 @@
   ],
   "require": {
     "php": ">=8.4.0",
-    "joepdooper/ivy-roots": "^0.9"
+    "joepdooper/ivy-roots": "^0.9.10@alpha"
   },
   "scripts": {
     "post-install-cmd": [

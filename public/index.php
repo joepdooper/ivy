@@ -11,17 +11,15 @@ use Ivy\View\View;
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../autoloader.php';
 
-$app = new App;
-$app->run();
+(new App)->run();
 ?>
 
 <!DOCTYPE html>
 <html lang="<?= substr(Info::stashGet('language')->value, 0, 2); ?>" data-color-mode="dark">
 <head>
-
     <?php View::head('head.latte'); ?>
 
-    <?php foreach (AssetManager::getCss() as $cssfile): ?>
+    <?php foreach (AssetManager::getCSS() as $cssfile): ?>
         <link href="<?= $cssfile; ?>" rel="stylesheet" type="text/css">
     <?php endforeach; ?>
 </head>
@@ -30,11 +28,11 @@ $app->run();
 <?php View::body('body.latte'); ?>
 
 <?php foreach (AssetManager::getJS() as $jsfile): ?>
-    <script nonce="<?= SecurityManager::getNonce(); ?>" src="<?= Path::get('PUBLIC_URL') . $jsfile; ?>"></script>
+    <script nonce="<?= SecurityManager::getNonce(); ?>" src="<?= $jsfile; ?>"></script>
 <?php endforeach; ?>
 
-<?php foreach (AssetManager::getViteEntry() as $viteEntry): ?>
-    <script nonce="<?= SecurityManager::getNonce(); ?>" type="module" src="<?= $viteEntry; ?>"></script>
+<?php foreach (AssetManager::getModules() as $module): ?>
+    <script nonce="<?= SecurityManager::getNonce(); ?>" type="module" src="<?= $module; ?>"></script>
 <?php endforeach; ?>
 </body>
 </html>
