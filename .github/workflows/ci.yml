@@ -48,7 +48,7 @@ jobs:
       uses: php-actions/phpstan@v3
       with:
         php_version: 8.4
-        level: 1
+        level: 2
 
     # --- Node.js / npm setup ---
     - name: Setup Node.js (Latest)
