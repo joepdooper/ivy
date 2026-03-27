@@ -32,11 +32,10 @@ export default defineConfig({
         copyPublicDir: false,
         rollupOptions: {
             input: normalizeEntries(loadEntries()),
-
             output: {
                 entryFileNames: '[name]',
                 chunkFileNames: 'chunks/[name]-[hash].js',
-                // assetFileNames: '[name].[ext]',
+                assetFileNames: '[name].[ext]',
             },
         },
     },
