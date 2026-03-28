@@ -9,7 +9,7 @@ use Ivy\Model\User;
 AssetManager::addCSS("plugins/items/collection/audio/css/audio.css");
 
 if (User::canEditAsEditor()) {
-    AssetManager::addViteEntry("plugins/items/collection/audio/js/audio_admin.js");
+    AssetManager::addJS("plugins/items/collection/audio/js/audio_admin.js");
 }
 
 RouterManager::instance()->mount('/audio', function () {

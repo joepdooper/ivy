@@ -17,7 +17,7 @@ if (User::canEditAsEditor()) {
 
         foreach ($assetMap as $pattern => $asset) {
             if (fnmatch($pattern, $uri)) {
-                AssetManager::addViteEntry($asset);
+                AssetManager::addJS($asset);
             }
         }
     });

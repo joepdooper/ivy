@@ -9,10 +9,10 @@ use Ivy\Model\User;
 use Ivy\View\View;
 
 AssetManager::addCSS("plugins/items/collection/text/css/text.css");
-AssetManager::addViteEntry("plugins/items/collection/text/js/text.js");
+AssetManager::addJS("plugins/items/collection/text/js/text.js");
 
 if (User::canEditAsEditor()) {
-    AssetManager::addViteEntry("plugins/items/collection/text/js/text_admin.js");
+    AssetManager::addJS("plugins/items/collection/text/js/text_admin.js");
     HookManager::add('before_footer', function () {
         View::render("plugins/items/collection/text/template/toolbar.latte");
     });
