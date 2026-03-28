@@ -16,7 +16,6 @@ function getCssEntries(basePath) {
             if (fs.statSync(fullPath).isDirectory()) {
                 walk(fullPath);
             } else if (file.endsWith('.css')) {
-                // remove extension for clean naming
                 const name = relPath.replace(/\.css$/, '');
                 entries[name] = fullPath;
             }
@@ -27,7 +26,19 @@ function getCssEntries(basePath) {
     return entries;
 }
 
-export default defineConfig(() => {
+export default defineConfig(({ command }) => {
+
+    // DEV MODE (vite dev)
+    if (command === 'serve') {
+        return {
+            plugins: [tailwindcss()],
+            server: {
+                host: true
+            }
+        };
+    }
+
+    // BUILD MODE (vite build)
     const basePath = process.env.BUILD_PATH;
 
     if (!basePath) {
