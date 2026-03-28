@@ -3,7 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 import fs from 'fs';
 import path from 'path';
 
-function getCssEntries(basePath) {
+function getEntries(basePath) {
     const entries = {};
 
     function walk(dir) {
@@ -15,8 +15,8 @@ function getCssEntries(basePath) {
 
             if (fs.statSync(fullPath).isDirectory()) {
                 walk(fullPath);
-            } else if (file.endsWith('.css')) {
-                const name = relPath.replace(/\.css$/, '');
+            } else if (file.endsWith('.css') || file.endsWith('.js')) {
+                const name = relPath.replace(/\.(css|js)$/, '');
                 entries[name] = fullPath;
             }
         }
@@ -27,20 +27,16 @@ function getCssEntries(basePath) {
 }
 
 export default defineConfig(({ command }) => {
-
-    // DEV MODE (vite dev)
+    // DEV mode
     if (command === 'serve') {
         return {
             plugins: [tailwindcss()],
-            server: {
-                host: true
-            }
+            server: { host: true },
         };
     }
 
-    // BUILD MODE (vite build)
+    // BUILD mode
     const basePath = process.env.BUILD_PATH;
-
     if (!basePath) {
         throw new Error('BUILD_PATH not defined');
     }
@@ -53,11 +49,12 @@ export default defineConfig(({ command }) => {
             cssCodeSplit: true,
             copyPublicDir: false,
             rollupOptions: {
-                input: getCssEntries(basePath),
+                input: getEntries(basePath),
                 output: {
-                    assetFileNames: '[name].css',
-                }
-            }
-        }
+                    entryFileNames: '[name].js',
+                    assetFileNames: '[name].[ext]',
+                },
+            },
+        },
     };
 });
