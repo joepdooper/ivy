@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e76b17a982856f9fef9913140f5b1ce8",
+    "content-hash": "a245173d1043451599ea4f7a9ba0b980",
     "packages": [
         {
             "name": "bainternet/php-hooks",
@@ -3609,16 +3609,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.0.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "87f4671b7d0d5d1b872dea26c46a92546b09f656"
-            },
+            "version": "2.1.44",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/87f4671b7d0d5d1b872dea26c46a92546b09f656",
-                "reference": "87f4671b7d0d5d1b872dea26c46a92546b09f656",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/4a88c083c668b2c364a425c9b3171b2d9ea5d218",
+                "reference": "4a88c083c668b2c364a425c9b3171b2d9ea5d218",
                 "shasum": ""
             },
             "require": {
@@ -3663,7 +3658,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-12-21T14:52:04+00:00"
+            "time": "2026-03-25T17:34:21+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -6058,8 +6053,7 @@
         "joepdooper/ivy-cultivate": 20,
         "joepdooper/ivy-roots": 15,
         "kint-php/kint": 20,
-        "pestphp/pest": 20,
-        "phpstan/phpstan": 20
+        "pestphp/pest": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

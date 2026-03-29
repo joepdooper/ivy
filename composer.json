@@ -20,10 +20,10 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require-dev": {
-    "pestphp/pest": "3.x-dev",
-    "phpstan/phpstan": "2.0.x-dev",
-    "kint-php/kint": "dev-master",
     "joepdooper/ivy-cultivate": "dev-main",
+    "kint-php/kint": "dev-master",
+    "pestphp/pest": "3.x-dev",
+    "phpstan/phpstan": "^2.1",
     "laravel/pint": "^1.29"
   },
   "config": {
