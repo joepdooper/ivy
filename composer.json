@@ -23,7 +23,8 @@
     "pestphp/pest": "3.x-dev",
     "phpstan/phpstan": "2.0.x-dev",
     "kint-php/kint": "dev-master",
-    "joepdooper/ivy-cultivate": "dev-main"
+    "joepdooper/ivy-cultivate": "dev-main",
+    "laravel/pint": "^1.29"
   },
   "config": {
     "platform": {
