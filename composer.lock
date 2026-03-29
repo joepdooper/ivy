@@ -568,16 +568,16 @@
         },
         {
             "name": "joepdooper/ivy-roots",
-            "version": "v0.9.10-alpha",
+            "version": "v0.9.11-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joepdooper/ivy-roots.git",
-                "reference": "bf7f6138e4bb80eeddb3d5bf566345e14c304aec"
+                "reference": "3c25a2adad2949636fcda02a2af29310d05e713d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joepdooper/ivy-roots/zipball/bf7f6138e4bb80eeddb3d5bf566345e14c304aec",
-                "reference": "bf7f6138e4bb80eeddb3d5bf566345e14c304aec",
+                "url": "https://api.github.com/repos/joepdooper/ivy-roots/zipball/3c25a2adad2949636fcda02a2af29310d05e713d",
+                "reference": "3c25a2adad2949636fcda02a2af29310d05e713d",
                 "shasum": ""
             },
             "require": {
@@ -620,9 +620,9 @@
             "description": "A set of classes designed to build and extend functionality in ivy",
             "support": {
                 "issues": "https://github.com/joepdooper/ivy-roots/issues",
-                "source": "https://github.com/joepdooper/ivy-roots/tree/v.0.9.10"
+                "source": "https://github.com/joepdooper/ivy-roots/tree/v0.9.11-alpha"
             },
-            "time": "2026-01-10T14:56:59+00:00"
+            "time": "2026-03-29T17:00:40+00:00"
         },
         {
             "name": "latte/latte",
@@ -1713,19 +1713,20 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.31.0",
+            "version": "v1.33.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "85181ba99b2345b0ef10ce42ecac37612d9fd341"
+                "reference": "6d857f4d76bd4b343eac26d6b539585d2bc56493"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/85181ba99b2345b0ef10ce42ecac37612d9fd341",
-                "reference": "85181ba99b2345b0ef10ce42ecac37612d9fd341",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/6d857f4d76bd4b343eac26d6b539585d2bc56493",
+                "reference": "6d857f4d76bd4b343eac26d6b539585d2bc56493",
                 "shasum": ""
             },
             "require": {
+                "ext-iconv": "*",
                 "php": ">=7.2"
             },
             "provide": {
@@ -1773,7 +1774,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.31.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.33.0"
             },
             "funding": [
                 {
@@ -1785,11 +1786,15 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-09T11:45:10+00:00"
+            "time": "2024-12-23T08:48:59+00:00"
         },
         {
             "name": "symfony/polyfill-php80",
@@ -2475,12 +2480,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joepdooper/ivy-cultivate.git",
-                "reference": "c8652bbef9748ab3563e1136a253fbb8041421c6"
+                "reference": "bae5875833091a1379d1782a2e1191eb2cb94ff8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joepdooper/ivy-cultivate/zipball/c8652bbef9748ab3563e1136a253fbb8041421c6",
-                "reference": "c8652bbef9748ab3563e1136a253fbb8041421c6",
+                "url": "https://api.github.com/repos/joepdooper/ivy-cultivate/zipball/bae5875833091a1379d1782a2e1191eb2cb94ff8",
+                "reference": "bae5875833091a1379d1782a2e1191eb2cb94ff8",
                 "shasum": ""
             },
             "default-branch": true,
@@ -2502,7 +2507,7 @@
                 "issues": "https://github.com/joepdooper/ivy-cultivate/issues",
                 "source": "https://github.com/joepdooper/ivy-cultivate/tree/main"
             },
-            "time": "2026-03-27T17:06:17+00:00"
+            "time": "2026-03-29T11:10:09+00:00"
         },
         {
             "name": "kint-php/kint",
@@ -5997,5 +6002,5 @@
     "platform-overrides": {
         "php": "8.4.0"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
