@@ -3,17 +3,16 @@
 namespace Items\Collection\Code;
 
 use Items\CollectionController;
-use Items\Item;
 use Items\ItemHelper;
-use Ivy\Abstract\Controller;
 
 class CodeController extends CollectionController
 {
     private Code $code;
+
     public function __construct()
     {
         parent::__construct();
-        $this->code = new Code();
+        $this->code = new Code;
     }
 
     public function insert($id): void
@@ -21,7 +20,7 @@ class CodeController extends CollectionController
         $this->code->policy('create');
 
         $item_table_id = $this->code->populate([
-            'text' => 'Write…'
+            'text' => 'Write…',
         ])->insert();
 
         $this->item->populate([
@@ -42,11 +41,11 @@ class CodeController extends CollectionController
 
         $this->code->where('id', $item->table_id)->populate([
             'code' => $this->request->get('code'),
-            'language' => $this->request->get('language')
+            'language' => $this->request->get('language'),
         ])->update();
 
         $item->populate([
-            'publish' => $this->request->get('publish')
+            'publish' => $this->request->get('publish'),
         ])->update();
 
         $this->flashBag->add('success', 'Code successfully updated');

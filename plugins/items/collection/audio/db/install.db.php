@@ -3,11 +3,11 @@
 use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
 
-if(User::canEditAsSuperAdmin()) {
+if (User::canEditAsSuperAdmin()) {
 
     try {
         DatabaseManager::connection()->exec(
-            "
+            '
 CREATE TABLE `audios` (
     `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `item_id` int(11) UNSIGNED NOT NULL,
@@ -16,10 +16,10 @@ CREATE TABLE `audios` (
     PRIMARY KEY (`id`),
     FOREIGN KEY (`item_id`) REFERENCES `items`(`id`) ON DELETE CASCADE
   ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-  "
+  '
         );
     } catch (Exception $e) {
-        error_log("Failed to create table `audios`: " . $e->getMessage());
+        error_log('Failed to create table `audios`: '.$e->getMessage());
     }
 
     try {
@@ -35,7 +35,7 @@ CREATE TABLE `audios` (
             ]
         );
     } catch (Exception $e) {
-        error_log("Failed to insert Audio into `item_templates`: " . $e->getMessage());
+        error_log('Failed to insert Audio into `item_templates`: '.$e->getMessage());
     }
 
 }

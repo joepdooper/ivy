@@ -12,7 +12,7 @@ class TextController extends CollectionController
     public function __construct()
     {
         parent::__construct();
-        $this->text = new Text();
+        $this->text = new Text;
     }
 
     public function insert($id): void
@@ -20,7 +20,7 @@ class TextController extends CollectionController
         $this->text->policy('create');
 
         $item_table_id = $this->text->populate([
-            'text' => 'Write…'
+            'text' => 'Write…',
         ])->insert();
 
         $this->item->populate([
@@ -40,11 +40,11 @@ class TextController extends CollectionController
         $item = $this->item->where('id', $id)->fetchOne();
 
         $this->text->where('id', $item->table_id)->populate([
-            'text' => $this->request->get('text')
+            'text' => $this->request->get('text'),
         ])->update();
 
         $item->populate([
-            'publish' => $this->request->get('publish')
+            'publish' => $this->request->get('publish'),
         ])->update();
 
         $this->flashBag->add('success', 'Text successfully updated');

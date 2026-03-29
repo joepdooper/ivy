@@ -1,9 +1,12 @@
 <?php
 
-$sitemaps = (new Sitemap\Settings)->get()->all();
+use Ivy\Button;
+use Sitemap\Settings;
+
+$sitemaps = (new Settings)->get()->all();
 ?>
 
-<form action="<?= Path::get('BASE_PATH') . '/sitemap/post'; ?>" method="POST" enctype="multipart/form-data">
+<form action="<?= Path::get('BASE_PATH').'/sitemap/post'; ?>" method="POST" enctype="multipart/form-data">
 
     <div class="p-1">
         <div class="p-05">
@@ -23,15 +26,15 @@ $sitemaps = (new Sitemap\Settings)->get()->all();
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($sitemaps as $row): ?>
+                <?php foreach ($sitemaps as $row) { ?>
                     <tr>
                         <td>
                             <?php
-                            \Ivy\Button::switch(
-                                'sitemap[' . $row->id . '][bool]',
+                            Button::switch(
+                                'sitemap['.$row->id.'][bool]',
                                 $row->bool
                             );
-                            ?>
+                    ?>
                         </td>
                         <td>
                             <input type="text" name="sitemap[<?= $row->id; ?>][url]" placeholder="url"
@@ -40,10 +43,10 @@ $sitemaps = (new Sitemap\Settings)->get()->all();
                         <td>
                             <input type="hidden" name="sitemap[<?= $row->id; ?>][id]"
                                    value="<?= $row->id; ?>">
-                            <?php \Ivy\Button::delete("sitemap[" . $row->id . "][delete]", "sitemap_" . $row->id); ?>
+                            <?php Button::delete('sitemap['.$row->id.'][delete]', 'sitemap_'.$row->id); ?>
                         </td>
                     </tr>
-                <?php endforeach; ?>
+                <?php } ?>
                 <tr>
                     <td colspan="2">
                         <input type="text" name="sitemap[][url]" placeholder="Add sitemap">

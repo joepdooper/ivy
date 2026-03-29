@@ -2,7 +2,6 @@
 
 namespace Moment\Collection\MomentPeople;
 
-use Carbon\Carbon;
 use Moment\Moment;
 
 class MomentPeopleFactory

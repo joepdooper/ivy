@@ -18,14 +18,14 @@ class MomentController extends CollectionController
         'start_time' => 'valid_time',
         'end_time' => 'valid_time',
         'city' => 'between_len,2;100',
-        'country' => 'between_len,2;100'
+        'country' => 'between_len,2;100',
     ];
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->moment = new Moment();
+        $this->moment = new Moment;
     }
 
     public function insert($id = null): void
@@ -36,12 +36,12 @@ class MomentController extends CollectionController
             $this->moment->createItemFromRequest($this->request);
 
             (new MomentDateTime)->populate([
-                'moment_id' => $this->moment->getId()
+                'moment_id' => $this->moment->getId(),
             ])->createFromRequest($this->request->request->all());
 
-            if(!empty($this->request->request->get('city')) || !empty($this->request->request->get('country'))){
+            if (! empty($this->request->request->get('city')) || ! empty($this->request->request->get('country'))) {
                 (new MomentLocation)->populate([
-                    'moment_id' => $this->moment->getId()
+                    'moment_id' => $this->moment->getId(),
                 ])->createFromRequest($this->request->request->all());
             }
 
@@ -68,16 +68,16 @@ class MomentController extends CollectionController
             $moment->updateItemFromRequest($this->request);
             $moment->getDateTime()->updateFromRequest($this->request->request->all());
 
-            if(empty($this->request->request->get('city')) && empty($this->request->request->get('country'))) {
-                !$moment->getLocation() || $moment->getLocation()->delete();
+            if (empty($this->request->request->get('city')) && empty($this->request->request->get('country'))) {
+                ! $moment->getLocation() || $moment->getLocation()->delete();
             }
 
-            if((!empty($this->request->request->get('city')) || !empty($this->request->request->get('country'))) && (!empty($this->request->request->get('latitude')) && !empty($this->request->request->get('longitude')))) {
-                if($moment->getLocation()){
+            if ((! empty($this->request->request->get('city')) || ! empty($this->request->request->get('country'))) && (! empty($this->request->request->get('latitude')) && ! empty($this->request->request->get('longitude')))) {
+                if ($moment->getLocation()) {
                     $moment->getLocation()->updateFromRequest($this->request->request->all());
                 } else {
                     (new MomentLocation)->populate([
-                        'moment_id' => $moment->getId()
+                        'moment_id' => $moment->getId(),
                     ])->createFromRequest($this->request->request->all());
                 }
             }

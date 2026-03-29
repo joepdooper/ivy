@@ -13,5 +13,3 @@ return [
     'none_installed' => 'No plugins installed',
     'select_to_install' => 'Select plugin to install',
 ];
-
-

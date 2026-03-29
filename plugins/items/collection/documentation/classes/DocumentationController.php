@@ -2,23 +2,21 @@
 
 namespace Items\Collection\Documentation;
 
-use Items\Collection\Image\ImageService;
 use Items\CollectionController;
-use Items\Item;
 use Items\ItemHelper;
-use Ivy\Abstract\Controller;
 use Tags\Tag;
 
 class DocumentationController extends CollectionController
 {
     private Documentation $documentation;
+
     private Tag $tag;
 
     public function __construct()
     {
         parent::__construct();
-        $this->documentation = new Documentation();
-        $this->tag = new Tag();
+        $this->documentation = new Documentation;
+        $this->tag = new Tag;
     }
 
     public function insert($id): void
@@ -28,14 +26,14 @@ class DocumentationController extends CollectionController
         $item_table_id = $this->documentation->populate([
             'title' => 'Title',
             'subtitle' => 'Subtitle',
-            'subject' => $this->tag->fetchOne()->getId()
+            'subject' => $this->tag->fetchOne()->getId(),
         ])->insert();
 
         $item_id = $this->item->populate([
             'template_id' => $id,
             'parent_id' => ItemHelper::getParentId($this->request),
             'slug' => ItemHelper::createSlug('Title'),
-            'table_id' => $item_table_id
+            'table_id' => $item_table_id,
         ])->insert();
 
         $this->documentation->where('id', $table_id)->populate([
@@ -53,19 +51,19 @@ class DocumentationController extends CollectionController
         $item = $this->item->where('id', $id)->fetchOne();
         $documentation = $this->documentation->where('id', $item->table_id)->fetchOne();
 
-        if($this->request->request->has('title')){
+        if ($this->request->request->has('title')) {
             $documentation->title = $this->request->request->get('title');
         }
-        if($this->request->request->has('subtitle')){
+        if ($this->request->request->has('subtitle')) {
             $documentation->subtitle = $this->request->request->get('subtitle');
         }
-        if($this->request->request->has('tag')){
+        if ($this->request->request->has('tag')) {
             $documentation->subject = $this->request->request->get('tag');
         }
 
         $documentation->update();
 
-        if($this->request->request->has('datetime')){
+        if ($this->request->request->has('datetime')) {
             $item->date = $this->request->request->get('datetime');
         }
 

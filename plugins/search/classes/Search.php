@@ -7,9 +7,11 @@ use Ivy\Abstract\Model;
 class Search extends Model
 {
     protected string $table = 'search';
+
     protected string $path = '/';
+
     protected array $columns = [
-        'value'
+        'value',
     ];
 
     protected string $value;

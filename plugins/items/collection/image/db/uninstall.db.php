@@ -3,24 +3,24 @@
 use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
 
-if(User::canEditAsSuperAdmin()) {
+if (User::canEditAsSuperAdmin()) {
     try {
         DatabaseManager::connection()->exec(
-            "
+            '
         DROP TABLE `images`;
-        "
+        '
         );
     } catch (Exception $e) {
-        error_log("Failed to drop table `images`: " . $e->getMessage());
+        error_log('Failed to drop table `images`: '.$e->getMessage());
     }
 
     try {
         DatabaseManager::connection()->exec(
-            "
+            '
         DROP TABLE `image_sizes`;
-        "
+        '
         );
     } catch (Exception $e) {
-        error_log("Failed to drop table `image_sizes`: " . $e->getMessage());
+        error_log('Failed to drop table `image_sizes`: '.$e->getMessage());
     }
 }

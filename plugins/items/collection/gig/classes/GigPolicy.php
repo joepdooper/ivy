@@ -2,7 +2,6 @@
 
 namespace Items\Collection\Gig;
 
-use Items\Item;
 use Ivy\Model\User;
 
 class GigPolicy

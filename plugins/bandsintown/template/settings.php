@@ -1,9 +1,15 @@
 <?php
-$bandsintown = new bandsintown\Settings;
-$gig = (new \Ivy\Plugin)->where('name', "Gig")->fetchOne();
+
+use bandsintown\Settings;
+use Ivy\Button;
+use Ivy\DB;
+use Ivy\Plugin;
+
+$bandsintown = new Settings;
+$gig = (new Plugin)->where('name', 'Gig')->fetchOne();
 ?>
 
-<form action="<?= Path::get('BASE_PATH') . '/bandsintown/post'; ?>" method="POST" enctype="multipart/form-data">
+<form action="<?= Path::get('BASE_PATH').'/bandsintown/post'; ?>" method="POST" enctype="multipart/form-data">
 
     <div class="p-1">
         <div class="p-05">
@@ -24,7 +30,7 @@ $gig = (new \Ivy\Plugin)->where('name', "Gig")->fetchOne();
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($bandsintown->get()->all() as $row): ?>
+                <?php foreach ($bandsintown->get()->all() as $row) { ?>
                     <tr>
                         <td>
                             <label>
@@ -40,16 +46,16 @@ $gig = (new \Ivy\Plugin)->where('name', "Gig")->fetchOne();
                         </td>
                         <td>
                             <label for="response" class="close text-align-right">
-                                <?= file_get_contents(Path::get('BASE_PATH') . "media/icon/" . "feather/code.svg"); ?>
+                                <?= file_get_contents(Path::get('BASE_PATH').'media/icon/'.'feather/code.svg'); ?>
                             </label>
                         </td>
                         <td>
                             <input type="hidden" name="bandsintown[<?= $row->id; ?>][id]"
                                    value="<?= $row->id; ?>">
-                            <?php \Ivy\Button::delete("bandsintown[" . $row->id . "][delete]", "bandsintown_" . $row->id); ?>
+                            <?php Button::delete('bandsintown['.$row->id.'][delete]', 'bandsintown_'.$row->id); ?>
                         </td>
                     </tr>
-                <?php endforeach; ?>
+                <?php } ?>
                 <tr>
                     <td colspan="4">
                         <label>
@@ -71,21 +77,21 @@ $gig = (new \Ivy\Plugin)->where('name', "Gig")->fetchOne();
 
 </form>
 
-<?php if ($gig->active): ?>
-    <form action="<?= Path::get('BASE_PATH') . '/bandsintown/render'; ?>" method="POST" enctype="multipart/form-data">
+<?php if ($gig->active) { ?>
+    <form action="<?= Path::get('BASE_PATH').'/bandsintown/render'; ?>" method="POST" enctype="multipart/form-data">
         <div class="p-1">
             <div class="p-05 text-center">
                 <p>Render (new) bandsintown data into gig items, with tag:</p>
-                <?php $option = \Ivy\DB::$connection->select('SELECT * FROM `tag`'); ?>
+                <?php $option = DB::$connection->select('SELECT * FROM `tag`'); ?>
                 <div class="select-container">
           <span class="select-arrow">
-            <?= file_get_contents(Path::get('BASE_PATH') . "media/icon/" . "feather/chevron-down.svg"); ?>
+            <?= file_get_contents(Path::get('BASE_PATH').'media/icon/'.'feather/chevron-down.svg'); ?>
           </span>
                     <label>
                         <select name="subject">
-                            <?php foreach ($option as $value): ?>
+                            <?php foreach ($option as $value) { ?>
                                 <option value="<?= $value['id']; ?>" <?= (isset($subject->id) && ($subject->id == $value['id'])) ? 'selected="selected"' : ''; ?>><?= $value['value']; ?></option>
-                            <?php endforeach; ?>
+                            <?php } ?>
                         </select>
                     </label>
                 </div>
@@ -95,17 +101,17 @@ $gig = (new \Ivy\Plugin)->where('name', "Gig")->fetchOne();
             </div>
         </div>
     </form>
-<?php endif; ?>
+<?php } ?>
 
 <div class="p-1">
     <div class="p-05">
         <strong>API response:</strong>
     </div>
-    <?php foreach ($bandsintown->get()->all() as $row): ?>
+    <?php foreach ($bandsintown->get()->all() as $row) { ?>
         <div class="inner">
       <pre>
         <?= print_r($bandsintown->list($row->key, $row->artists, 'all'), true); ?>
       </pre>
         </div>
-    <?php endforeach; ?>
+    <?php } ?>
 </div>

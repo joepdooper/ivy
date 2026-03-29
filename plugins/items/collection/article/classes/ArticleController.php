@@ -12,13 +12,14 @@ use Tags\Tag;
 class ArticleController extends CollectionController
 {
     private Article $article;
+
     private Tag $tag;
 
     public function __construct()
     {
         parent::__construct();
-        $this->article = new Article();
-        $this->tag = new Tag();
+        $this->article = new Article;
+        $this->tag = new Tag;
     }
 
     public function insert($id): void
@@ -50,43 +51,43 @@ class ArticleController extends CollectionController
 
         $article = $this->article->fetchOneWithItem($id);
 
-        if($this->request->request->has('title')){
+        if ($this->request->request->has('title')) {
             $article->title = $this->request->request->get('title');
             $slug = ItemHelper::slugify($this->request->request->get('title'));
-            if($this->article->getItem()->slug !== $slug){
+            if ($this->article->getItem()->slug !== $slug) {
                 $this->article->getItem()->slug = $slug;
             }
         }
-        if($this->request->request->has('subtitle')){
+        if ($this->request->request->has('subtitle')) {
             $article->subtitle = $this->request->request->get('subtitle');
         }
-        if($this->request->request->has('tag')){
+        if ($this->request->request->has('tag')) {
             // tag
         }
-        if($this->request->files->get('image')){
+        if ($this->request->files->get('image')) {
             $files = [];
             $file = new ImageFile($this->request->files->get('image'));
             $file->generateFileName();
             foreach ((new ImageSize)->fetchAll() as $imageSize) {
                 $files[] = clone $file
-                    ->setUploadPath('item'. DIRECTORY_SEPARATOR . $imageSize->name)
+                    ->setUploadPath('item'.DIRECTORY_SEPARATOR.$imageSize->name)
                     ->setImageWidth($imageSize->value);
             }
             $article->image = $file->getFileName();
             (new ImageFileService)->add($files)->upload();
         }
 
-        if($this->request->request->has('remove')){
-            $file = new ImageFile();
+        if ($this->request->request->has('remove')) {
+            $file = new ImageFile;
             foreach ((new ImageSize)->fetchAll() as $imageSize) {
-                $file->setUploadPath('item'. DIRECTORY_SEPARATOR . $imageSize->name)->remove($article->image);
+                $file->setUploadPath('item'.DIRECTORY_SEPARATOR.$imageSize->name)->remove($article->image);
             }
             $article->image = '';
         }
 
         $article->update();
 
-        if($this->request->request->has('datetime')){
+        if ($this->request->request->has('datetime')) {
             $this->article->getItem()->date = $this->request->request->get('datetime');
         }
 

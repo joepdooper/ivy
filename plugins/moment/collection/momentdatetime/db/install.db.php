@@ -2,13 +2,12 @@
 
 use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
-use Tags\Tag;
 
-if(User::canEditAsSuperAdmin()) {
+if (User::canEditAsSuperAdmin()) {
 
-    try{
-    DatabaseManager::connection()->exec(
-        "
+    try {
+        DatabaseManager::connection()->exec(
+            '
 CREATE TABLE `moments_date_time` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `moment_id` int(11) NOT NULL,
@@ -19,9 +18,9 @@ CREATE TABLE `moments_date_time` (
   `token` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-  "
-    );
+  '
+        );
     } catch (Exception $e) {
-        error_log("Failed to create table `moments_date_time`: " . $e->getMessage());
+        error_log('Failed to create table `moments_date_time`: '.$e->getMessage());
     }
 }

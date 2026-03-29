@@ -3,26 +3,26 @@
 use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
 
-if(User::canEditAsSuperAdmin()) {
+if (User::canEditAsSuperAdmin()) {
     try {
         DatabaseManager::connection()->delete(
             'item_templates',
             [
                 // where
-                'plugin_url' => 'vimeo'
+                'plugin_url' => 'vimeo',
             ]
         );
     } catch (Exception $e) {
-        error_log("Failed to remove vimeo from item_templates: " . $e->getMessage());
+        error_log('Failed to remove vimeo from item_templates: '.$e->getMessage());
     }
 
     try {
         DatabaseManager::connection()->exec(
-            "
+            '
         DROP TABLE `vimeos`;
-        "
+        '
         );
     } catch (Exception $e) {
-        error_log("Failed to drop table `vimeos`: " . $e->getMessage());
+        error_log('Failed to drop table `vimeos`: '.$e->getMessage());
     }
 }

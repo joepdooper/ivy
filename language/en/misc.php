@@ -6,5 +6,5 @@ return [
     'and' => 'and',
     'not' => 'not',
     'is' => 'is',
-    'to' => 'to'
+    'to' => 'to',
 ];

@@ -10,17 +10,21 @@ class Audio extends Model
     use ItemTrait;
 
     protected string $table = 'audios';
+
     protected array $columns = [
         'file',
-        'token'
+        'token',
     ];
 
     protected ?string $file;
+
     protected ?string $token;
 
-    public function delete():bool {
+    public function delete(): bool
+    {
         (new AudioFile)->remove($this->file);
         $this->item->delete();
+
         return parent::delete();
     }
 }

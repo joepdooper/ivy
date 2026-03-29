@@ -3,7 +3,7 @@
 use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
 
-if(User::canEditAsSuperAdmin()) {
+if (User::canEditAsSuperAdmin()) {
 
     try {
         DatabaseManager::connection()->exec(
@@ -12,7 +12,7 @@ if(User::canEditAsSuperAdmin()) {
         '
         );
     } catch (Exception $e) {
-        error_log("Failed to drop table `articles`: " . $e->getMessage());
+        error_log('Failed to drop table `articles`: '.$e->getMessage());
     }
 
 }

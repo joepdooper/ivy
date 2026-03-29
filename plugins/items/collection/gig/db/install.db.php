@@ -4,11 +4,11 @@ use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
 use Tags\Tag;
 
-if(User::canEditAsSuperAdmin()) {
+if (User::canEditAsSuperAdmin()) {
 
-    try{
+    try {
         DatabaseManager::connection()->exec(
-        "
+            '
   CREATE TABLE `gigs` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `datetime` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -22,10 +22,10 @@ if(User::canEditAsSuperAdmin()) {
     `token` int(11) DEFAULT NULL,
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-    "
+    '
         );
     } catch (Exception $e) {
-        error_log("Failed to create table `gigs`: " . $e->getMessage());
+        error_log('Failed to create table `gigs`: '.$e->getMessage());
     }
 
     try {
@@ -41,11 +41,11 @@ if(User::canEditAsSuperAdmin()) {
             ]
         );
     } catch (Exception $e) {
-        error_log("Failed to insert Gig into `item_templates`: " . $e->getMessage());
+        error_log('Failed to insert Gig into `item_templates`: '.$e->getMessage());
     }
 
     $existing = (new Tag)->where('value', 'Gig')->fetchOne();
-    if (!$existing) {
+    if (! $existing) {
         (new Tag)->populate(['value' => 'Gig'])->insert();
     }
 }

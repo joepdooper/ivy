@@ -1,7 +1,8 @@
 <?php
 
+use Ivy\DB;
 
-\Ivy\DB::$connection->exec(
+DB::$connection->exec(
     "
 CREATE TABLE `sitemap` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -13,11 +14,11 @@ CREATE TABLE `sitemap` (
   "
 );
 
-\Ivy\DB::$connection->insert(
+DB::$connection->insert(
     'sitemap',
     [
         // set
         'bool' => '1',
-        'url' => _ROOT . _SUBFOLDER . 'sitemap.xml'
+        'url' => _ROOT._SUBFOLDER.'sitemap.xml',
     ]
 );

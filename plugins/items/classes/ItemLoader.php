@@ -8,7 +8,9 @@ class ItemLoader
 {
     public static function attach(array &$items, array $load = []): void
     {
-        if (empty($items)) return;
+        if (empty($items)) {
+            return;
+        }
 
         $itemsById = [];
         foreach ($items as $item) {
@@ -20,9 +22,9 @@ class ItemLoader
 
         $pluginsByItemId = [];
 
-        if (!empty($load['plugins'])) {
+        if (! empty($load['plugins'])) {
             foreach ($registry as $modelClass) {
-                $rows = (new $modelClass())
+                $rows = (new $modelClass)
                     ->whereIn('item_id', $itemIds)
                     ->fetchAll();
 
@@ -34,10 +36,10 @@ class ItemLoader
 
         $authorsById = [];
 
-        if (!empty($load['authors'])) {
-            $userIds = array_unique(array_map(fn($i) => $i->user_id, $items));
+        if (! empty($load['authors'])) {
+            $userIds = array_unique(array_map(fn ($i) => $i->user_id, $items));
 
-            if (!empty($userIds)) {
+            if (! empty($userIds)) {
                 $authors = Profile::query()
                     ->whereIn('id', $userIds)
                     ->fetchAll();
@@ -49,7 +51,7 @@ class ItemLoader
         }
 
         foreach ($items as $item) {
-            if (!empty($load['plugins'])) {
+            if (! empty($load['plugins'])) {
                 $plugin = $pluginsByItemId[$item->id] ?? null;
                 if ($plugin) {
                     $plugin->item = $item;
@@ -57,7 +59,7 @@ class ItemLoader
                 $item->setRelation('plugin', $plugin);
             }
 
-            if (!empty($load['authors'])) {
+            if (! empty($load['authors'])) {
                 $author = $authorsById[$item->user_id] ?? null;
                 $item->setRelation('author', $author);
             }

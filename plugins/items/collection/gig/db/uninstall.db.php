@@ -3,28 +3,28 @@
 use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
 
-if(User::canEditAsSuperAdmin()) {
+if (User::canEditAsSuperAdmin()) {
 
     try {
         DatabaseManager::connection()->delete(
             'item_templates',
             [
                 // where
-                'plugin_url' => 'gig'
+                'plugin_url' => 'gig',
             ]
         );
     } catch (Exception $e) {
-        error_log("Failed to remove gig from item_templates: " . $e->getMessage());
+        error_log('Failed to remove gig from item_templates: '.$e->getMessage());
     }
 
-    try{
+    try {
         DatabaseManager::connection()->exec(
-        "
+            '
     DROP TABLE `gigs`;
-    "
+    '
         );
     } catch (Exception $e) {
-        error_log("Failed to drop table `gigs`: " . $e->getMessage());
+        error_log('Failed to drop table `gigs`: '.$e->getMessage());
     }
 
 }

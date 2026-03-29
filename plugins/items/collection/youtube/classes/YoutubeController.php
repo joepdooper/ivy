@@ -3,9 +3,7 @@
 namespace Items\Collection\Youtube;
 
 use Items\CollectionController;
-use Items\Item;
 use Items\ItemHelper;
-use Ivy\Abstract\Controller;
 
 class YoutubeController extends CollectionController
 {
@@ -14,7 +12,7 @@ class YoutubeController extends CollectionController
     public function __construct()
     {
         parent::__construct();
-        $this->youtube = new Youtube();
+        $this->youtube = new Youtube;
     }
 
     public function insert($id): void
@@ -22,13 +20,13 @@ class YoutubeController extends CollectionController
         $this->youtube->policy('create');
 
         $item_table_id = $this->youtube->populate([
-            'youtube_video_id' => 'aKydtOXW8mI'
+            'youtube_video_id' => 'aKydtOXW8mI',
         ])->insert();
 
         $this->item->populate([
             'template_id' => $id,
             'parent_id' => ItemHelper::getParentId($this->request),
-            'table_id' => $item_table_id
+            'table_id' => $item_table_id,
         ])->insert();
 
         $this->flashBag->add('success', 'Youtube successfully inserted');
@@ -42,11 +40,11 @@ class YoutubeController extends CollectionController
         $item = $this->item->where('id', $id)->fetchOne();
 
         $this->youtube->where('id', $item->table_id)->populate([
-            'youtube_video_id' => $this->request->get('youtube_video_id')
+            'youtube_video_id' => $this->request->get('youtube_video_id'),
         ])->update();
 
         $item->populate([
-            'publish' => $this->request->get('publish')
+            'publish' => $this->request->get('publish'),
         ])->update();
 
         $this->flashBag->add('success', 'Youtube successfully updated');

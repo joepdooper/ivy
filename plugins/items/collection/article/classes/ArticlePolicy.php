@@ -2,7 +2,6 @@
 
 namespace Items\Collection\Article;
 
-use Items\Item;
 use Ivy\Model\User;
 
 class ArticlePolicy

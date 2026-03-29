@@ -5,5 +5,5 @@ return [
     'username' => 'Username',
     'email' => 'Email',
     'password' => 'Password',
-    'birthday' => 'Birthday'
+    'birthday' => 'Birthday',
 ];

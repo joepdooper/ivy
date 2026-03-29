@@ -13,12 +13,12 @@ abstract class CollectionController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->item = new Item();
+        $this->item = new Item;
     }
 
     public function save($id): void
     {
-        if($this->request->request->has('delete')){
+        if ($this->request->request->has('delete')) {
             $this->delete($id);
         } else {
             $this->update($id);
@@ -26,6 +26,8 @@ abstract class CollectionController extends Controller
     }
 
     abstract protected function insert($id): void;
+
     abstract protected function update($id): void;
+
     abstract protected function delete($id): void;
 }

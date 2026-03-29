@@ -4,11 +4,11 @@ use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
 use Tags\Tag;
 
-if(User::canEditAsSuperAdmin()) {
+if (User::canEditAsSuperAdmin()) {
 
-    try{
-    DatabaseManager::connection()->exec(
-        "
+    try {
+        DatabaseManager::connection()->exec(
+            '
 CREATE TABLE `documentations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
@@ -18,10 +18,10 @@ CREATE TABLE `documentations` (
   `token` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-  "
-    );
+  '
+        );
     } catch (Exception $e) {
-        error_log("Failed to create table `documentations`: " . $e->getMessage());
+        error_log('Failed to create table `documentations`: '.$e->getMessage());
     }
 
     try {
@@ -37,11 +37,11 @@ CREATE TABLE `documentations` (
             ]
         );
     } catch (Exception $e) {
-        error_log("Failed to insert Documentation into `item_templates`: " . $e->getMessage());
+        error_log('Failed to insert Documentation into `item_templates`: '.$e->getMessage());
     }
 
     $existing = (new Tag)->where('value', 'Documentation')->fetchOne();
-    if (!$existing) {
+    if (! $existing) {
         (new Tag)->populate(['value' => 'Documentation'])->insert();
     }
 

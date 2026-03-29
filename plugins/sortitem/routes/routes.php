@@ -8,8 +8,8 @@ if (User::getAuth()->isLoggedIn()) {
 
         $router->post('/item/sort/', function () {
 
-            $_POST = json_decode(file_get_contents("php://input"), true);
-            $item = new Item();
+            $_POST = json_decode(file_get_contents('php://input'), true);
+            $item = new Item;
 
             foreach ($_POST['data'] as $key => $value) {
                 $item->where('id', $value)->update(['sort' => $key]);

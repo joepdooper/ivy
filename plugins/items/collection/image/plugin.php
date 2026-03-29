@@ -5,15 +5,14 @@ use Items\ItemRegistry;
 use Ivy\Manager\AssetManager;
 use Ivy\Manager\RouterManager;
 use Ivy\Model\User;
-use Ivy\Core\Path;
 
-AssetManager::addCSS("plugins/items/collection/image/css/image.css");
+AssetManager::addCSS('plugins/items/collection/image/css/image.css');
 
 if (User::canEditAsEditor()) {
-    AssetManager::addJS("plugins/items/collection/image/js/image_admin.js");
+    AssetManager::addJS('plugins/items/collection/image/js/image_admin.js');
 }
 
-//if (User::getAuth()->isLoggedIn()) {
+// if (User::getAuth()->isLoggedIn()) {
 //    if (User::canEditAsEditor()) {
 //
 //        $router->get('/plugin/image', function () {
@@ -23,7 +22,7 @@ if (User::canEditAsEditor()) {
 //
 //        $router->post('/image_sizes/post', '\Image\SettingController@post');
 //    }
-//}
+// }
 
 RouterManager::instance()->match('GET|POST', '/image/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Image\ImageController@insert');
 

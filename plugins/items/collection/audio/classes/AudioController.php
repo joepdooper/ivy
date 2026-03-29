@@ -9,10 +9,11 @@ use Ivy\Service\FileService;
 class AudioController extends CollectionController
 {
     private Audio $audio;
+
     public function __construct()
     {
         parent::__construct();
-        $this->audio = new Audio();
+        $this->audio = new Audio;
     }
 
     public function insert($id): void
@@ -20,7 +21,7 @@ class AudioController extends CollectionController
         $this->audio->policy('create');
 
         $item_table_id = $this->audio->populate([
-            'file' => ''
+            'file' => '',
         ])->insert();
 
         $this->item->populate([
@@ -40,15 +41,15 @@ class AudioController extends CollectionController
         $item = $this->item->where('id', $id)->fetchOne();
         $audio = $this->audio->where('id', $item->table_id)->fetchOne();
 
-        if($this->request->files->get('upload')){
+        if ($this->request->files->get('upload')) {
             $file = new AudioFile($this->request->files->get('upload'));
             $audio->file = $file->generateFileName();
 
             (new FileService)->add($file)->upload();
         }
 
-        if($this->request->request->has('remove')){
-            $file = new AudioFile();
+        if ($this->request->request->has('remove')) {
+            $file = new AudioFile;
             $file->remove($audio->file);
             $audio->file = '';
         }
@@ -56,7 +57,7 @@ class AudioController extends CollectionController
         $audio->update();
 
         $item->populate([
-            'publish' => $this->request->get('publish')
+            'publish' => $this->request->get('publish'),
         ])->update();
 
         $this->flashBag->add('success', 'Audio successfully updated');

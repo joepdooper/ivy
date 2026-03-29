@@ -11,16 +11,16 @@ class ImageSizeController extends Controller
 {
     protected ImageSize $image_size;
 
-    public function post(Request $request = null): void
+    public function post(?Request $request = null): void
     {
-        $request = $request ?? new Request();
+        $request = $request ?? new Request;
         $this->image_size = new ImageSize;
 
         if ($request->isMethod('POST') && User::getAuth()->isLoggedIn()) {
             foreach ($request->all()['image_sizes'] as $row) {
                 try {
                     $validated = GUMP::is_valid($row, [
-                        'value' => 'alpha_numeric_dash'
+                        'value' => 'alpha_numeric_dash',
                     ]);
                     if ($validated === true) {
                         $this->image_size->save($row);

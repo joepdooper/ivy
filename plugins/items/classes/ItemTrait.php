@@ -11,19 +11,21 @@ trait ItemTrait
         return $this->hasOne(Item::class, 'id');
     }
 
-    public function getSlug() {
+    public function getSlug()
+    {
         return $this->slug;
     }
 
     public function delete(): bool
     {
         $this->item->delete();
+
         return parent::delete();
     }
 
     public function insertItem(Request $request): static
     {
-        if(!is_array($this->slug)) {
+        if (! is_array($this->slug)) {
             $slugKeys = [$this->slug];
         } else {
             $slugKeys = $this->slug;
@@ -35,9 +37,9 @@ trait ItemTrait
                 : null;
         }
 
-        $item = (new Item())->populate([
+        $item = (new Item)->populate([
             'parent_id' => ItemHelper::getParentId($request),
-            'slug'      => $slugValue,
+            'slug' => $slugValue,
         ])->insert();
 
         $this->item = $item;
@@ -56,14 +58,16 @@ trait ItemTrait
     {
         $this->updateFromRequest($request->request->all());
 
-        if (!$this->item) return;
+        if (! $this->item) {
+            return;
+        }
 
         $newSlug = $this->slug
             ? ItemHelper::slugify($request->get($this->slug) ?? $this->{$this->slug})
             : null;
 
         $data = [
-            'publish' => $request->get('publish', $this->item->publish)
+            'publish' => $request->get('publish', $this->item->publish),
         ];
 
         if ($newSlug !== $this->item->slug) {

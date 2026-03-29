@@ -4,7 +4,7 @@ use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
 use Tags\Tag;
 
-if(User::canEditAsSuperAdmin()) {
+if (User::canEditAsSuperAdmin()) {
     try {
         DatabaseManager::connection()->exec(
             'CREATE TABLE `moments` (
@@ -17,12 +17,11 @@ if(User::canEditAsSuperAdmin()) {
   ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;'
         );
     } catch (Exception $e) {
-        error_log("Failed to create table `moments`: " . $e->getMessage());
+        error_log('Failed to create table `moments`: '.$e->getMessage());
     }
 
     $existing = (new Tag)->where('value', 'Moment')->fetchOne();
-    if (!$existing) {
+    if (! $existing) {
         (new Tag)->populate(['value' => 'Moment'])->insert();
     }
 }
-

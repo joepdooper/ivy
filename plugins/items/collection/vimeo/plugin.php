@@ -9,19 +9,19 @@ use Ivy\Manager\SecurityManager;
 use Ivy\Manager\SessionManager;
 
 HookManager::add('after_footer', function () {
-    if(in_array("IframeManager", SessionManager::get('plugin_actives'))){
-        if (isset($_COOKIE['cc_cookie'])){
+    if (in_array('IframeManager', SessionManager::get('plugin_actives'))) {
+        if (isset($_COOKIE['cc_cookie'])) {
             $cc_cookie = json_decode($_COOKIE['cc_cookie']);
-            $cc_cookie->necessary = in_array("necessary", $cc_cookie->categories);
-            $cc_cookie->analytics = in_array("analytics", $cc_cookie->categories);
-            $cc_cookie->targeting = in_array("targeting", $cc_cookie->categories);
+            $cc_cookie->necessary = in_array('necessary', $cc_cookie->categories);
+            $cc_cookie->analytics = in_array('analytics', $cc_cookie->categories);
+            $cc_cookie->targeting = in_array('targeting', $cc_cookie->categories);
         }
         $scriptAttribute = (isset($cc_cookie) && $cc_cookie->analytics) ?: "type='text/plain' data-cookiecategory='analytics'";
-        print "<script nonce='" . SecurityManager::getNonce() . "' {$scriptAttribute} src='https://unpkg.com/@vimeo/player'></script>";
-        AssetManager::addJS("plugins/items/collection/vimeo/js/vimeo.js");
+        echo "<script nonce='".SecurityManager::getNonce()."' {$scriptAttribute} src='https://unpkg.com/@vimeo/player'></script>";
+        AssetManager::addJS('plugins/items/collection/vimeo/js/vimeo.js');
     } else {
-        print "<script nonce='" . SecurityManager::getNonce() . "' src='https://unpkg.com/@vimeo/player'></script>";
-        AssetManager::addJS("plugins/items/collection/vimeo/js/vimeo.js");
+        echo "<script nonce='".SecurityManager::getNonce()."' src='https://unpkg.com/@vimeo/player'></script>";
+        AssetManager::addJS('plugins/items/collection/vimeo/js/vimeo.js');
     }
 });
 

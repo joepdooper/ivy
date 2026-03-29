@@ -14,23 +14,26 @@ use Tags\TagTrait;
 
 class Moment extends Model
 {
-    use ItemTrait, TagTrait, Factory, HasFilters;
+    use Factory, HasFilters, ItemTrait, TagTrait;
 
-    protected string $table = "moments";
-    protected string|array $slug = "title";
+    protected string $table = 'moments';
+
+    protected string|array $slug = 'title';
 
     protected array $columns = [
         'title',
         'item_id',
-        'token'
+        'token',
     ];
 
     protected array $searchable = [
-        'title'
+        'title',
     ];
 
     protected ?string $title;
+
     protected int $item_id;
+
     protected ?string $token = null;
 
     public function getDateTime(): ?MomentDateTime
@@ -46,7 +49,7 @@ class Moment extends Model
     public function getPeople(): array
     {
         $momentPeople = $this->hasMany(MomentPeople::class, 'moment_id');
-        $userIds = array_map(fn($mp) => $mp->user_id, $momentPeople);
+        $userIds = array_map(fn ($mp) => $mp->user_id, $momentPeople);
 
         return (new Profile)->whereIn('user_id', $userIds)->fetchAll();
     }
@@ -63,6 +66,7 @@ class Moment extends Model
         $this->getDateTime()?->delete();
         $this->getLocation()?->delete();
         $this->item->delete();
+
         return parent::delete();
     }
 

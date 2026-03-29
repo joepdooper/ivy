@@ -3,7 +3,7 @@
 use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
 
-if(User::canEditAsSuperAdmin()) {
+if (User::canEditAsSuperAdmin()) {
 
     try {
         DatabaseManager::connection()->exec('
@@ -15,9 +15,9 @@ CREATE TABLE `codes` (
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
   '
-    );
+        );
     } catch (Exception $e) {
-        error_log("Failed to create table `codes`: " . $e->getMessage());
+        error_log('Failed to create table `codes`: '.$e->getMessage());
     }
 
     try {
@@ -33,7 +33,7 @@ CREATE TABLE `codes` (
             ]
         );
     } catch (Exception $e) {
-        error_log("Failed to insert Code into `item_templates`: " . $e->getMessage());
+        error_log('Failed to insert Code into `item_templates`: '.$e->getMessage());
     }
 
 }

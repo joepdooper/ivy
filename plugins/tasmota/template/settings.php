@@ -1,9 +1,12 @@
 <?php
 
-$tasmota = new \Tasmota\Settings;
+use Ivy\Button;
+use Tasmota\Settings;
+
+$tasmota = new Settings;
 ?>
 
-<form action="<?= Path::get('BASE_PATH') . '/tasmota/post'; ?>" method="POST" enctype="multipart/form-data">
+<form action="<?= Path::get('BASE_PATH').'/tasmota/post'; ?>" method="POST" enctype="multipart/form-data">
 
     <div class="p-1">
         <div class="p-05">
@@ -23,7 +26,7 @@ $tasmota = new \Tasmota\Settings;
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($tasmota->get()->all() as $row): ?>
+                <?php foreach ($tasmota->get()->all() as $row) { ?>
                     <tr>
                         <td>
                             <input type="text" name="tasmota[<?= $row->id; ?>][ip]" placeholder="ip address"
@@ -35,16 +38,16 @@ $tasmota = new \Tasmota\Settings;
                         </td>
                         <td>
                             <label for="response" class="close text-align-right">
-                                <?= file_get_contents(Path::get('BASE_PATH') . "media/icon/" . "feather/code.svg"); ?>
+                                <?= file_get_contents(Path::get('BASE_PATH').'media/icon/'.'feather/code.svg'); ?>
                             </label>
                         </td>
                         <td>
                             <input type="hidden" name="tasmota[<?= $row->id; ?>][id]"
                                    value="<?= $row->id; ?>">
-                            <?php \Ivy\Button::delete("tasmota[" . $row->id . "][delete]", "tasmota_" . $row->id); ?>
+                            <?php Button::delete('tasmota['.$row->id.'][delete]', 'tasmota_'.$row->id); ?>
                         </td>
                     </tr>
-                <?php endforeach; ?>
+                <?php } ?>
                 <tr>
                     <td colspan="3">
                         <input type="text" name="tasmota[][ip]" placeholder="Add ip address">
@@ -68,13 +71,13 @@ $tasmota = new \Tasmota\Settings;
     <div class="p-05">
         <strong>API response:</strong>
     </div>
-    <?php foreach ($tasmota->get()->all() as $row): ?>
-        <?php if (!empty($row->ip)): ?>
+    <?php foreach ($tasmota->get()->all() as $row) { ?>
+        <?php if (! empty($row->ip)) { ?>
             <div class="inner">
         <pre>
           <?= print_r($tasmota->device($row->ip, $row->cmnd)); ?>
         </pre>
             </div>
-        <?php endif; ?>
-    <?php endforeach; ?>
+        <?php } ?>
+    <?php } ?>
 </div>

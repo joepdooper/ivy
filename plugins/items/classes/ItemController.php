@@ -3,8 +3,8 @@
 namespace Items;
 
 use Ivy\Abstract\Controller;
-use Ivy\Manager\DatabaseManager;
 use Ivy\Core\Path;
+use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
 use Ivy\View\View;
 use Tags\Tag;
@@ -12,6 +12,7 @@ use Tags\Tag;
 class ItemController extends Controller
 {
     protected Item $item;
+
     protected ?string $slug = null;
 
     public function __construct()
@@ -26,9 +27,10 @@ class ItemController extends Controller
 
         $itemRegistry = ItemRegistry::get($this->request->request->get('item_registry'));
 
-        d($itemRegistry);die;
+        d($itemRegistry);
+        exit;
 
-        if(!$this->request->get('item_template_id')) {
+        if (! $this->request->get('item_template_id')) {
             $this->flashBag->add('warning', 'No template was selected');
             $this->redirect(ItemHelper::getRedirect($this->request));
         } else {
@@ -57,7 +59,7 @@ class ItemController extends Controller
             )
             ->when(
                 $this->request->request->has('tags') &&
-                !empty($this->request->request->all('tags')),
+                ! empty($this->request->request->all('tags')),
                 function () use (&$itemIds) {
                     $ids = ItemHelper::filterItemTags(
                         $this->request->request->all('tags')
@@ -68,14 +70,14 @@ class ItemController extends Controller
             ->when(
                 isset($itemIds) &&
                 empty($itemIds) &&
-                ( $this->request->request->has('search') ||
+                ($this->request->request->has('search') ||
                     $this->request->request->has('tags')
                 ),
                 function ($query) {
                     return $query->where('id', -1);
                 }
             )
-            ->when(!empty($itemIds), function ($query) use (&$itemIds) {
+            ->when(! empty($itemIds), function ($query) use (&$itemIds) {
                 $query->whereIn('id', $itemIds);
             })
             ->sortBy('date')
@@ -83,15 +85,15 @@ class ItemController extends Controller
 
         $tags = Tag::query()->fetchAll();
 
-        View::set(Path::get('PLUGINS_FOLDER') . 'items/template/index.latte', [
+        View::set(Path::get('PLUGINS_FOLDER').'items/template/index.latte', [
             'items' => $items,
-            'tags' => $tags
+            'tags' => $tags,
         ]);
     }
 
     public function save($id): void
     {
-        if($this->request->request->has('delete')){
+        if ($this->request->request->has('delete')) {
             $this->delete($id);
         } else {
             $this->update($id);
@@ -111,7 +113,7 @@ class ItemController extends Controller
         $item = $this->item->with(['plugins'])->where('id', $id)->fetchOne();
 
         if (method_exists($item->plugin, 'policy') && method_exists($item->plugin, 'delete')) {
-            if($item->plugin->policy('delete')){
+            if ($item->plugin->policy('delete')) {
                 $message = $item->plugin->getSlug() ? $item->plugin->{$item->plugin->getSlug()} : $item->id;
                 $item->plugin->delete();
                 $this->flashBag->add('success', "$message successfully deleted");
@@ -125,28 +127,28 @@ class ItemController extends Controller
 
     public function deleteChildren(): void
     {
-        $children = (new Item())->where('parent',  $this->item->id)->fetchAll();
-        if (!empty($children)) {
+        $children = (new Item)->where('parent', $this->item->id)->fetchAll();
+        if (! empty($children)) {
             foreach ($children as $child) {
                 try {
                     DatabaseManager::connection()->delete(
                         $child->table,
                         [
-                            'id' => $child->table_id
+                            'id' => $child->table_id,
                         ]
                     );
                 } catch (\Exception $e) {
-                    error_log("Failed to delete from child table in item plugin: " . $e->getMessage());
+                    error_log('Failed to delete from child table in item plugin: '.$e->getMessage());
                 }
                 try {
                     DatabaseManager::connection()->delete(
                         'items',
                         [
-                            'id' => $child->id
+                            'id' => $child->id,
                         ]
                     );
                 } catch (\Exception $e) {
-                    error_log("Failed to delete items child in item plugin: " . $e->getMessage());
+                    error_log('Failed to delete items child in item plugin: '.$e->getMessage());
                 }
             }
         }
@@ -156,7 +158,7 @@ class ItemController extends Controller
     {
         $this->item->policy('update');
 
-        $_POST = json_decode(file_get_contents("php://input"), true);
+        $_POST = json_decode(file_get_contents('php://input'), true);
 
         foreach ($_POST['data'] as $key => $value) {
             $this->item->where('id', $value)->populate(['sort' => $key])->update();

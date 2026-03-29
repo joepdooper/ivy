@@ -6,7 +6,6 @@ use GUMP;
 use Ivy\Abstract\Controller;
 use Ivy\Core\Path;
 use Ivy\View\View;
-use Moment\Moment;
 
 class MomentPeopleController extends Controller
 {
@@ -16,7 +15,7 @@ class MomentPeopleController extends Controller
     {
         parent::__construct();
 
-        $this->people = new People();
+        $this->people = new People;
     }
 
     public function index(): void
@@ -24,7 +23,7 @@ class MomentPeopleController extends Controller
         $this->people->policy('index');
 
         $people = $this->people->fetchAll();
-        View::set(Path::get('PLUGINS_PATH') . 'moment/template/people.latte', ['people' => $people]);
+        View::set(Path::get('PLUGINS_PATH').'moment/template/people.latte', ['people' => $people]);
     }
 
     public function post(): void
@@ -34,21 +33,26 @@ class MomentPeopleController extends Controller
         foreach ($this->request->get('people') as $data) {
             try {
                 $validated = GUMP::is_valid($data, [
-                    'name' => 'valid_name'
+                    'name' => 'valid_name',
                 ]);
 
                 if ($validated !== true) {
-                    foreach ($validated as $msg) $this->flashBag->add('error', $msg);
+                    foreach ($validated as $msg) {
+                        $this->flashBag->add('error', $msg);
+                    }
+
                     continue;
                 }
 
-                if (empty($data['name'])) continue;
+                if (empty($data['name'])) {
+                    continue;
+                }
 
-                $people = !empty($data['id'])
+                $people = ! empty($data['id'])
                     ? People::query()->where('id', $data['id'])->fetchOne()
-                    : new People();
+                    : new People;
 
-                if (isset($data['delete']) && !empty($data['id'])) {
+                if (isset($data['delete']) && ! empty($data['id'])) {
                     $people?->delete();
                 } else {
                     $people->populate($data)->save();
@@ -60,6 +64,6 @@ class MomentPeopleController extends Controller
         }
 
         $this->flashBag->add('success', 'Updated successful');
-        $this->redirect($this->people->getPath() . DIRECTORY_SEPARATOR . 'index');
+        $this->redirect($this->people->getPath().DIRECTORY_SEPARATOR.'index');
     }
 }

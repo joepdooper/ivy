@@ -12,7 +12,7 @@ class ImageController extends CollectionController
     public function __construct()
     {
         parent::__construct();
-        $this->image = new Image();
+        $this->image = new Image;
     }
 
     public function insert($id): void
@@ -20,7 +20,7 @@ class ImageController extends CollectionController
         $this->image->policy('create');
 
         $item_table_id = $this->image->populate([
-            'file' => ''
+            'file' => '',
         ])->insert();
 
         $this->item->populate([
@@ -40,23 +40,23 @@ class ImageController extends CollectionController
         $item = $this->item->where('id', $id)->fetchOne();
         $image = $this->image->where('id', $item->table_id)->fetchOne();
 
-        if($this->request->files->get('image')){
+        if ($this->request->files->get('image')) {
             $files = [];
             $file = new ImageFile($this->request->files->get('image'));
             $file->generateFileName();
             foreach ((new ImageSize)->fetchAll() as $imageSize) {
                 $files[] = clone $file
-                    ->setUploadPath('item'. DIRECTORY_SEPARATOR . $imageSize->name)
+                    ->setUploadPath('item'.DIRECTORY_SEPARATOR.$imageSize->name)
                     ->setImageWidth($imageSize->value);
             }
             $image->file = $file->getFileName();
             (new ImageFileService)->add($files)->upload();
         }
 
-        if($this->request->request->has('remove')){
-            $file = new ImageFile();
+        if ($this->request->request->has('remove')) {
+            $file = new ImageFile;
             foreach ((new ImageSize)->fetchAll() as $imageSize) {
-                $file->setUploadPath('item'. DIRECTORY_SEPARATOR . $imageSize->name)->remove($image->file);
+                $file->setUploadPath('item'.DIRECTORY_SEPARATOR.$imageSize->name)->remove($image->file);
             }
             $image->file = '';
         }
@@ -64,7 +64,7 @@ class ImageController extends CollectionController
         $image->update();
 
         $item->populate([
-            'publish' => $this->request->get('publish')
+            'publish' => $this->request->get('publish'),
         ])->update();
 
         $this->flashBag->add('success', 'Image successfully updated');

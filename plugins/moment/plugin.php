@@ -7,11 +7,11 @@ use Ivy\Model\User;
 use Moment\Moment;
 
 if (User::canEditAsEditor()) {
-    RouterManager::instance()->before('GET', '/.*', function() {
+    RouterManager::instance()->before('GET', '/.*', function () {
         $uri = RouterManager::instance()->getCurrentUri();
 
         $assetMap = [
-            '/'         => 'plugins/moment/js/add_moment_admin.js',
+            '/' => 'plugins/moment/js/add_moment_admin.js',
             '/moment/*' => 'plugins/moment/js/add_moment_admin.js',
         ];
 

@@ -3,9 +3,7 @@
 namespace Items\Collection\Vimeo;
 
 use Items\CollectionController;
-use Items\Item;
 use Items\ItemHelper;
-use Ivy\Abstract\Controller;
 
 class VimeoController extends CollectionController
 {
@@ -14,7 +12,7 @@ class VimeoController extends CollectionController
     public function __construct()
     {
         parent::__construct();
-        $this->vimeo = new Vimeo();
+        $this->vimeo = new Vimeo;
     }
 
     public function insert($id): void
@@ -22,13 +20,13 @@ class VimeoController extends CollectionController
         $this->vimeo->policy('create');
 
         $item_table_id = $this->vimeo->populate([
-            'vimeo_video_id' => '876176995'
+            'vimeo_video_id' => '876176995',
         ])->insert();
 
         $this->item->populate([
             'template_id' => $id,
             'parent_id' => ItemHelper::getParentId($this->request),
-            'table_id' => $item_table_id
+            'table_id' => $item_table_id,
         ])->insert();
 
         $this->flashBag->add('success', 'Vimeo successfully inserted');
@@ -42,11 +40,11 @@ class VimeoController extends CollectionController
         $item = $this->item->where('id', $id)->fetchOne();
 
         $this->vimeo->where('id', $item->table_id)->populate([
-            'vimeo_video_id' => $this->request->get('vimeo_video_id')
+            'vimeo_video_id' => $this->request->get('vimeo_video_id'),
         ])->update();
 
         $item->populate([
-            'publish' => $this->request->get('publish')
+            'publish' => $this->request->get('publish'),
         ])->update();
 
         $this->flashBag->add('success', 'Vimeo successfully updated');

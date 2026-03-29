@@ -10,7 +10,7 @@ class MomentLocationFactory
     {
         $userLocation = MomentLocationHelper::getUserLocation();
 
-        if (!empty($userLocation['city']) && !empty($userLocation['country'])) {
+        if (! empty($userLocation['city']) && ! empty($userLocation['country'])) {
             $location = $userLocation;
         } else {
             $defaults = [

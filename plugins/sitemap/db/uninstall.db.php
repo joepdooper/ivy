@@ -1,8 +1,9 @@
 <?php
 
+use Ivy\DB;
 
-\Ivy\DB::$connection->exec(
-    "
+DB::$connection->exec(
+    '
     DROP TABLE `sitemap`;
-    "
+    '
 );

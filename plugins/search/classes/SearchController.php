@@ -27,7 +27,7 @@ class SearchController extends Controller
         $filtered = GUMP::filter_input([
             'search' => $this->request->get('search'),
         ], [
-            'search' => 'trim|sanitize_string'
+            'search' => 'trim|sanitize_string',
         ]);
 
         $searches = $this->parseSearchString($filtered['search']);
@@ -49,19 +49,19 @@ class SearchController extends Controller
         $this->search->policy('index');
 
         $search = $this->search->fetchAll();
-        View::set(Path::get('PLUGINS_PATH') . 'tags/template/manage.latte', ['tags' => $search]);
+        View::set(Path::get('PLUGINS_PATH').'tags/template/manage.latte', ['tags' => $search]);
     }
 
-    function parseSearchString(string $input): array
+    public function parseSearchString(string $input): array
     {
         $matches = [];
         preg_match_all('/"([^"]+)"|\'([^\']+)\'|(\S+)/', $input, $matches);
 
         $results = [];
         foreach ($matches[0] as $i => $match) {
-            if (!empty($matches[1][$i])) {
+            if (! empty($matches[1][$i])) {
                 $results[] = $matches[1][$i]; // double-quoted
-            } elseif (!empty($matches[2][$i])) {
+            } elseif (! empty($matches[2][$i])) {
                 $results[] = $matches[2][$i]; // single-quoted
             } else {
                 $results[] = $matches[3][$i]; // unquoted

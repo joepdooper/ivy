@@ -9,16 +9,18 @@ class MomentPeople extends Model
 {
     use Factory;
 
-    protected string $table = "moments_people";
+    protected string $table = 'moments_people';
 
     protected array $columns = [
         'moment_id',
         'people_id',
-        'token'
+        'token',
     ];
 
     protected int $moment_id;
+
     protected int $people_id;
+
     protected ?string $token = null;
 
     public function getPeople(): array

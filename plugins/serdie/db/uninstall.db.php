@@ -1,13 +1,15 @@
 <?php
 
-\Ivy\DB::$connection->exec(
-    "
+use Ivy\DB;
+
+DB::$connection->exec(
+    '
     DROP TABLE `serdie_wordlist`;
-    "
+    '
 );
 
-\Ivy\DB::$connection->exec(
-    "
+DB::$connection->exec(
+    '
     DROP TABLE `serdie_player`;
-    "
+    '
 );

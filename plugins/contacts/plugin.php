@@ -5,7 +5,7 @@ use Ivy\Manager\RouterManager;
 use Ivy\Model\User;
 
 if (User::canEditAsEditor()) {
-    AssetManager::addJS("plugins/contacts/js/contacts_admin.js");
+    AssetManager::addJS('plugins/contacts/js/contacts_admin.js');
 }
 
 RouterManager::instance()->mount('/admin/plugin/contacts', function () {

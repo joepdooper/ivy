@@ -3,27 +3,27 @@
 use Ivy\Manager\DatabaseManager;
 use Ivy\Model\User;
 
-if(User::canEditAsSuperAdmin()) {
+if (User::canEditAsSuperAdmin()) {
 
     try {
         DatabaseManager::connection()->delete(
             'item_templates',
             [
                 // where
-                'plugin_url' => 'documentation'
+                'plugin_url' => 'documentation',
             ]
         );
     } catch (Exception $e) {
-        error_log("Failed to remove documentation from item_templates: " . $e->getMessage());
+        error_log('Failed to remove documentation from item_templates: '.$e->getMessage());
     }
 
-    try{
-    DatabaseManager::connection()->exec(
-        "
+    try {
+        DatabaseManager::connection()->exec(
+            '
     DROP TABLE `documentations`;
-    "
-    );
+    '
+        );
     } catch (Exception $e) {
-        error_log("Failed to drop table `documentations`: " . $e->getMessage());
+        error_log('Failed to drop table `documentations`: '.$e->getMessage());
     }
 }

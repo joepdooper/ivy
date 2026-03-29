@@ -2,23 +2,21 @@
 
 namespace Items\Collection\Gig;
 
-use Items\Collection\Image\ImageService;
 use Items\CollectionController;
-use Items\Item;
 use Items\ItemHelper;
-use Ivy\Abstract\Controller;
 use Tags\Tag;
 
 class GigController extends CollectionController
 {
     private Gig $gig;
+
     private Tag $tag;
 
     public function __construct()
     {
         parent::__construct();
-        $this->gig = new Gig();
-        $this->tag = new Tag();
+        $this->gig = new Gig;
+        $this->tag = new Tag;
     }
 
     public function insert($id): void
@@ -26,16 +24,16 @@ class GigController extends CollectionController
         $this->gig->policy('create');
 
         $item_table_id = $this->gig->populate([
-            'datetime' => date("Y-m-d H:i:s"),
+            'datetime' => date('Y-m-d H:i:s'),
             'venue' => 'Venue',
             'address' => 'Address',
-            'subject' => $this->tag->fetchOne()->getId()
+            'subject' => $this->tag->fetchOne()->getId(),
         ])->insert();
 
         $this->item->populate([
             'template_id' => $id,
             'parent_id' => ItemHelper::getParentId($this->request),
-            'table_id' => $item_table_id
+            'table_id' => $item_table_id,
         ])->insert();
 
         $this->flashBag->add('success', 'Gig successfully inserted');
@@ -50,10 +48,10 @@ class GigController extends CollectionController
         $gig = $this->gig->where('id', $item->table_id)->fetchOne();
 
         $gig->populate([
-            'datetime' => $this->request->get('date') . ' ' . $this->request->get('time'),
+            'datetime' => $this->request->get('date').' '.$this->request->get('time'),
             'venue' => $this->request->get('venue'),
             'address' => $this->request->get('address'),
-            'subject' => $this->request->get('tag')
+            'subject' => $this->request->get('tag'),
         ])->update();
 
         $item->populate([

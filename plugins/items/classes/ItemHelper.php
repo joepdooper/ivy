@@ -39,6 +39,7 @@ class ItemHelper
     private static function getRefererPath($request): string
     {
         $referer = $request->headers->get('referer');
+
         return ltrim(parse_url($referer, PHP_URL_PATH), '/');
     }
 
@@ -49,7 +50,7 @@ class ItemHelper
 
         while (self::checkSlug($string)) {
             $string = preg_replace('/-\d+$/', '', $string);
-            $string = $string . '-' . $count;
+            $string = $string.'-'.$count;
             $count++;
         }
 
@@ -58,7 +59,7 @@ class ItemHelper
 
     private static function checkSlug($slug): bool
     {
-        $result = DatabaseManager::connection()->selectRow("SELECT COUNT(*) AS count FROM items WHERE slug = :slug", ['slug' => $slug]);
+        $result = DatabaseManager::connection()->selectRow('SELECT COUNT(*) AS count FROM items WHERE slug = :slug', ['slug' => $slug]);
 
         return $result['count'] > 0;
     }
@@ -69,6 +70,7 @@ class ItemHelper
         $string = str_replace(' ', '-', $string);
         $string = preg_replace('/[^a-z0-9\-]/', '', $string);
         $string = preg_replace('/-+/', '-', $string);
+
         return trim($string, '-');
     }
 
@@ -81,7 +83,7 @@ class ItemHelper
         foreach ($registry as $modelClass) {
             $model = new $modelClass;
 
-            if (!property_exists($model, 'searchable') || empty($model->getSearchable())) {
+            if (! property_exists($model, 'searchable') || empty($model->getSearchable())) {
                 continue;
             }
 

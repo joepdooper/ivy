@@ -9,7 +9,7 @@ class MomentLocation extends Model
 {
     use Factory;
 
-    protected string $table = "moments_location";
+    protected string $table = 'moments_location';
 
     protected array $columns = [
         'moment_id',
@@ -18,14 +18,20 @@ class MomentLocation extends Model
         'country_code',
         'latitude',
         'longitude',
-        'token'
+        'token',
     ];
 
     protected int $moment_id;
+
     protected ?string $city;
+
     protected ?string $country;
+
     protected ?string $country_code;
+
     protected ?float $latitude;
+
     protected ?float $longitude;
+
     protected ?string $token = null;
 }

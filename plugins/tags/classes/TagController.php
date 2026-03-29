@@ -5,7 +5,6 @@ namespace Tags;
 use GUMP;
 use Ivy\Abstract\Controller;
 use Ivy\Core\Path;
-use Ivy\Model\Setting;
 use Ivy\View\View;
 
 class TagController extends Controller
@@ -25,21 +24,26 @@ class TagController extends Controller
         foreach ($this->request->get('tag') as $data) {
             try {
                 $validated = GUMP::is_valid($data, [
-                    'value' => 'alpha_numeric_dash'
+                    'value' => 'alpha_numeric_dash',
                 ]);
 
                 if ($validated !== true) {
-                    foreach ($validated as $msg) $this->flashBag->add('error', $msg);
+                    foreach ($validated as $msg) {
+                        $this->flashBag->add('error', $msg);
+                    }
+
                     continue;
                 }
 
-                if (empty($data['value'])) continue;
+                if (empty($data['value'])) {
+                    continue;
+                }
 
-                $tag = !empty($data['id'])
-                    ? (new Tag())->where('id', $data['id'])->fetchOne()
-                    : new Tag();
+                $tag = ! empty($data['id'])
+                    ? (new Tag)->where('id', $data['id'])->fetchOne()
+                    : new Tag;
 
-                if (isset($data['delete']) && !empty($data['id'])) {
+                if (isset($data['delete']) && ! empty($data['id'])) {
                     $tag?->delete();
                 } else {
                     $tag->populate($data)->save();
@@ -51,7 +55,7 @@ class TagController extends Controller
         }
 
         $this->flashBag->add('success', 'Updated successful');
-        $this->redirect($this->tag->getPath() . DIRECTORY_SEPARATOR . 'manage');
+        $this->redirect($this->tag->getPath().DIRECTORY_SEPARATOR.'manage');
     }
 
     public function index(): void
@@ -59,6 +63,6 @@ class TagController extends Controller
         $this->tag->policy('index');
 
         $tags = $this->tag->fetchAll();
-        View::set(Path::get('PLUGINS_PATH') . 'tags/template/manage.latte', ['tags' => $tags]);
+        View::set(Path::get('PLUGINS_PATH').'tags/template/manage.latte', ['tags' => $tags]);
     }
 }

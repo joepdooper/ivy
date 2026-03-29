@@ -10,7 +10,7 @@ use Tags\TagTrait;
 
 class Item extends Model
 {
-    use TagTrait, HasFilters, Factory;
+    use Factory, HasFilters, TagTrait;
 
     protected string $table = 'items';
 
@@ -20,23 +20,29 @@ class Item extends Model
         'publish',
         'token',
         'sort',
-        'slug'
+        'slug',
     ];
 
     protected array $filterable = [
-        'slug'
+        'slug',
     ];
 
     protected int $user_id;
+
     protected ?int $parent_id = null;
+
     protected int $publish = 0;
 
     protected ?string $token = null;
+
     protected ?string $date = null;
+
     protected ?int $sort = null;
+
     protected ?string $slug = null;
 
     protected bool $loadPlugins = false;
+
     protected bool $loadAuthors = false;
 
     public function plugin(): ?object
@@ -73,7 +79,7 @@ class Item extends Model
         }
 
         $native = array_diff($relations, ['plugins', 'authors']);
-        if (!empty($native)) {
+        if (! empty($native)) {
             parent::with($native);
         }
 
@@ -87,7 +93,7 @@ class Item extends Model
         if ($this->loadPlugins || $this->loadAuthors) {
             ItemLoader::attach($items, [
                 'plugins' => $this->loadPlugins,
-                'authors' => $this->loadAuthors
+                'authors' => $this->loadAuthors,
             ]);
         }
 
@@ -102,8 +108,9 @@ class Item extends Model
             $items = [$item];
             ItemLoader::attach($items, [
                 'plugins' => $this->loadPlugins,
-                'authors' => $this->loadAuthors
+                'authors' => $this->loadAuthors,
             ]);
+
             return $items[0];
         }
 

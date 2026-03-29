@@ -6,5 +6,5 @@ return [
     'settings' => 'Settings',
     'plugins' => 'Plugins',
     'templates' => 'Templates',
-    'users' => 'Users'
+    'users' => 'Users',
 ];

@@ -14,13 +14,13 @@ if (User::getAuth()->isLoggedIn()) {
         $router->post('/player/post', '\Serdie\Player@post');
 
         $router->get('/serdie/wordlist', function () {
-            $wordlist = (new Wordlist)->get()->all();
-            Template::render(_PLUGINS_PATH . 'serdie/template/wordlist.php', ['wordlist' => $wordlist], 'main');
+            $wordlist = (new WordList)->get()->all();
+            Template::render(_PLUGINS_PATH.'serdie/template/wordlist.php', ['wordlist' => $wordlist], 'main');
         });
 
         $router->get('/serdie/player', function () {
             $player = (new Player)->get()->all();
-            Template::render(_PLUGINS_PATH . 'serdie/template/player.php', ['player' => $player], 'main');
+            Template::render(_PLUGINS_PATH.'serdie/template/player.php', ['player' => $player], 'main');
         });
 
     }

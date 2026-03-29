@@ -9,8 +9,8 @@ return [
             'Forgot to buy toilet paper… again',
             'Cancelled fitness subscription… again',
             'Started a toxic relationship… again',
-            'Stopped procrastinating for good… again'
-        ]
+            'Stopped procrastinating for good… again',
+        ],
     ],
     'date' => 'Date',
     'location' => 'Location',
@@ -25,5 +25,5 @@ return [
     'fetch_current_location' => 'Get current location',
     'no_people_defined' => 'No people defined',
     'add_persons_name' => "Add person's name",
-    'persons_name' => 'Name'
+    'persons_name' => 'Name',
 ];

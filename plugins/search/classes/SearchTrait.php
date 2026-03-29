@@ -14,7 +14,7 @@ trait SearchTrait
      */
     public function fetchAllEntityTags(): array
     {
-        $tagModel = new Tag();
+        $tagModel = new Tag;
 
         return $tagModel
             ->addJoin('entity_tags', 'id', '=', 'tag_id')
@@ -26,7 +26,6 @@ trait SearchTrait
     /**
      * Add a tag to this model instance.
      *
-     * @param int $tag_id
      * @return bool Insert success
      */
     public function attachTag(int $tag_id): bool
@@ -35,11 +34,13 @@ trait SearchTrait
             DatabaseManager::connection()->insert('entity_tags', [
                 'tag_id' => $tag_id,
                 'entity_table' => $this->table,
-                'entity_id' => $this->id
+                'entity_id' => $this->id,
             ]);
+
             return true;
         } catch (\Exception $e) {
             error_log($e->getMessage());
+
             return false;
         }
     }
@@ -47,8 +48,8 @@ trait SearchTrait
     /**
      * Remove a tag from this model instance.
      *
-     * @param int $tag_id
      * @return int Number of deleted rows
+     *
      * @throws EmptyWhereClauseError
      */
     public function detachTag(int $tag_id): int
@@ -56,7 +57,7 @@ trait SearchTrait
         return DatabaseManager::connection()->delete('entity_tags', [
             'tag_id' => $tag_id,
             'entity_table' => $this->table,
-            'entity_id' => $this->id
+            'entity_id' => $this->id,
         ]);
     }
 }
