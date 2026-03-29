@@ -1,18 +1,27 @@
 <?php
 
-use Ivy\Manager\RouterManager;
+use Ivy\Routing\Route;
 
-RouterManager::instance()->mount('/user', function () {
+Route::mount('/user', function () {
     // -- USER register
-    RouterManager::instance()->post('register', '\Ivy\Controller\UserController@register');
-    RouterManager::instance()->get('register', '\Ivy\Controller\UserController@viewRegister');
+    Route::post('/register', '\Ivy\Controller\UserController@register')
+        ->before('\Ivy\Controller\UserController@beforeRegister');
+    Route::get('/register', '\Ivy\Controller\UserController@viewRegister')
+        ->before('\Ivy\Controller\UserController@beforeRegister');
+
     // -- USER login
-    RouterManager::instance()->post('login', '\Ivy\Controller\UserController@login');
-    RouterManager::instance()->get('login(/[^/]+)?(/[^/]+)?', '\Ivy\Controller\UserController@viewLogin');
+    Route::post('/login', '\Ivy\Controller\UserController@login')
+        ->before('\Ivy\Controller\UserController@beforeLogin');
+    Route::get('/login(/[^/]+)?(/[^/]+)?', '\Ivy\Controller\UserController@viewLogin')
+        ->before('\Ivy\Controller\UserController@beforeLogin');
+
     // -- USER logout
-    RouterManager::instance()->post('logout', '\Ivy\Controller\UserController@logout');
-    RouterManager::instance()->get('logout', '\Ivy\Controller\UserController@viewLogout');
+    Route::post('/logout', '\Ivy\Controller\UserController@logout');
+    Route::get('/logout', '\Ivy\Controller\UserController@viewLogout');
+
     // -- USER reset
-    RouterManager::instance()->post('reset', '\Ivy\Controller\UserController@reset');
-    RouterManager::instance()->get('reset(/[^/]+)?(/[^/]+)?', '\Ivy\Controller\UserController@viewReset');
+    Route::post('/reset', '\Ivy\Controller\UserController@reset')
+        ->before('\Ivy\Controller\UserController@beforeReset');
+    Route::get('/reset(/[^/]+)?(/[^/]+)?', '\Ivy\Controller\UserController@viewReset')
+        ->before('\Ivy\Controller\UserController@beforeReset');
 });

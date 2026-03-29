@@ -1,8 +1,10 @@
 <?php
 
-use Ivy\Manager\RouterManager;
+use Ivy\Routing\Route;
 
 // -- HOME
-RouterManager::instance()->get('/', '\Ivy\Controller\TemplateController@root');
+Route::get('/', function () {})
+    ->before('\Ivy\Controller\TemplateController@before');
 // -- PROFILE
-RouterManager::instance()->get('/profile/(\d+)', '\Ivy\Controller\ProfileController@public');
+Route::get('/profile/(\d+)', '\Ivy\Controller\ProfileController@public')
+    ->before('\Ivy\Controller\TemplateController@before');
