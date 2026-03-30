@@ -1713,19 +1713,20 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.31.0",
+            "version": "v1.33.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "85181ba99b2345b0ef10ce42ecac37612d9fd341"
+                "reference": "6d857f4d76bd4b343eac26d6b539585d2bc56493"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/85181ba99b2345b0ef10ce42ecac37612d9fd341",
-                "reference": "85181ba99b2345b0ef10ce42ecac37612d9fd341",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/6d857f4d76bd4b343eac26d6b539585d2bc56493",
+                "reference": "6d857f4d76bd4b343eac26d6b539585d2bc56493",
                 "shasum": ""
             },
             "require": {
+                "ext-iconv": "*",
                 "php": ">=7.2"
             },
             "provide": {
@@ -1773,7 +1774,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.31.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.33.0"
             },
             "funding": [
                 {
@@ -1785,11 +1786,15 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-09T11:45:10+00:00"
+            "time": "2024-12-23T08:48:59+00:00"
         },
         {
             "name": "symfony/polyfill-php80",
@@ -2475,12 +2480,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joepdooper/ivy-cultivate.git",
-                "reference": "bae5875833091a1379d1782a2e1191eb2cb94ff8"
+                "reference": "991fdb356dec0704e0aa885e49881e9cee141598"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joepdooper/ivy-cultivate/zipball/bae5875833091a1379d1782a2e1191eb2cb94ff8",
-                "reference": "bae5875833091a1379d1782a2e1191eb2cb94ff8",
+                "url": "https://api.github.com/repos/joepdooper/ivy-cultivate/zipball/991fdb356dec0704e0aa885e49881e9cee141598",
+                "reference": "991fdb356dec0704e0aa885e49881e9cee141598",
                 "shasum": ""
             },
             "default-branch": true,
@@ -2502,7 +2507,7 @@
                 "issues": "https://github.com/joepdooper/ivy-cultivate/issues",
                 "source": "https://github.com/joepdooper/ivy-cultivate/tree/main"
             },
-            "time": "2026-03-29T11:10:09+00:00"
+            "time": "2026-03-30T17:03:41+00:00"
         },
         {
             "name": "kint-php/kint",
@@ -6059,5 +6064,5 @@
     "platform-overrides": {
         "php": "8.4.0"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
