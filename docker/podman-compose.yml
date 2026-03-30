@@ -10,10 +10,10 @@ services:
     ports:
       - "${SERVER_PORT:-8080}:80"
     volumes:
-      - ../:/var/www
-      - ./sites-available:/etc/apache2/sites-available
-      - ./sites-enabled:/etc/apache2/sites-enabled
-      - ./php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ../:/var/www:Z
+      - ./sites-available:/etc/apache2/sites-available:Z
+      - ./sites-enabled:/etc/apache2/sites-enabled:Z
+      - ./php/custom.ini:/usr/local/etc/php/conf.d/custom.ini:Z
 
   node:
     image: docker.io/node:latest
@@ -22,7 +22,7 @@ services:
     ports:
       - "${VITE_PORT:-5173}:5173"
     volumes:
-      - ../:/var/www
+      - ../:/var/www:Z
     command: tail -f /dev/null
 
   mysql:
@@ -36,7 +36,8 @@ services:
     ports:
       - "${DB_PORT:-3306}:3306"
     volumes:
-      - ./mysql/ivy.sql:/docker-entrypoint-initdb.d/ivy.sql
+      - ivy_mysql_data:/var/lib/mysql:z
+      - ./mysql/ivy.sql:/docker-entrypoint-initdb.d/ivy.sql:Z
 
   mailcatcher:
     image: docker.io/dockage/mailcatcher
@@ -45,3 +46,7 @@ services:
     ports:
       - "1080:1080"
       - "${MAIL_PORT:-1025}:1025"
+
+volumes:
+  ivy_mysql_data:
+    driver: local
