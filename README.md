@@ -28,8 +28,6 @@ composer create-project joepdooper/ivy .
 
 Rename the `example.env` file to `.env`. 
 
-If you are not using the provided Docker or Podman compose files, update the .env file with your database credentials and make sure your web server points to the `public/` folder inside this project [`000-default.conf`](docker/sites-available/000-default.conf). Additionally, ensure that the `public/` and `cache/` folders have the proper permissions so your web server can read and write to them as needed.
-
 #### 4. Setup
 
 ##### Option A - Start the containers (recommended)
@@ -48,6 +46,7 @@ Create a database for **ivy** and import the provided [`ivy.sql`](docker/mysql/i
 mysql -u your_database_username -p your_database_name < docker/mysql/ivy.sql
 ```
 
+If you are not using the provided Docker or Podman compose files, update the .env file with your database credentials and make sure your web server points to the `public/` folder inside this project [`000-default.conf`](docker/sites-available/000-default.conf). Additionally, ensure that the `public/` and `cache/` folders have the proper permissions so your web server can read and write to them as needed.
 
 ## Login
 
