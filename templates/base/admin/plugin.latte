@@ -43,19 +43,19 @@
                                         <a n:if="$plugin->active" n:foreach="$plugin->getInfo()->getActions() as $action"
                                                 class="btn btn-square btn-soft btn-primary shadow-none join-item"
                                                 title="{text($plugin->url.'.'.$action['text'])}"
-                                                href="{path('BASE_PATH') . 'admin' . DIRECTORY_SEPARATOR . 'plugin' . DIRECTORY_SEPARATOR . $plugin->url . DIRECTORY_SEPARATOR . $action['url']}">
+                                                href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/' . $action['url']}">
                                             {icon($action['icon'])|noescape}
                                         </a>
                                         <a n:if="$plugin->active && $plugin->policy('collection')"
                                                 class="btn btn-square btn-soft btn-primary shadow-none join-item"
                                                 title="{text('plugin.collection')}"
-                                                href="{path('BASE_PATH') . 'admin' . DIRECTORY_SEPARATOR . 'plugin' . DIRECTORY_SEPARATOR . $plugin->url . DIRECTORY_SEPARATOR . 'collection'}">
+                                                href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/collection'}">
                                             {icon("feather/package.svg")|noescape}
                                         </a>
                                         <a n:if="$plugin->active && $plugin->policy('settings')"
                                                 class="btn btn-square btn-soft btn-primary shadow-none join-item"
                                                 title="{text('setting.settings')}"
-                                                href="{path('BASE_PATH') . 'admin' . DIRECTORY_SEPARATOR . 'plugin' . DIRECTORY_SEPARATOR . $plugin->url . DIRECTORY_SEPARATOR . 'settings'}">
+                                                href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/settings'}">
                                             {icon("feather/settings.svg")|noescape}
                                         </a>
                                         {if !$plugin->parent_id && $plugin->policy('uninstall')}
