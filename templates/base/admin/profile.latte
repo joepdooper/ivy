@@ -2,11 +2,10 @@
 
 {block main}
     <main class="grow p-4">
-        <form action="{path('BASE_PATH') . 'admin/profile/post'}" method="POST" enctype="multipart/form-data"
-              class="max-w-xl mx-auto">
+        <form ts-req="{path('BASE_PATH') . 'admin/profile/post'}" ts-target="target" method="POST" enctype="multipart/form-data">
             {csrf()}
 
-            <div class="space-y-4">
+            <div class="space-y-4 max-w-xl mx-auto">
                 <h1 class="leading-none text-6xl font-bold">{text('user.profile')}</h1>
 
                 <div class="space-x-2">

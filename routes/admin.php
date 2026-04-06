@@ -30,6 +30,8 @@ Route::mount('/admin', function () {
     // -- SETTING index
     Route::post('/setting/post', '\Ivy\Controller\SettingController@post')
         ->before('\Ivy\Controller\AdminController@before');
+    Route::post('/setting/test', '\Ivy\Controller\SettingController@test')
+        ->before('\Ivy\Controller\AdminController@before');
     Route::get('/setting', '\Ivy\Controller\SettingController@index')
         ->before('\Ivy\Controller\AdminController@before');
     // -- INFO index
