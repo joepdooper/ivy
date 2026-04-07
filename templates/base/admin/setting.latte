@@ -1,8 +1,11 @@
 {extends file('body.latte')}
 
 {block main}
+    {var $error = error('setting') ?? null}
+    {var $old = old('setting') ?? null}
+
     <main class="grow p-4 w-full max-w-5xl mx-auto">
-        <form ts-req="{path('BASE_PATH') . 'admin/setting/post'}" ts-target="target" method="POST" enctype="multipart/form-data">
+        <form ts-req="{path('BASE_PATH') . 'admin/setting/sync'}" ts-target="target" method="POST" enctype="multipart/form-data">
             {csrf()}
 
             <div class="space-y-4">
@@ -22,6 +25,8 @@
                         <tbody>
                         {foreach $settings as $key => $setting}
                             {if $setting->name}
+                                {var $er = $error[$key] ?? null}
+                                {var $ol = $old[$key] ?? null}
                                 <tr>
                                     <td>
                                         {button type:switch, name:"setting[$key][bool]", value:$setting->bool}
@@ -31,13 +36,19 @@
                                     </td>
                                     <td>
                                         <label>
-                                            <input type="text" name="setting[{$key}][value]" value="{$setting->value}" class="input input-bordered w-full">
+                                            <input type="text" name="setting[{$key}][value]" value="{ifset $er['value']}{$ol['value']}{else}{$setting->value}{/ifset}" class="input input-bordered w-full {ifset $er['value']}input-error{/ifset}">
+                                            {ifset $er['value']}
+                                                <span n:foreach="$er['value'] as $message">{$message}</span>
+                                            {/ifset}
                                         </label>
                                     </td>
                                     {if !$setting->info}
                                         <td>
                                             <label>
-                                                <input type="text" name="setting[{$key}][info]" class="input input-bordered w-full">
+                                                <input type="text" name="setting[{$key}][info]" value="{ifset $er['info']}{$ol['info']}{/ifset}" class="input input-bordered w-full {ifset $er['info']}input-error{/ifset}">
+                                                {ifset $er['info']}
+                                                    <span n:foreach="$er['info'] as $message">{$message}</span>
+                                                {/ifset}
                                             </label>
                                         </td>
                                     {else}
@@ -67,8 +78,13 @@
                 </div>
 
                 <div>
+                    {var $er = $error ? $error[array_key_last($error)] : null}
+                    {var $ol = $old ? $old[array_key_last($old)] : null}
                     <label>
-                        <input class="input input-bordered w-full" type="text" name="setting[][name]" placeholder="{text('setting.add_name')}">
+                        <input class="input input-bordered w-full {ifset $er['name']}input-error{/ifset}" type="text" name="setting[][name]" value="{ifset $er['name']}{$ol['name']}{/ifset}" placeholder="{text('setting.add_name')}">
+                        {ifset $er['name']}
+                            <span n:foreach="$er['name'] as $message">{$message}</span>
+                        {/ifset}
                     </label>
                 </div>
 

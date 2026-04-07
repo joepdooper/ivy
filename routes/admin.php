@@ -28,7 +28,7 @@ Route::mount('/admin', function () {
     Route::get('/template', '\Ivy\Controller\TemplateController@index')
         ->before('\Ivy\Controller\AdminController@before');
     // -- SETTING index
-    Route::post('/setting/post', '\Ivy\Controller\SettingController@post')
+    Route::post('/setting/sync', '\Ivy\Controller\SettingController@sync')
         ->before('\Ivy\Controller\AdminController@before');
     Route::post('/setting/test', '\Ivy\Controller\SettingController@test')
         ->before('\Ivy\Controller\AdminController@before');
