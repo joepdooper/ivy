@@ -48,14 +48,14 @@
                 <div>
                     <label>
                         <input class="input input-bordered w-full" name="username" type="text" placeholder="{text('placeholder.name')}"
-                               value="{$profile->user->username}">
+                               value="{ifset $errors['username']}{$old['username']}{else}{$profile->user->username}{/ifset}">
                     </label>
                 </div>
 
                 <div>
                     <label>
                         <input class="input input-bordered w-full" name="email" type="email" placeholder="{text('placeholder.email')}"
-                               value="{$profile->user->email}">
+                               value="{ifset $errors['email']}{$old['email']}{else}{$profile->user->email}{/ifset}">
                     </label>
                 </div>
 

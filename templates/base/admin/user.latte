@@ -2,7 +2,7 @@
 
 {block main}
     <main class="grow p-4 w-full max-w-5xl mx-auto">
-        <form ts-req="{path('BASE_PATH') . 'admin/user/post'}" ts-target="target" method="POST" enctype="multipart/form-data">
+        <form ts-req="{path('BASE_PATH') . 'admin/user/sync'}" ts-target="target" method="POST" enctype="multipart/form-data">
             {csrf()}
 
             <div class="space-y-4">

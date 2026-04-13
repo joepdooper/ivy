@@ -17,9 +17,9 @@ class TagController extends Controller
         $this->tag = new Tag;
     }
 
-    public function post(): void
+    public function sync(): void
     {
-        $this->tag->policy('post');
+        $this->tag->policy('sync');
 
         foreach ($this->request->get('tag') as $data) {
             try {

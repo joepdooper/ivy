@@ -2,7 +2,7 @@
 
 {block main}
     <main class="grow p-4 w-full max-w-5xl mx-auto">
-        <form ts-req="{path('BASE_PATH') . 'admin/info/post'}" ts-target="target" method="POST" enctype="multipart/form-data">
+        <form ts-req="{path('BASE_PATH') . 'admin/info/sync'}" ts-target="target" method="POST" enctype="multipart/form-data">
             {csrf()}
 
             <div class="space-y-4">
@@ -27,13 +27,19 @@
                                     </td>
                                     <td>
                                         <label>
-                                            <input type="text" name="info[{$key}][value]" value="{$info->value}" class="input input-bordered w-full">
+                                            <input type="text" name="info[{$key}][value]" value="{ifset $errors[$key]['value']}{$old[$key]['value']}{else}{$info->value}{/ifset}" class="input input-bordered w-full {ifset $errors[$key]['value']}input-error{/ifset}">
+                                            {ifset $errors[$key]['value']}
+                                                <span n:foreach="$errors[$key]['value'] as $message">{$message}</span>
+                                            {/ifset}
                                         </label>
                                     </td>
                                     {if !$info->info}
                                         <td>
                                             <label>
-                                                <input type="text" name="info[{$key}][info]" class="input input-bordered w-full">
+                                                <input type="text" name="info[{$key}][info]" value="{ifset $errors[$key]['info']}{$old[$key]['info']}{/ifset}" class="input input-bordered w-full {ifset $errors[$key]['info']}input-error{/ifset}">
+                                                {ifset $errors[$key]['info']}
+                                                    <span n:foreach="$errors[$key]['info'] as $message">{$message}</span>
+                                                {/ifset}
                                             </label>
                                         </td>
                                     {else}
@@ -64,7 +70,11 @@
 
                 <div>
                     <label>
-                        <input class="input input-bordered w-full" type="text" name="info[][name]" placeholder="{text('info.add_name')}">
+                        {var $key = array_key_last($errors)}
+                        <input class="input input-bordered w-full {ifset $errors[$key]['name']}input-error{/ifset}" type="text" name="info[][name]" value="{ifset $errors[$key]['name']}{$old[$key]['name']}{/ifset}" placeholder="{text('info.add_name')}">
+                        {ifset $errors[$key]['name']}
+                            <span n:foreach="$errors[$key]['name'] as $message">{$message}</span>
+                        {/ifset}
                     </label>
                 </div>
 
