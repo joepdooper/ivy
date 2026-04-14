@@ -1,5 +1,8 @@
 <?php
 
-use Ivy\Manager\RouterManager;
+use Ivy\Routing\Route;
 
-RouterManager::instance()->post('/search/post', '\Search\SearchController@post');
+Route::mount('/search', function () {
+    Route::post('/post', '\Search\SearchController@post')
+        ->before('\Ivy\Controller\AdminController@before');
+});

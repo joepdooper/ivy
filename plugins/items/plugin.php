@@ -1,11 +1,15 @@
 <?php
 
-use Ivy\Manager\RouterManager;
+use Ivy\Routing\Route;
 
-RouterManager::instance()->match('GET|POST', '/', '\Items\ItemController@index');
+Route::get('/', '\Items\ItemController@index')
+    ->before('\Ivy\Controller\AdminController@before');
 
-RouterManager::instance()->mount('/item', function () {
-    RouterManager::instance()->post('/save/(\d+)', '\Items\ItemController@save');
-    RouterManager::instance()->post('/update/(\d+)', '\Items\ItemController@update');
-    RouterManager::instance()->post('/insert', '\Items\ItemController@insert');
+Route::mount('/item', function () {
+    Route::post('/save/(\d+)', '\Items\ItemController@save')
+        ->before('\Ivy\Controller\AdminController@before');
+    Route::post('/update/(\d+)', '\Tags\TagController@update')
+        ->before('\Ivy\Controller\AdminController@before');
+    Route::post('/insert', '\Tags\TagController@insert')
+        ->before('\Ivy\Controller\AdminController@before');
 });
