@@ -1,14 +1,16 @@
 <?php
 
 use Ivy\Manager\AssetManager;
-use Ivy\Manager\RouterManager;
 use Ivy\Model\User;
+use Ivy\Routing\Route;
 
 if (User::canEditAsEditor()) {
     AssetManager::addJS('plugins/contacts/js/contacts_admin.js');
 }
 
-RouterManager::instance()->mount('/admin/plugin/contacts', function () {
-    RouterManager::instance()->get('/index', '\Contacts\ContactController@index');
-    RouterManager::instance()->post('/post', '\Contacts\ContactController@post');
+Route::mount('/admin/plugin/contacts', function () {
+    Route::get('/index', '\Contacts\ContactController@index')
+        ->before('\Ivy\Controller\AdminController@before');
+    Route::post('/sync', '\Contacts\ContactController@sync')
+        ->before('\Ivy\Controller\AdminController@before');
 });

@@ -1,8 +1,10 @@
 <?php
 
-use Ivy\Manager\RouterManager;
+use Ivy\Routing\Route;
 
-RouterManager::instance()->mount('/admin/plugin/moment/collection/momentpeople', function () {
-    RouterManager::instance()->get('/index', '\Moment\Collection\MomentPeople\MomentPeopleController@index');
-    RouterManager::instance()->post('/post', '\Moment\Collection\MomentPeople\MomentPeopleController@post');
+Route::mount('/admin/plugin/moment/collection/momentpeople', function () {
+    Route::get('/index', '\Moment\Collection\MomentPeople\MomentPeopleController@index')
+        ->before('\Ivy\Controller\AdminController@before');
+    Route::get('/sync', '\Moment\Collection\MomentPeople\MomentPeopleController@sync')
+        ->before('\Ivy\Controller\AdminController@before');
 });

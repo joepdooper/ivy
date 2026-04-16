@@ -15,6 +15,7 @@
   "dependencies": [
     "Items",
     "Tags",
-    "Search"
+    "Search",
+    "Contacts"
   ]
 }

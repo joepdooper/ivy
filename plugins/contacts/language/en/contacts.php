@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'tags' => 'Tags',
-    'manage' => 'Manage Tags',
-    'none_defined' => 'No tags defined',
+    'contacts' => 'Contacts',
+    'manage' => 'Manage contacts',
+    'none_defined' => 'No contacts defined',
 ];

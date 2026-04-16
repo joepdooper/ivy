@@ -2,13 +2,13 @@
 
 {block main}
     <main class="grow p-4 w-full max-w-5xl mx-auto">
-        <form action="{path('PUBLIC_URL') . 'admin/plugin/tags/post'}" method="POST" enctype="multipart/form-data">
+        <form ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/sync'}" ts-target="target" method="POST" enctype="multipart/form-data">
             {csrf()}
 
             <div class="space-y-4">
-                <h1 class="leading-none text-6xl font-bold">{text('tags.tags.tags')}</h1>
+                <h1 class="leading-none text-6xl font-bold">{text('contacts.contacts.contacts')}</h1>
 
-                <div n:if="$tags" class="overflow-x-auto rounded-box border border-base-content/5">
+                <div n:if="$contacts" class="overflow-x-auto rounded-box border border-base-content/5">
                     <table class="table">
                         <thead>
                         <tr>
@@ -17,18 +17,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {foreach $tags as $key => $tag}
+                        {foreach $contacts as $key => $contact}
                             <tr>
                                 <td>
                                     <label>
-                                        <input type="text" name="tag[{$key}][value]" value="{$tag->value}"
+                                        <input type="text" name="contact[{$key}][value]" value="{$contact->value}"
                                                class="input input-bordered w-full">
                                     </label>
                                 </td>
                                 <td class="text-right">
-                                    <input type="hidden" name="tag[{$key}][id]" value="{$tag->id}">
+                                    <input type="hidden" name="contact[{$key}][id]" value="{$contact->id}">
                                     <div class="join">
-                                        {button type:delete, name:"tag[$key][delete]", value:"tag_" . $tag->id, id:$tag->id, placeholder:$tag->value}
+                                        {button type:delete, name:"contact[$key][delete]", value:"contact_" . $contact->id, id:$contact->id, placeholder:$contact->value}
                                     </div>
                                 </td>
                             </tr>
@@ -37,13 +37,13 @@
                     </table>
                 </div>
                 <div n:else class="text-center">
-                    {text('tags.tags.none_defined')}
+                    {text('contacts.contacts.none_defined')}
                 </div>
 
                 <div>
                     <label>
-                        <input class="input input-bordered w-full" type="text" name="tag[][value]"
-                               placeholder="Add tag">
+                        <input class="input input-bordered w-full" type="text" name="contact[][value]"
+                               placeholder="Add contact">
                     </label>
                 </div>
 

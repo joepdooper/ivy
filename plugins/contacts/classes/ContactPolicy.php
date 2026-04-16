@@ -1,17 +1,17 @@
 <?php
 
-namespace Tags;
+namespace Contacts;
 
 use Ivy\Model\User;
 
-class TagPolicy
+class ContactPolicy
 {
-    public static function post(Tag $tag): bool
+    public static function index(Contact $contact): bool
     {
         return User::canEditAsEditor();
     }
 
-    public static function index(Tag $tag): bool
+    public static function sync(Contact $contact): bool
     {
         return User::canEditAsEditor();
     }

@@ -20,6 +20,15 @@ if (User::canEditAsSuperAdmin()) {
         error_log('Failed to create table `moments`: '.$e->getMessage());
     }
 
+    try {
+        DatabaseManager::connection()->exec(
+            'ALTER TABLE `profiles`
+         ADD COLUMN `birthday` DATE NULL;'
+        );
+    } catch (Exception $e) {
+        error_log('Failed to add column `birthday`: '.$e->getMessage());
+    }
+
     $existing = (new Tag)->where('value', 'Moment')->fetchOne();
     if (! $existing) {
         (new Tag)->populate(['value' => 'Moment'])->insert();

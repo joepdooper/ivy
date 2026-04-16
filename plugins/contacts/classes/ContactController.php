@@ -1,25 +1,34 @@
 <?php
 
-namespace Tags;
+namespace Contacts;
 
-use GUMP;
 use Ivy\Abstract\Controller;
 use Ivy\Core\Path;
 use Ivy\View\View;
 
-class TagController extends Controller
+class ContactController extends Controller
 {
-    protected Tag $tag;
+    protected Contact $contact;
 
     public function __construct()
     {
         parent::__construct();
-        $this->tag = new Tag;
+        $this->contact = new Contact;
     }
 
-    public function post(): void
+    public function index(): void
     {
-        $this->tag->policy('post');
+        $this->contact->policy('index');
+
+        $contacts = $this->contact->fetchAll();
+        View::set(Path::get('PLUGINS_PATH').'contacts/template/index.latte', ['contacts' => $contacts]);
+    }
+
+    public function sync(): void
+    {
+        $this->contact->policy('sync');
+
+        d($this->request->get('contact'));die;
 
         foreach ($this->request->get('tag') as $data) {
             try {
@@ -56,13 +65,5 @@ class TagController extends Controller
 
         $this->flashBag->add('success', 'Updated successful');
         $this->redirect($this->tag->getPath().DIRECTORY_SEPARATOR.'manage');
-    }
-
-    public function index(): void
-    {
-        $this->tag->policy('index');
-
-        $tags = $this->tag->fetchAll();
-        View::set(Path::get('PLUGINS_PATH').'tags/template/manage.latte', ['tags' => $tags]);
     }
 }

@@ -8,7 +8,8 @@
     "uninstall": "db/uninstall.db.php"
   },
   "dependencies": [
-    "Moment"
+    "Moment",
+    "Contacts"
   ],
   "actions": [
     {"text": "moment.people", "icon": "feather/users.svg", "url": "index"}

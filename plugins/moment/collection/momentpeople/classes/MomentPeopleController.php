@@ -2,20 +2,19 @@
 
 namespace Moment\Collection\MomentPeople;
 
-use GUMP;
 use Ivy\Abstract\Controller;
 use Ivy\Core\Path;
 use Ivy\View\View;
 
 class MomentPeopleController extends Controller
 {
-    private People $people;
+    // private People $people;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->people = new People;
+        // $this->people = new People;
     }
 
     public function index(): void
@@ -26,9 +25,9 @@ class MomentPeopleController extends Controller
         View::set(Path::get('PLUGINS_PATH').'moment/template/people.latte', ['people' => $people]);
     }
 
-    public function post(): void
+    public function sync(): void
     {
-        $this->people->policy('post');
+        $this->people->policy('sync');
 
         foreach ($this->request->get('people') as $data) {
             try {

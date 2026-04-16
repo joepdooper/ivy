@@ -15,7 +15,7 @@
                         <div class="space-y-4">
                             {include 'calendar.latte',
                             'calendar' => 'moment',
-                            'startYear' => profile()?->birthday ? datetime()::parse(profile()->birthday)->year : 2000,
+                            'startYear' => isset(profile()?->birthday) ? datetime()::parse(profile()->birthday)->year : 2000,
                             'endYear' => datetime()::now()->year + 5,
                             'selectYear' => $moment ? datetime()::parse($moment->getDateTime()->start_date)->year : datetime()::now()->year,
                             'selectMonth' => $moment ? datetime()::parse($moment->getDateTime()->start_date)->month : datetime()::now()->month,
@@ -71,7 +71,7 @@
                         <div class="flex flex-wrap gap-4">
                             {var $peopleIds = array_map(fn($p) => $p->user_id, $moment?->getPeople() ?? [])}
                             {foreach (new \Ivy\Model\Profile)->fetchAll() as $person}
-                            <div class="tooltip" data-tip="{$person->username}">
+                            <div class="tooltip" data-tip="{$person->user->username}">
                                 <label class="swap">
                                     <input
                                             type="checkbox"

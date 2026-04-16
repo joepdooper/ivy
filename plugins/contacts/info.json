@@ -7,7 +7,7 @@
     {
       "text": "contacts.manage",
       "icon": "feather/user-plus.svg",
-      "url": "manage"
+      "url": "index"
     }
   ],
   "database": {

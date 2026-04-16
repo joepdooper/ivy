@@ -3,31 +3,35 @@
 namespace Contacts;
 
 use Ivy\Abstract\Model;
-use Ivy\Model\User;
+use Ivy\Model\Profile;
 
+/**
+ * @property ?Profile $profile
+ */
 class Contact extends Model
 {
     protected string $table = 'contacts';
 
     protected string $path = 'admin/plugin/contacts';
 
+    /** @var string[] */
     protected array $columns = [
         'name',
         'image',
         'birthday',
-        'user_id',
+        'profile_id',
     ];
 
     protected string $name;
 
     protected ?string $image = null;
 
-    protected ?int $user_id = null;
+    protected ?int $profile_id = null;
 
-    protected ?string $birthday;
+    protected ?string $birthday = null;
 
-    public function getUser(): User
+    public function profile(): ?Profile
     {
-        return $this->hasOne(User::class, 'user_id');
+        return $this->hasOne(Profile::class, 'id','profile_id');
     }
 }
