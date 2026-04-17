@@ -6,14 +6,16 @@
             </a>
         </div>
         <div class="navbar-center px-2">
-{*            {if isPluginActive('Search')}*}
+            {*            {if isPluginActive('Search')}*}
 {*                {render(path('PLUGINS_FOLDER') . "search/template/form.latte")}*}
 {*            {/if}*}
         </div>
         <div class="navbar-end gap-x-4 px-2">
-            <label n:if="route('/')" for="filter_moment_modal" class="cursor-pointer text-primary">
-                {icon("feather/search.svg")|noescape}
-            </label>
+            {if isPluginActive('Moment')}}
+                <label n:if="route('/')" for="filter_moment_modal" class="cursor-pointer text-primary">
+                    {icon("feather/search.svg")|noescape}
+                </label>
+            {/if}
 {*            {if canEditAsAdmin()}*}
 {*                <label n:if="route('/moment/*')" for="modal_add_moment" class="cursor-pointer text-primary">*}
 {*                    {icon("feather/edit.svg")|noescape}*}
@@ -34,7 +36,7 @@
                         {/if}
                     </div>
                     <ul tabindex="0"
-                            class="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 shadow">
+                        class="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 shadow">
                         <li>
                             <a href="{path('BASE_PATH') . 'admin/profile'}">
                                 {icon("feather/user.svg")|noescape}
