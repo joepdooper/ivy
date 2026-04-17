@@ -9,11 +9,13 @@ use Ivy\View\View;
 class ContactController extends Controller
 {
     protected Contact $contact;
+    protected ContactForm $contactForm;
 
     public function __construct()
     {
         parent::__construct();
         $this->contact = new Contact;
+        $this->contactForm = new ContactForm();
     }
 
     public function index(): void
@@ -24,46 +26,70 @@ class ContactController extends Controller
         View::set(Path::get('PLUGINS_PATH').'contacts/template/index.latte', ['contacts' => $contacts]);
     }
 
+    public function add(mixed $data): void
+    {
+        $contact = new Contact;
+
+        $contact->authorize('add');
+
+        $contact->populate($data)->save();
+        $this->flashBag->add('success', 'Contact ' . $contact->name . ' added successfully.');
+    }
+
+    public function update(Contact|int $contact, mixed $data): void
+    {
+        if(is_int($contact)) {
+            $contact = (new Contact)->where('id', $contact)->fetchOne();
+        }
+
+        $contact?->authorize('update');
+
+        if($contact && $contact->isDirty($data)) {
+            $contact->populate($data)->update();
+            $this->flashBag->add('success', 'Contact ' . $contact->name . ' updated successfully.');
+        }
+    }
+
+    public function delete(Contact|int $contact): void
+    {
+        if(is_int($contact)) {
+            $contact = (new Contact)->where('id', $contact)->fetchOne();
+        }
+
+        $contact?->authorize('delete');
+
+        if($contact){
+            $contact->delete();
+            $this->flashBag->add('success', 'Contact ' . $contact->name . ' deleted successfully.');
+        }
+    }
+
     public function sync(): void
     {
         $this->contact->policy('sync');
 
-        d($this->request->get('contact'));die;
+        foreach ($this->request->get('contact') as $index => $data) {
 
-        foreach ($this->request->get('tag') as $data) {
-            try {
-                $validated = GUMP::is_valid($data, [
-                    'value' => 'alpha_numeric_dash',
-                ]);
+            if (empty($data['name'])) {
+                continue;
+            }
 
-                if ($validated !== true) {
-                    foreach ($validated as $msg) {
-                        $this->flashBag->add('error', $msg);
-                    }
+            $result = $this->contactForm->validate($data);
 
-                    continue;
-                }
-
-                if (empty($data['value'])) {
-                    continue;
-                }
-
-                $tag = ! empty($data['id'])
-                    ? (new Tag)->where('id', $data['id'])->fetchOne()
-                    : new Tag;
-
-                if (isset($data['delete']) && ! empty($data['id'])) {
-                    $tag?->delete();
+            if ($result->valid) {
+                if(empty($data['id'])){
+                    $this->add($data);
+                } elseif(isset($data['delete'])) {
+                    $this->delete($data['id']);
                 } else {
-                    $tag->populate($data)->save();
+                    $this->update($data['id'], $data);
                 }
-
-            } catch (\Exception $e) {
-                $this->flashBag->add('error', $e->getMessage());
+            } else {
+                $errors[$index] = $result->errors;
+                $old[$index] = $result->old;
             }
         }
 
-        $this->flashBag->add('success', 'Updated successful');
-        $this->redirect($this->tag->getPath().DIRECTORY_SEPARATOR.'manage');
+        $this->redirect($this->contact->getPath().DIRECTORY_SEPARATOR.'index');
     }
 }

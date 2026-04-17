@@ -12,7 +12,7 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Value</th>
+                            <th>Name</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -21,14 +21,14 @@
                             <tr>
                                 <td>
                                     <label>
-                                        <input type="text" name="contact[{$key}][value]" value="{$contact->value}"
+                                        <input type="text" name="contact[{$key}][name]" value="{$contact->name}"
                                                class="input input-bordered w-full">
                                     </label>
                                 </td>
                                 <td class="text-right">
                                     <input type="hidden" name="contact[{$key}][id]" value="{$contact->id}">
                                     <div class="join">
-                                        {button type:delete, name:"contact[$key][delete]", value:"contact_" . $contact->id, id:$contact->id, placeholder:$contact->value}
+                                        {button type:delete, name:"contact[$key][delete]", value:"contact_" . $contact->id, id:$contact->id, placeholder:$contact->name}
                                     </div>
                                 </td>
                             </tr>
@@ -42,8 +42,8 @@
 
                 <div>
                     <label>
-                        <input class="input input-bordered w-full" type="text" name="contact[][value]"
-                               placeholder="Add contact">
+                        <input class="input input-bordered w-full" type="text" name="contact[][name]"
+                               placeholder="Add contacts name">
                     </label>
                 </div>
 
