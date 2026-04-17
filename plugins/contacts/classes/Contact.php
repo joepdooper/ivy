@@ -4,12 +4,15 @@ namespace Contacts;
 
 use Ivy\Abstract\Model;
 use Ivy\Model\Profile;
+use Ivy\Trait\HasDirtyChecking;
 
 /**
  * @property ?Profile $profile
  */
 class Contact extends Model
 {
+    use HasDirtyChecking;
+
     protected string $table = 'contacts';
 
     protected string $path = 'admin/plugin/contacts';
