@@ -68,6 +68,14 @@
                                 </li>
                             {/if}
                         {/if}
+                        {if isPluginActive('Contacts')}
+                            <li>
+                                <a href="{path('BASE_PATH') . 'admin/plugin/contacts/index'}">
+                                    {icon("feather/book.svg")|noescape}
+                                        {text('contacts.contacts.contacts')}
+                                </a>
+                            </li>
+                        {/if}
                         <li>
                             <a href="{path('BASE_PATH') . 'user/logout'}">
                                 {icon("feather/log-out.svg")|noescape}

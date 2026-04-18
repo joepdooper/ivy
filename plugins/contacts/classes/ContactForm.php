@@ -13,7 +13,7 @@ class ContactForm extends Form
     {
         return [
             'name' => ['required', 'not_nullable', 'string'],
-            'image' => ['nullable'],
+            'email' => ['nullable', 'email'],
             'birthday' => ['nullable'],
             'profile_id' => ['nullable', 'numeric'],
         ];

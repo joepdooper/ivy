@@ -10,27 +10,23 @@ use Moment\Collection\MomentLocation\MomentLocation;
 class MomentController extends CollectionController
 {
     private Moment $moment;
-
-    private array $rules = [
-        'title' => 'between_len,5;100',
-        'start_date' => 'required|date',
-        'end_date' => 'date',
-        'start_time' => 'valid_time',
-        'end_time' => 'valid_time',
-        'city' => 'between_len,2;100',
-        'country' => 'between_len,2;100',
-    ];
+    private MomentForm $momentForm;
 
     public function __construct()
     {
         parent::__construct();
-
         $this->moment = new Moment;
+        $this->momentForm = new MomentForm;
     }
 
     public function insert($id = null): void
     {
         $this->moment->policy('create');
+
+        $result = $this->momentForm->validate($this->request->request->all());
+
+        d($result->valid);
+
 
         if ($this->validate($this->rules)) {
             $this->moment->createItemFromRequest($this->request);

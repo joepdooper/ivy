@@ -9,7 +9,7 @@ if (User::canEditAsSuperAdmin()) {
             CREATE TABLE IF NOT EXISTS `contacts` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `name` VARCHAR(255) NOT NULL,
-                `image` VARCHAR(255) DEFAULT NULL,
+                `email` VARCHAR(255) DEFAULT NULL,
                 `birthday` DATE DEFAULT NULL,
                 `profile_id` VARCHAR(255) DEFAULT NULL,
                 PRIMARY KEY (`id`)

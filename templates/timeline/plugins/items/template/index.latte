@@ -11,7 +11,7 @@
         </div>
     </main>
     {if canEditAsEditor()}
-        {if isPluginActive('Moment')}}
+        {if isPluginActive('Moment')}
             {render(path('PLUGINS_FOLDER') . 'moment/template/modal_add.latte', ['moment' => null, 'tags' => $tags])}
             {render(path('PLUGINS_FOLDER') . 'moment/template/modal_filter.latte', ['tags' => $tags])}
             <div class="text-center p-4">

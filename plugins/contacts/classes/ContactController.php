@@ -4,6 +4,7 @@ namespace Contacts;
 
 use Ivy\Abstract\Controller;
 use Ivy\Core\Path;
+use Ivy\Model\Profile;
 use Ivy\View\View;
 
 class ContactController extends Controller
@@ -21,9 +22,16 @@ class ContactController extends Controller
     public function index(): void
     {
         $this->contact->policy('index');
-
         $contacts = $this->contact->fetchAll();
-        View::set(Path::get('PLUGINS_PATH').'contacts/template/index.latte', ['contacts' => $contacts]);
+        $profiles = (new Profile)->whereNotIn('id',
+            (new Contact)
+            ->whereNot('profile_id', null)
+            ->pluck('profile_id')
+        )->fetchAll();
+        View::set(Path::get('PLUGINS_PATH').'contacts/template/index.latte', [
+            'contacts' => $contacts,
+            'profiles' => $profiles
+        ]);
     }
 
     public function add(mixed $data): void
@@ -42,10 +50,13 @@ class ContactController extends Controller
             $contact = (new Contact)->where('id', $contact)->fetchOne();
         }
 
-        $contact?->authorize('update');
-
         if($contact && $contact->isDirty($data)) {
-            $contact->populate($data)->update();
+            $contact->authorize('update');
+            $contact->populate($data);
+            if($contact->profile_id && !$contact->email){
+                $contact->email = $contact->profile->user->email;
+            }
+            $contact->update();
             $this->flashBag->add('success', 'Contact ' . $contact->name . ' updated successfully.');
         }
     }
@@ -77,12 +88,12 @@ class ContactController extends Controller
             $result = $this->contactForm->validate($data);
 
             if ($result->valid) {
-                if(empty($data['id'])){
-                    $this->add($data);
-                } elseif(isset($data['delete'])) {
-                    $this->delete($data['id']);
+                if(empty($result->data['id'])){
+                    $this->add($result->data);
+                } elseif(isset($result->data['delete'])) {
+                    $this->delete($result->data['id']);
                 } else {
-                    $this->update($data['id'], $data);
+                    $this->update($result->data['id'], $result->data);
                 }
             } else {
                 $errors[$index] = $result->errors;

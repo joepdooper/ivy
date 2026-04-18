@@ -2,27 +2,30 @@
 
 namespace Moment\Collection\MomentPeople;
 
+use Contacts\Contact;
 use Ivy\Abstract\Controller;
 use Ivy\Core\Path;
 use Ivy\View\View;
 
 class MomentPeopleController extends Controller
 {
-    // private People $people;
+    private MomentPeople $momentPeople;
 
     public function __construct()
     {
         parent::__construct();
 
-        // $this->people = new People;
+        $this->momentPeople = new MomentPeople;
     }
 
     public function index(): void
     {
-        $this->people->policy('index');
+        $this->momentPeople->policy('index');
 
-        $people = $this->people->fetchAll();
-        View::set(Path::get('PLUGINS_PATH').'moment/template/people.latte', ['people' => $people]);
+        $people = $this->momentPeople->fetchAll();
+        View::set(Path::get('PLUGINS_PATH').'moment/template/people.latte', [
+            'people' => $people
+        ]);
     }
 
     public function sync(): void

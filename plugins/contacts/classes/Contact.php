@@ -20,18 +20,16 @@ class Contact extends Model
     /** @var string[] */
     protected array $columns = [
         'name',
-        'image',
+        'email',
         'birthday',
         'profile_id',
     ];
 
     protected string $name;
-
-    protected ?string $image = null;
+    protected ?string $email;
+    protected ?string $birthday = null;
 
     protected ?int $profile_id = null;
-
-    protected ?string $birthday = null;
 
     public function profile(): ?Profile
     {

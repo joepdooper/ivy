@@ -12,7 +12,10 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th>
+                            </th>
                             <th>Name</th>
+                            <th>Username</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -20,14 +23,39 @@
                         {foreach $contacts as $key => $contact}
                             <tr>
                                 <td>
-                                    <label>
-                                        <input type="text" name="contact[{$key}][name]" value="{$contact->name}"
-                                               class="input input-bordered w-full">
-                                    </label>
+                                    <div class="w-10 h-10 rounded-full bg-primary/10 text-center">
+                                        {if $contact->profile_id && $contact->profile->user_image}
+                                            <img alt="{$contact->name}" src="{media('profile/' . $contact->profile->user_image)}"/>
+                                        {else}
+                                            <span class="inline-block mt-2">
+                                                {icon("feather/user.svg")|noescape}
+                                            </span>
+                                        {/if}
+                                    </div>
+                                </td>
+                                <td>
+                                    {$contact->name}
+                                </td>
+                                <td>
+                                    {if $contact->profile_id}
+                                        {$contact->profile->user->username}
+                                    {/if}
                                 </td>
                                 <td class="text-right">
                                     <input type="hidden" name="contact[{$key}][id]" value="{$contact->id}">
                                     <div class="join">
+                                        {if !empty($profiles) || $contact->profile_id}
+                                        {render(path('PLUGINS_FOLDER') . 'contacts/template/modal.profile.latte', [
+                                        'contact' => $contact,
+                                        'profiles' => $profiles,
+                                        'key' => $key
+                                        ])}
+                                        {/if}
+                                        {render(path('PLUGINS_FOLDER') . 'contacts/template/modal.contact.latte', [
+                                        'contact' => $contact,
+                                        'profiles' => $profiles,
+                                        'key' => $key
+                                        ])}
                                         {button type:delete, name:"contact[$key][delete]", value:"contact_" . $contact->id, id:$contact->id, placeholder:$contact->name}
                                     </div>
                                 </td>

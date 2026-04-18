@@ -1,0 +1,55 @@
+<label class="btn btn-soft btn-primary btn-square shadow-none join-item"
+       title="{text('contacts.contacts.attach_profile')}"
+       for="modal_profile_{$contact->id}">
+    {if $contact->profile_id}
+        {icon("feather/user-minus.svg")|noescape}
+    {else}
+        {icon("feather/user-plus.svg")|noescape}
+    {/if}
+</label>
+
+<input type="hidden" name="contact[{$key}][profile_id]" value="{$contact->profile_id}">
+<input type="checkbox" id="modal_profile_{$contact->id}" class="modal-toggle block" name="contact[{$key}][profile_id]" value=""/>
+<div n:if="$contact->id" class="modal text-left" role="dialog">
+    <div class="modal-box">
+        <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" for="modal_profile_{$contact->id}">✕</label>
+        <h3 class="text-lg font-bold">
+            {if $contact->profile_id}
+                {text('contacts.contacts.modal.detach_profile')}
+            {else}
+                {text('contacts.contacts.modal.attach_profile')}
+            {/if}
+        </h3>
+        <p class="py-4">
+            {if $contact->profile_id}
+                {text('contacts.contacts.modal.detach_profile_question', [
+                'name' => $contact->name,
+                'username' => $contact->profile->user->username
+                ])}
+            {else}
+                {if empty($profiles)}
+                    {text('contacts.contacts.modal.no_profile_to_select')}
+                {else}
+                    <label>
+                        <select class="select w-full" name="contact[{$key}][profile_id]">
+                            <option disabled selected value>
+                                {text('contacts.contacts.modal.attach_profile_select', [
+                                'name' => $contact->name
+                                ])}
+                            </option>
+                            {foreach $profiles as $profile}
+                                <option value="{$profile->id}">{$profile->user->username}</option>
+                            {/foreach}
+                        </select>
+                    </label>
+                {/if}
+            {/if}
+        </p>
+        <div class="modal-action">
+            <label for="modal_profile_{$contact->id}" class="btn">{text('button.cancel')}</label>
+            <button class="btn btn-primary shadow-none"
+                    name="submit" type="submit" value="save">{text('button.save')}
+            </button>
+        </div>
+    </div>
+</div>

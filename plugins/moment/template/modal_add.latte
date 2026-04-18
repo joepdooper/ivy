@@ -13,9 +13,10 @@
                 </label>
                 <div class="tab-content">
                         <div class="space-y-4">
+                            {php $profile = (new \Contacts\Contact)->where('profile_id', profile()->id)->fetchOne()}
                             {include 'calendar.latte',
                             'calendar' => 'moment',
-                            'startYear' => isset(profile()?->birthday) ? datetime()::parse(profile()->birthday)->year : 2000,
+                            'startYear' => $profile->birthday ? datetime()::parse($profile->birthday)->year : 2000,
                             'endYear' => datetime()::now()->year + 5,
                             'selectYear' => $moment ? datetime()::parse($moment->getDateTime()->start_date)->year : datetime()::now()->year,
                             'selectMonth' => $moment ? datetime()::parse($moment->getDateTime()->start_date)->month : datetime()::now()->month,
@@ -41,7 +42,10 @@
                 <div class="tab-content">
                         <label class="input w-full">
                             {php $momentFactoryTitles = text('moment.moment.factory.titles')}
+                            {$momentFactoryTitles}
+                            {*
                             <input placeholder="{text('moment.moment.title')}" name="title" type="text" value="{$moment?->id ? $moment->title : $momentFactoryTitles[array_rand($momentFactoryTitles)]}"/>
+                            *}
                         </label>
                 </div>
                 {* Location *}

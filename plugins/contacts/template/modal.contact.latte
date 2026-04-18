@@ -1,0 +1,33 @@
+<label class="btn btn-soft btn-primary btn-square shadow-none join-item"
+       title="{text('contacts.contacts.contact')}"
+       for="modal_contact_{$contact->id}">
+        {icon("feather/edit.svg")|noescape}
+</label>
+
+<input type="checkbox" id="modal_contact_{$contact->id}" class="modal-toggle block" name="contact[{$key}][edit]"/>
+<div n:if="$contact->id" class="modal text-left" role="dialog">
+    <div class="modal-box">
+        <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" for="modal_contact_{$contact->id}">✕</label>
+        <h3 class="text-lg font-bold mb-4">
+                {text('contacts.contacts.modal.edit')}
+        </h3>
+        <div class="space-y-4">
+            <label class="input input-bordered w-full">
+                <input type="text" name="contact[{$key}][name]" value="{$contact->name}" placeholder="{text('contacts.contacts.label.email')}"/>
+            </label>
+            <label class="input w-full">
+                <input name="contact[{$key}][email]" type="email" value="{$contact->email}" placeholder="{text('contacts.contacts.label.email')}"/>
+            </label>
+            <label class="input w-full">
+                <span class="label">{text('contacts.contacts.label.birthday')}</span>
+                <input name="contact[{$key}][birthday]" type="date" value="{$contact->birthday}"/>
+            </label>
+        </div>
+        <div class="modal-action">
+            <label for="modal_contact_{$contact->id}" class="btn">{text('button.cancel')}</label>
+            <button class="btn btn-primary shadow-none"
+                    name="submit" type="submit" value="save">{text('button.save')}
+            </button>
+        </div>
+    </div>
+</div>

@@ -11,7 +11,7 @@
 {*            {/if}*}
         </div>
         <div class="navbar-end gap-x-4 px-2">
-            {if isPluginActive('Moment')}}
+            {if isPluginActive('Moment')}
                 <label n:if="route('/')" for="filter_moment_modal" class="cursor-pointer text-primary">
                     {icon("feather/search.svg")|noescape}
                 </label>
@@ -82,6 +82,14 @@
                                     </a>
                                 </li>
                             {/if}
+                        {/if}
+                        {if isPluginActive('Contacts')}
+                            <li>
+                                <a href="{path('BASE_PATH') . 'admin/plugin/contacts/index'}">
+                                    {icon("feather/book.svg")|noescape}
+                                        {text('contacts.contacts.contacts')}
+                                </a>
+                            </li>
                         {/if}
                         <li>
                             <a href="{path('BASE_PATH') . 'user/logout'}">
