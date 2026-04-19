@@ -4,6 +4,7 @@ namespace Contacts;
 
 use Ivy\Abstract\Model;
 use Ivy\Model\Profile;
+use Ivy\Trait\Factory;
 use Ivy\Trait\HasDirtyChecking;
 
 /**
@@ -11,7 +12,7 @@ use Ivy\Trait\HasDirtyChecking;
  */
 class Contact extends Model
 {
-    use HasDirtyChecking;
+    use Factory, HasDirtyChecking;
 
     protected string $table = 'contacts';
 

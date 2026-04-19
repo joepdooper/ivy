@@ -1,9 +1,9 @@
 <?php
 
-namespace Moment\Collection\MomentDateTime;
+namespace Moments\Collection\MomentDateTime;
 
 use Carbon\Carbon;
-use Moment\Moment;
+use Moments\Moment;
 
 class MomentDateTimeFactory
 {

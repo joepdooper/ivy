@@ -1,6 +1,6 @@
 <?php
 
-namespace Moment\Collection\MomentPeople;
+namespace Moments\Collection\MomentPeople;
 
 use Contacts\Contact;
 use Ivy\Abstract\Controller;

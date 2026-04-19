@@ -1,11 +1,11 @@
 <?php
 
-namespace Moment\Collection\MomentPeople;
+namespace Moments\Collection\MomentPeople;
 
 use Contacts\Contact;
 use Ivy\Abstract\Model;
 use Ivy\Trait\Factory;
-use Moment\Moment;
+use Moments\Moment;
 
 
 /**

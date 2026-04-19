@@ -1,8 +1,8 @@
 <?php
 
-namespace Moment\Collection\MomentLocation;
+namespace Moments\Collection\MomentLocation;
 
-use Moment\Moment;
+use Moments\Moment;
 
 class MomentLocationFactory
 {

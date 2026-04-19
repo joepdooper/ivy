@@ -1,6 +1,6 @@
 <?php
 
-namespace Moment\Collection\MomentPeople;
+namespace Moments\Collection\MomentPeople;
 
 use Ivy\Model\User;
 

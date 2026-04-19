@@ -1,7 +1,7 @@
 {
-  "name": "Moment",
+  "name": "Moments",
   "version": "1.0.0",
-  "description": "Add moment items",
+  "description": "Add moments",
   "type": "collection",
   "database": {
     "install": "db/install.db.php",

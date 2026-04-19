@@ -1,6 +1,6 @@
 <?php
 
-namespace Moment\Collection\MomentDateTime;
+namespace Moments\Collection\MomentDateTime;
 
 use Ivy\Abstract\Model;
 use Ivy\Trait\Factory;

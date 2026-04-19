@@ -1,6 +1,6 @@
 <?php
 
-namespace Moment;
+namespace Moments;
 
 use Contacts\Contact;
 use Items\ItemTrait;

@@ -1,8 +1,9 @@
 <?php
 
-namespace Moment\Collection\MomentPeople;
+namespace Moments\Collection\MomentPeople;
 
-use Moment\Moment;
+use Contacts\Contact;
+use Moments\Moment;
 
 class MomentPeopleFactory
 {
@@ -10,7 +11,7 @@ class MomentPeopleFactory
     {
         return [
             'moment_id' => Moment::factory(),
-            'people_id' => People::factory(),
+            'people_id' => Contact::factory(),
             'token' => null,
         ];
     }

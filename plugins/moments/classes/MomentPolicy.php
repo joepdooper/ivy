@@ -1,6 +1,6 @@
 <?php
 
-namespace Moment;
+namespace Moments;
 
 use Ivy\Model\User;
 

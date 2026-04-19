@@ -1,37 +1,39 @@
 <?php
 
-use Delight\Db\Throwable\Exception;
-use Ivy\Manager\DatabaseManager;
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Schema\Blueprint;
 use Ivy\Model\User;
 
 if (User::canEditAsSuperAdmin()) {
 
     try {
-        DatabaseManager::connection()->exec('
-            CREATE TABLE IF NOT EXISTS `tags` (
-                `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `value` VARCHAR(255) NOT NULL,
-                PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-        ');
-    } catch (Exception $e) {
-        error_log('Failed to create table `tags`: '.$e->getMessage());
+        if (!Capsule::schema()->hasTable('tags')) {
+            Capsule::schema()->create('tags', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('value', 255);
+            });
+        }
+    } catch (\Throwable $e) {
+        error_log('Failed to create table `tags`: ' . $e->getMessage());
     }
 
     try {
-        DatabaseManager::connection()->exec('
-            CREATE TABLE IF NOT EXISTS `entity_tags` (
-                `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `tag_id` INT(11) UNSIGNED NOT NULL,
-                `entity_table` VARCHAR(255) NOT NULL,
-                `entity_id` INT NOT NULL,
-                UNIQUE KEY `unique_tag_entity` (`tag_id`, `entity_table`, `entity_id`),
-                FOREIGN KEY (`tag_id`) REFERENCES `tags`(`id`) ON DELETE CASCADE,
-                PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-        ');
-    } catch (Exception $e) {
-        error_log('Failed to create table `entity_tags`: '.$e->getMessage());
-    }
+        if (!Capsule::schema()->hasTable('entity_tags')) {
+            Capsule::schema()->create('entity_tags', function (Blueprint $table) {
+                $table->increments('id');
+                $table->unsignedInteger('tag_id');
+                $table->string('entity_table', 255);
+                $table->unsignedInteger('entity_id');
 
+                $table->unique(['tag_id', 'entity_table', 'entity_id'], 'unique_tag_entity');
+
+                $table->foreign('tag_id')
+                    ->references('id')
+                    ->on('tags')
+                    ->onDelete('cascade');
+            });
+        }
+    } catch (\Throwable $e) {
+        error_log('Failed to create table `entity_tags`: ' . $e->getMessage());
+    }
 }

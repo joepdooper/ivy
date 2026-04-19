@@ -1,6 +1,6 @@
 <?php
 
-namespace Moment;
+namespace Moments;
 
 use Items\Item;
 use Ivy\Core\Path;

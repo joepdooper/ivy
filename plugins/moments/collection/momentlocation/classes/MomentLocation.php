@@ -1,6 +1,6 @@
 <?php
 
-namespace Moment\Collection\MomentLocation;
+namespace Moments\Collection\MomentLocation;
 
 use Ivy\Abstract\Model;
 use Ivy\Trait\Factory;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Moment;
+namespace Moments;
 
 use Items\CollectionController;
 use Items\ItemHelper;
