@@ -26,9 +26,8 @@ class Contact extends Model
     ];
 
     protected string $name;
-    protected ?string $email;
+    protected ?string $email = null;
     protected ?string $birthday = null;
-
     protected ?int $profile_id = null;
 
     public function profile(): ?Profile

@@ -116,7 +116,7 @@
     </main>
 
     {if canEditAsEditor()}
-        {render(path('PLUGINS_FOLDER') . 'moment/template/modal_add.latte', [
+        {render(path('PLUGINS_FOLDER') . 'moment/template/modal.add.latte', [
         'moment' => $moment,
         'item' => $item,
         'tags' => $tags

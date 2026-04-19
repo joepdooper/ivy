@@ -2,6 +2,7 @@
 
 namespace Moment;
 
+use Contacts\Contact;
 use Items\ItemTrait;
 use Ivy\Abstract\Model;
 use Ivy\Model\Profile;
@@ -12,6 +13,12 @@ use Moment\Collection\MomentLocation\MomentLocation;
 use Moment\Collection\MomentPeople\MomentPeople;
 use Tags\TagTrait;
 
+
+/**
+ * @property ?MomentDateTime $momentDateTime
+ * @property ?MomentLocation $momentLocation
+ * @property ?array $momentPeople
+ */
 class Moment extends Model
 {
     use Factory, HasFilters, ItemTrait, TagTrait;
@@ -36,22 +43,22 @@ class Moment extends Model
 
     protected ?string $token = null;
 
-    public function getDateTime(): ?MomentDateTime
+    public function momentDateTime(): ?MomentDateTime
     {
         return $this->hasOne(MomentDateTime::class, 'moment_id');
     }
 
-    public function getLocation(): ?MomentLocation
+    public function momentLocation(): ?MomentLocation
     {
         return $this->hasOne(MomentLocation::class, 'moment_id');
     }
 
-    public function getPeople(): array
+    public function momentPeople(): array
     {
         $momentPeople = $this->hasMany(MomentPeople::class, 'moment_id');
         $userIds = array_map(fn ($mp) => $mp->user_id, $momentPeople);
 
-        return (new Profile)->whereIn('user_id', $userIds)->fetchAll();
+        return (new Contact)->whereIn('profile_id', $userIds)->fetchAll();
     }
 
     public function syncPeople(array $user_ids = []): void

@@ -4,7 +4,6 @@ use Ivy\Core\App;
 use Ivy\Manager\AssetManager;
 use Ivy\Manager\SecurityManager;
 use Ivy\Model\Info;
-use Ivy\Core\Path;
 use Ivy\View\View;
 
 // Autoloader

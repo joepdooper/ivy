@@ -2,9 +2,16 @@
 
 namespace Moment\Collection\MomentPeople;
 
+use Contacts\Contact;
 use Ivy\Abstract\Model;
 use Ivy\Trait\Factory;
+use Moment\Moment;
 
+
+/**
+ * @property ?array $contacts
+ * @property ?array $moments
+ */
 class MomentPeople extends Model
 {
     use Factory;
@@ -13,23 +20,20 @@ class MomentPeople extends Model
 
     protected array $columns = [
         'moment_id',
-        'people_id',
-        'token',
+        'contact_id',
     ];
 
     protected int $moment_id;
 
-    protected int $people_id;
+    protected int $contact_id;
 
-    protected ?string $token = null;
-
-    public function getPeople(): array
+    public function contacts(): ?array
     {
-        return $this->hasMany(People::class, 'people_id');
+        return $this->hasMany(Contact::class, 'id', 'contact_id');
     }
 
-    public function getMoment(): array
+    public function moments(): array
     {
-        return $this->hasMany(Moment::class, 'moment_id');
+        return $this->hasMany(Moment::class, 'id', 'moment_id');
     }
 }

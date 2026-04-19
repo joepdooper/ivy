@@ -13,10 +13,10 @@
                 </label>
                 <div class="tab-content">
                         <div class="space-y-4">
-                            {php $profile = (new \Contacts\Contact)->where('profile_id', profile()->id)->fetchOne()}
+                            {php $contact = (new \Contacts\Contact)->where('profile_id', profile()->id)->fetchOne()}
                             {include 'calendar.latte',
                             'calendar' => 'moment',
-                            'startYear' => $profile->birthday ? datetime()::parse($profile->birthday)->year : 2000,
+                            'startYear' => $contact->birthday ? datetime()::parse($contact->birthday)->year : 2000,
                             'endYear' => datetime()::now()->year + 5,
                             'selectYear' => $moment ? datetime()::parse($moment->getDateTime()->start_date)->year : datetime()::now()->year,
                             'selectMonth' => $moment ? datetime()::parse($moment->getDateTime()->start_date)->month : datetime()::now()->month,
@@ -73,19 +73,19 @@
                 </label>
                 <div class="tab-content">
                         <div class="flex flex-wrap gap-4">
-                            {var $peopleIds = array_map(fn($p) => $p->user_id, $moment?->getPeople() ?? [])}
-                            {foreach (new \Ivy\Model\Profile)->fetchAll() as $person}
-                            <div class="tooltip" data-tip="{$person->user->username}">
+                            {var $peopleIds = array_map(fn($p) => $p->user_id, $moment?->momentPeople ?? [])}
+                            {foreach (new \Contacts\Contact)->fetchAll() as $person}
+                            <div class="tooltip" data-tip="{$person->name}">
                                 <label class="swap">
                                     <input
                                             type="checkbox"
                                             name="people[]"
-                                            value="{$person->user_id}"
-                                            {if in_array($person->user_id, $peopleIds) || (!$moment && $person->user_id === auth()->getUserId())}checked{/if}
+                                            value="{$person->id}"
+                                            {if $person->profile && (in_array($person->profile->user_id, $peopleIds) || (!$moment && $person->profile->user_id === auth()->getUserId()))}checked{/if}
                                     />
                                     <span class="swap-off overflow-hidden w-10 h-10 rounded-full bg-primary/10 text-primary border-2 border-transparent">
-                                        {if $person->user_image}
-                                            <img alt="{$person->username}" src="{media('profile/' . $person->user_image)}"/>
+                                        {if $person?->profile?->user_image}
+                                            <img alt="{$person->name}" src="{media('profile/' . $person->profile->user_image)}"/>
                                         {else}
                                             <span class="inline-block ml-1.5 mt-1.5">
                                                 {icon("feather/user.svg")|noescape}
@@ -93,8 +93,8 @@
                                         {/if}
                                     </span>
                                     <span class="swap-on overflow-hidden w-10 h-10 rounded-full bg-accent text-primary border-2 border-accent">
-                                        {if $person->user_image}
-                                            <img alt="{$person->username}" src="{media('profile/' . $person->user_image)}"/>
+                                        {if $person->profile->user_image}
+                                            <img alt="{$person->name}" src="{media('profile/' . $person->profile->user_image)}"/>
                                         {else}
                                             <span class="inline-block ml-1.5 mt-1.5">
                                                 {icon("feather/user.svg")|noescape}

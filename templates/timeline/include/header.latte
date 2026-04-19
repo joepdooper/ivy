@@ -26,7 +26,7 @@
             {/if}
             {if auth()->isLoggedIn()}
                 <div class="dropdown dropdown-end">
-                    <div tabindex="0" role="button" class="avatar">
+                    <div tabindex="0" role="button" class="avatar cursor-pointer text-primary">
                         {if profile()->user_image}
                             <div class="w-10 rounded-full">
                                 <img alt="{profile()->user->username}" src="{media('profile/' . profile()->user_image)}"/>
