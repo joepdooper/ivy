@@ -1,4 +1,5 @@
-<button class="btn btn-primary shadow-none leading-none px-4"
+<button class="btn btn-primary shadow-none leading-none px-4 ts-active:opacity-60 ts-active:scale-95"
         name="submit" type="submit" value="{$text}">
-    {$text}
+    <span class="submit-btn-loader absolute"></span>
+    <span class="submit-btn-text relative">{$text}</span>
 </button>

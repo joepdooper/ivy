@@ -86,3 +86,15 @@ html, body {
 .flashes > [type="checkbox"]:checked + .alert {
     display: flex;
 }
+
+form.ts-active {
+    pointer-events: none;
+}
+
+form.ts-active button[type="submit"] .submit-btn-loader {
+    @apply loading loading-dots loading-xs visible;
+}
+
+form.ts-active button[type="submit"] .submit-btn-text {
+    @apply invisible;
+}
