@@ -2,9 +2,9 @@ version: '3.8'
 
 services:
 
-  apache:
+  ivy_apache:
     build: .
-    container_name: ${APACHE_HOST:-ivy_apache}
+    container_name: ivy_apache
     environment:
       APACHE_DOCUMENT_ROOT: /var/www/public
     ports:
@@ -15,9 +15,9 @@ services:
       - ./sites-enabled:/etc/apache2/sites-enabled:Z
       - ./php/custom.ini:/usr/local/etc/php/conf.d/custom.ini:Z
 
-  node:
+  ivy_node:
     image: docker.io/node:latest
-    container_name: ${NODE_HOST:-ivy_node}
+    container_name: ivy_node
     working_dir: /var/www
     ports:
       - "${VITE_PORT:-5173}:5173"
@@ -25,9 +25,9 @@ services:
       - ../:/var/www:Z
     command: tail -f /dev/null
 
-  mysql:
+  ivy_mysql:
     image: docker.io/mysql:latest
-    container_name: ${DB_HOST:-ivy_mysql}
+    container_name: ivy_mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ${DB_DATABASE:-ivy_db}
@@ -39,10 +39,9 @@ services:
       - ivy_mysql_data:/var/lib/mysql:z
       - ./mysql/ivy.sql:/docker-entrypoint-initdb.d/ivy.sql:Z
 
-  mailcatcher:
+  ivy_mailcatcher:
     image: docker.io/dockage/mailcatcher
-    container_name: ${MAIL_HOST:-ivy_mailcatcher}
-    hostname: ${MAIL_HOST:-ivy_mailcatcher}
+    container_name: ivy_mailcatcher
     ports:
       - "1080:1080"
       - "${MAIL_PORT:-1025}:1025"
