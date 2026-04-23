@@ -1339,16 +1339,16 @@
         },
         {
             "name": "joepdooper/ivy-roots",
-            "version": "v0.9.14-alpha",
+            "version": "v0.9.15-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joepdooper/ivy-roots.git",
-                "reference": "842725b4584b84a7d1598338719004f7d6dfafe6"
+                "reference": "de0df68c423061e76ae485e52bc8327af6d7d952"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joepdooper/ivy-roots/zipball/842725b4584b84a7d1598338719004f7d6dfafe6",
-                "reference": "842725b4584b84a7d1598338719004f7d6dfafe6",
+                "url": "https://api.github.com/repos/joepdooper/ivy-roots/zipball/de0df68c423061e76ae485e52bc8327af6d7d952",
+                "reference": "de0df68c423061e76ae485e52bc8327af6d7d952",
                 "shasum": ""
             },
             "require": {
@@ -1356,7 +1356,6 @@
                 "blakvghost/php-validator": "^2.3",
                 "bramus/router": "^1.6",
                 "delight-im/auth": "^8.3",
-                "delight-im/db": "^1.3",
                 "ext-pdo": "*",
                 "ezyang/htmlpurifier": "dev-master",
                 "illuminate/database": "^13.5",
@@ -1394,9 +1393,9 @@
             "description": "A set of classes designed to build and extend functionality in ivy",
             "support": {
                 "issues": "https://github.com/joepdooper/ivy-roots/issues",
-                "source": "https://github.com/joepdooper/ivy-roots/tree/v0.9.14-alpha"
+                "source": "https://github.com/joepdooper/ivy-roots/tree/v0.9.15-alpha"
             },
-            "time": "2026-04-19T18:25:23+00:00"
+            "time": "2026-04-22T22:44:37+00:00"
         },
         {
             "name": "laravel/serializable-closure",
