@@ -2,17 +2,14 @@
 
 namespace Tags;
 
-use Ivy\Abstract\Model;
+use Illuminate\Database\Eloquent\Model;
+use Ivy\Trait\HasPolicies;
 
 class Tag extends Model
 {
-    protected string $table = 'tags';
+    use HasPolicies;
 
-    protected string $path = 'admin/plugin/tags';
-
-    protected array $columns = [
+    protected $fillable = [
         'value',
     ];
-
-    protected string $value;
 }

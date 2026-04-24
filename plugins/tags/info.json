@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Create tags for items",
   "type": "filter",
+  "namespace": "\\Tags\\Plugin",
   "actions": [
     {"text": "tags.manage", "icon": "feather/tag.svg", "url": "manage"}
   ],

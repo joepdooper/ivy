@@ -17,6 +17,14 @@ class TagController extends Controller
         $this->tag = new Tag;
     }
 
+    public function index(): void
+    {
+        $this->tag->policy('index');
+
+        $tags = Tag::all();
+        View::set(Path::get('PLUGINS_PATH').'tags/template/manage.latte', ['tags' => $tags]);
+    }
+
     public function sync(): void
     {
         $this->tag->policy('sync');
@@ -56,13 +64,5 @@ class TagController extends Controller
 
         $this->flashBag->add('success', 'Updated successful');
         $this->redirect($this->tag->getPath().DIRECTORY_SEPARATOR.'manage');
-    }
-
-    public function index(): void
-    {
-        $this->tag->policy('index');
-
-        $tags = $this->tag->fetchAll();
-        View::set(Path::get('PLUGINS_PATH').'tags/template/manage.latte', ['tags' => $tags]);
     }
 }
