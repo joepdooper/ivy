@@ -1,6 +1,6 @@
-FROM docker.io/php:8.4-apache
+FROM php:8.4-apache
 
-# Install system deps
+# System dependencies
 RUN apt-get update && apt-get install -y \
     libicu-dev \
     libjpeg-dev \
@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions
+# PHP extensions
 RUN docker-php-ext-configure gd \
         --with-jpeg \
         --with-webp \
@@ -22,9 +22,15 @@ RUN docker-php-ext-configure gd \
         pdo_mysql \
         gd
 
-# Enable Apache modules
+# Apache modules
 RUN a2enmod rewrite headers deflate expires
 
+# Composer (stable, pinned version, correct PATH)
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+RUN chmod +x /usr/local/bin/composer \
+    && composer --version
+
+# Apache document root
 ENV APACHE_DOCUMENT_ROOT=/var/www/public
 
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \

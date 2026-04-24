@@ -12,11 +12,6 @@
     "php": ">=8.4.0",
     "joepdooper/ivy-roots": "^0.9.10@alpha"
   },
-  "scripts": {
-    "post-install-cmd": [
-      "[ \"$COMPOSER_DEV_MODE\" = \"1\" ] && npm install || npm install --production"
-    ]
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require-dev": {
