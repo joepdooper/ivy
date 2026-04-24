@@ -158,15 +158,7 @@ INSERT INTO `settings` (`id`, `name`, `bool`, `value`, `info`, `token`, `plugin_
 (1, 'Private', 0, '', 'Set website to private', NULL, NULL, 1, NULL, NULL),
 (2, 'Minify CSS', 0, '', 'CSS minifier', NULL, NULL, 1, NULL, NULL),
 (3, 'Minify JS', 0, '', 'JS minifier', NULL, NULL, 1, NULL, NULL),
-(4, 'Registration role', 0, 'EDITOR', 'After registration set user role', NULL, NULL, 1, NULL, NULL),
-(11, 'Sort', 0, NULL, 'Sort items by drag and drop', NULL, 37, 0, NULL, NULL),
-(12, 'Timeline', 0, NULL, 'Show items in a timeline', NULL, 37, 0, NULL, NULL),
-(13, 'Sort', 0, NULL, 'Sort items by drag and drop', NULL, 38, 0, NULL, NULL),
-(14, 'Timeline', 0, NULL, 'Show items in a timeline', NULL, 38, 0, NULL, NULL),
-(17, 'Sort', 0, NULL, 'Sort items by drag and drop', NULL, 49, 0, NULL, NULL),
-(18, 'Timeline', 0, NULL, 'Show items in a timeline', NULL, 49, 0, NULL, NULL),
-(19, 'Sort', 0, NULL, 'Sort items by drag and drop', NULL, 50, 0, NULL, NULL),
-(20, 'Timeline', 0, NULL, 'Show items in a timeline', NULL, 50, 0, NULL, NULL);
+(4, 'Registration role', 0, 'EDITOR', 'After registration set user role', NULL, NULL, 1, NULL, NULL);
 
 INSERT INTO `templates` (`id`, `type`, `value`, `created_at`, `updated_at`) VALUES
 (1, 'base', 'base', NULL, NULL),
