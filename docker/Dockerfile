@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     git \
     unzip \
     curl \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # PHP extensions
@@ -25,10 +26,12 @@ RUN docker-php-ext-configure gd \
 # Apache modules
 RUN a2enmod rewrite headers deflate expires
 
-# Composer (stable, pinned version, correct PATH)
-COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
-RUN chmod +x /usr/local/bin/composer \
-    && composer --version
+# Install Composer (official installer)
+RUN curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php \
+    && php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && chmod +x /usr/local/bin/composer \
+    && composer --version \
+    && rm /tmp/composer-setup.php
 
 # Apache document root
 ENV APACHE_DOCUMENT_ROOT=/var/www/public
