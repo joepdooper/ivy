@@ -3,8 +3,5 @@
   "version": "1.0.0",
   "description": "Vimeo SDK",
   "type": "item",
-  "database": {
-    "install": "db/install.db.php",
-    "uninstall": "db/uninstall.db.php"
-  }
+  "interface": "Items\\Collection\\Vimeo\\VimeoInterface"
 }

@@ -3,12 +3,9 @@
   "version": "1.0.0",
   "description": "Add items to homepage",
   "type": "collection",
+  "interface": "Items\\ItemInterface",
   "actions": [
   ],
-  "database": {
-    "install": "db/install.db.php",
-    "uninstall": "db/uninstall.db.php"
-  },
   "settings": [
     {
       "name": "Sort",
@@ -27,7 +24,6 @@
     "Youtube"
   ],
   "dependencies": [
-    "Tags",
-    "Search"
+    "Tags"
   ]
 }

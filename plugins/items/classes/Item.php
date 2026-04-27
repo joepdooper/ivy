@@ -2,7 +2,8 @@
 
 namespace Items;
 
-use Ivy\Abstract\Model;
+use Illuminate\Database\Eloquent\Model;
+use Ivy\Model\Plugin;
 use Ivy\Model\Profile;
 use Ivy\Trait\Factory;
 use Ivy\Trait\HasFilters;
@@ -12,9 +13,7 @@ class Item extends Model
 {
     use Factory, HasFilters, TagTrait;
 
-    protected string $table = 'items';
-
-    protected array $columns = [
+    protected $fillable = [
         'user_id',
         'parent_id',
         'publish',
@@ -27,37 +26,18 @@ class Item extends Model
         'slug',
     ];
 
-    protected int $user_id;
-
-    protected ?int $parent_id = null;
-
-    protected int $publish = 0;
-
-    protected ?string $token = null;
-
-    protected ?string $date = null;
-
-    protected ?int $sort = null;
-
-    protected ?string $slug = null;
-
     protected bool $loadPlugins = false;
 
     protected bool $loadAuthors = false;
 
-    public function plugin(): ?object
+    public function plugin(): ?Plugin
     {
         return $this->getRelation('plugin');
     }
 
-    public function author(): ?Profile
+    public function profile(): ?Profile
     {
         return $this->getRelation('author');
-    }
-
-    public function getDate(): ?string
-    {
-        return $this->date;
     }
 
     public function populate(array $data): static
@@ -68,52 +48,52 @@ class Item extends Model
         return parent::populate($data);
     }
 
-    public function with(array $relations): static
-    {
-        if (in_array('plugins', $relations, true)) {
-            $this->loadPlugins = true;
-        }
+//    public function with(array $relations)
+//    {
+//        if (in_array('plugins', $relations, true)) {
+//            $this->loadPlugins = true;
+//        }
+//
+//        if (in_array('authors', $relations, true)) {
+//            $this->loadAuthors = true;
+//        }
+//
+//        $native = array_diff($relations, ['plugins', 'authors']);
+//        if (! empty($native)) {
+//            parent::with($native);
+//        }
+//
+//        return $this;
+//    }
 
-        if (in_array('authors', $relations, true)) {
-            $this->loadAuthors = true;
-        }
+//    public function fetchAll(): array
+//    {
+//        $items = parent::fetchAll();
+//
+//        if ($this->loadPlugins || $this->loadAuthors) {
+//            ItemLoader::attach($items, [
+//                'plugins' => $this->loadPlugins,
+//                'authors' => $this->loadAuthors,
+//            ]);
+//        }
+//
+//        return $items;
+//    }
 
-        $native = array_diff($relations, ['plugins', 'authors']);
-        if (! empty($native)) {
-            parent::with($native);
-        }
-
-        return $this;
-    }
-
-    public function fetchAll(): array
-    {
-        $items = parent::fetchAll();
-
-        if ($this->loadPlugins || $this->loadAuthors) {
-            ItemLoader::attach($items, [
-                'plugins' => $this->loadPlugins,
-                'authors' => $this->loadAuthors,
-            ]);
-        }
-
-        return $items;
-    }
-
-    public function fetchOne(): ?static
-    {
-        $item = parent::fetchOne();
-
-        if ($item && ($this->loadPlugins || $this->loadAuthors)) {
-            $items = [$item];
-            ItemLoader::attach($items, [
-                'plugins' => $this->loadPlugins,
-                'authors' => $this->loadAuthors,
-            ]);
-
-            return $items[0];
-        }
-
-        return $item;
-    }
+//    public function fetchOne(): ?static
+//    {
+//        $item = parent::fetchOne();
+//
+//        if ($item && ($this->loadPlugins || $this->loadAuthors)) {
+//            $items = [$item];
+//            ItemLoader::attach($items, [
+//                'plugins' => $this->loadPlugins,
+//                'authors' => $this->loadAuthors,
+//            ]);
+//
+//            return $items[0];
+//        }
+//
+//        return $item;
+//    }
 }

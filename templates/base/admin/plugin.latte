@@ -40,7 +40,7 @@
                                     <input type="hidden" name="plugin[{$key}][id]"
                                            value="{$plugin->id}">
                                     <div class="join">
-                                        <a n:if="$plugin->active" n:foreach="$plugin->getInfo()->getActions() as $action"
+                                        <a n:if="$plugin->active" n:foreach="$plugin->info->actions as $action"
                                                 class="btn btn-square btn-soft btn-primary shadow-none join-item"
                                                 title="{text($plugin->url.'.'.$action['text'])}"
                                                 href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/' . $action['url']}">

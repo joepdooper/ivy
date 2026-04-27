@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "description": "Gig item",
   "type": "item",
-  "database": {
-    "install": "db/install.db.php",
-    "uninstall": "db/uninstall.db.php"
-  },
+  "interface": "Items\\Collection\\Gig\\GigInterface",
   "dependencies": [
     "Text"
   ]
