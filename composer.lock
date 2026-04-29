@@ -1343,12 +1343,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joepdooper/ivy-roots.git",
-                "reference": "5826c7e31b4bf7a34b51f5288e1ef4050c85abab"
+                "reference": "1983662395e6c0f64b5caf2b7c3a8853891dcb56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joepdooper/ivy-roots/zipball/5826c7e31b4bf7a34b51f5288e1ef4050c85abab",
-                "reference": "5826c7e31b4bf7a34b51f5288e1ef4050c85abab",
+                "url": "https://api.github.com/repos/joepdooper/ivy-roots/zipball/1983662395e6c0f64b5caf2b7c3a8853891dcb56",
+                "reference": "1983662395e6c0f64b5caf2b7c3a8853891dcb56",
                 "shasum": ""
             },
             "require": {
@@ -1395,7 +1395,7 @@
                 "issues": "https://github.com/joepdooper/ivy-roots/issues",
                 "source": "https://github.com/joepdooper/ivy-roots/tree/v0.9.17-alpha"
             },
-            "time": "2026-04-29T16:50:36+00:00"
+            "time": "2026-04-29T22:19:12+00:00"
         },
         {
             "name": "laravel/serializable-closure",
