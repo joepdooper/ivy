@@ -7,7 +7,7 @@ AssetManager::addCSS('css/style.css');
 AssetManager::addCSS('css/custom.css');
 AssetManager::addJS('js/twinspark.min.js');
 
-require TemplateManager::file('routes/web.php');
-require TemplateManager::file('routes/user.php');
-require TemplateManager::file('routes/admin.php');
-require TemplateManager::file('routes/error.php');
+TemplateManager::require('routes/web.php');
+TemplateManager::require('routes/user.php');
+TemplateManager::require('routes/admin.php');
+TemplateManager::require('routes/error.php');
