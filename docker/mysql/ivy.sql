@@ -28,7 +28,7 @@ CREATE TABLE `plugins` (
   `parent_id` int DEFAULT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
   `url` varchar(255) NOT NULL,
-  `namespace` varchar(255) DEFAULT NULL,
+  `interface` varchar(255) DEFAULT NULL,
   `version` varchar(11) NOT NULL DEFAULT '',
   `description` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
