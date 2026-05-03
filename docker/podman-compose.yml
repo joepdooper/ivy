@@ -2,9 +2,11 @@ version: '3.8'
 
 services:
 
-  ivy_apache:
+  apache:
     build: .
     container_name: ivy_apache
+    networks:
+      - ivy_network
     environment:
       APACHE_DOCUMENT_ROOT: /var/www/public
     ports:
@@ -15,9 +17,11 @@ services:
       - ./sites-enabled:/etc/apache2/sites-enabled:Z
       - ./php/custom.ini:/usr/local/etc/php/conf.d/custom.ini:Z
 
-  ivy_node:
+  node:
     image: docker.io/node:latest
     container_name: ivy_node
+    networks:
+      - ivy_network
     working_dir: /var/www
     ports:
       - "${VITE_PORT:-5173}:5173"
@@ -25,9 +29,11 @@ services:
       - ../:/var/www:Z
     command: tail -f /dev/null
 
-  ivy_mysql:
+  mysql:
     image: docker.io/mysql:latest
     container_name: ivy_mysql
+    networks:
+      - ivy_network
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ${DB_DATABASE:-ivy_db}
@@ -36,12 +42,14 @@ services:
     ports:
       - "${DB_PORT:-3306}:3306"
     volumes:
-      - ivy_mysql_data:/var/lib/mysql:z
+      - ivy_mysql_data:/var/lib/mysql:Z
       - ./mysql/ivy.sql:/docker-entrypoint-initdb.d/ivy.sql:Z
 
-  ivy_mailcatcher:
+  mailcatcher:
     image: docker.io/dockage/mailcatcher
     container_name: ivy_mailcatcher
+    networks:
+      - ivy_network
     ports:
       - "1080:1080"
       - "${MAIL_PORT:-1025}:1025"
@@ -49,3 +57,6 @@ services:
 volumes:
   ivy_mysql_data:
     driver: local
+
+networks:
+  ivy_network:

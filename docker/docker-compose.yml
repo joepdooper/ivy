@@ -1,8 +1,10 @@
 services:
 
-  ivy_apache:
+  apache:
     build: .
     container_name: ivy_apache
+    networks:
+      - ivy_network
     environment:
       APACHE_DOCUMENT_ROOT: /var/www/public
     ports:
@@ -13,9 +15,11 @@ services:
       - ./sites-enabled:/etc/apache2/sites-enabled
       - ./php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
 
-  ivy_node:
+  node:
     image: node:latest
     container_name: ivy_node
+    networks:
+      - ivy_network
     working_dir: /var/www
     ports:
       - "${VITE_PORT:-5173}:5173"
@@ -23,9 +27,11 @@ services:
       - ../:/var/www
     command: tail -f /dev/null
 
-  ivy_mysql:
+  mysql:
     image: mysql
     container_name: ivy_mysql
+    networks:
+      - ivy_network
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ${DB_DATABASE:-ivy_db}
@@ -37,12 +43,17 @@ services:
       - ivy_mysql_data:/var/lib/mysql
       - ./mysql/ivy.sql:/docker-entrypoint-initdb.d/ivy.sql
 
-  ivy_mailcatcher:
-    image: dockage/mailcatcher
-    container_name: ivy_mailcatcher
+  mailpit:
+    image: axllent/mailpit
+    container_name: ivy_mailpit
+    networks:
+      - ivy_network
     ports:
-      - "1080:1080" # Web UI
+      - "8025:8025" # Web UI
       - "${MAIL_PORT:-1025}:1025" # SMTP
 
 volumes:
   ivy_mysql_data:
+
+networks:
+  ivy_network:
