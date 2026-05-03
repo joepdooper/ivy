@@ -10,7 +10,7 @@
             {/foreach}
         </div>
     </main>
-    {if canEditAsEditor()}
+    {if authUser()->canEditAsEditor()}
         {if isPluginActive('Moment')}
             {render(path('PLUGINS_FOLDER') . 'moment/template/modal.add.latte', ['moment' => null, 'tags' => $tags])}
             {render(path('PLUGINS_FOLDER') . 'moment/template/modal.filter.latte', ['tags' => $tags])}

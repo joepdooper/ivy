@@ -24,7 +24,7 @@
                         {foreach $installed_plugins as $key => $plugin}
                             <tr>
                                 <td>
-                                    {if canEditAsSuperAdmin()}
+                                    {if authUser()->canEditAsSuperAdmin()}
                                         {button type:switch, name:"plugin[$key][active]", value:$plugin->active}
                                     {else}
                                         {if $plugin->active}
@@ -46,25 +46,19 @@
                                                 href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/' . $action['url']}">
                                             {icon($action['icon'])|noescape}
                                         </a>
-
-                                        {* && $plugin->policy('collection') *}
-                                        <a n:if="$plugin->active"
+                                        <a n:if="$plugin->active && can('collection', $plugin)"
                                                 class="btn btn-square btn-soft btn-primary shadow-none join-item"
                                                 title="{text('plugin.collection')}"
                                                 href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/collection'}">
                                             {icon("feather/package.svg")|noescape}
                                         </a>
-
-                                        {* && $plugin->policy('settings') *}
-                                        <a n:if="$plugin->active"
+                                        <a n:if="$plugin->active && can('settings', $plugin)"
                                                 class="btn btn-square btn-soft btn-primary shadow-none join-item"
                                                 title="{text('setting.settings')}"
                                                 href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/settings'}">
                                             {icon("feather/settings.svg")|noescape}
                                         </a>
-
-                                        {* && $plugin->policy('uninstall') *}
-                                        {if !$plugin->parent_id}
+                                        {if !$plugin->parent_id && can('uninstall', $plugin)}
                                             {button type:delete, name:"plugin[$key][delete]", value:"plugin_" . $plugin->id, id:$plugin->id, placeholder:$plugin->name}
                                         {/if}
                                     </div>
@@ -78,7 +72,7 @@
                     {text('plugin.none_installed')}
                 </div>
 
-                {if canEditAsSuperAdmin()}
+                {if authUser()->canEditAsSuperAdmin()}
                     <div n:ifset="$uninstalled_plugins">
                         <label>
                             <select class="select w-full" name="plugin[][url]">

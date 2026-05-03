@@ -9,7 +9,7 @@
                 <h1 class="leading-none text-6xl font-bold">{text('user.profile')}</h1>
 
                 <div class="space-x-2">
-                    {foreach auth()->getRoles() as $role}
+                    {foreach authRoles() as $role}
                         <span class="badge badge-soft badge-info badge-sm font-bold p-3">{text('user.'.strtolower($role))}</span>
                     {/foreach}
                 </div>

@@ -16,7 +16,7 @@
                     {icon("feather/search.svg")|noescape}
                 </label>
             {/if}
-{*            {if canEditAsAdmin()}*}
+{*            {if profile()->canEditAsAdmin()} *}
 {*                <label n:if="route('/moment/*')" for="modal_add_moment" class="cursor-pointer text-primary">*}
 {*                    {icon("feather/edit.svg")|noescape}*}
 {*                </label>*}
@@ -27,9 +27,9 @@
             {if auth()->isLoggedIn()}
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="avatar cursor-pointer text-primary">
-                        {if profile()->user_image}
+                        {if authUser()->user_image}
                             <div class="w-10 rounded-full">
-                                <img alt="{profile()->user->username}" src="{media('profile/' . profile()->user_image)}"/>
+                                <img alt="{authUser()->user->username}" src="{media('profile/' . profile()->user_image)}"/>
                             </div>
                         {else}
                             {icon("feather/user.svg")|noescape}
@@ -43,7 +43,7 @@
                                 {text('menu.profile')}
                             </a>
                         </li>
-                        {if canEditAsAdmin()}
+                        {if authUser()->canEditAsAdmin()}
                             <li>
                                 <a href="{path('BASE_PATH') . 'admin/info'}">
                                     {icon("feather/info.svg")|noescape}

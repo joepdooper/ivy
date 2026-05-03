@@ -9,12 +9,12 @@
             {if isPluginActive('DarkMode')}
                 {render(Path::get('PLUGINS_PATH') . "darkmode/template/buttons.latte")}
             {/if}
-            {if auth()->isLoggedIn()}
+            {if isLoggedIn()}
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="avatar">
-                        {if profile()->user_image}
+                        {if authUser()->user_image}
                             <div class="w-10 rounded-full">
-                                <img alt="{profile()->user->username}" src="{media('profile/' . profile()->user_image)}"/>
+                                <img alt="{authUser()->user->username}" src="{media('profile/' . authUser()->user_image)}"/>
                             </div>
                         {else}
                             {icon("feather/user.svg")|noescape}
@@ -28,7 +28,7 @@
                                 {text('menu.profile')}
                             </a>
                         </li>
-                        {if canEditAsAdmin()}
+                        {if authUser()->canEditAsAdmin()}
                             <li>
                                 <a href="{path('BASE_PATH') . 'admin/info'}">
                                     {icon("feather/info.svg")|noescape}
