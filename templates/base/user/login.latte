@@ -12,7 +12,10 @@
                 <div>
                     <label>
                         <input type="email" id="email" name="email" placeholder="{text('placeholder.email')}"
-                               class="input input-bordered w-full">
+                               class="input input-bordered w-full {ifset $errors['email']}input-error{/ifset}">
+                        {ifset $errors['email']}
+                            <span n:foreach="$errors['email'] as $message">{$message}</span>
+                        {/ifset}
                     </label>
                 </div>
 
@@ -20,7 +23,10 @@
                     <label>
                         <input type="password" id="password" name="password"
                                placeholder="{text('placeholder.password')}"
-                               class="input input-bordered w-full">
+                               class="input input-bordered w-full {ifset $errors['password']}input-error{/ifset}">
+                        {ifset $errors['password']}
+                            <span n:foreach="$errors['password'] as $message">{$message}</span>
+                        {/ifset}
                     </label>
                 </div>
 

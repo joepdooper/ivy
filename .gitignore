@@ -1,4 +1,5 @@
 .env
+.idea
 /.build/
 /vendor/
 /node_modules/
