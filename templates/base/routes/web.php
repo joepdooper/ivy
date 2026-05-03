@@ -1,9 +1,12 @@
 <?php
 
 use Ivy\Routing\Route;
+use Ivy\View\View;
 
 // -- HOME
-Route::get('/', function () {})
+Route::get('/', function () {
+    View::render('body.latte');
+})
     ->before('\Ivy\Controller\TemplateController@before');
 // -- PROFILE
 Route::get('/profile/(\d+)', '\Ivy\Controller\ProfileController@public')

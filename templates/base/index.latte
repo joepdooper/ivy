@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="{substr(info('language'), 0, 2)}" data-color-mode="dark">
+<head>
+    <meta charset="utf-8"/>
+    <title>{info('title')}</title>
+    {include file('head.latte')}
+
+    {foreach \Ivy\Manager\AssetManager::getCSS() as $cssfile}
+        <link href="{$cssfile}" rel="stylesheet" type="text/css">
+    {/foreach}
+</head>
+<body>
+
+{block body}{/block}
+
+{foreach \Ivy\Manager\AssetManager::getJS() as $jsfile}
+<script nonce="{\Ivy\Manager\SecurityManager::getNonce()}" src="{$jsfile}"></script>
+{/foreach}
+
+{foreach \Ivy\Manager\AssetManager::getModules() as $module}
+<script nonce="{\Ivy\Manager\SecurityManager::getNonce()}" type="module" src="{$module}"></script>
+{/foreach}
+
+</body>
+</html>
