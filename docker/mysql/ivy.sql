@@ -20,7 +20,7 @@ CREATE TABLE `infos` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `plugins`;
 CREATE TABLE `plugins` (
@@ -36,7 +36,7 @@ CREATE TABLE `plugins` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 DROP TABLE IF EXISTS `profiles`;
 CREATE TABLE `profiles` (
@@ -47,7 +47,7 @@ CREATE TABLE `profiles` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
@@ -62,7 +62,7 @@ CREATE TABLE `settings` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE `templates` (
@@ -72,7 +72,7 @@ CREATE TABLE `templates` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -89,7 +89,7 @@ CREATE TABLE `users` (
   `force_logout` mediumint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users_confirmations`;
 CREATE TABLE `users_confirmations` (
@@ -103,7 +103,7 @@ CREATE TABLE `users_confirmations` (
   UNIQUE KEY `selector` (`selector`),
   KEY `email_expires` (`email`,`expires`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users_remembered`;
 CREATE TABLE `users_remembered` (
@@ -141,9 +141,9 @@ CREATE TABLE `users_throttling` (
 
 INSERT INTO `infos` (`id`, `name`, `value`, `info`, `token`, `plugin_id`, `is_default`, `created_at`, `updated_at`) VALUES
 (1, 'Name', 'localhost', 'Website name', NULL, NULL, 1, NULL, NULL),
-(2, 'Title', 'ivy', 'Meta title', NULL, NULL, 1, NULL, '2026-05-03 02:11:11'),
+(2, 'Title', 'ivy', 'Meta title', NULL, NULL, 1, NULL, NULL),
 (3, 'Description', 'Yet another sleek simple fast CMS with an effortless template and plugin environment', 'Meta description', NULL, NULL, 1, NULL, NULL),
-(4, 'Keywords', 'fast, CMS, design, build, simple, slim, clean, easy, quick, cms-framework, content-management-system, google-page-speed, easy-to-deploy', 'Meta keywords', NULL, NULL, 1, NULL, '2026-04-24 00:02:07'),
+(4, 'Keywords', 'fast, CMS, design, build, simple, slim, clean, easy, quick, cms-framework, content-management-system, google-page-speed, easy-to-deploy', 'Meta keywords', NULL, NULL, 1, NULL, NULL),
 (5, 'Url', 'http://localhost:8888/blog/', 'Meta url', NULL, NULL, 1, NULL, NULL),
 (6, 'Language', 'en_GB', 'Meta language', NULL, NULL, 1, NULL, NULL),
 (7, 'Author', 'Joep Dooper', 'Meta author', NULL, NULL, 1, NULL, NULL),
@@ -155,14 +155,14 @@ INSERT INTO `profiles` (`id`, `user_id`, `user_image`, `last_activity`, `created
 (1, 1, NULL, '2025-01-01 12:00:00', NULL, NULL);
 
 INSERT INTO `settings` (`id`, `name`, `bool`, `value`, `info`, `token`, `plugin_id`, `is_default`, `created_at`, `updated_at`) VALUES
-(1, 'Private', 1, NULL, 'Set website to private', NULL, NULL, 1, NULL, '2026-05-03 11:32:21'),
-(2, 'Minify CSS', 0, 'sadasda', 'CSS minifier', NULL, NULL, 1, NULL, '2026-04-30 22:53:22'),
-(3, 'Minify JS', 0, NULL, 'JS minifier', NULL, NULL, 1, NULL, '2026-04-30 22:53:44'),
-(4, 'Registration role', 0, 'EDITOR', 'After registration set user role', NULL, NULL, 1, NULL, '2026-04-30 22:53:51');
+(1, 'Private', 0, NULL, 'Set website to private', NULL, NULL, 1, NULL, NULL),
+(2, 'Minify CSS', 0, 'sadasda', 'CSS minifier', NULL, NULL, 1, NULL, NULL),
+(3, 'Minify JS', 0, NULL, 'JS minifier', NULL, NULL, 1, NULL, NULL),
+(4, 'Registration role', 0, 'EDITOR', 'After registration set user role', NULL, NULL, 1, NULL, NULL);
 
 INSERT INTO `templates` (`id`, `type`, `value`, `created_at`, `updated_at`) VALUES
 (1, 'base', 'base', NULL, NULL),
-(2, 'sub', 'DEMO', NULL, '2026-05-03 01:59:06');
+(2, 'sub', 'DEMO', NULL, NULL);
 
 INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`) VALUES
 (1, 'admin@localhost.test', '$2y$12$ILvFcrz1kxPnAlwr6fFa4OWTW7EeDK5Uf1KFgdSFCzkXpxL5miV5C', 'ivy', 0, 1, 1, 263169, 1701517536, 1777807753, 0);
