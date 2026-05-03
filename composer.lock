@@ -1339,16 +1339,16 @@
         },
         {
             "name": "joepdooper/ivy-roots",
-            "version": "v0.9.17-alpha",
+            "version": "v0.9.18-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joepdooper/ivy-roots.git",
-                "reference": "1983662395e6c0f64b5caf2b7c3a8853891dcb56"
+                "reference": "40f74e85a7736a6eada6832efbb0a8d4f4280d91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joepdooper/ivy-roots/zipball/1983662395e6c0f64b5caf2b7c3a8853891dcb56",
-                "reference": "1983662395e6c0f64b5caf2b7c3a8853891dcb56",
+                "url": "https://api.github.com/repos/joepdooper/ivy-roots/zipball/40f74e85a7736a6eada6832efbb0a8d4f4280d91",
+                "reference": "40f74e85a7736a6eada6832efbb0a8d4f4280d91",
                 "shasum": ""
             },
             "require": {
@@ -1393,9 +1393,9 @@
             "description": "A set of classes designed to build and extend functionality in ivy",
             "support": {
                 "issues": "https://github.com/joepdooper/ivy-roots/issues",
-                "source": "https://github.com/joepdooper/ivy-roots/tree/v0.9.17-alpha"
+                "source": "https://github.com/joepdooper/ivy-roots/tree/v0.9.18-alpha"
             },
-            "time": "2026-04-29T22:19:12+00:00"
+            "time": "2026-05-03T15:56:02+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -6378,16 +6378,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v8.0.8",
+            "version": "v8.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "5b66d385dc58f69652e56f78a4184615e3f2b7f7"
+                "reference": "7113778e2e91f4709cb3194a75dfa9c0d028d94d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/5b66d385dc58f69652e56f78a4184615e3f2b7f7",
-                "reference": "5b66d385dc58f69652e56f78a4184615e3f2b7f7",
+                "url": "https://api.github.com/repos/symfony/console/zipball/7113778e2e91f4709cb3194a75dfa9c0d028d94d",
+                "reference": "7113778e2e91f4709cb3194a75dfa9c0d028d94d",
                 "shasum": ""
             },
             "require": {
@@ -6444,7 +6444,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v8.0.8"
+                "source": "https://github.com/symfony/console/tree/v8.0.9"
             },
             "funding": [
                 {
@@ -6464,7 +6464,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-30T15:14:47+00:00"
+            "time": "2026-04-29T15:02:55+00:00"
         },
         {
             "name": "symfony/finder",
