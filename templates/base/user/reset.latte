@@ -16,7 +16,10 @@
                         <input type="hidden" name="token" value="{$token}">
                         <label>
                             <input type="password" name="password" placeholder="{text('placeholder.password')}"
-                                   class="input input-bordered w-full" autocomplete="new-password">
+                                   class="input input-bordered w-full {ifset $errors['password']}input-error{/ifset}" autocomplete="new-password">
+                            {ifset $errors['password']}
+                                <span n:foreach="$errors['password'] as $message">{$message}</span>
+                            {/ifset}
                         </label>
                     </div>
 
@@ -28,7 +31,10 @@
 
                     <div>
                         <label>
-                            <input type="email" name="email" placeholder="{text('placeholder.email')}" class="input input-bordered w-full">
+                            <input type="email" name="email" placeholder="{text('placeholder.email')}" class="input input-bordered w-full {ifset $errors['email']}input-error{/ifset}">
+                            {ifset $errors['email']}
+                                <span n:foreach="$errors['email'] as $message">{$message}</span>
+                            {/ifset}
                         </label>
                     </div>
 
