@@ -1,0 +1,1 @@
+window.addEventListener("DOMContentLoaded",e=>{document.querySelectorAll("[type=submit]").forEach(function(n){})});document.addEventListener("ts-req-after",e=>{const t=new DOMParser().parseFromString(e.detail.response,"text/html").querySelector("#flashes");t&&(document.querySelector("#flashes").innerHTML=t.innerHTML)});
