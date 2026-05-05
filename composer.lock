@@ -1339,16 +1339,16 @@
         },
         {
             "name": "joepdooper/ivy-roots",
-            "version": "v0.9.18-alpha",
+            "version": "v0.9.19-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joepdooper/ivy-roots.git",
-                "reference": "8e6566947600147843cd8391608e78d1cb40fa23"
+                "reference": "45666234b4d1b1d956bece18dc2508b56a37d7b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joepdooper/ivy-roots/zipball/8e6566947600147843cd8391608e78d1cb40fa23",
-                "reference": "8e6566947600147843cd8391608e78d1cb40fa23",
+                "url": "https://api.github.com/repos/joepdooper/ivy-roots/zipball/45666234b4d1b1d956bece18dc2508b56a37d7b6",
+                "reference": "45666234b4d1b1d956bece18dc2508b56a37d7b6",
                 "shasum": ""
             },
             "require": {
@@ -1393,9 +1393,9 @@
             "description": "A set of classes designed to build and extend functionality in ivy",
             "support": {
                 "issues": "https://github.com/joepdooper/ivy-roots/issues",
-                "source": "https://github.com/joepdooper/ivy-roots/tree/v0.9.18-alpha"
+                "source": "https://github.com/joepdooper/ivy-roots/tree/v0.9.19-alpha"
             },
-            "time": "2026-05-04T07:19:20+00:00"
+            "time": "2026-05-05T08:33:03+00:00"
         },
         {
             "name": "laravel/serializable-closure",
