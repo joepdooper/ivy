@@ -5,7 +5,7 @@ use Ivy\View\View;
 
 // -- HOME
 Route::get('/', function () {
-    View::render('body.latte');
+    View::render('include/main.latte');
 })
     ->before('\Ivy\Controller\TemplateController@before');
 // -- PROFILE

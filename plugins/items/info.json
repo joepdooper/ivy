@@ -24,6 +24,7 @@
     "Youtube"
   ],
   "dependencies": [
+    "Search",
     "Tags"
   ]
 }

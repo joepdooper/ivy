@@ -16,7 +16,7 @@ class ImageInterface implements PluginInterface
         AssetManager::addCSS('plugins/items/collection/image/css/image.css');
 
         if (User::canEditAsEditor()) {
-            AssetManager::addJS('plugins/items/collection/image/js/image_admin.js');
+            AssetManager::addJS('plugins/items/collection/image/js/image.admin.js');
         }
 
 // if (User::getAuth()->isLoggedIn()) {

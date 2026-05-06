@@ -4,7 +4,11 @@ namespace Items\Collection\Audio;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
+use Items\ItemRegistry;
 use Ivy\Core\Contracts\PluginInterface;
+use Ivy\Manager\AssetManager;
+use Ivy\Routing\Route;
+use Ivy\Model\User;
 
 class AudioInterface implements PluginInterface
 {
@@ -16,11 +20,12 @@ class AudioInterface implements PluginInterface
             AssetManager::addJS('plugins/items/collection/audio/js/audio_admin.js');
         }
 
-        RouterManager::instance()->mount('/audio', function () {
-            RouterManager::instance()->match('GET|POST', '/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@insert');
-            RouterManager::instance()->post('/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@save');
-            RouterManager::instance()->post('/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@update');
-            RouterManager::instance()->post('/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@delete');
+        Route::mount('/audio', function () {
+            Route::get('/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@insert');
+            Route::post('/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@insert');
+            Route::post('/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@save');
+            Route::post('/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@update');
+            Route::post('/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Audio\AudioController@delete');
         });
 
         ItemRegistry::register('audio', Audio::class);
@@ -28,26 +33,17 @@ class AudioInterface implements PluginInterface
 
     public function install(): void
     {
-        DatabaseManager::connection()->exec(
-            '
-CREATE TABLE `audios` (
-    `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `item_id` int(11) UNSIGNED NOT NULL,
-    `file` varchar(255) DEFAULT NULL,
-    `token` int(11) DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`item_id`) REFERENCES `items`(`id`) ON DELETE CASCADE
-  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-  '
-        );
+        Capsule::schema()->create('audios', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('item_id');
+            $table->string('file', 255)->nullable();
+            $table->integer('token')->nullable();
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+        });
     }
 
     public function uninstall(): void
     {
-        DatabaseManager::connection()->exec(
-            '
-    DROP TABLE `audios`;
-    '
-        );
+        Capsule::schema()->dropIfExists('audios');
     }
 }

@@ -4,7 +4,10 @@ namespace Items\Collection\Code;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
+use Items\ItemRegistry;
 use Ivy\Core\Contracts\PluginInterface;
+use Ivy\Manager\AssetManager;
+use Ivy\Routing\Route;
 
 class CodeInterface implements PluginInterface
 {
@@ -13,35 +16,29 @@ class CodeInterface implements PluginInterface
         AssetManager::addCSS('plugins/items/collection/code/css/code.css');
         AssetManager::addJS('plugins/items/collection/code/js/rainbow.min.js');
 
-        RouterManager::instance()->match('GET|POST', '/code/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Code\CodeController@insert');
-
-        RouterManager::instance()->post('/code/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Code\CodeController@save');
-        RouterManager::instance()->post('/code/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Code\CodeController@update');
-        RouterManager::instance()->post('/code/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Code\CodeController@delete');
+        Route::mount('/code', function () {
+            Route::get('/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Code\CodeController@insert');
+            Route::post('/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Code\CodeController@insert');
+            Route::post('/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Code\CodeController@save');
+            Route::post('/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Code\CodeController@update');
+            Route::post('/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Code\CodeController@delete');
+        });
 
         ItemRegistry::register('code', Code::class);
     }
 
     public function install(): void
     {
-        DatabaseManager::connection()->exec('
-CREATE TABLE `codes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` TEXT NOT NULL,
-  `language` varchar(255) DEFAULT NULL,
-  `token` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-  '
-        );
+        Capsule::schema()->create('codes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->text('code');
+            $table->string('language', 255)->nullable();
+            $table->integer('token')->nullable();
+        });
     }
 
     public function uninstall(): void
     {
-        DatabaseManager::connection()->exec(
-            '
-    DROP TABLE `codes`;
-    '
-        );
+        Capsule::schema()->dropIfExists('codes');
     }
 }

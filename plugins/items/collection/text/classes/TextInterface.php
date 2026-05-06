@@ -4,7 +4,13 @@ namespace Items\Collection\Text;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
+use Items\ItemRegistry;
 use Ivy\Core\Contracts\PluginInterface;
+use Ivy\Manager\AssetManager;
+use Ivy\Manager\HookManager;
+use Ivy\Model\User;
+use Ivy\Routing\Route;
+use Ivy\View\View;
 
 class TextInterface implements PluginInterface
 {
@@ -20,35 +26,28 @@ class TextInterface implements PluginInterface
             });
         }
 
-        RouterManager::instance()->match('GET|POST', '/text/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Text\TextController@insert');
-
-        RouterManager::instance()->post('/text/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Text\TextController@save');
-        RouterManager::instance()->post('/text/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Text\TextController@update');
-        RouterManager::instance()->post('/text/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Text\TextController@delete');
+        Route::mount('/text', function () {
+            Route::get('/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Text\TextController@insert');
+            Route::post('/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Text\TextController@insert');
+            Route::post('/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Text\TextController@save');
+            Route::post('/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Text\TextController@update');
+            Route::post('/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Text\TextController@delete');
+        });
 
         ItemRegistry::register('text', Text::class);
     }
 
     public function install(): void
     {
-        DatabaseManager::connection()->exec(
-            '
-CREATE TABLE `texts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `text` TEXT NOT NULL,
-  `token` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-  '
-        );
+        Capsule::schema()->create('texts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->text('text');
+            $table->integer('token')->nullable();
+        });
     }
 
     public function uninstall(): void
     {
-        DatabaseManager::connection()->exec(
-            '
-        DROP TABLE `texts`;
-        '
-        );
+        Capsule::schema()->dropIfExists('texts');
     }
 }

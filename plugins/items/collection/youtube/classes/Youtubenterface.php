@@ -4,9 +4,12 @@ namespace Items\Collection\Youtube;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
+use Items\ItemRegistry;
 use Ivy\Core\Contracts\PluginInterface;
-use Ivy\Core\Path;
 use Ivy\Manager\AssetManager;
+use Ivy\Manager\HookManager;
+use Ivy\Manager\SecurityManager;
+use Ivy\Manager\SessionManager;
 use Ivy\Routing\Route;
 
 class YoutubeInterface implements PluginInterface
@@ -32,27 +35,24 @@ class YoutubeInterface implements PluginInterface
             }
         });
 
-        RouterManager::instance()->match('GET|POST', '/youtube/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Youtube\YoutubeController@insert');
+        Route::mount('/youtube', function () {
+            Route::get('/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Youtube\YoutubeController@insert');
+            Route::post('/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Youtube\YoutubeController@insert');
+            Route::post('/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Youtube\YoutubeController@save');
+            Route::post('/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Youtube\YoutubeController@update');
+            Route::post('/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Youtube\YoutubeController@delete');
+        });
 
-        RouterManager::instance()->post('/youtube/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Youtube\YoutubeController@save');
-        RouterManager::instance()->post('/youtube/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Youtube\YoutubeController@update');
-        RouterManager::instance()->post('/youtube/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Youtube\YoutubeController@delete');
-
-        ItemRegistry::register('image', Youtube::class);
+        ItemRegistry::register('youtube', Youtube::class);
     }
 
     public function install(): void
     {
-        DatabaseManager::connection()->exec(
-            '
-CREATE TABLE `youtubes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `youtube_video_id` varchar(255) DEFAULT NULL,
-  `token` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-  '
-        );
+        Capsule::schema()->create('youtubes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('youtube_video_id', 255)->nullable();
+            $table->integer('token')->nullable();
+        });
 
         Capsule::table('item_templates')->insert([
             'name'        => 'Youtube',
@@ -69,10 +69,6 @@ CREATE TABLE `youtubes` (
             ->where('plugin_url', 'youtube')
             ->delete();
 
-        DatabaseManager::connection()->exec(
-            '
-    DROP TABLE `youtubes`;
-    '
-        );
+        Capsule::schema()->dropIfExists('youtubes');
     }
 }

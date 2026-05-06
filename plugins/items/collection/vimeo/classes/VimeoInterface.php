@@ -8,6 +8,9 @@ use Items\ItemRegistry;
 use Ivy\Core\Contracts\PluginInterface;
 use Ivy\Manager\AssetManager;
 use Ivy\Manager\HookManager;
+use Ivy\Manager\SecurityManager;
+use Ivy\Manager\SessionManager;
+use Ivy\Routing\Route;
 
 class VimeoInterface implements PluginInterface
 {
@@ -30,35 +33,28 @@ class VimeoInterface implements PluginInterface
             }
         });
 
-        RouterManager::instance()->match('GET|POST', '/vimeo/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Vimeo\VimeoController@insert');
+        Route::mount('/vimeo', function () {
+            Route::get('/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Vimeo\VimeoController@insert');
+            Route::post('/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Vimeo\VimeoController@insert');
+            Route::post('/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Vimeo\VimeoController@save');
+            Route::post('/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Vimeo\VimeoController@update');
+            Route::post('/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Vimeo\VimeoController@delete');
+        });
 
-        RouterManager::instance()->post('/vimeo/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Vimeo\VimeoController@save');
-        RouterManager::instance()->post('/vimeo/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Vimeo\VimeoController@update');
-        RouterManager::instance()->post('/vimeo/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Vimeo\VimeoController@delete');
-
-        ItemRegistry::register('image', Vimeo::class);
+        ItemRegistry::register('vimeo', Vimeo::class);
     }
 
     public function install(): void
     {
-        DatabaseManager::connection()->exec(
-            '
-    CREATE TABLE `vimeos` (
-      `id` int(11) NOT NULL AUTO_INCREMENT,
-      `vimeo_video_id` varchar(255) DEFAULT NULL,
-      `token` int(11) DEFAULT NULL,
-      PRIMARY KEY (`id`)
-      ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-      '
-        );
+        Capsule::schema()->create('vimeos', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('vimeo_video_id', 255)->nullable();
+            $table->integer('token')->nullable();
+        });
     }
 
     public function uninstall(): void
     {
-        DatabaseManager::connection()->exec(
-            '
-        DROP TABLE `vimeos`;
-        '
-        );
+        Capsule::schema()->dropIfExists('vimeos');
     }
 }
