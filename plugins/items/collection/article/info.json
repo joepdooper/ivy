@@ -3,9 +3,5 @@
   "version": "1.0.0",
   "description": "Article item",
   "type": "item",
-  "interface": "Items\\Collection\\Article\\ArticleInterface",
-  "dependencies": [
-    "Image",
-    "Text"
-  ]
+  "interface": "Items\\Collection\\Article\\ArticleInterface"
 }

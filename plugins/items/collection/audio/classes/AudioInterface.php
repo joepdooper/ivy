@@ -38,7 +38,6 @@ class AudioInterface implements PluginInterface
             $table->unsignedInteger('item_id');
             $table->string('file', 255)->nullable();
             $table->integer('token')->nullable();
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
         });
     }
 

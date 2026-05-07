@@ -53,22 +53,10 @@ class YoutubeInterface implements PluginInterface
             $table->string('youtube_video_id', 255)->nullable();
             $table->integer('token')->nullable();
         });
-
-        Capsule::table('item_templates')->insert([
-            'name'        => 'Youtube',
-            'table'       => 'youtube',
-            'plugin_url'  => 'items/collection/youtube',
-            'route'       => 'youtube',
-            'namespace'   => 'Items\\Collection\\Youtube',
-        ]);
     }
 
     public function uninstall(): void
     {
-        Capsule::table('item_templates')
-            ->where('plugin_url', 'youtube')
-            ->delete();
-
         Capsule::schema()->dropIfExists('youtubes');
     }
 }

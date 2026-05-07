@@ -4,9 +4,10 @@ namespace Items\Collection\Image;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
+use Items\ItemRegistry;
 use Ivy\Core\Contracts\PluginInterface;
-use Ivy\Core\Path;
 use Ivy\Manager\AssetManager;
+use Ivy\Model\User;
 use Ivy\Routing\Route;
 
 class ImageInterface implements PluginInterface
@@ -31,57 +32,40 @@ class ImageInterface implements PluginInterface
 //    }
 // }
 
-        RouterManager::instance()->match('GET|POST', '/image/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Image\ImageController@insert');
-
-        RouterManager::instance()->post('/image/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Image\ImageController@save');
-        RouterManager::instance()->post('/image/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Image\ImageController@update');
-        RouterManager::instance()->post('/image/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Image\ImageController@delete');
-
-        RouterManager::instance()->post('/image/sizes/post', '\Items\Collection\Image\ImageController@post');
-        RouterManager::instance()->post('/image/sizes/index', '\Items\Collection\Image\ImageController@index');
+        Route::mount('/image', function () {
+            Route::get('/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Image\ImageController@insert');
+            Route::post('/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Image\ImageController@insert');
+            Route::post('/save/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Image\ImageController@save');
+            Route::post('/update/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Image\ImageController@update');
+            Route::post('/delete/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Image\ImageController@delete');
+            Route::post('/sizes/post', '\Items\Collection\Image\ImageController@post');
+            Route::post('/sizes/index', '\Items\Collection\Image\ImageController@index');
+        });
 
         ItemRegistry::register('image', Image::class);
     }
 
     public function install(): void
     {
-        DatabaseManager::connection()->exec(
-            'CREATE TABLE `images` (
-    `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `item_id` int(11) UNSIGNED NOT NULL,
-    `file` varchar(255) DEFAULT NULL,
-    `token` int(11) DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`item_id`) REFERENCES `items`(`id`) ON DELETE CASCADE
-  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;'
-        );
+        Capsule::schema()->create('images', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('item_id');
+            $table->string('file', 255)->nullable();
+            $table->integer('token')->nullable();
+        });
 
-        DatabaseManager::connection()->exec(
-            '
-CREATE TABLE `image_sizes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255),
-  `bool` tinyint(1) DEFAULT 0,
-  `value` int(11) DEFAULT NULL,
-  `info` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-  '
-        );
+        Capsule::schema()->create('image_sizes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 255)->nullable();
+            $table->boolean('bool')->default(false);
+            $table->integer('value')->nullable();
+            $table->string('info', 255)->nullable();
+        });
     }
 
     public function uninstall(): void
     {
-        DatabaseManager::connection()->exec(
-            '
-        DROP TABLE `images`;
-        '
-        );
-
-        DatabaseManager::connection()->exec(
-            '
-        DROP TABLE `image_sizes`;
-        '
-        );
+        Capsule::schema()->dropIfExists('images');
+        Capsule::schema()->dropIfExists('image_sizes');
     }
 }

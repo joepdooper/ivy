@@ -3,8 +3,5 @@
   "version": "1.0.0",
   "description": "Gig item",
   "type": "item",
-  "interface": "Items\\Collection\\Gig\\GigInterface",
-  "dependencies": [
-    "Text"
-  ]
+  "interface": "Items\\Collection\\Gig\\GigInterface"
 }
