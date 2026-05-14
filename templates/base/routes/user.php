@@ -1,6 +1,6 @@
 <?php
 
-use Ivy\Routing\Route;
+use Ivy\Shared\Presentation\Routing\Route;
 
 Route::mount('/user', function () {
     // -- USER register

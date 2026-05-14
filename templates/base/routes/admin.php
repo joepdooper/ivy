@@ -1,6 +1,7 @@
 <?php
 
-use Ivy\Routing\Route;
+
+use Ivy\Shared\Presentation\Routing\Route;
 
 Route::mount('/admin', function () {
     // -- USER profile

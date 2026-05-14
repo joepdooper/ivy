@@ -1,6 +1,6 @@
 <?php
 
-use Ivy\Core\Path;
+use Ivy\Shared\Core\Path;
 
 spl_autoload_register(function ($classname) {
     $classname = str_replace('\\', DIRECTORY_SEPARATOR, $classname);

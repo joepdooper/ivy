@@ -1,7 +1,7 @@
 <?php
 
-use Ivy\Manager\AssetManager;
-use Ivy\Manager\TemplateManager;
+use Ivy\Template\Infrastructure\Manager\AssetManager;
+use Ivy\Template\Infrastructure\Manager\TemplateManager;
 
 AssetManager::addCSS('css/style.css');
 AssetManager::addCSS('css/custom.css');
