@@ -4,6 +4,7 @@ namespace NextcloudApi;
 
 use Ivy\Plugin\Application\Contracts\PluginInterface;
 use Ivy\Shared\Presentation\Routing\Route;
+use Ivy\User\Domain\Entity\User;
 
 class NextcloudApiInterface implements PluginInterface
 {
@@ -15,6 +16,8 @@ class NextcloudApiInterface implements PluginInterface
             Route::post('/sync', '\NextcloudApi\NextcloudApiController@sync')
                 ->before('\Ivy\User\Presentation\Controller\AdminController@before');
         });
+
+        User::observe(UserObserver::class);
     }
 
     public function install(): void
