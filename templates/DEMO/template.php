@@ -4,6 +4,7 @@ use Ivy\Template\Infrastructure\Manager\AssetManager;
 use Ivy\Template\Infrastructure\Manager\TemplateManager;
 
 AssetManager::addCSS('css/style.css');
+AssetManager::addCSS('css/custom.css');
 AssetManager::addJS('js/twinspark.min.js');
 
 TemplateManager::require('routes/web.php');

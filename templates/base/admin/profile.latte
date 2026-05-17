@@ -47,15 +47,21 @@
                 {/if}
                 <div>
                     <label>
-                        <input class="input input-bordered w-full" name="username" type="text" placeholder="{text('placeholder.name')}"
+                        <input class="input input-bordered w-full {ifset $errors['username']}input-error{/ifset}" name="username" type="text" placeholder="{text('placeholder.name')}"
                                value="{ifset $errors['username']}{$old['username']}{else}{$profile->user->username}{/ifset}">
+                        {ifset $errors['username']}
+                            <span n:foreach="$errors['username'] as $message">{$message}</span>
+                        {/ifset}
                     </label>
                 </div>
 
                 <div>
                     <label>
-                        <input class="input input-bordered w-full" name="email" type="email" placeholder="{text('placeholder.email')}"
+                        <input class="input input-bordered w-full {ifset $errors['email']}input-error{/ifset}" name="email" type="email" placeholder="{text('placeholder.email')}"
                                value="{ifset $errors['email']}{$old['email']}{else}{$profile->user->email}{/ifset}">
+                        {ifset $errors['email']}
+                            <span n:foreach="$errors['email'] as $message">{$message}</span>
+                        {/ifset}
                     </label>
                 </div>
 
