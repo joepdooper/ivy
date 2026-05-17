@@ -2,16 +2,18 @@
 
 namespace Tags;
 
-use Ivy\Model\User;
 
-class TagPolicy
+use Ivy\Shared\Base\Policy;
+
+class TagPolicy extends Policy
 {
-    public static function index(Tag $tag): bool
+    public function index(Tag $tag): bool
     {
-        return User::canEditAsEditor();
+        return $this->canEditAsEditor();
+
     }
-    public static function sync(Tag $tag): bool
+    public function sync(Tag $tag): bool
     {
-        return User::canEditAsEditor();
+        return $this->canEditAsEditor();
     }
 }

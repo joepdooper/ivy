@@ -2,10 +2,12 @@
 
 namespace Tags;
 
-use GUMP;
-use Ivy\Abstract\Controller;
-use Ivy\Core\Path;
-use Ivy\View\View;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Ivy\Shared\Base\Controller;
+use Ivy\Shared\Core\Path;
+use Ivy\Template\Presentation\View\View;
+use Ivy\User\Domain\Exception\AuthorizationException;
+use ReflectionException;
 
 class TagController extends Controller
 {
@@ -22,9 +24,14 @@ class TagController extends Controller
         $this->tag->policy('index');
 
         $tags = Tag::all();
-        View::set(Path::get('PLUGINS_PATH').'tags/template/manage.latte', ['tags' => $tags]);
+        View::render(Path::get('PLUGINS_PATH').'tags/template/manage.latte', ['tags' => $tags]);
     }
 
+    /**
+     * @throws AuthorizationException
+     * @throws ReflectionException
+     * @throws BindingResolutionException
+     */
     public function sync(): void
     {
         $this->tag->policy('sync');
@@ -63,6 +70,6 @@ class TagController extends Controller
         }
 
         $this->flashBag->add('success', 'Updated successful');
-        $this->redirect($this->tag->getPath().DIRECTORY_SEPARATOR.'manage');
+        $this->redirect('/admin/plugin/tags/manage');
     }
 }

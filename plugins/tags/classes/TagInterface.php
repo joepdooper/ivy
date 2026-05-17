@@ -4,9 +4,9 @@ namespace Tags;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
-use Ivy\Core\Contracts\PluginInterface;
-use Ivy\Manager\AssetManager;
-use Ivy\Routing\Route;
+use Ivy\Plugin\Application\Contracts\PluginInterface;
+use Ivy\Shared\Presentation\Routing\Route;
+use Ivy\Template\Infrastructure\Manager\AssetManager;
 
 class TagInterface implements PluginInterface
 {
@@ -16,9 +16,9 @@ class TagInterface implements PluginInterface
 
         Route::mount('/admin/plugin/tags', function () {
             Route::get('/manage', '\Tags\TagController@index')
-                ->before('\Ivy\Controller\AdminController@before');
+                ->before('\Ivy\User\Presentation\Controller\AdminController@before');
             Route::post('/sync', '\Tags\TagController@sync')
-                ->before('\Ivy\Controller\AdminController@before');
+                ->before('\Ivy\User\Presentation\Controller\AdminController@before');
         });
     }
 
