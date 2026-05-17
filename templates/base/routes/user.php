@@ -4,24 +4,24 @@ use Ivy\Shared\Presentation\Routing\Route;
 
 Route::mount('/user', function () {
     // -- USER register
-    Route::post('/register', '\Ivy\Controller\UserController@register')
-        ->before('\Ivy\Controller\UserController@beforeRegister');
-    Route::get('/register', '\Ivy\Controller\UserController@viewRegister')
-        ->before('\Ivy\Controller\UserController@beforeRegister');
+    Route::post('/register', '\Ivy\User\Presentation\Controller\UserController@register')
+        ->before('\Ivy\User\Presentation\Controller\UserController@beforeRegister');
+    Route::get('/register', '\Ivy\User\Presentation\Controller\UserController@viewRegister')
+        ->before('\Ivy\User\Presentation\Controller\UserController@beforeRegister');
 
     // -- USER login
-    Route::post('/login', '\Ivy\Controller\UserController@login')
-        ->before('\Ivy\Controller\UserController@beforeLogin');
-    Route::get('/login(/[^/]+)?(/[^/]+)?', '\Ivy\Controller\UserController@viewLogin')
-        ->before('\Ivy\Controller\UserController@beforeLogin');
+    Route::post('/login', '\Ivy\User\Presentation\Controller\UserController@login')
+        ->before('\Ivy\User\Presentation\Controller\UserController@beforeLogin');
+    Route::get('/login(/[^/]+)?(/[^/]+)?', '\Ivy\User\Presentation\Controller\UserController@viewLogin')
+        ->before('\Ivy\User\Presentation\Controller\UserController@beforeLogin');
 
     // -- USER logout
-    Route::post('/logout', '\Ivy\Controller\UserController@logout');
-    Route::get('/logout', '\Ivy\Controller\UserController@viewLogout');
+    Route::post('/logout', '\Ivy\User\Presentation\Controller\UserController@logout');
+    Route::get('/logout', '\Ivy\User\Presentation\Controller\UserController@viewLogout');
 
     // -- USER reset
-    Route::post('/reset', '\Ivy\Controller\UserController@reset')
-        ->before('\Ivy\Controller\UserController@beforeReset');
-    Route::get('/reset(/[^/]+)?(/[^/]+)?', '\Ivy\Controller\UserController@viewReset')
-        ->before('\Ivy\Controller\UserController@beforeReset');
+    Route::post('/reset', '\Ivy\User\Presentation\Controller\UserController@reset')
+        ->before('\Ivy\User\Presentation\Controller\UserController@beforeReset');
+    Route::get('/reset(/[^/]+)?(/[^/]+)?', '\Ivy\User\Presentation\Controller\UserController@viewReset')
+        ->before('\Ivy\User\Presentation\Controller\UserController@beforeReset');
 });
