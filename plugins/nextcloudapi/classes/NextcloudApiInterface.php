@@ -12,22 +12,14 @@ class NextcloudApiInterface implements PluginInterface
     public function register(): void
     {
         Route::mount('/admin/plugin/nextcloud-api', function () {
-            Route::get('/manage', '\NextcloudApi\NextcloudApiController@index')
+            Route::get('/status', '\NextcloudApi\NextcloudApiController@index')
                 ->before('\Ivy\User\Presentation\Controller\AdminController@before');
             Route::post('/sync', '\NextcloudApi\NextcloudApiController@sync')
                 ->before('\Ivy\User\Presentation\Controller\AdminController@before');
         });
 
-        Profile::created(function (Profile $user) {
-            d('Created profile: ' . $user->id);die;
-        });
-
-        Profile::saved(function (Profile $user) {
-            d('Saved user: ' . $user->id);die;
-        });
-
-        Profile::deleted(function (Profile $user) {
-            d('Deleted user: ' . $user->id);die;
+        Profile::created(function (Profile $profile) {
+            d('Created user id: ' . $profile->user->id);die;
         });
     }
 
