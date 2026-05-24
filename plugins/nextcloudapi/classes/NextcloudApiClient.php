@@ -8,27 +8,56 @@ use Exception;
 class NextcloudApiClient
 {
     protected Curl $curl;
+
     protected string $baseUrl;
 
-    public function __construct() {
+    public function __construct(NextcloudApi $nextcloudApi)
+    {
+        $this->baseUrl = $nextcloudApi->protocol . '://' . rtrim(
+            $nextcloudApi->url,
+            '/'
+        );
+
+        if($nextcloudApi->port){
+            $this->baseUrl .= ':' . $nextcloudApi->port;
+        }
+
         $this->curl = new Curl();
         $this->curl->setTimeout(15);
         $this->curl->setConnectTimeout(10);
-        $this->curl->setBasicAuthentication($_ENV['NEXTCLOUD_USERNAME'], $_ENV['NEXTCLOUD_PASSWORD']);
-        $this->curl->setHeader('OCS-APIRequest', 'true');
-        $this->curl->setHeader('Accept', 'application/json');
-        $this->curl->setDefaultJsonDecoder(true);
 
-        $this->baseUrl = rtrim($_ENV['NEXTCLOUD_URL'], '/');
+        if($nextcloudApi->username && $nextcloudApi->password) {
+            $this->curl->setBasicAuthentication(
+                $nextcloudApi->username,
+                $nextcloudApi->password
+            );
+        }
+
+        $this->curl->setHeader(
+            'OCS-APIRequest',
+            'true'
+        );
+
+        $this->curl->setHeader(
+            'Accept',
+            'application/json'
+        );
+
+        $this->curl->setDefaultJsonDecoder(true);
     }
+
+    /* =========================================================
+     * CORE REQUEST
+     * ========================================================= */
 
     protected function request(
         string $method,
         string $endpoint,
         array $data = []
-    ): array {
+    ): NextcloudApiResponse
+    {
 
-        $url = $this->baseUrl . $endpoint;
+        $url = $this->baseUrl . '/' . ltrim($endpoint, '/');
 
         switch (strtoupper($method)) {
 
@@ -49,58 +78,36 @@ class NextcloudApiClient
                 break;
 
             default:
-                throw new Exception('Unsupported HTTP method.');
+                throw new Exception(
+                    'Unsupported HTTP method.'
+                );
         }
 
         if ($this->curl->error) {
-            throw new Exception('Request failed: ' .$this->curl->errorMessage);
-        }
-
-        $status = $this->curl->httpStatusCode;
-
-        if ($status === 401) {
-            throw new Exception('Invalid Nextcloud credentials.');
-        }
-
-        if ($status === 404) {
-            throw new Exception('Nextcloud API endpoint not found.');
-        }
-
-        if ($status >= 500) {
-            throw new Exception('Nextcloud server error.');
-        }
-
-        if ($status >= 400) {
-            throw new Exception('Nextcloud returned HTTP ' . $status);
-        }
-
-        $response = $this->curl->response;
-
-        if (!is_array($response)) {
-            throw new Exception(
-                'Nextcloud did not return valid JSON.'
+            return new NextcloudApiResponse(
+                code: $this->curl->getErrorCode(),
+                message: $this->curl->getErrorMessage()
             );
         }
 
-        if (!isset($response['ocs'])) {
-            throw new Exception('Invalid response from Nextcloud.');
-        }
-
-        $meta = $response['ocs']['meta'] ?? null;
-
-        if (!$meta) {
-            throw new Exception('Missing OCS metadata.');
-        }
-
-        if ($meta['statuscode'] !== 100) {
-            throw new Exception($meta['message'] ?: 'Unknown Nextcloud API error.');
-        }
-
-        return $response;
+        return new NextcloudApiResponse(
+            code: $this->curl->getHttpStatusCode(),
+            version: $this->curl->response['ocs']['data']['nextcloud']['system']['version'] ?? $this->curl->response['version'],
+            meta: $this->curl->response['ocs']['meta'] ?? null,
+            data: $this->curl->response['ocs']['data'] ?? $this->curl->response
+        );
     }
 
-    public function get(string $endpoint, array $data = []): array
+    /* =========================================================
+     * HTTP HELPERS
+     * ========================================================= */
+
+    public function get(
+        string $endpoint,
+        array $data = []
+    ): NextcloudApiResponse
     {
+
         return $this->request(
             'GET',
             $endpoint,
@@ -108,8 +115,12 @@ class NextcloudApiClient
         );
     }
 
-    public function post(string $endpoint, array $data = []): array
+    public function post(
+        string $endpoint,
+        array $data = []
+    ): NextcloudApiResponse
     {
+
         return $this->request(
             'POST',
             $endpoint,
@@ -117,8 +128,12 @@ class NextcloudApiClient
         );
     }
 
-    public function put(string $endpoint, array $data = []): array
+    public function put(
+        string $endpoint,
+        array $data = []
+    ): NextcloudApiResponse
     {
+
         return $this->request(
             'PUT',
             $endpoint,
@@ -126,8 +141,12 @@ class NextcloudApiClient
         );
     }
 
-    public function delete(string $endpoint, array $data = []): array
+    public function delete(
+        string $endpoint,
+        array $data = []
+    ): NextcloudApiResponse
     {
+
         return $this->request(
             'DELETE',
             $endpoint,
@@ -135,24 +154,74 @@ class NextcloudApiClient
         );
     }
 
-    public function getCapabilities(): array
+    /* =========================================================
+     * USERS
+     * ========================================================= */
+
+    public function getCurrentUser(): NextcloudApiResponse
     {
-        return $this->get('/ocs/v1.php/cloud/capabilities');
+        return $this->get(
+            '/ocs/v2.php/cloud/user'
+        );
+    }
+
+    public function getUsers(): NextcloudApiResponse
+    {
+        return $this->get(
+            '/ocs/v2.php/cloud/users'
+        );
+    }
+
+    public function getUser(
+        string $userId
+    ): NextcloudApiResponse
+    {
+
+        return $this->get(
+            '/ocs/v2.php/cloud/users/' .
+            urlencode($userId)
+        );
     }
 
     public function createUser(
         string $userId,
         ?string $email = null,
-        ?string $password = null,
-    ): array
+        ?string $password = null
+    ): NextcloudApiResponse
     {
+
         return $this->post(
-            '/ocs/v1.php/cloud/users',
+            '/ocs/v2.php/cloud/users',
             [
-                'userid'      => $userId,
-                'email'       => $email,
-                'password'    => $password,
+                'userid'   => $userId,
+                'email'    => $email,
+                'password' => $password,
             ]
+        );
+    }
+
+    /* =========================================================
+     * SYSTEM
+     * ========================================================= */
+
+    public function getServerInfo(): NextcloudApiResponse
+    {
+        return $this->get(
+            '/ocs/v2.php/apps/serverinfo/api/v1/info'
+        );
+    }
+
+    public function getCapabilities(): NextcloudApiResponse
+    {
+        return $this->get(
+            '/ocs/v2.php/cloud/capabilities'
+        );
+    }
+
+    public function getStatus(): NextcloudApiResponse
+    {
+        return $this->get(
+            'status.php'
         );
     }
 }

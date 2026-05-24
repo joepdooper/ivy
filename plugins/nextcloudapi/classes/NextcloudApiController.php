@@ -2,67 +2,47 @@
 
 namespace NextcloudApi;
 
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Ivy\Shared\Base\Controller;
 use Ivy\Shared\Core\Path;
 use Ivy\Template\Presentation\View\View;
-use Ivy\User\Domain\Exception\AuthorizationException;
-use ReflectionException;
 
-class NextcloudController extends Controller
+class NextcloudApiController extends Controller
 {
+    protected NextcloudApi $nextcloudApi;
 
-    public function index(): void
+    public function __construct()
     {
-        $this->tag->policy('index');
-
-        $tags = Tag::all();
-        View::render(Path::get('PLUGINS_PATH').'tags/template/manage.latte', ['tags' => $tags]);
+        parent::__construct();
+        $this->nextcloudApi = new NextcloudApi();
     }
 
-    /**
-     * @throws AuthorizationException
-     * @throws ReflectionException
-     * @throws BindingResolutionException
-     */
-    public function sync(): void
+    public function servers(): void
     {
-        $this->tag->policy('sync');
+        $this->nextcloudApi->policy('servers');
 
-        foreach ($this->request->get('tag') as $data) {
-            try {
-                $validated = GUMP::is_valid($data, [
-                    'value' => 'alpha_numeric_dash',
-                ]);
+        $nextcloudApis = NextcloudApi::all();
 
-                if ($validated !== true) {
-                    foreach ($validated as $msg) {
-                        $this->flashBag->add('error', $msg);
-                    }
+        View::render(Path::get('PLUGINS_PATH').'nextcloudapi/template/servers.latte', [
+            'nextcloudApis' => $nextcloudApis
+        ]);
+    }
 
-                    continue;
-                }
 
-                if (empty($data['value'])) {
-                    continue;
-                }
+    public function status($id): void
+    {
+        $this->nextcloudApi->policy('status');
 
-                $tag = ! empty($data['id'])
-                    ? (new Tag)->where('id', $data['id'])->fetchOne()
-                    : new Tag;
-
-                if (isset($data['delete']) && ! empty($data['id'])) {
-                    $tag?->delete();
-                } else {
-                    $tag->populate($data)->save();
-                }
-
-            } catch (\Exception $e) {
-                $this->flashBag->add('error', $e->getMessage());
-            }
+        $nextcloudApi = NextcloudApi::find($id);
+        $nextcloudApiClient = new NextcloudApiClient($nextcloudApi);
+        // $info = $nextcloudApiClient->getStatus();
+        $info = null;
+        if(isset($info->data['installed'])){
+            $version = $info->data['version'];
+            $info = $nextcloudApiClient->getServerInfo();
+            $info->version = $version;
         }
-
-        $this->flashBag->add('success', 'Updated successful');
-        $this->redirect('/admin/plugin/tags/manage');
+        View::render(Path::get('PLUGINS_PATH').'nextcloudapi/template/status.latte', [
+            'info' => $info,
+        ]);
     }
 }

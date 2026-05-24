@@ -1,0 +1,40 @@
+{extends file('body.latte')}
+
+{block main}
+    <main class="grow p-4 w-full max-w-5xl mx-auto">
+        <div class="space-y-4">
+            <div class="flex justify-between items-end">
+                <h1 class="leading-none text-6xl font-bold">{text('nextcloudapi.nextcloudapi.nextcloud_apis')}</h1>
+                <label class="btn btn-primary btn-square shadow-none join-item"
+                       title="{text('button.add')}"
+                       for="modal_create_nextcloud_api"
+                >
+                    {icon("feather/plus.svg")|noescape}
+                </label>
+            </div>
+
+            <div n:if="!$nextcloudApis->isEmpty()" class="space-y-4">
+                <div n:foreach="$nextcloudApis as $nextcloudApi">
+                    <div class="rounded-box">
+                        <div class="p-4 rounded-box bg-base-300">
+                            <h2 class="leading-none">{$nextcloudApi->url}</h2>
+                        </div>
+                        <div
+                                ts-req="{path('PUBLIC_URL') . 'admin/plugin/nextcloudapi/server/'.$nextcloudApi->id.'/status'}"
+                                ts-trigger="visible once"
+                        >
+                            {include 'status.latte'}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div n:else class="text-center">
+                {text('nextcloudapi.nextcloudapi.empty')}
+            </div>
+
+            {* <pre>{print_r($info, true)}</pre> *}
+        </div>
+
+        {include 'create.latte'}
+    </main>
+{/block}

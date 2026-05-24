@@ -1,7 +1,7 @@
 {
   "name": "Nextcloud API",
   "version": "1.0.0",
-  "description": "Connect your Nextcloud server",
+  "description": "Connect with Nextcloud servers",
   "type": "API",
   "interface": "NextcloudApi\\NextcloudApiInterface",
   "settings": [
@@ -11,6 +11,10 @@
     }
   ],
   "actions": [
-    {"text": "nextcloudapi.nextcloudapi.response", "icon": "feather/activity.svg", "url": "status"}
+    {
+      "text": "nextcloudapi.servers",
+      "icon": "feather/server.svg",
+      "url": "servers"
+    }
   ]
 }

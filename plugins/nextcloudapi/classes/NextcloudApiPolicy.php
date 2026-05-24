@@ -1,18 +1,23 @@
 <?php
 
-namespace Tags;
+namespace NextcloudApi;
 
 
 use Ivy\Shared\Base\Policy;
 
-class TagPolicy extends Policy
+class NextcloudApiPolicy extends Policy
 {
-    public function index(Tag $tag): bool
+    public function servers(): bool
     {
         return $this->canEditAsEditor();
-
     }
-    public function sync(Tag $tag): bool
+
+    public function status(): bool
+    {
+        return $this->canEditAsEditor();
+    }
+
+    public function sync(): bool
     {
         return $this->canEditAsEditor();
     }

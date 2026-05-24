@@ -1,0 +1,45 @@
+<input type="checkbox" id="modal_create_nextcloud_api" class="modal-toggle block" name="modal_create_nextcloud_api"/>
+<div class="modal text-left" role="dialog">
+    <div class="modal-box">
+        <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" for="modal_create_nextcloud_api">✕</label>
+        <h3 class="text-lg font-bold">{text('nextcloudapi.nextcloudapi.modal.add')}</h3>
+        <form ts-req="{path('PUBLIC_URL') . 'admin/plugin/nextcloudapi/add/'}" ts-target="target" method="POST" enctype="multipart/form-data">
+            {csrf()}
+            <div class="space-y-4 mt-4">
+                <div class="join w-full">
+                    <label class="join-item w-25">
+                        <select name="protocol" class="select">
+                            <option>https</option>
+                            <option>http</option>
+                        </select>
+                    </label>
+                    <label class="input validator join-item">
+                        <input name="url" type="text" placeholder="cloud.domain.com" required />
+                    </label>
+                    <label class="input w-25 validator join-item">
+                        <input name="port" type="number" placeholder="80" />
+                    </label>
+                </div>
+
+                <label class="input w-full">
+                    Username
+                    <input type="text" class="grow" />
+                    <span class="badge badge-neutral badge-xs">Optional</span>
+                </label>
+
+                <label class="input w-full">
+                    Password
+                    <input type="password" class="grow" />
+                    <span class="badge badge-neutral badge-xs">Optional</span>
+                </label>
+
+                <div class="modal-action">
+                    <label for="modal_create_nextcloud_api" class="btn">{text('button.cancel')}</label>
+                    <button class="btn btn-primary shadow-none"
+                            name="submit" type="submit" value="add">{text('button.add')}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
