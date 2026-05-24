@@ -34,8 +34,7 @@ class NextcloudApiController extends Controller
 
         $nextcloudApi = NextcloudApi::find($id);
         $nextcloudApiClient = new NextcloudApiClient($nextcloudApi);
-        // $info = $nextcloudApiClient->getStatus();
-        $info = null;
+        $info = $nextcloudApiClient->getStatus();
         if(isset($info->data['installed'])){
             $version = $info->data['version'];
             $info = $nextcloudApiClient->getServerInfo();
