@@ -12,9 +12,9 @@
   ],
   "actions": [
     {
-      "text": "nextcloudapi.servers",
+      "text": "nextcloudapi.nextcloud_apis",
       "icon": "feather/server.svg",
-      "url": "servers"
+      "url": "index"
     }
   ]
 }

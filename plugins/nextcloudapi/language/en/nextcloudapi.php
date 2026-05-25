@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'protocol' => 'Protocol',
+    'url' => 'URL',
+    'port' => 'Port',
+    'username' => 'Username',
+    'password' => 'Password',
     'status' => [
         'error' => 'Error',
         'unknown' => 'Unknown',
@@ -15,8 +20,16 @@ return [
     ],
     'modal' => [
         'add' => 'Add a new API connection',
+        'edit' => 'Edit API connection :url',
+    ],
+    'placeholder' => [
+        'url' => 'nextcloud.example.com',
+        'port' => '80',
+        'username' => 'Username',
+        'password' => 'Password',
+        'api_username' => 'Leave empty to keep current saved username',
+        'api_password' => 'Leave empty to keep current saved password'
     ],
     'nextcloud_apis' => 'Nextcloud APIs',
-    'status_message' => 'Status message is :message',
-    'version' => 'Version is :version'
+    'empty' => 'No Nextcloud API connections defined'
 ];
