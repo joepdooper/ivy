@@ -9,12 +9,14 @@ use Ivy\Template\Presentation\View\View;
 class NextcloudApiController extends Controller
 {
     protected NextcloudApi $nextcloudApi;
+    protected NextcloudApiManager $nextcloudApiManager;
     protected NextcloudApiForm $nextcloudApiForm;
 
     public function __construct()
     {
         parent::__construct();
         $this->nextcloudApi = new NextcloudApi();
+        $this->nextcloudApiManager = new NextcloudApiManager();
         $this->nextcloudApiForm = new NextcloudApiForm();
     }
 
@@ -22,7 +24,8 @@ class NextcloudApiController extends Controller
     {
         $this->nextcloudApi->policy('add');
 
-        $result = $this->nextcloudApiForm->validate($this->request->request->all());
+        $data = $this->request->request->all();
+        $result = $this->nextcloudApiForm->validate($data);
 
         if (!$result->valid) {
             $this->flashBag->set('errors', $result->errors);
@@ -31,6 +34,25 @@ class NextcloudApiController extends Controller
             $nextcloudApi = new NextcloudApi();
             $nextcloudApi->fill($result->data)->save();
             $this->flashBag->add('success', 'Nextcloud API connection ' . $nextcloudApi->url . ' added successfully.');
+        }
+
+        $this->redirect('/admin/plugin/nextcloudapi/index');
+    }
+
+    public function update(): void
+    {
+        $this->nextcloudApi->policy('update');
+
+        $data = $this->request->request->all();
+        $result = $this->nextcloudApiForm->validate($data);
+
+        if (!$result->valid) {
+            $this->flashBag->set('errors', $result->errors);
+            $this->flashBag->set('old', $result->old);
+        } else {
+            $nextcloudApi = NextcloudApi::find($data['id']);
+            $nextcloudApi->fill($result->data)->save();
+            $this->flashBag->add('success', 'Nextcloud API connection ' . $nextcloudApi->url . ' updated successfully.');
         }
 
         $this->redirect('/admin/plugin/nextcloudapi/index');
@@ -65,12 +87,11 @@ class NextcloudApiController extends Controller
     }
 
 
-    public function status($id): void
+    public function status(int $id): void
     {
         $this->nextcloudApi->policy('status');
 
-        $nextcloudApi = NextcloudApi::find($id);
-        $nextcloudApiClient = new NextcloudApiClient($nextcloudApi);
+        $nextcloudApiClient = $this->nextcloudApiManager->get($id);
         $info = $nextcloudApiClient->getStatus();
         if(isset($info->data['installed'])){
             $version = $info->data['version'];
@@ -78,6 +99,7 @@ class NextcloudApiController extends Controller
             $info->version = $version;
         }
         View::render(Path::get('PLUGINS_PATH').'nextcloudapi/template/status.latte', [
+            'id' => $id,
             'info' => $info,
         ]);
     }

@@ -18,20 +18,16 @@
                     <div>
                         <div class="flex justify-between rounded-box bg-base-300 p-4">
                             <h2 class="text-2xl leading-none">
-                                {$nextcloudApi->url}
+                                <a href="{$nextcloudApi->href()}" target="_blank">
+                                    {$nextcloudApi->url}
+                                </a>
                                 <span class="badge badge-accent badge-xs font-bold">{$nextcloudApi->protocol}</span>
                                 {if $nextcloudApi->port}
                                     <span class="badge badge-accent badge-xs font-bold">{$nextcloudApi->port}</span>
                                 {/if}
                             </h2>
                             <div class="join">
-                                <a class="btn btn-soft btn-primary btn-square shadow-none join-item" href="{$nextcloudApi->href()}" target="_blank">
-                                    {icon("feather/external-link.svg")|noescape}
-                                </a>
-                                <label class="btn btn-soft btn-primary btn-square shadow-none join-item">
-                                    {icon("feather/refresh-ccw.svg")|noescape}
-                                </label>
-                                <label class="btn btn-soft btn-primary btn-square shadow-none join-item" for="modal_edit_nextcloud_api_{$nextcloudApi->id}">
+                                <label class="btn btn-soft btn-primary btn-square shadow-none join-item" for="modal_update_nextcloud_api_{$nextcloudApi->id}">
                                     {icon("feather/edit.svg")|noescape}
                                 </label>
                                 <form ts-req="{path('PUBLIC_URL') . 'admin/plugin/nextcloudapi/delete'}" method="POST">
@@ -41,17 +37,17 @@
                             </div>
                         </div>
                         <div
-                                ts-req="{path('PUBLIC_URL') . 'admin/plugin/nextcloudapi/'.$nextcloudApi->id.'/status'}"
+                                ts-req="{path('PUBLIC_URL') . 'admin/plugin/nextcloudapi/status/'.$nextcloudApi->id}"
                                 ts-trigger="visible once"
                         >
                             {include 'status.latte'}
                         </div>
                     </div>
                     {include 'modal.latte',
-                    'modal' => 'modal_edit_nextcloud_api_' . $nextcloudApi->id,
-                    'title' => text('nextcloudapi.nextcloudapi.modal.edit', ['url' => $nextcloudApi->url]),
-                    'url' => 'edit/' . $nextcloudApi->id,
-                        'button' => text('button.update'),
+                    'modal' => 'modal_update_nextcloud_api_' . $nextcloudApi->id,
+                    'title' => text('nextcloudapi.nextcloudapi.modal.update', ['url' => $nextcloudApi->url]),
+                    'url' => 'update',
+                    'button' => text('button.update'),
                     'nextcloudApi' => $nextcloudApi
                     }
                 </div>

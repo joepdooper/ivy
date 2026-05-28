@@ -20,7 +20,7 @@ return [
     ],
     'modal' => [
         'add' => 'Add a new API connection',
-        'edit' => 'Edit API connection :url',
+        'update' => 'Update API connection :url',
     ],
     'placeholder' => [
         'url' => 'nextcloud.example.com',

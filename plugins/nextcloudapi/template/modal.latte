@@ -5,6 +5,7 @@
         <h3 class="text-lg font-bold">{$title}</h3>
         <form ts-req="{path('PUBLIC_URL') . 'admin/plugin/nextcloudapi/' . $url}" ts-target="target" method="POST" enctype="multipart/form-data">
             {csrf()}
+            <input type="hidden" name="id" value="{ifset $nextcloudApi}{$nextcloudApi->id}{/ifset}">
             <div class="space-y-4 mt-4">
                 <div class="join w-full">
                     <label class="w-25">

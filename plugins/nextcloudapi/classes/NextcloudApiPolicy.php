@@ -12,6 +12,11 @@ class NextcloudApiPolicy extends Policy
         return $this->canEditAsAdmin();
     }
 
+    public function update(): bool
+    {
+        return $this->canEditAsAdmin();
+    }
+
     public function delete(): bool
     {
         return $this->canEditAsAdmin();
