@@ -40,12 +40,19 @@
                     </label>
                 </div>
 
+                {if isset($nextcloudApi)}
+                    <label for="update_credentials" class="flex items-center gap-2 cursor-pointer text-sm">
+                        {button type:switch, name:"update_credentials"}
+                        {text('nextcloudapi.nextcloudapi.update_credentials')}
+                    </label>
+                {/if}
+
                 <label class="input w-full {ifset $errors['username']}input-error{/ifset}">
                     <input
                             name="username"
                             type="text"
                             value="{ifset $errors['username']}{$old['username']}{/ifset}"
-                            placeholder="{ifset $nextcloudApi}{text(nextcloudapi.nextcloudapi.placeholder.api_username)}{else}{text(nextcloudapi.nextcloudapi.placeholder.username)}{/ifset}"
+                            placeholder="{text('nextcloudapi.nextcloudapi.placeholder.username')}"
                             class="grow"
                     />
                     <span class="badge badge-neutral badge-xs font-bold">Optional</span>
@@ -59,7 +66,7 @@
                             name="password"
                             type="password"
                             autocomplete="new-password"
-                            placeholder="{ifset $nextcloudApi}{text(nextcloudapi.nextcloudapi.placeholder.api_password)}{else}{text(nextcloudapi.nextcloudapi.placeholder.password)}{/ifset}"
+                            placeholder="{text('nextcloudapi.nextcloudapi.placeholder.password')}"
                             class="grow"
                     />
                     <span class="badge badge-neutral badge-xs font-bold">Optional</span>

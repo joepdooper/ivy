@@ -44,6 +44,10 @@ class NextcloudApiController extends Controller
         $this->nextcloudApi->policy('update');
 
         $data = $this->request->request->all();
+        if(!$data['update_credentials']){
+            unset($data['username']);
+            unset($data['password']);
+        }
         $result = $this->nextcloudApiForm->validate($data);
 
         if (!$result->valid) {

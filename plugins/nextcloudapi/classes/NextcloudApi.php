@@ -3,6 +3,7 @@
 namespace NextcloudApi;
 
 use Illuminate\Database\Eloquent\Model;
+use Ivy\Shared\Infrastructure\Cast\CryptedCast;
 use Ivy\Shared\Traits\HasPolicies;
 
 /**
@@ -28,6 +29,10 @@ class NextcloudApi extends Model
         'port',
         'username',
         'password'
+    ];
+
+    protected $casts = [
+        'password'  => CryptedCast::class,
     ];
 
     public function href(): string

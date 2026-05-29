@@ -1343,12 +1343,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joepdooper/ivy-roots.git",
-                "reference": "fd48cd3b6776451b3ae4fdca4e22bda298d7601d"
+                "reference": "faf1f9a968d31581e51e2b4dadf997eabc23a8b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joepdooper/ivy-roots/zipball/fd48cd3b6776451b3ae4fdca4e22bda298d7601d",
-                "reference": "fd48cd3b6776451b3ae4fdca4e22bda298d7601d",
+                "url": "https://api.github.com/repos/joepdooper/ivy-roots/zipball/faf1f9a968d31581e51e2b4dadf997eabc23a8b7",
+                "reference": "faf1f9a968d31581e51e2b4dadf997eabc23a8b7",
                 "shasum": ""
             },
             "require": {
@@ -1357,6 +1357,7 @@
                 "bramus/router": "^1.6",
                 "delight-im/auth": "^8.3",
                 "ext-pdo": "*",
+                "ext-sodium": "*",
                 "ezyang/htmlpurifier": "dev-master",
                 "illuminate/database": "^13.5",
                 "illuminate/events": "^13.5",
@@ -1395,7 +1396,7 @@
                 "issues": "https://github.com/joepdooper/ivy-roots/issues",
                 "source": "https://github.com/joepdooper/ivy-roots/tree/reorder-files"
             },
-            "time": "2026-05-17T18:54:03+00:00"
+            "time": "2026-05-28T23:58:57+00:00"
         },
         {
             "name": "laravel/serializable-closure",

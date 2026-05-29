@@ -6,6 +6,7 @@ return [
     'port' => 'Port',
     'username' => 'Username',
     'password' => 'Password',
+    'update_credentials' => 'Update credentials',
     'status' => [
         'error' => 'Error',
         'unknown' => 'Unknown',
@@ -27,8 +28,6 @@ return [
         'port' => '80',
         'username' => 'Username',
         'password' => 'Password',
-        'api_username' => 'Leave empty to keep current saved username',
-        'api_password' => 'Leave empty to keep current saved password'
     ],
     'nextcloud_apis' => 'Nextcloud APIs',
     'empty' => 'No Nextcloud API connections defined'
