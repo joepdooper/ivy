@@ -40,24 +40,22 @@
                     </label>
                 </div>
 
-{*                {if isset($nextcloudApi)}*}
-{*                    <div class="flex items-center gap-2 text-sm">*}
-{*                        {button type:switch, name:"update_credentials"}*}
-{*                        <label for="update_credentials">*}
-{*                            {text('nextcloudapi.nextcloudapi.update_credentials')}*}
-{*                        </label>*}
-{*                    </div>*}
-{*                {/if}*}
+                {*                {if isset($nextcloudApi)}*}
+                {*                    <div class="flex items-center gap-2 text-sm">*}
+                {*                        {button type:switch, name:"update_credentials"}*}
+                {*                        <label for="update_credentials">*}
+                {*                            {text('nextcloudapi.nextcloudapi.update_credentials')}*}
+                {*                        </label>*}
+                {*                    </div>*}
+                {*                {/if}*}
 
                 <div class="collapse bg-base-100 border border-base-300">
-                    <input type="checkbox" name="credentials" {if !isset($nextcloudApi)}checked{/if}/>
-                    <div class="collapse-title font-semibold">
-                        {if isset($nextcloudApi)}
+                    <input class="p-2 min-h-0" type="checkbox" name="credentials" {if !isset($nextcloudApi)}checked{/if}/>
+                    {if isset($nextcloudApi)}
+                        <div class="collapse-title font-semibold">
                             {text('nextcloudapi.nextcloudapi.update_credentials')}
-                        {else}
-                            {text('nextcloudapi.nextcloudapi.add_credentials')}
-                        {/if}
-                    </div>
+                        </div>
+                    {/if}
                     <div class="collapse-content text-sm space-y-4">
                         <label class="input w-full {ifset $errors['username']}input-error{/ifset}">
                             <input
