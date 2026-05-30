@@ -40,40 +40,54 @@
                     </label>
                 </div>
 
-                {if isset($nextcloudApi)}
-                    <label for="update_credentials" class="flex items-center gap-2 cursor-pointer text-sm">
-                        {button type:switch, name:"update_credentials"}
-                        {text('nextcloudapi.nextcloudapi.update_credentials')}
-                    </label>
-                {/if}
+{*                {if isset($nextcloudApi)}*}
+{*                    <div class="flex items-center gap-2 text-sm">*}
+{*                        {button type:switch, name:"update_credentials"}*}
+{*                        <label for="update_credentials">*}
+{*                            {text('nextcloudapi.nextcloudapi.update_credentials')}*}
+{*                        </label>*}
+{*                    </div>*}
+{*                {/if}*}
 
-                <label class="input w-full {ifset $errors['username']}input-error{/ifset}">
-                    <input
-                            name="username"
-                            type="text"
-                            value="{ifset $errors['username']}{$old['username']}{/ifset}"
-                            placeholder="{text('nextcloudapi.nextcloudapi.placeholder.username')}"
-                            class="grow"
-                    />
-                    <span class="badge badge-neutral badge-xs font-bold">Optional</span>
-                    {ifset $errors['username']}
-                        <span class="text-xs" n:foreach="$errors['username'] as $message">{$message}</span>
-                    {/ifset}
-                </label>
+                <div class="collapse bg-base-100 border border-base-300">
+                    <input type="checkbox" name="credentials" {if !isset($nextcloudApi)}checked{/if}/>
+                    <div class="collapse-title font-semibold">
+                        {if isset($nextcloudApi)}
+                            {text('nextcloudapi.nextcloudapi.update_credentials')}
+                        {else}
+                            {text('nextcloudapi.nextcloudapi.add_credentials')}
+                        {/if}
+                    </div>
+                    <div class="collapse-content text-sm space-y-4">
+                        <label class="input w-full {ifset $errors['username']}input-error{/ifset}">
+                            <input
+                                    name="username"
+                                    type="text"
+                                    value="{ifset $errors['username']}{$old['username']}{/ifset}"
+                                    placeholder="{text('nextcloudapi.nextcloudapi.placeholder.username')}"
+                                    class="grow"
+                            />
+                            <span class="badge badge-neutral badge-xs font-bold">Optional</span>
+                            {ifset $errors['username']}
+                                <span class="text-xs" n:foreach="$errors['username'] as $message">{$message}</span>
+                            {/ifset}
+                        </label>
 
-                <label class="input w-full {ifset $errors['password']}input-error{/ifset}">
-                    <input
-                            name="password"
-                            type="password"
-                            autocomplete="new-password"
-                            placeholder="{text('nextcloudapi.nextcloudapi.placeholder.password')}"
-                            class="grow"
-                    />
-                    <span class="badge badge-neutral badge-xs font-bold">Optional</span>
-                    {ifset $errors['password']}
-                        <span class="text-xs" n:foreach="$errors['password'] as $message">{$message}</span>
-                    {/ifset}
-                </label>
+                        <label class="input w-full {ifset $errors['password']}input-error{/ifset}">
+                            <input
+                                    name="password"
+                                    type="password"
+                                    autocomplete="new-password"
+                                    placeholder="{text('nextcloudapi.nextcloudapi.placeholder.password')}"
+                                    class="grow"
+                            />
+                            <span class="badge badge-neutral badge-xs font-bold">Optional</span>
+                            {ifset $errors['password']}
+                                <span class="text-xs" n:foreach="$errors['password'] as $message">{$message}</span>
+                            {/ifset}
+                        </label>
+                    </div>
+                </div>
 
                 <div class="modal-action">
                     <label for="{$modal}" class="btn">{text('button.cancel')}</label>

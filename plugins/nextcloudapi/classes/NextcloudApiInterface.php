@@ -24,10 +24,6 @@ class NextcloudApiInterface implements PluginInterface
             Route::post('/update', '\NextcloudApi\NextcloudApiController@update')
                 ->before('\Ivy\User\Presentation\Controller\AdminController@before');
         });
-
-        Profile::created(function (Profile $profile) {
-            d('Created user id: ' . $profile->user->id);die;
-        });
     }
 
     public function install(): void

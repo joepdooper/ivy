@@ -6,6 +6,7 @@ return [
     'port' => 'Port',
     'username' => 'Username',
     'password' => 'Password',
+    'add_credentials' => 'Add credentials',
     'update_credentials' => 'Update credentials',
     'status' => [
         'error' => 'Error',
