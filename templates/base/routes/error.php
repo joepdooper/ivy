@@ -1,6 +1,6 @@
 <?php
 
-use Ivy\Manager\RouterManager;
+use Ivy\Shared\Infrastructure\Manager\RouterManager;
 
 // -- 404
 RouterManager::router()->set404(function () {

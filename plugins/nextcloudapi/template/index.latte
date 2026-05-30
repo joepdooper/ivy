@@ -1,0 +1,67 @@
+{extends file('body.latte')}
+
+{block main}
+    <main class="grow p-4 w-full max-w-5xl mx-auto">
+        <div class="space-y-4">
+            <div class="flex justify-between items-end">
+                <h1 class="leading-none text-6xl font-bold">{text('nextcloudapi.nextcloudapi.nextcloud_apis')}</h1>
+                <label class="btn btn-primary btn-square shadow-none join-item"
+                       title="{text('button.add')}"
+                       for="modal_add_nextcloud_api"
+                >
+                    {icon("feather/plus.svg")|noescape}
+                </label>
+            </div>
+
+            <div n:if="!$nextcloudApis->isEmpty()" class="space-y-4">
+                <div n:foreach="$nextcloudApis as $nextcloudApi">
+                    <div>
+                        <div class="flex justify-between rounded-box bg-base-300 p-4">
+                            <h2 class="text-2xl leading-none">
+                                <a href="{$nextcloudApi->href()}" target="_blank">
+                                    {$nextcloudApi->url}
+                                </a>
+                                <span class="badge badge-accent badge-xs font-bold">{$nextcloudApi->protocol}</span>
+                                {if $nextcloudApi->port}
+                                    <span class="badge badge-accent badge-xs font-bold">{$nextcloudApi->port}</span>
+                                {/if}
+                            </h2>
+                            <div class="join">
+                                <label class="btn btn-soft btn-primary btn-square shadow-none join-item" for="modal_update_nextcloud_api_{$nextcloudApi->id}">
+                                    {icon("feather/edit.svg")|noescape}
+                                </label>
+                                <form ts-req="{path('PUBLIC_URL') . 'admin/plugin/nextcloudapi/delete'}" method="POST">
+                                    {csrf()}
+                                    {button type:delete, name:"delete", value:$nextcloudApi->id, id:$nextcloudApi->id, placeholder:$nextcloudApi->url}
+                                </form>
+                            </div>
+                        </div>
+                        <div
+                                ts-req="{path('PUBLIC_URL') . 'admin/plugin/nextcloudapi/status/'.$nextcloudApi->id}"
+                                ts-trigger="visible once"
+                        >
+                            {include 'status.latte'}
+                        </div>
+                    </div>
+                    {include 'modal.latte',
+                    'modal' => 'modal_update_nextcloud_api_' . $nextcloudApi->id,
+                    'title' => text('nextcloudapi.nextcloudapi.modal.update', ['url' => $nextcloudApi->url]),
+                    'url' => 'update',
+                    'button' => text('button.update'),
+                    'nextcloudApi' => $nextcloudApi
+                    }
+                </div>
+            </div>
+            <div n:else class="text-center">
+                {text('nextcloudapi.nextcloudapi.empty')}
+            </div>
+        </div>
+
+        {include 'modal.latte',
+        'modal' => 'modal_add_nextcloud_api',
+        'title' => text('nextcloudapi.nextcloudapi.modal.add'),
+        'url' => 'add',
+        'button' => text('button.add'),
+        }
+    </main>
+{/block}

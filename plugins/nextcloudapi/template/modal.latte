@@ -1,0 +1,99 @@
+<input type="checkbox" id="{$modal}" class="modal-toggle block" name="{$modal}" {if !empty($errors)}checked{/if}/>
+<div class="modal text-left" role="dialog">
+    <div class="modal-box">
+        <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" for="{$modal}">✕</label>
+        <h3 class="text-lg font-bold">{$title}</h3>
+        <form ts-req="{path('PUBLIC_URL') . 'admin/plugin/nextcloudapi/' . $url}" ts-target="target" method="POST" enctype="multipart/form-data">
+            {csrf()}
+            <input type="hidden" name="id" value="{ifset $nextcloudApi}{$nextcloudApi->id}{/ifset}">
+            <div class="space-y-4 mt-4">
+                <div class="join w-full">
+                    <label class="w-25">
+                        <select name="protocol" class="join-item select">
+                            <option value="https" selected>https</option>
+                            <option value="http">http</option>
+                        </select>
+                    </label>
+                    <label class="grow">
+                        <input
+                                class="w-full input join-item {ifset $errors['url']}input-error{/ifset}"
+                                name="url"
+                                type="text"
+                                placeholder="cloud.domain.com"
+                                value="{ifset $errors['url']}{$old['url']}{elseifset $nextcloudApi}{$nextcloudApi->url}{/ifset}"
+                        />
+                        {ifset $errors['url']}
+                            <span class="text-xs" n:foreach="$errors['url'] as $message">{$message}</span>
+                        {/ifset}
+                    </label>
+                    <label class="w-25">
+                        <input
+                                class="input join-item {ifset $errors['port']}input-error{/ifset}"
+                                name="port"
+                                value="{ifset $errors['port']}{$old['port']}{elseifset $nextcloudApi}{$nextcloudApi->port}{/ifset}"
+                                type="number"
+                                placeholder="80"
+                        />
+                        {ifset $errors['port']}
+                            <span class="text-xs" n:foreach="$errors['port'] as $message">{$message}</span>
+                        {/ifset}
+                    </label>
+                </div>
+
+                {*                {if isset($nextcloudApi)}*}
+                {*                    <div class="flex items-center gap-2 text-sm">*}
+                {*                        {button type:switch, name:"update_credentials"}*}
+                {*                        <label for="update_credentials">*}
+                {*                            {text('nextcloudapi.nextcloudapi.update_credentials')}*}
+                {*                        </label>*}
+                {*                    </div>*}
+                {*                {/if}*}
+
+                <div class="collapse bg-base-100 border border-base-300">
+                    <input class="p-2 min-h-0" type="checkbox" name="credentials" {if !isset($nextcloudApi)}checked{/if}/>
+                    {if isset($nextcloudApi)}
+                        <div class="collapse-title font-semibold">
+                            {text('nextcloudapi.nextcloudapi.update_credentials')}
+                        </div>
+                    {/if}
+                    <div class="collapse-content text-sm space-y-4">
+                        <label class="input w-full {ifset $errors['username']}input-error{/ifset}">
+                            <input
+                                    name="username"
+                                    type="text"
+                                    value="{ifset $errors['username']}{$old['username']}{/ifset}"
+                                    placeholder="{text('nextcloudapi.nextcloudapi.placeholder.username')}"
+                                    class="grow"
+                            />
+                            <span class="badge badge-neutral badge-xs font-bold">Optional</span>
+                            {ifset $errors['username']}
+                                <span class="text-xs" n:foreach="$errors['username'] as $message">{$message}</span>
+                            {/ifset}
+                        </label>
+
+                        <label class="input w-full {ifset $errors['password']}input-error{/ifset}">
+                            <input
+                                    name="password"
+                                    type="password"
+                                    autocomplete="new-password"
+                                    placeholder="{text('nextcloudapi.nextcloudapi.placeholder.password')}"
+                                    class="grow"
+                            />
+                            <span class="badge badge-neutral badge-xs font-bold">Optional</span>
+                            {ifset $errors['password']}
+                                <span class="text-xs" n:foreach="$errors['password'] as $message">{$message}</span>
+                            {/ifset}
+                        </label>
+                    </div>
+                </div>
+
+                <div class="modal-action">
+                    <label for="{$modal}" class="btn">{text('button.cancel')}</label>
+                    <button class="btn btn-primary shadow-none"
+                            name="submit" type="submit">{$button}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

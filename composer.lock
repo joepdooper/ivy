@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a245173d1043451599ea4f7a9ba0b980",
+    "content-hash": "77480faff0b26cc15a6ca6e552161ef7",
     "packages": [
         {
             "name": "bainternet/php-hooks",
@@ -1339,16 +1339,16 @@
         },
         {
             "name": "joepdooper/ivy-roots",
-            "version": "v0.9.19-alpha",
+            "version": "dev-reorder-files",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joepdooper/ivy-roots.git",
-                "reference": "45666234b4d1b1d956bece18dc2508b56a37d7b6"
+                "reference": "faf1f9a968d31581e51e2b4dadf997eabc23a8b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joepdooper/ivy-roots/zipball/45666234b4d1b1d956bece18dc2508b56a37d7b6",
-                "reference": "45666234b4d1b1d956bece18dc2508b56a37d7b6",
+                "url": "https://api.github.com/repos/joepdooper/ivy-roots/zipball/faf1f9a968d31581e51e2b4dadf997eabc23a8b7",
+                "reference": "faf1f9a968d31581e51e2b4dadf997eabc23a8b7",
                 "shasum": ""
             },
             "require": {
@@ -1357,6 +1357,7 @@
                 "bramus/router": "^1.6",
                 "delight-im/auth": "^8.3",
                 "ext-pdo": "*",
+                "ext-sodium": "*",
                 "ezyang/htmlpurifier": "dev-master",
                 "illuminate/database": "^13.5",
                 "illuminate/events": "^13.5",
@@ -1393,9 +1394,9 @@
             "description": "A set of classes designed to build and extend functionality in ivy",
             "support": {
                 "issues": "https://github.com/joepdooper/ivy-roots/issues",
-                "source": "https://github.com/joepdooper/ivy-roots/tree/v0.9.19-alpha"
+                "source": "https://github.com/joepdooper/ivy-roots/tree/reorder-files"
             },
-            "time": "2026-05-05T08:33:03+00:00"
+            "time": "2026-05-28T23:58:57+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -7119,7 +7120,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "joepdooper/ivy-cultivate": 20,
-        "joepdooper/ivy-roots": 15,
+        "joepdooper/ivy-roots": 20,
         "kint-php/kint": 20,
         "pestphp/pest": 20
     },

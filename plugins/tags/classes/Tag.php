@@ -3,7 +3,7 @@
 namespace Tags;
 
 use Illuminate\Database\Eloquent\Model;
-use Ivy\Trait\HasPolicies;
+use Ivy\Shared\Traits\HasPolicies;
 
 class Tag extends Model
 {

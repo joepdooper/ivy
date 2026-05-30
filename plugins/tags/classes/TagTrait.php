@@ -11,8 +11,6 @@ trait TagTrait
             'entity_tags',
             foreignPivotKey: '',
             relatedPivotKey: 'tag_id',
-            morphType: 'entity_table',
-            morphId: 'entity_id'
         );
     }
 

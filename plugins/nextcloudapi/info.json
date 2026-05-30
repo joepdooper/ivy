@@ -1,0 +1,20 @@
+{
+  "name": "Nextcloud API",
+  "version": "1.0.0",
+  "description": "Connect with Nextcloud servers",
+  "type": "API",
+  "interface": "NextcloudApi\\NextcloudApiInterface",
+  "settings": [
+    {
+      "name": "Register Nextcloud user",
+      "info": "On registration, create a new user in Nextcloud"
+    }
+  ],
+  "actions": [
+    {
+      "text": "nextcloudapi.nextcloud_apis",
+      "icon": "feather/server.svg",
+      "url": "index"
+    }
+  ]
+}
