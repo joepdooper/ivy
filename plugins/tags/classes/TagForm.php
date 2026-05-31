@@ -13,7 +13,7 @@ class TagForm extends Form
     protected function rules(): array
     {
         return [
-            'name' => ['required', 'not_nullable', new UniqueRule([Tag::class])],
+            'value' => ['required', 'not_nullable', new UniqueRule([Tag::class])],
         ];
     }
 }

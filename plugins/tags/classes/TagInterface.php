@@ -27,6 +27,7 @@ class TagInterface implements PluginInterface
         Capsule::schema()->create('tags', function (Blueprint $table) {
             $table->increments('id');
             $table->string('value', 255);
+            $table->timestamps();
         });
         Capsule::schema()->create('entity_tags', function (Blueprint $table) {
             $table->increments('id');

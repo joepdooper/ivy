@@ -34,6 +34,9 @@ class TagController extends Controller
         ]);
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function add(mixed $data): void
     {
         $tag = new Tag();
@@ -48,6 +51,9 @@ class TagController extends Controller
         );
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function update(Tag|int $tag, mixed $data): void
     {
         if (is_int($tag)) {
@@ -74,6 +80,9 @@ class TagController extends Controller
         );
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function delete(Tag|int $tag): void
     {
         if (is_int($tag)) {
@@ -92,13 +101,16 @@ class TagController extends Controller
         }
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function sync(): void
     {
-        $this->tag->policy('sync');
+        $this->tag->authorize('sync');
 
         $errors = $old = [];
 
-        foreach ($this->request->request->get('tag') as $index => $data) {
+        foreach ($this->request->request->all('tag') as $index => $data) {
 
             if (empty($data['value'])) {
                 continue;
@@ -111,7 +123,7 @@ class TagController extends Controller
                 if (empty($result->data['id'])) {
                     $this->add($result->data);
 
-                } elseif (isset($result->data['delete'])) {
+                } elseif (isset($data['delete'])) {
                     $this->delete($result->data['id']);
 
                 } else {

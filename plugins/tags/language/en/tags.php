@@ -2,6 +2,7 @@
 
 return [
     'tags' => 'Tags',
-    'manage' => 'Manage tags',
     'none_defined' => 'No tags defined',
+    'value' => 'Value',
+    'add_new_tag' => 'Add new tag'
 ];
