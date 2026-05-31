@@ -10,7 +10,7 @@
   ],
   "require": {
     "php": ">=8.4.0",
-    "joepdooper/ivy-roots": "dev-reorder-files"
+    "joepdooper/ivy-roots": "^0.9.20@alpha"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

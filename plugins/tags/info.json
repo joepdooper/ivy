@@ -5,6 +5,6 @@
   "type": "filter",
   "interface": "Tags\\TagInterface",
   "actions": [
-    {"text": "tags.manage", "icon": "feather/tag.svg", "url": "manage"}
+    {"text": "tags.manage", "icon": "feather/tag.svg", "url": "index"}
   ]
 }

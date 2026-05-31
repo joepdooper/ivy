@@ -2,74 +2,133 @@
 
 namespace Tags;
 
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Ivy\Shared\Base\Controller;
 use Ivy\Shared\Core\Path;
 use Ivy\Template\Presentation\View\View;
 use Ivy\User\Domain\Exception\AuthorizationException;
-use ReflectionException;
+
 
 class TagController extends Controller
 {
     protected Tag $tag;
+    protected TagForm $tagForm;
 
     public function __construct()
     {
         parent::__construct();
         $this->tag = new Tag;
-    }
-
-    public function index(): void
-    {
-        $this->tag->policy('index');
-
-        $tags = Tag::all();
-        View::render(Path::get('PLUGINS_PATH').'tags/template/manage.latte', ['tags' => $tags]);
+        $this->tagForm = new TagForm;
     }
 
     /**
      * @throws AuthorizationException
-     * @throws ReflectionException
-     * @throws BindingResolutionException
      */
+    public function index(): void
+    {
+        $this->tag->authorize('index');
+
+        $tags = Tag::all()->sortBy('value');
+
+        View::render(Path::get('PLUGINS_PATH').'tags/template/index.latte', [
+            'tags' => $tags
+        ]);
+    }
+
+    public function add(mixed $data): void
+    {
+        $tag = new Tag();
+
+        $tag->authorize('add');
+
+        $tag->fill($data)->save();
+
+        $this->flashBag->add(
+            'success',
+            'Tag ' . $tag->value . ' added successfully.'
+        );
+    }
+
+    public function update(Tag|int $tag, mixed $data): void
+    {
+        if (is_int($tag)) {
+            $tag = Tag::find($tag);
+        }
+
+        if (! $tag) {
+            return;
+        }
+
+        $tag->fill($data);
+
+        if (! $tag->isDirty()) {
+            return;
+        }
+
+        $tag->authorize('update');
+
+        $tag->save();
+
+        $this->flashBag->add(
+            'success',
+            'Tag ' . $tag->value . ' updated successfully.'
+        );
+    }
+
+    public function delete(Tag|int $tag): void
+    {
+        if (is_int($tag)) {
+            $tag = Tag::find($tag);
+        }
+
+        $tag?->authorize('delete');
+
+        if ($tag) {
+            $tag->delete();
+
+            $this->flashBag->add(
+                'success',
+                'Tag ' . $tag->value . ' deleted successfully.'
+            );
+        }
+    }
+
     public function sync(): void
     {
         $this->tag->policy('sync');
 
-        foreach ($this->request->get('tag') as $data) {
-            try {
-                $validated = GUMP::is_valid($data, [
-                    'value' => 'alpha_numeric_dash',
-                ]);
+        $errors = $old = [];
 
-                if ($validated !== true) {
-                    foreach ($validated as $msg) {
-                        $this->flashBag->add('error', $msg);
-                    }
+        foreach ($this->request->request->get('tag') as $index => $data) {
 
-                    continue;
-                }
+            if (empty($data['value'])) {
+                continue;
+            }
 
-                if (empty($data['value'])) {
-                    continue;
-                }
+            $result = $this->tagForm->validate($data);
 
-                $tag = ! empty($data['id'])
-                    ? (new Tag)->where('id', $data['id'])->fetchOne()
-                    : new Tag;
+            if ($result->valid) {
 
-                if (isset($data['delete']) && ! empty($data['id'])) {
-                    $tag?->delete();
+                if (empty($result->data['id'])) {
+                    $this->add($result->data);
+
+                } elseif (isset($result->data['delete'])) {
+                    $this->delete($result->data['id']);
+
                 } else {
-                    $tag->populate($data)->save();
+                    $this->update($result->data['id'], $result->data);
                 }
 
-            } catch (\Exception $e) {
-                $this->flashBag->add('error', $e->getMessage());
+            } else {
+                $errors[$index] = $result->errors;
+                $old[$index] = $result->old;
             }
         }
 
-        $this->flashBag->add('success', 'Updated successful');
-        $this->redirect('/admin/plugin/tags/manage');
+        if (! empty($errors)) {
+            $this->flashBag->set('errors', $errors);
+            $this->flashBag->set('old', $old);
+        }
+
+        $this->redirect('/admin/plugin/tags/index');
     }
 }

@@ -15,7 +15,7 @@ class TagInterface implements PluginInterface
         AssetManager::addCSS('plugins/tags/css/tag.css');
 
         Route::mount('/admin/plugin/tags', function () {
-            Route::get('/manage', '\Tags\TagController@index')
+            Route::get('/index', '\Tags\TagController@index')
                 ->before('\Ivy\User\Presentation\Controller\AdminController@before');
             Route::post('/sync', '\Tags\TagController@sync')
                 ->before('\Ivy\User\Presentation\Controller\AdminController@before');
