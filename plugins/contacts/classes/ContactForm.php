@@ -2,7 +2,7 @@
 
 namespace Contacts;
 
-use Ivy\Abstract\Form;
+use Ivy\Shared\Base\Form;
 
 class ContactForm extends Form
 {

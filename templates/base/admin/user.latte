@@ -13,7 +13,7 @@
                         <thead>
                         <tr>
                             <th></th>
-                            {if authUser()->canEditAsSuperAdmin()}
+                            {if canEditAsSuperAdmin()}
                                 <th></th>
                             {/if}
                             <th>{text('user.super_admin')}</th>
@@ -26,7 +26,7 @@
                         {foreach $users as $key => $user}
                             <tr>
                                 <td>{$user->username}</td>
-                                {if authUser()->canEditAsSuperAdmin()}
+                                {if canEditAsSuperAdmin()}
                                     <td>
                                         {$user->email}
                                     </td>
@@ -71,7 +71,7 @@
                     </table>
                 </div>
 
-                {if authUser()->canEditAsSuperAdmin()}
+                {if canEditAsSuperAdmin()}
                     <div class="text-center">
                         {button type:submit, text:text('button.update')}
                     </div>

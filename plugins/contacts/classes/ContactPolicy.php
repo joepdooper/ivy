@@ -2,39 +2,39 @@
 
 namespace Contacts;
 
-use Ivy\Model\Setting;
-use Ivy\Model\User;
 
-class ContactPolicy
+use Ivy\Shared\Base\Policy;
+
+class ContactPolicy extends Policy
 {
-    public static function index(Contact $contact): bool
+    public function index(Contact $contact): bool
     {
-        return User::canEditAsEditor();
+        return $this->canEditAsEditor();
     }
 
-    public static function sync(Contact $contact): bool
+    public function sync(Contact $contact): bool
     {
-        return User::canEditAsEditor();
+        return $this->canEditAsEditor();
     }
 
-    public static function save(Contact $contact): bool
+    public function save(Contact $contact): bool
     {
-        return User::canEditAsAdmin();
+        return $this->canEditAsEditor();
     }
 
-    public static function add(Contact $contact): bool
+    public function add(Contact $contact): bool
     {
-        return User::canEditAsAdmin();
+        return $this->canEditAsEditor();
     }
 
-    public static function update(Contact $contact): bool
+    public function update(Contact $contact): bool
     {
-        return User::canEditAsAdmin();
+        return $this->canEditAsEditor();
     }
 
-    public static function delete(Contact $contact): bool
+    public function delete(Contact $contact): bool
     {
-        if (! $contact->profile_id && User::canEditAsAdmin()) {
+        if (! $contact->profile_id && $this->canEditAsEditor()) {
             return true;
         }
 

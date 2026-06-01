@@ -3,9 +3,7 @@
 namespace Contacts;
 
 use Carbon\Carbon;
-use Items\Item;
-use Ivy\Core\Language;
-use Ivy\Model\Profile;
+use Ivy\User\Domain\Entity\Profile;
 
 class ContactFactory
 {

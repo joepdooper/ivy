@@ -2,7 +2,6 @@
 
 return [
     'contacts' => 'Contacts',
-    'manage' => 'Manage contacts',
     'none_defined' => 'No contacts defined',
     'modal' => [
         'attach_profile' => 'Attach profile',

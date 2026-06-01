@@ -3,15 +3,12 @@
   "version": "1.0.0",
   "description": "Manage contacts",
   "type": "utility",
+  "interface": "Contacts\\ContactInterface",
   "actions": [
     {
-      "text": "contacts.manage",
+      "text": "contacts.contacts",
       "icon": "feather/book.svg",
       "url": "index"
     }
-  ],
-  "database": {
-    "install": "db/install.db.php",
-    "uninstall": "db/uninstall.db.php"
-  }
+  ]
 }

@@ -5,6 +5,7 @@ namespace NextcloudApi;
 use Ivy\Shared\Base\Controller;
 use Ivy\Shared\Core\Path;
 use Ivy\Template\Presentation\View\View;
+use Ivy\User\Domain\Exception\AuthorizationException;
 
 class NextcloudApiController extends Controller
 {
@@ -20,9 +21,12 @@ class NextcloudApiController extends Controller
         $this->nextcloudApiForm = new NextcloudApiForm();
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function add(): void
     {
-        $this->nextcloudApi->policy('add');
+        $this->nextcloudApi->authorize('add');
 
         $data = $this->request->request->all();
         $result = $this->nextcloudApiForm->validate($data);
@@ -39,9 +43,12 @@ class NextcloudApiController extends Controller
         $this->redirect('/admin/plugin/nextcloudapi/index');
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function update(): void
     {
-        $this->nextcloudApi->policy('update');
+        $this->nextcloudApi->authorize('update');
 
         $data = $this->request->request->all();
         if(!$data['credentials']){
@@ -62,12 +69,15 @@ class NextcloudApiController extends Controller
         $this->redirect('/admin/plugin/nextcloudapi/index');
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function delete(): void
     {
         $nextcloudApi = NextcloudApi::find($this->request->request->get('delete'));
 
         if($nextcloudApi) {
-            $nextcloudApi->policy('delete');
+            $nextcloudApi->authorize('delete');
 
             $nextcloudApi->delete();
             $this->flashBag->add(
@@ -79,9 +89,12 @@ class NextcloudApiController extends Controller
         $this->redirect('/admin/plugin/nextcloudapi/index');
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function index(): void
     {
-        $this->nextcloudApi->policy('index');
+        $this->nextcloudApi->authorize('index');
 
         $nextcloudApis = NextcloudApi::all();
 
@@ -91,9 +104,12 @@ class NextcloudApiController extends Controller
     }
 
 
+    /**
+     * @throws AuthorizationException
+     */
     public function status(int $id): void
     {
-        $this->nextcloudApi->policy('status');
+        $this->nextcloudApi->authorize('status');
 
         $nextcloudApiClient = $this->nextcloudApiManager->get($id);
         $info = $nextcloudApiClient->getStatus();

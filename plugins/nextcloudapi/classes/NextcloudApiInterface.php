@@ -6,11 +6,12 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
 use Ivy\Plugin\Application\Contracts\PluginInterface;
 use Ivy\Shared\Presentation\Routing\Route;
+use Ivy\User\Application\Service\AuthService;
 use Ivy\User\Domain\Entity\Profile;
 
 class NextcloudApiInterface implements PluginInterface
 {
-    public function register(): void
+    public function register(AuthService $auth): void
     {
         Route::mount('/admin/plugin/nextcloudapi', function () {
             Route::get('/index', '\NextcloudApi\NextcloudApiController@index')

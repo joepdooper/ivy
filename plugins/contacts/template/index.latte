@@ -8,7 +8,7 @@
             <div class="space-y-4">
                 <h1 class="leading-none text-6xl font-bold">{text('contacts.contacts.contacts')}</h1>
 
-                <div n:if="$contacts" class="overflow-x-auto rounded-box border border-base-content/5">
+                <div n:if="!$contacts->isEmpty()" class="overflow-x-auto rounded-box border border-base-content/5">
                     <table class="table">
                         <thead>
                         <tr>

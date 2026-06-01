@@ -7,10 +7,11 @@ use Illuminate\Database\Schema\Blueprint;
 use Ivy\Plugin\Application\Contracts\PluginInterface;
 use Ivy\Shared\Presentation\Routing\Route;
 use Ivy\Template\Infrastructure\Manager\AssetManager;
+use Ivy\User\Application\Service\AuthService;
 
 class TagInterface implements PluginInterface
 {
-    public function register(): void
+    public function register(AuthService $auth): void
     {
         AssetManager::addCSS('plugins/tags/css/tag.css');
 

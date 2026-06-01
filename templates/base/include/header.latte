@@ -28,7 +28,7 @@
                                 {text('menu.profile')}
                             </a>
                         </li>
-                        {if authUser()->canEditAsAdmin()}
+                        {if canEditAsAdmin()}
                             <li>
                                 <a href="{path('BASE_PATH') . 'admin/info'}">
                                     {icon("feather/info.svg")|noescape}

@@ -2,10 +2,12 @@
 
 namespace Contacts;
 
-use Ivy\Abstract\Controller;
-use Ivy\Core\Path;
-use Ivy\Model\Profile;
-use Ivy\View\View;
+
+use Ivy\Shared\Base\Controller;
+use Ivy\Shared\Core\Path;
+use Ivy\Template\Presentation\View\View;
+use Ivy\User\Domain\Entity\Profile;
+use Ivy\User\Domain\Exception\AuthorizationException;
 
 class ContactController extends Controller
 {
@@ -19,16 +21,18 @@ class ContactController extends Controller
         $this->contactForm = new ContactForm();
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function index(): void
     {
-        $this->contact->policy('index');
-        $contacts = $this->contact->fetchAll();
-        $profiles = (new Profile)->whereNotIn('id',
-            (new Contact)
-            ->whereNot('profile_id', null)
-            ->pluck('profile_id')
-        )->fetchAll();
-        View::set(Path::get('PLUGINS_PATH').'contacts/template/index.latte', [
+        $this->contact->authorize('index');
+
+        $contacts = Contact::all();
+        $profiles = Profile::whereNotExists(function ($query) {
+            $query->selectRaw(1)->from('contacts')->whereColumn('contacts.profile_id', 'profiles.id');
+        })->get();
+        View::render(Path::get('PLUGINS_PATH').'contacts/template/index.latte', [
             'contacts' => $contacts,
             'profiles' => $profiles
         ]);

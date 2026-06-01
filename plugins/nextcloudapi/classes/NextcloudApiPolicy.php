@@ -7,27 +7,27 @@ use Ivy\Shared\Base\Policy;
 
 class NextcloudApiPolicy extends Policy
 {
-    public function add(): bool
+    public function add(NextcloudApi $nextcloudApi): bool
     {
         return $this->canEditAsAdmin();
     }
 
-    public function update(): bool
+    public function update(NextcloudApi $nextcloudApi): bool
     {
         return $this->canEditAsAdmin();
     }
 
-    public function delete(): bool
+    public function delete(NextcloudApi $nextcloudApi): bool
     {
         return $this->canEditAsAdmin();
     }
 
-    public function servers(): bool
+    public function index(NextcloudApi $nextcloudApi): bool
     {
         return $this->canEditAsEditor();
     }
 
-    public function status(): bool
+    public function status(NextcloudApi $nextcloudApi): bool
     {
         return $this->canEditAsEditor();
     }
