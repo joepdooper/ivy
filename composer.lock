@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "12f56044cf8dc1989bf11c7358ccf9c9",
+    "content-hash": "132816e6dda8c17fa98fe071c1027e32",
     "packages": [
         {
             "name": "bainternet/php-hooks",
@@ -7413,11 +7413,11 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.4.21"
+        "php": ">=8.4.20"
     },
     "platform-dev": {},
     "platform-overrides": {
-        "php": "8.4.21"
+        "php": "8.4.20"
     },
     "plugin-api-version": "2.9.0"
 }
