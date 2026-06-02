@@ -9,8 +9,8 @@
     }
   ],
   "require": {
-    "php": ">=8.4.0",
-    "joepdooper/ivy-roots": "^0.9.20@alpha"
+    "php": ">=8.4.1",
+    "joepdooper/ivy-roots": "^0.9.21@alpha"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -23,7 +23,7 @@
   },
   "config": {
     "platform": {
-      "php": "8.4.0"
+      "php": "8.4.1"
     },
     "allow-plugins": {
       "pestphp/pest-plugin": true
