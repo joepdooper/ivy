@@ -10,10 +10,10 @@ services:
     ports:
       - "${SERVER_PORT:-8080}:80"
     volumes:
-      - ../:/var/www
-      - ./sites-available:/etc/apache2/sites-available
-      - ./sites-enabled:/etc/apache2/sites-enabled
-      - ./php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ../:/var/www:Z
+      - ./sites-available:/etc/apache2/sites-available:Z
+      - ./sites-enabled:/etc/apache2/sites-enabled:Z
+      - ./php/custom.ini:/usr/local/etc/php/conf.d/custom.ini:Z
 
   node:
     image: node:latest
