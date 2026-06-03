@@ -70,7 +70,7 @@
 
                 <div>
                     <label>
-                        {var $key = array_key_last($errors)}
+                        {var $key = array_key_last($errors) ?? count($infos)}
                         <input class="input input-bordered w-full {ifset $errors[$key]['name']}input-error{/ifset}" type="text" name="info[][name]" value="{ifset $errors[$key]['name']}{$old[$key]['name']}{/ifset}" placeholder="{text('info.add_name')}">
                         {ifset $errors[$key]['name']}
                             <span n:foreach="$errors[$key]['name'] as $message">{$message}</span>
