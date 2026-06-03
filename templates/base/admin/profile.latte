@@ -20,7 +20,7 @@
 
                             <div class="w-36 rounded-full">
                                 <img src="{media('profile/' . $profile->user_image)}"
-                                     alt="{auth()->getUsername()}"/>
+                                     alt="{$profile->user->username}"/>
                             </div>
                             <div class="join">
                                 {button type:delete, name:"delete_user_image", value:"delete", id:$profile->id, placeholder:$profile->user_image}
@@ -33,11 +33,11 @@
                                     {button type:upload, name:"user_image", value:"upload"}
                                 </div>
                                 <div id="userImagePreview" class="h-36 w-36"></div>
-                                <script>
-                                    window.addEventListener('DOMContentLoaded', () => {
-                                        previewImage("user_image", "userImagePreview", "background");
-                                    });
-                                </script>
+{*                                <script>*}
+{*                                    window.addEventListener('DOMContentLoaded', () => {*}
+{*                                        previewImage("user_image", "userImagePreview", "background");*}
+{*                                    });*}
+{*                                </script>*}
                             </div>
 
                         {/if}
