@@ -12,9 +12,9 @@
             {if isLoggedIn()}
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="avatar">
-                        {if authUser()->user_image}
+                        {if authProfile()->user_image}
                             <div class="w-10 rounded-full">
-                                <img alt="{authUser()->user->username}" src="{media('profile/' . authUser()->user_image)}"/>
+                                <img alt="{authUser()->username}" src="{media('profile/' . authProfile()->user_image)}"/>
                             </div>
                         {else}
                             {icon("feather/user.svg")|noescape}
