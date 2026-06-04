@@ -16,9 +16,17 @@ RouterManager::error(403, function (string $message) {
     ]);
 });
 
+// -- 413
+RouterManager::error(413, function (string $message) {
+    View::render('errors/error.latte', [
+        'code' => 413,
+        'message' => $message,
+    ]);
+});
+
 // -- 500
 RouterManager::error(500, function (string $message) {
-    View::render('errors/server_error.latte', [
+    View::render('errors/error.latte', [
         'code' => 500,
         'message' => $message,
     ]);
