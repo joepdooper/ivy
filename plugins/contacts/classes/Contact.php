@@ -2,11 +2,12 @@
 
 namespace Contacts;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Ivy\Shared\Base\Entity;
 use Ivy\Shared\Traits\HasPolicies;
 use Ivy\User\Domain\Entity\Profile;
 
-class Contact extends Model
+class Contact extends Entity
 {
     use HasPolicies;
 
@@ -17,7 +18,7 @@ class Contact extends Model
         'profile_id',
     ];
 
-    public function profile(): ?Profile
+    public function profile(): HasOne
     {
         return $this->hasOne(Profile::class, 'id','profile_id');
     }

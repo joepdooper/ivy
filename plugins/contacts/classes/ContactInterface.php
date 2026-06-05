@@ -20,9 +20,9 @@ class ContactInterface implements PluginInterface
                 ->before('\Ivy\User\Presentation\Controller\AdminController@before');
         });
 
-        if ($auth->canEditAsEditor()) {
-            AssetManager::addJS('plugins/contacts/js/contacts.admin.js');
-        }
+//        if ($auth->canEditAsEditor()) {
+//            AssetManager::addJS('plugins/contacts/js/contacts.admin.js');
+//        }
     }
 
     public function install(): void

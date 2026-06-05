@@ -3,11 +3,14 @@
 namespace Contacts;
 
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Ivy\Shared\Base\Controller;
 use Ivy\Shared\Core\Path;
 use Ivy\Template\Presentation\View\View;
 use Ivy\User\Domain\Entity\Profile;
 use Ivy\User\Domain\Exception\AuthorizationException;
+use ReflectionException;
+use Tags\Tag;
 
 class ContactController extends Controller
 {
@@ -38,52 +41,82 @@ class ContactController extends Controller
         ]);
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function add(mixed $data): void
     {
+        $this->contact->authorize('add');
+
         $contact = new Contact;
 
-        $contact->authorize('add');
+        $contact->fill($data)->save();
 
-        $contact->populate($data)->save();
         $this->flashBag->add('success', 'Contact ' . $contact->name . ' added successfully.');
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function update(Contact|int $contact, mixed $data): void
     {
-        if(is_int($contact)) {
-            $contact = (new Contact)->where('id', $contact)->fetchOne();
+        if (is_int($contact)) {
+            $contact = Contact::find($contact);
         }
 
-        if($contact && $contact->isDirty($data)) {
-            $contact->authorize('update');
-            $contact->populate($data);
-            if($contact->profile_id && !$contact->email){
-                $contact->email = $contact->profile->user->email;
-            }
-            $contact->update();
-            $this->flashBag->add('success', 'Contact ' . $contact->name . ' updated successfully.');
+        if (! $contact) {
+            return;
         }
+
+        $contact->fill($data);
+
+        if (! $contact->isDirty()) {
+            return;
+        }
+
+        $contact->authorize('update');
+
+        $contact->save();
+
+        $this->flashBag->add(
+            'success',
+            'Contact ' . $contact->name . ' updated successfully.'
+        );
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function delete(Contact|int $contact): void
     {
-        if(is_int($contact)) {
-            $contact = (new Contact)->where('id', $contact)->fetchOne();
+        if (is_int($contact)) {
+            $contact = Contact::find($contact);
         }
 
-        $contact?->authorize('delete');
-
-        if($contact){
-            $contact->delete();
-            $this->flashBag->add('success', 'Contact ' . $contact->name . ' deleted successfully.');
+        if (! $contact) {
+            return;
         }
+
+        $contact->authorize('delete');
+
+        $contact->delete();
+
+        $this->flashBag->add(
+            'success',
+            'Contact ' . $contact->name . ' deleted successfully.'
+        );
     }
 
+    /**
+     * @throws AuthorizationException
+     * @throws ReflectionException
+     * @throws BindingResolutionException
+     */
     public function sync(): void
     {
         $this->contact->policy('sync');
 
-        foreach ($this->request->get('contact') as $index => $data) {
+        foreach ($this->request->request->all('contact') as $index => $data) {
 
             if (empty($data['name'])) {
                 continue;
@@ -94,7 +127,7 @@ class ContactController extends Controller
             if ($result->valid) {
                 if(empty($result->data['id'])){
                     $this->add($result->data);
-                } elseif(isset($result->data['delete'])) {
+                } elseif(isset($data['delete'])) {
                     $this->delete($result->data['id']);
                 } else {
                     $this->update($result->data['id'], $result->data);
@@ -105,6 +138,11 @@ class ContactController extends Controller
             }
         }
 
-        $this->redirect($this->contact->getPath().DIRECTORY_SEPARATOR.'index');
+        if (! empty($errors)) {
+            $this->flashBag->set('errors', $errors);
+            $this->flashBag->set('old', $old);
+        }
+
+        $this->redirect('/admin/plugin/contacts/index');
     }
 }
