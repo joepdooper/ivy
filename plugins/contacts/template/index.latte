@@ -3,111 +3,118 @@
 {block header}
     {embed file('include/header.latte')}
         {block search}
-        <form class="ml-auto" id="search" ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/index'}" ts-trigger="input debounce 300ms" ts-target="#index" ts-req-selector="#index" method="POST" enctype="multipart/form-data">
-            {csrf()}
-            <label class="input">
-                <span class="icon text-gray-500">
-                    {icon("feather/search.svg")|noescape}
-                </span>
-                <input type="text" name="search" placeholder="Search contacts">
-            </label>
-        </form>
+            {include file('include/search.latte'),
+                url: 'admin/plugin/contacts/index',
+                target: '#index',
+                text: text('contacts.contacts.search')
+            }
         {/block}
     {/embed}
 {/block}
 
 {block main}
     <main class="grow p-4 w-full max-w-5xl mx-auto">
-        <div class="space-y-4">
-            <h1 class="leading-none text-6xl font-bold">{text('contacts.contacts.contacts')}</h1>
+        <form id="index" ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/sync'}" method="POST" enctype="multipart/form-data">
+            {csrf()}
 
-            <form id="index" ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/sync'}" method="POST" enctype="multipart/form-data">
-                {csrf()}
+            <div class="space-y-4">
+                <div class="flex justify-between items-end">
+                    <h1 class="leading-none text-6xl font-bold">{text('contacts.contacts.contacts')}</h1>
+                    {include 'modal.contact.latte',
+                    modal: 'modal_add_contact',
+                    title: text('contacts.contacts.modal.add'),
+                    key: count($contacts),
+                    contact: null,
+                    errors: $errors,
+                    old: $old
+                    }
+                </div>
 
-                <div class="space-y-4">
-                    <div n:if="!$contacts->isEmpty()" class="overflow-x-auto rounded-box border border-base-content/5">
-                        <table class="table">
-                            <thead>
+                <div n:if="!$contacts->isEmpty()" class="overflow-x-auto rounded-box border border-base-content/5">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>
+                            </th>
+                            <th>
+                                {button type:sort, column:'name', text:text('contacts.contacts.label.name'), sort:$sort, direction:$direction}
+                            </th>
+                            <th>
+                                {button type:sort, column:'profile.user.username', text:text('contacts.contacts.label.username'), sort:$sort, direction:$direction}
+                            </th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach $contacts as $key => $contact}
                             <tr>
-                                <th>
-                                </th>
-                                <th>
-                                    {button type:sort, column:'name', text:text('contacts.contacts.label.name'), sort:$sort, direction:$direction}
-                                </th>
-                                <th>
-                                    {button type:sort, column:'profile.user.username', text:text('contacts.contacts.label.username'), sort:$sort, direction:$direction}
-                                </th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {foreach $contacts as $key => $contact}
-                                <tr>
-                                    <td>
-                                        <div class="avatar">
-                                            <div class="w-10 h-10 rounded-full bg-primary/10 text-center">
-                                                {if $contact->profile_id && $contact->profile->user_image}
-                                                    <img alt="{$contact->name}" src="{media('profile/' . $contact->profile->user_image)}"/>
-                                                {else}
-                                                    <span class="inline-block mt-2">
+                                <td>
+                                    <div class="avatar">
+                                        <div class="w-10 h-10 rounded-full bg-primary/10 text-center">
+                                            {if $contact->profile_id && $contact->profile->user_image}
+                                                <img alt="{$contact->name}" src="{media('profile/' . $contact->profile->user_image)}"/>
+                                            {else}
+                                                <span class="inline-block mt-2">
                                                 {icon("feather/user.svg")|noescape}
                                             </span>
-                                                {/if}
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {$contact->name}
-                                    </td>
-                                    <td>
-                                        {if $contact->profile_id}
-                                            {$contact->profile->user->username}
-                                        {/if}
-                                    </td>
-                                    <td class="text-right">
-                                        <input type="hidden" name="contact[{$key}][id]" value="{$contact->id}">
-                                        <div class="join">
-                                            {if !empty($profiles) || $contact->profile_id}
-                                                {include 'modal.profile.latte',
-                                                contact: $contact,
-                                                profiles: $profiles,
-                                                key: $key,
-                                                errors: $errors,
-                                                old: $old
-                                                }
                                             {/if}
-                                        {include 'modal.contact.latte',
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {$contact->name}
+                                </td>
+                                <td>
+                                    {if $contact->profile_id}
+                                        {$contact->profile->user->username}
+                                    {/if}
+                                </td>
+                                <td class="text-right">
+                                    <input type="hidden" name="contact[{$key}][id]" value="{$contact->id}">
+                                    <div class="join">
+                                        {if !empty($profiles) || $contact->profile_id}
+                                            {include 'modal.profile.latte',
                                             contact: $contact,
                                             profiles: $profiles,
                                             key: $key,
                                             errors: $errors,
                                             old: $old
                                             }
+                                        {/if}
+                                        {include 'modal.contact.latte',
+                                        modal: 'modal_contact_'.$contact->id,
+                                        title: text('contacts.contacts.modal.edit') . ' ' . $contact->name,
+                                        contact: $contact,
+                                        profiles: $profiles,
+                                        key: $key,
+                                        errors: $errors,
+                                        old: $old
+                                        }
                                         {button type:delete, name:"contact[$key][delete]", value:"contact_" . $contact->id, id:$contact->id, placeholder:$contact->name}
-                                        </div>
-                                    </td>
-                                </tr>
-                            {/foreach}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div n:else class="text-center">
-                        {text('contacts.contacts.none_defined')}
-                    </div>
-
-                    <div>
-                        <label>
-                            <input class="input input-bordered w-full" type="text" name="contact[][name]"
-                                   placeholder="Add contacts name">
-                        </label>
-                    </div>
-
-                    <div class="text-center">
-                        {button type:submit, text:text('button.save')}
-                    </div>
-
+                                    </div>
+                                </td>
+                            </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
                 </div>
-            </form>
-        </div>
+                <div n:else class="text-center">
+                    {text('contacts.contacts.none_defined')}
+                </div>
+
+{*                <div>*}
+{*                    <label>*}
+{*                        <input class="input input-bordered w-full" type="text" name="contact[][name]"*}
+{*                               placeholder="{text('contacts.contacts.add')}"/>*}
+{*                    </label>*}
+{*                </div>*}
+
+{*                <div class="text-center">*}
+{*                    {button type:submit, text:text('button.save')}*}
+{*                </div>*}
+
+                {include file('include/pagination.latte')}
+            </div>
+        </form>
     </main>
 {/block}

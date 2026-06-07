@@ -43,6 +43,7 @@ class ContactController extends Controller
             'profiles' => $profiles,
             'sort' => $this->request->query->get('sort', 'name'),
             'direction' => $this->request->query->get('direction', 'asc'),
+            'search' => $this->request->query->get('search', ''),
         ]);
     }
 
