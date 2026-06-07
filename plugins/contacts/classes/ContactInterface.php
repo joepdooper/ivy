@@ -16,6 +16,8 @@ class ContactInterface implements PluginInterface
         Route::mount('/admin/plugin/contacts', function () {
             Route::get('/index', '\Contacts\ContactController@index')
                 ->before('\Ivy\User\Presentation\Controller\AdminController@before');
+            Route::post('/index', '\Contacts\ContactController@index')
+                ->before('\Ivy\User\Presentation\Controller\AdminController@before');
             Route::post('/sync', '\Contacts\ContactController@sync')
                 ->before('\Ivy\User\Presentation\Controller\AdminController@before');
         });

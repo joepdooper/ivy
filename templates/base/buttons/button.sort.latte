@@ -1,14 +1,16 @@
-<a role="button" class="flex" href="{sortUrl($column)}">
+<a role="button" class="flex items-center" href="{sortUrl($column)}">
     {$text}
     {if $sort === $column}
-        {if $direction === 'asc'}
-            <span class="ml-4 text-primary">
-                {icon('feather/chevron-up.svg')|noescape}
-            </span>
-        {else}
-            <span class="ml-4 text-primary">
-                {icon('feather/chevron-down.svg')|noescape}
-            </span>
-        {/if}
+        <div class="ml-2">
+            {if $direction === 'asc'}
+                <span class="btn btn-xs btn-square btn-primary btn-ghost">
+                    {icon('feather/arrow-down.svg')|noescape}
+                </span>
+            {else}
+                <span class="btn btn-xs btn-square btn-primary btn-ghost">
+                    {icon('feather/arrow-up.svg')|noescape}
+                </span>
+            {/if}
+        </div>
     {/if}
 </a>

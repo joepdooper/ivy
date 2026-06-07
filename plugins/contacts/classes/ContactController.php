@@ -32,6 +32,7 @@ class ContactController extends Controller
         $this->contact->authorize('index');
 
         $contacts = Contact::with('profile.user')
+            ->search($this->request)
             ->sort($this->request, 'name')
             ->get();
         $profiles = Profile::whereNotExists(function ($query) {
@@ -40,7 +41,7 @@ class ContactController extends Controller
         View::render(Path::get('PLUGINS_PATH').'contacts/template/index.latte', [
             'contacts' => $contacts,
             'profiles' => $profiles,
-            'sort' => $this->request->query->get('sort'),
+            'sort' => $this->request->query->get('sort', 'name'),
             'direction' => $this->request->query->get('direction', 'asc'),
         ]);
     }
@@ -155,6 +156,6 @@ class ContactController extends Controller
             $this->flashBag->set('old', $old);
         }
 
-        $this->redirect('/admin/plugin/contacts/index');
+        $this->redirect('admin/plugin/contacts/index');
     }
 }

@@ -1,11 +1,14 @@
 <header>
-    <div class="border-b border-base-300 navbar">
-        <div class="flex-1 px-2">
+    <div class="border-b border-base-300 navbar grid grid-cols-3 items-center">
+        <div class="px-2">
             <a href="{path('BASE_PATH')}" class="leading-none text-xl font-bold">
                 {info('name')}
             </a>
         </div>
-        <div class="flex gap-x-4 px-2">
+        <div class="px-2 justify-self-center">
+            {block search}{/block}
+        </div>
+        <div class="flex gap-x-4 px-2 justify-self-end">
             {if isLoggedIn()}
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="avatar">

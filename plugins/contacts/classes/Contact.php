@@ -5,12 +5,13 @@ namespace Contacts;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Ivy\Shared\Base\Entity;
 use Ivy\Shared\Traits\HasPolicies;
+use Ivy\Shared\Traits\HasSearching;
 use Ivy\Shared\Traits\HasSorting;
 use Ivy\User\Domain\Entity\Profile;
 
 class Contact extends Entity
 {
-    use HasPolicies, HasSorting;
+    use HasPolicies, HasSorting, HasSearching;
 
     protected $fillable = [
         'name',
@@ -23,6 +24,13 @@ class Contact extends Entity
         'name',
         'profile.user.username',
         'created_at',
+    ];
+
+    protected static array $searchable = [
+        'name',
+        'email',
+        'profile.user.username',
+        'profile.user.email'
     ];
 
     public function profile(): HasOne
