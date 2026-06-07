@@ -14,8 +14,12 @@
                         <tr>
                             <th>
                             </th>
-                            <th>Name</th>
-                            <th>Username</th>
+                            <th>
+                                {button type:sort, column:'name', text:text('contacts.contacts.label.name'), sort:$sort, direction:$direction}
+                            </th>
+                            <th>
+                                {button type:sort, column:'profile.user.username', text:text('contacts.contacts.label.username'), sort:$sort, direction:$direction}
+                            </th>
                             <th></th>
                         </tr>
                         </thead>

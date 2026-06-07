@@ -13,7 +13,11 @@ return [
     ],
     'label' => [
         'name' => 'Name',
+        'username' => 'Username',
         'email' => 'user@mail.com',
         'birthday' => 'Date of birth'
-    ]
+    ],
+    'added_successfully' => 'Contact :name added successfully',
+    'updated_successfully' => 'Contact :name updated successfully',
+    'deleted_successfully' => 'Contact :name deleted successfully',
 ];

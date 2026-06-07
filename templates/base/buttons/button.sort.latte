@@ -1,0 +1,14 @@
+<a role="button" class="flex" href="{sortUrl($column)}">
+    {$text}
+    {if $sort === $column}
+        {if $direction === 'asc'}
+            <span class="ml-4 text-primary">
+                {icon('feather/chevron-up.svg')|noescape}
+            </span>
+        {else}
+            <span class="ml-4 text-primary">
+                {icon('feather/chevron-down.svg')|noescape}
+            </span>
+        {/if}
+    {/if}
+</a>

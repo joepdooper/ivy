@@ -6,9 +6,6 @@
             </a>
         </div>
         <div class="flex gap-x-4 px-2">
-            {if isPluginActive('DarkMode')}
-                {render(Path::get('PLUGINS_PATH') . "darkmode/template/buttons.latte")}
-            {/if}
             {if isLoggedIn()}
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="avatar">
