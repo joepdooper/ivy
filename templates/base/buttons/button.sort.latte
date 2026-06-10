@@ -1,4 +1,7 @@
-<a role="button" class="flex items-center" href="{sortUrl($column)}">
+<a role="button" class="flex items-center" href="{queryUrl([
+'sort' => $column,
+'direction' => $direction === 'asc' ? 'desc' : 'asc',
+])}">
     {$text}
     {if $sort === $column}
         <div class="ml-2">

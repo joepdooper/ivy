@@ -7,4 +7,5 @@ return [
     'not' => 'not',
     'is' => 'is',
     'to' => 'to',
+    'of' => 'of'
 ];

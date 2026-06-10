@@ -34,6 +34,7 @@ class ContactController extends Controller
         $contacts = Contact::with('profile.user')
             ->search($this->request)
             ->sort($this->request, 'name')
+            ->paged($this->request)
             ->get();
         $profiles = Profile::whereNotExists(function ($query) {
             $query->selectRaw(1)->from('contacts')->whereColumn('contacts.profile_id', 'profiles.id');
@@ -43,7 +44,7 @@ class ContactController extends Controller
             'profiles' => $profiles,
             'sort' => $this->request->query->get('sort', 'name'),
             'direction' => $this->request->query->get('direction', 'asc'),
-            'search' => $this->request->query->get('search', ''),
+            'search' => $this->request->query->get('search', '')
         ]);
     }
 

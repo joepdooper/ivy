@@ -113,7 +113,7 @@
 {*                    {button type:submit, text:text('button.save')}*}
 {*                </div>*}
 
-                {include file('include/pagination.latte')}
+                {include file('include/pagination.latte'), pagination: $contacts->pagination()}
             </div>
         </form>
     </main>

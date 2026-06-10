@@ -4,6 +4,7 @@ namespace Contacts;
 
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Ivy\Shared\Base\Entity;
+use Ivy\Shared\Traits\HasPagination;
 use Ivy\Shared\Traits\HasPolicies;
 use Ivy\Shared\Traits\HasSearching;
 use Ivy\Shared\Traits\HasSorting;
@@ -11,7 +12,7 @@ use Ivy\User\Domain\Entity\Profile;
 
 class Contact extends Entity
 {
-    use HasPolicies, HasSorting, HasSearching;
+    use HasPolicies, HasSorting, HasSearching, HasPagination;
 
     protected $fillable = [
         'name',
