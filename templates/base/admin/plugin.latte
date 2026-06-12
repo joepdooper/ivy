@@ -8,7 +8,7 @@
             <div class="space-y-4">
                 <h1 class="leading-none text-6xl font-bold">{text('plugin.plugins')}</h1>
 
-                <div n:if="!$installed_plugins->isEmpty()" class="overflow-x-auto rounded-box border border-base-content/5">
+                <div n:if="!$installed_plugins->isEmpty()" class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 shadow shadow-lg shadow-base-300">
                     <table class="table">
                         <thead>
                         <tr>
@@ -35,25 +35,25 @@
                                 <td><strong>{$plugin->name}</strong></td>
                                 <td>{$plugin->description}</td>
                                 <td>{$plugin->version}</td>
-                                <td>{$plugin->type}</td>
+                                <td><div class="badge badge-sm badge-info font-bold">{$plugin->type}</div></td>
                                 <td class="text-right">
                                     <input type="hidden" name="plugin[{$key}][id]"
                                            value="{$plugin->id}">
                                     <div class="join">
                                         <a n:if="$plugin->active" n:foreach="$plugin->info->actions as $action"
-                                                class="btn btn-square btn-soft btn-primary shadow-none join-item"
+                                                class="btn btn-square btn-ghost btn-primary shadow-none join-item"
                                                 title="{text($plugin->url.'.'.$action['text'])}"
                                                 href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/' . $action['url']}">
                                             {icon($action['icon'])|noescape}
                                         </a>
                                         <a n:if="$plugin->active && can('collection', $plugin)"
-                                                class="btn btn-square btn-soft btn-primary shadow-none join-item"
+                                                class="btn btn-square btn-ghost btn-primary shadow-none join-item"
                                                 title="{text('plugin.collection')}"
                                                 href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/collection'}">
                                             {icon("feather/package.svg")|noescape}
                                         </a>
                                         <a n:if="$plugin->active && can('settings', $plugin)"
-                                                class="btn btn-square btn-soft btn-primary shadow-none join-item"
+                                                class="btn btn-square btn-ghost btn-primary shadow-none join-item"
                                                 title="{text('setting.settings')}"
                                                 href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/settings'}">
                                             {icon("feather/settings.svg")|noescape}

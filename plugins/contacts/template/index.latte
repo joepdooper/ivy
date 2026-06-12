@@ -13,12 +13,12 @@
 {/block}
 
 {block main}
-    <main class="grow p-4 w-full max-w-5xl mx-auto">
-        <form id="index" ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/sync'}" method="POST" enctype="multipart/form-data">
+    <main class="flex flex-col grow p-4 w-full max-w-5xl mx-auto">
+        <form class="flex flex-col grow" id="index" ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/sync'}" method="POST" enctype="multipart/form-data">
             {csrf()}
 
             <div class="space-y-4">
-                <div class="flex justify-between items-end">
+                <div class="flex justify-between items-center">
                     <h1 class="leading-none text-6xl font-bold">{text('contacts.contacts.contacts')}</h1>
                     {include 'modal.contact.latte',
                     modal: 'modal_add_contact',
@@ -30,8 +30,8 @@
                     }
                 </div>
 
-                <div n:if="!$contacts->isEmpty()" class="overflow-x-auto rounded-box border border-base-content/5">
-                    <table class="table">
+                <div n:if="!$contacts->isEmpty()" class="overflow-x-auto rounded-box border border-base-content/5 shadow shadow-lg shadow-base-300">
+                    <table class="table bg-base-100">
                         <thead>
                         <tr>
                             <th>
@@ -50,7 +50,7 @@
                             <tr>
                                 <td>
                                     <div class="avatar">
-                                        <div class="w-10 h-10 rounded-full bg-primary/10 text-center">
+                                        <div class="w-10 h-10 rounded-full bg-base-content/5 text-center">
                                             {if $contact->profile_id && $contact->profile->user_image}
                                                 <img alt="{$contact->name}" src="{media('profile/' . $contact->profile->user_image)}"/>
                                             {else}
@@ -113,6 +113,8 @@
 {*                    {button type:submit, text:text('button.save')}*}
 {*                </div>*}
 
+            </div>
+            <div class="mt-auto">
                 {include file('include/pagination.latte'), pagination: $contacts->pagination()}
             </div>
         </form>
