@@ -158,6 +158,6 @@ class ContactController extends Controller
             $this->flashBag->set('old', $old);
         }
 
-        $this->redirect('admin/plugin/contacts/index');
+        $this->redirect($this->getRefererPath() ?? 'admin/plugin/contacts/index');
     }
 }
