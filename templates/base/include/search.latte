@@ -1,8 +1,6 @@
-<form ts-req="{path('BASE_PATH') . $url . queryUrl(['page' => 1])}" ts-trigger="input debounce 300ms" ts-target="{$target}" ts-req-selector="{$target}" method="GET" enctype="multipart/form-data">
-    <label class="input">
-        <span class="icon text-gray-500">
+<label class="input">
+    <span class="icon text-gray-500">
             {icon("feather/search.svg")|noescape}
         </span>
-        <input type="text" name="search" placeholder="{$text}" value="{$search}" />
-    </label>
-</form>
+    <input type="text" name="search" placeholder="{$text}" value="{$search}" />
+</label>

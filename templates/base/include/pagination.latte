@@ -1,7 +1,8 @@
 {if $pagination}
     <div class="grid grid-cols-3 items-center">
-        <div class="flex font-medium text-sm text-base-content/60 justify-self-start">
-            {$pagination->from()} › {$pagination->to()} {text('misc.of')} {$pagination->total}
+
+        <div class="flex font-medium text-xs text-base-content/60 justify-self-start px-4 py-3">
+            {$pagination->from()} {text('misc.to')} {$pagination->to()} {text('misc.of')} {$pagination->total}
         </div>
 
         {if $pagination->lastPage > 1}
@@ -10,18 +11,18 @@
                 {* Previous *}
                 {if $pagination->hasPrevious()}
                     <a href="{queryUrl(['page' => $pagination->currentPage - 1])}"
-                       class="btn btn-ghost btn-primary shadow-none btn-square join-item">
+                       class="btn btn-soft btn-primary shadow-none btn-square join-item">
                         {icon('feather/arrow-left.svg')|noescape}
                     </a>
                 {else}
-                    <span class="btn btn-ghost btn-primary shadow-none btn-square join-item">
+                    <span class="btn btn-soft btn-primary shadow-none btn-square join-item">
                         {icon('feather/arrow-left.svg')|noescape}
                     </span>
                 {/if}
 
                 {* Page numbers *}
                 {foreach $pagination->pages() as $page}
-                    <a href="{queryUrl(['page' => $page])}" class="btn shadow-none btn-square join-item btn-ghost
+                    <a href="{queryUrl(['page' => $page])}" class="btn shadow-none btn-square join-item btn-soft
                     {if $page === $pagination->currentPage}btn-accent{else}btn-primary{/if}">
                         {$page}
                     </a>
@@ -30,11 +31,11 @@
                 {* Next *}
                {if $pagination->hasNext()}
                     <a href="{queryUrl(['page' => $pagination->currentPage + 1])}"
-                       class="btn btn-ghost btn-primary shadow-none btn-square join-item">
+                       class="btn btn-soft btn-primary shadow-none btn-square join-item">
                         {icon('feather/arrow-right.svg')|noescape}
                     </a>
                 {else}
-                    <span class="btn btn-ghost btn-primary shadow-none btn-square join-item">
+                    <span class="btn btn-soft btn-primary shadow-none btn-square join-item">
                         {icon('feather/arrow-right.svg')|noescape}
                     </span>
                 {/if}
@@ -44,14 +45,15 @@
             <div></div>
         {/if}
 
-        <div class="flex gap-1.5 justify-self-end">
+        <div class="flex gap-1.5 justify-self-end px-4 py-3">
             {foreach $pagination->perPageOptions as $option}
                 <a href="{queryUrl(['per_page' => $option])}"
-                   class="text-sm font-medium
+                   class="font-medium text-xs
            {if $option == $pagination->perPage}text-accent{else}text-primary hover:text-white{/if}">
                     {$option}
                 </a>
             {/foreach}
         </div>
+
     </div>
 {/if}

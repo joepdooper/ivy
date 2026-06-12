@@ -1,37 +1,36 @@
 {extends file('body.latte')}
 
-{block header}
-    {embed file('include/header.latte')}
-        {block search}
-            {include file('include/search.latte'),
-                url: 'admin/plugin/contacts/index',
-                target: '#index',
-                text: text('contacts.contacts.search')
-            }
-        {/block}
-    {/embed}
-{/block}
-
 {block main}
-    <main class="flex flex-col grow p-4 w-full max-w-5xl mx-auto">
-        <form class="flex flex-col grow" id="index" ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/sync'}" method="POST" enctype="multipart/form-data">
-            {csrf()}
+    <main class="flex flex-col flex-1 p-4 w-full max-w-5xl mx-auto">
 
-            <div class="space-y-4">
-                <div class="flex justify-between items-center">
-                    <h1 class="leading-none text-6xl font-bold">{text('contacts.contacts.contacts')}</h1>
-                    {include 'modal.contact.latte',
-                    modal: 'modal_add_contact',
-                    title: text('contacts.contacts.modal.add'),
-                    key: count($contacts),
-                    contact: null,
-                    errors: $errors,
-                    old: $old
-                    }
+        <div class="flex-1 h-full space-y-4">
+
+            <h1 class="leading-none text-6xl font-bold">{text('contacts.contacts.contacts')}</h1>
+
+            <div n:if="!$contacts->isEmpty()" class="flex-1 overflow-x-auto rounded-box border border-base-content/5 shadow shadow-lg shadow-base-300 bg-base-100">
+                <div class="border-b border-base-content/5 p-4 flex justify-between">
+                    <form ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/index' . queryUrl(['page' => 1])}" ts-trigger="input debounce 300ms" ts-target="#index" ts-req-selector="#index" method="GET" enctype="multipart/form-data">
+                        {include file('include/search.latte'),
+                        text: text('contacts.contacts.search')
+                        }
+                    </form>
+                    <div>
+                        <form ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/sync' . queryUrl()}" method="POST" enctype="multipart/form-data">
+                            {csrf()}
+                            {include 'modal.contact.latte',
+                            modal: 'modal_add_contact',
+                            title: text('contacts.contacts.modal.add'),
+                            key: count($contacts),
+                            contact: null,
+                            errors: $errors,
+                            old: $old
+                            }
+                        </form>
+                    </div>
                 </div>
-
-                <div n:if="!$contacts->isEmpty()" class="overflow-x-auto rounded-box border border-base-content/5 shadow shadow-lg shadow-base-300">
-                    <table class="table bg-base-100">
+                <form class="flex-1" id="index" ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/sync' . queryUrl()}" method="POST" enctype="multipart/form-data">
+                    {csrf()}
+                    <table class="table table-pin-rows">
                         <thead>
                         <tr>
                             <th>
@@ -41,6 +40,9 @@
                             </th>
                             <th>
                                 {button type:sort, column:'profile.user.username', text:text('contacts.contacts.label.username'), sort:$sort, direction:$direction}
+                            </th>
+                            <th>
+                                {text('contacts.contacts.label.details')}
                             </th>
                             <th></th>
                         </tr>
@@ -68,6 +70,20 @@
                                     {if $contact->profile_id}
                                         {$contact->profile->user->username}
                                     {/if}
+                                </td>
+                                <td>
+                                    <div class="flex items-center space-x-2">
+                                        {if $contact->email}
+                                            <div class="icon text-info">
+                                                {icon("feather/at-sign.svg")|noescape}
+                                            </div>
+                                        {/if}
+                                    {if $contact->birthday}
+                                            <div class="icon text-info">
+                                                {icon("feather/calendar.svg")|noescape}
+                                            </div>
+                                        {/if}
+                                    </div>
                                 </td>
                                 <td class="text-right">
                                     <input type="hidden" name="contact[{$key}][id]" value="{$contact->id}">
@@ -97,26 +113,15 @@
                         {/foreach}
                         </tbody>
                     </table>
+                </form>
+                <div class="border-t border-base-content/5">
+                    {include file('include/pagination.latte'), pagination: $contacts->pagination()}
                 </div>
-                <div n:else class="text-center">
-                    {text('contacts.contacts.none_defined')}
-                </div>
-
-{*                <div>*}
-{*                    <label>*}
-{*                        <input class="input input-bordered w-full" type="text" name="contact[][name]"*}
-{*                               placeholder="{text('contacts.contacts.add')}"/>*}
-{*                    </label>*}
-{*                </div>*}
-
-{*                <div class="text-center">*}
-{*                    {button type:submit, text:text('button.save')}*}
-{*                </div>*}
-
             </div>
-            <div class="mt-auto">
-                {include file('include/pagination.latte'), pagination: $contacts->pagination()}
+            <div n:else class="text-center">
+                {text('contacts.contacts.none_defined')}
             </div>
-        </form>
+
+        </div>
     </main>
 {/block}

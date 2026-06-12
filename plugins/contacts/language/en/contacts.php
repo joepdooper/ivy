@@ -16,6 +16,7 @@ return [
     'label' => [
         'name' => 'Name',
         'username' => 'Username',
+        'details' => 'Details',
         'email' => 'user@mail.com',
         'birthday' => 'Date of birth'
     ],

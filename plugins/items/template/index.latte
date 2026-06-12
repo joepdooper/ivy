@@ -1,5 +1,17 @@
 {extends file('body.latte')}
 
+{*{block header}*}
+{*    {embed file('include/header.latte')}*}
+{*        {block search}*}
+{*            {include file('include/search.latte'),*}
+{*                url: 'admin/plugin/contacts/index',*}
+{*                target: '#index',*}
+{*                text: text('contacts.contacts.search')*}
+{*            }*}
+{*        {/block}*}
+{*    {/embed}*}
+{*{/block}*}
+
 {block main}
     <main class="grow p-4 relative">
         <div n:if="$items" id="grid" class="grid grid-cols-3 gap-4 items-start">
