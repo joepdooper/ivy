@@ -28,94 +28,96 @@
                         </form>
                     </div>
                 </div>
-                <form class="flex-1" id="index" ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/sync' . queryUrl()}" method="POST" enctype="multipart/form-data">
-                    {csrf()}
-                    <table class="table table-pin-rows">
-                        <thead>
-                        <tr>
-                            <th>
-                            </th>
-                            <th>
-                                {button type:sort, column:'name', text:text('contacts.contacts.label.name'), sort:$sort, direction:$direction}
-                            </th>
-                            <th>
-                                {button type:sort, column:'profile.user.username', text:text('contacts.contacts.label.username'), sort:$sort, direction:$direction}
-                            </th>
-                            <th>
-                                {text('contacts.contacts.label.details')}
-                            </th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {foreach $contacts as $key => $contact}
+                <div class="flex-1" id="index">
+                    <form ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/sync' . queryUrl()}" method="POST" enctype="multipart/form-data">
+                        {csrf()}
+                        <table class="table table-pin-rows">
+                            <thead>
                             <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <div class="w-10 h-10 rounded-full bg-base-content/5 text-center">
-                                            {if $contact->profile_id && $contact->profile->user_image}
-                                                <img alt="{$contact->name}" src="{media('profile/' . $contact->profile->user_image)}"/>
-                                            {else}
-                                                <span class="inline-block mt-2">
+                                <th>
+                                </th>
+                                <th>
+                                    {button type:sort, column:'name', text:text('contacts.contacts.label.name'), sort:$sort, direction:$direction}
+                                </th>
+                                <th>
+                                    {button type:sort, column:'profile.user.username', text:text('contacts.contacts.label.username'), sort:$sort, direction:$direction}
+                                </th>
+                                <th>
+                                    {text('contacts.contacts.label.details')}
+                                </th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {foreach $contacts as $key => $contact}
+                                <tr>
+                                    <td>
+                                        <div class="avatar">
+                                            <div class="w-10 h-10 rounded-full bg-base-content/5 text-center">
+                                                {if $contact->profile_id && $contact->profile->user_image}
+                                                    <img alt="{$contact->name}" src="{media('profile/' . $contact->profile->user_image)}"/>
+                                                {else}
+                                                    <span class="inline-block mt-2">
                                                 {icon("feather/user.svg")|noescape}
                                             </span>
+                                                {/if}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {$contact->name}
+                                    </td>
+                                    <td>
+                                        {if $contact->profile_id}
+                                            {$contact->profile->user->username}
+                                        {/if}
+                                    </td>
+                                    <td>
+                                        <div class="flex items-center space-x-2">
+                                            {if $contact->email}
+                                                <div class="icon text-info">
+                                                    {icon("feather/at-sign.svg")|noescape}
+                                                </div>
+                                            {/if}
+                                    {if $contact->birthday}
+                                                <div class="icon text-info">
+                                                    {icon("feather/calendar.svg")|noescape}
+                                                </div>
                                             {/if}
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    {$contact->name}
-                                </td>
-                                <td>
-                                    {if $contact->profile_id}
-                                        {$contact->profile->user->username}
-                                    {/if}
-                                </td>
-                                <td>
-                                    <div class="flex items-center space-x-2">
-                                        {if $contact->email}
-                                            <div class="icon text-info">
-                                                {icon("feather/at-sign.svg")|noescape}
-                                            </div>
-                                        {/if}
-                                    {if $contact->birthday}
-                                            <div class="icon text-info">
-                                                {icon("feather/calendar.svg")|noescape}
-                                            </div>
-                                        {/if}
-                                    </div>
-                                </td>
-                                <td class="text-right">
-                                    <input type="hidden" name="contact[{$key}][id]" value="{$contact->id}">
-                                    <div class="join">
-                                        {if !empty($profiles) || $contact->profile_id}
-                                            {include 'modal.profile.latte',
+                                    </td>
+                                    <td class="text-right">
+                                        <input type="hidden" name="contact[{$key}][id]" value="{$contact->id}">
+                                        <div class="join">
+                                            {if !empty($profiles) || $contact->profile_id}
+                                                {include 'modal.profile.latte',
+                                                contact: $contact,
+                                                profiles: $profiles,
+                                                key: $key,
+                                                errors: $errors,
+                                                old: $old
+                                                }
+                                            {/if}
+                                        {include 'modal.contact.latte',
+                                            modal: 'modal_contact_'.$contact->id,
+                                            title: text('contacts.contacts.modal.edit') . ' ' . $contact->name,
                                             contact: $contact,
                                             profiles: $profiles,
                                             key: $key,
                                             errors: $errors,
                                             old: $old
                                             }
-                                        {/if}
-                                        {include 'modal.contact.latte',
-                                        modal: 'modal_contact_'.$contact->id,
-                                        title: text('contacts.contacts.modal.edit') . ' ' . $contact->name,
-                                        contact: $contact,
-                                        profiles: $profiles,
-                                        key: $key,
-                                        errors: $errors,
-                                        old: $old
-                                        }
                                         {button type:delete, name:"contact[$key][delete]", value:"contact_" . $contact->id, id:$contact->id, placeholder:$contact->name}
-                                    </div>
-                                </td>
-                            </tr>
-                        {/foreach}
-                        </tbody>
-                    </table>
-                </form>
-                <div class="border-t border-base-content/5">
-                    {include file('include/pagination.latte'), pagination: $contacts->pagination()}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {/foreach}
+                            </tbody>
+                        </table>
+                    </form>
+                    <div class="border-t border-base-content/5">
+                        {include file('include/pagination.latte'), pagination: $contacts->pagination()}
+                    </div>
                 </div>
             </div>
             <div n:else class="text-center">
