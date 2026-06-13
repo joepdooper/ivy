@@ -103,24 +103,27 @@ class NextcloudApiController extends Controller
         ]);
     }
 
-
-    /**
-     * @throws AuthorizationException
-     */
-    public function status(int $id): void
+    public function response(): void
     {
-        $this->nextcloudApi->authorize('status');
+        $nextcloudApis = NextcloudApi::all();
 
-        $nextcloudApiClient = $this->nextcloudApiManager->get($id);
-        $info = $nextcloudApiClient->getStatus();
-        if(isset($info->data['installed'])){
-            $version = $info->data['version'];
-            $info = $nextcloudApiClient->getServerInfo();
-            $info->version = $version;
+        foreach ($nextcloudApis as $nextcloudApi) {
+            try {
+                $nextcloudApiClient = $this->nextcloudApiManager->get($nextcloudApi->id);
+                $nextcloudApi->response = $nextcloudApiClient->getStatus();
+                if(isset($nextcloudApi->response->data['installed'])){
+                    $nextcloudApi->response = $nextcloudApiClient->getServerInfo();
+                }
+            } catch (\Throwable $e) {
+                $nextcloudApi->status = (object) [
+                    'code' => 'TIMEOUT',
+                    'message' => $e->getMessage(),
+                ];
+            }
         }
-        View::render(Path::get('PLUGINS_PATH').'nextcloudapi/template/status.latte', [
-            'id' => $id,
-            'info' => $info,
-        ]);
+
+        View::render(Path::get('PLUGINS_PATH').'nextcloudapi/template/response.latte', [
+            'nextcloudApis' => $nextcloudApis,
+        ]);;
     }
 }

@@ -16,7 +16,7 @@ class NextcloudApiInterface implements PluginInterface
         Route::mount('/admin/plugin/nextcloudapi', function () {
             Route::get('/index', '\NextcloudApi\NextcloudApiController@index')
                 ->before('\Ivy\User\Presentation\Controller\AdminController@before');
-            Route::get('/status/(\d+)', '\NextcloudApi\NextcloudApiController@status')
+            Route::get('/response', '\NextcloudApi\NextcloudApiController@response')
                 ->before('\Ivy\User\Presentation\Controller\AdminController@before');
             Route::post('/add', '\NextcloudApi\NextcloudApiController@add')
                 ->before('\Ivy\User\Presentation\Controller\AdminController@before');
