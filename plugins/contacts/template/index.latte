@@ -7,7 +7,7 @@
 
             <h1 class="leading-none text-6xl font-bold">{text('contacts.contacts.contacts')}</h1>
 
-            <div n:if="!$contacts->isEmpty()" class="flex-1 overflow-x-auto rounded-box border border-base-content/5 shadow shadow-lg shadow-base-300 bg-base-100">
+            <div class="flex-1 overflow-x-auto rounded-box border border-base-content/5 shadow shadow-lg shadow-base-300 bg-base-100">
                 <div class="border-b border-base-content/5 p-4 flex justify-between">
                     <form ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/index' . queryUrl(['page' => 1])}" ts-trigger="input debounce 300ms" ts-target="#index" ts-req-selector="#index" method="GET" enctype="multipart/form-data">
                         {include file('include/search.latte'),
@@ -28,7 +28,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="flex-1" id="index">
+                <div class="flex-1" id="index" n:if="!$contacts->isEmpty()">
                     <form ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/sync' . queryUrl()}" method="POST" enctype="multipart/form-data">
                         {csrf()}
                         <table class="table table-pin-rows">
@@ -119,9 +119,9 @@
                         {include file('include/pagination.latte'), pagination: $contacts->pagination()}
                     </div>
                 </div>
-            </div>
-            <div n:else class="text-center">
-                {text('contacts.contacts.none_defined')}
+                <div n:else class="text-center p-4">
+                    {text('contacts.contacts.none_defined')}
+                </div>
             </div>
 
         </div>
