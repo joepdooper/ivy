@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0272730c3df3486355bb22e28f4b3a99",
+    "content-hash": "2b77385da05cc0870b9b9cdcd9b7f25f",
     "packages": [
         {
             "name": "bainternet/php-hooks",
