@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b77385da05cc0870b9b9cdcd9b7f25f",
+    "content-hash": "0f15b9e1ef68cb6679b039d337fe3df9",
     "packages": [
         {
             "name": "bainternet/php-hooks",
@@ -4121,19 +4121,18 @@
         },
         {
             "name": "joepdooper/ivy-cultivate",
-            "version": "dev-main",
+            "version": "v0.8.9-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joepdooper/ivy-cultivate.git",
-                "reference": "991fdb356dec0704e0aa885e49881e9cee141598"
+                "reference": "6fbb67dfe088eca9b2e02632332421d8e046caac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joepdooper/ivy-cultivate/zipball/991fdb356dec0704e0aa885e49881e9cee141598",
-                "reference": "991fdb356dec0704e0aa885e49881e9cee141598",
+                "url": "https://api.github.com/repos/joepdooper/ivy-cultivate/zipball/6fbb67dfe088eca9b2e02632332421d8e046caac",
+                "reference": "6fbb67dfe088eca9b2e02632332421d8e046caac",
                 "shasum": ""
             },
-            "default-branch": true,
             "bin": [
                 "bin/cultivate"
             ],
@@ -4150,9 +4149,9 @@
             "description": "A set of CLI tools to build and extend development in ivy",
             "support": {
                 "issues": "https://github.com/joepdooper/ivy-cultivate/issues",
-                "source": "https://github.com/joepdooper/ivy-cultivate/tree/main"
+                "source": "https://github.com/joepdooper/ivy-cultivate/tree/v0.8.9-alpha"
             },
-            "time": "2026-03-30T17:03:41+00:00"
+            "time": "2026-06-14T14:18:25+00:00"
         },
         {
             "name": "kint-php/kint",
@@ -7531,7 +7530,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "joepdooper/ivy-cultivate": 20,
         "joepdooper/ivy-roots": 15,
         "kint-php/kint": 20,
         "pestphp/pest": 20
