@@ -54,8 +54,8 @@
                                     <td>
                                         <div class="avatar">
                                             <div class="w-10 h-10 rounded-full bg-base-content/5 text-center">
-                                                {if $contact->profile_id && $contact->profile->user_image}
-                                                    <img alt="{$contact->name}" src="{media('profile/' . $contact->profile->user_image)}"/>
+                                                {if $contact->profile_id && $contact->profile->image}
+                                                    <img alt="{$contact->name}" src="{media('profile/' . $contact->profile->image)}"/>
                                                 {else}
                                                     <span class="inline-block mt-2">
                                                 {icon("feather/user.svg")|noescape}

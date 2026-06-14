@@ -84,8 +84,8 @@
                                             {if $person->profile && (in_array($person->profile->user_id, $peopleIds) || (!$moment && $person->profile->user_id === auth()->getUserId()))}checked{/if}
                                     />
                                     <span class="swap-off overflow-hidden w-10 h-10 rounded-full bg-primary/10 text-primary border-2 border-transparent">
-                                        {if $person?->profile?->user_image}
-                                            <img alt="{$person->name}" src="{media('profile/' . $person->profile->user_image)}"/>
+                                        {if $person?->profile?->image}
+                                            <img alt="{$person->name}" src="{media('profile/' . $person->profile->image)}"/>
                                         {else}
                                             <span class="inline-block ml-1.5 mt-1.5">
                                                 {icon("feather/user.svg")|noescape}
@@ -93,8 +93,8 @@
                                         {/if}
                                     </span>
                                     <span class="swap-on overflow-hidden w-10 h-10 rounded-full bg-accent text-primary border-2 border-accent">
-                                        {if $person->profile->user_image}
-                                            <img alt="{$person->name}" src="{media('profile/' . $person->profile->user_image)}"/>
+                                        {if $person->profile->image}
+                                            <img alt="{$person->name}" src="{media('profile/' . $person->profile->image)}"/>
                                         {else}
                                             <span class="inline-block ml-1.5 mt-1.5">
                                                 {icon("feather/user.svg")|noescape}

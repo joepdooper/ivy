@@ -65,8 +65,8 @@
                     {foreach $momentPeople as $person}
                         <div class="avatar tooltip" data-tip="{$person->username}">
                             <div class="w-10 rounded-full bg-secondary">
-                                {if $person->user_image}
-                                    <img alt="{$person->username}" src="{media('profile/' . $person->user_image)}"/>
+                                {if $person->image}
+                                    <img alt="{$person->username}" src="{media('profile/' . $person->image)}"/>
                                 {else}
                                     <div class="ml-2 mt-2">
                                         {icon("feather/user.svg")|noescape}
