@@ -10,7 +10,7 @@
   ],
   "require": {
     "php": ">=8.5.6",
-    "joepdooper/ivy-roots": "^0.9.22@alpha"
+    "joepdooper/ivy-roots": "^0.9.23@alpha"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
