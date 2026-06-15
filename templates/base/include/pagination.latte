@@ -45,15 +45,32 @@
             <div></div>
         {/if}
 
-        <div class="flex gap-1.5 justify-self-end px-4 py-3">
-            {foreach $pagination->perPageOptions as $option}
-                <a href="{queryUrl(['per_page' => $option])}"
-                   class="font-medium text-xs
-           {if $option == $pagination->perPage}text-accent{else}text-primary hover:text-white{/if}">
-                    {$option}
-                </a>
-            {/foreach}
-        </div>
+        <label class="justify-self-end">
+                <select
+                        name="per_page"
+                        class="select"
+                        ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/index' . queryUrl(['page' => 1])}"
+                        ts-trigger="change"
+                        ts-target="#index"
+                        ts-req-selector="#index"
+                >
+                    {foreach $pagination->perPageOptions as $option}
+                        <option value="{$option}" {if $option == $pagination->perPage}selected{/if}>
+                            {$option}
+                        </option>
+                    {/foreach}
+                </select>
+        </label>
+
+{*        <div class="flex gap-1.5 justify-self-end px-4 py-3">*}
+{*            {foreach $pagination->perPageOptions as $option}*}
+{*                <a href="{queryUrl(['per_page' => $option])}"*}
+{*                   class="font-medium text-xs*}
+{*           {if $option == $pagination->perPage}text-accent{else}text-primary hover:text-white{/if}">*}
+{*                    {$option}*}
+{*                </a>*}
+{*            {/foreach}*}
+{*        </div>*}
 
     </div>
 {/if}

@@ -36,9 +36,11 @@ class ContactController extends Controller
             ->sort($this->request, 'name')
             ->paged($this->request)
             ->get();
+
         $profiles = Profile::whereNotExists(function ($query) {
             $query->selectRaw(1)->from('contacts')->whereColumn('contacts.profile_id', 'profiles.id');
         })->get();
+
         View::render(Path::get('PLUGINS_PATH').'contacts/template/index.latte', [
             'contacts' => $contacts,
             'profiles' => $profiles,
@@ -153,7 +155,7 @@ class ContactController extends Controller
             }
         }
 
-        if (! empty($errors)) {
+        if (! empty($errors) && !empty($old)) {
             $this->flashBag->set('errors', $errors);
             $this->flashBag->set('old', $old);
         }
