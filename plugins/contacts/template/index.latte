@@ -114,13 +114,14 @@
                             </tbody>
                         </table>
                     </form>
+                    <div class="border-t border-base-content/5">
+                        {include file('include/pagination.latte'), pagination: $contacts->pagination()}
+                    </div>
                 </div>
                 <div n:else class="text-center p-4">
                     {text('contacts.contacts.none_defined')}
                 </div>
             </div>
-
-            {include file('include/pagination.latte'), pagination: $contacts->pagination()}
 
         </div>
     </main>
