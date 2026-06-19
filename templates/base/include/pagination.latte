@@ -1,15 +1,14 @@
 {if $pagination}
-    <div class="flex justify-between">
+    <div class="flex justify-between"
+         ts-req="{path('BASE_PATH') . $url .queryUrl(['page' => 1])}"
+         ts-trigger="input debounce 300ms"
+         ts-target="{$target}"
+         ts-req-selector="{$target}"
+    >
 
         <div class="flex font-medium text-xs text-base-content/60 items-center">
             <label class="mr-4">
-                <select class="select select-ghost border border-base-content/5"
-                        onchange="
-                        const params = new URLSearchParams(window.location.search);
-                        params.set('page', '1');
-                        params.set('per_page', this.value);
-                        window.location.href = window.location.pathname + '?' + params.toString()
-                ">
+                <select name="per_page" class="select select-ghost border border-base-content/5">
                     {foreach $pagination->perPageOptions as $option}
                         <option value="{$option}" {if $option == $pagination->perPage}selected{/if}>
                             {$option}
@@ -30,8 +29,8 @@
                     </a>
                 {else}
                     <span class="join-item border border-base-content/5 btn btn-ghost btn-primary shadow-none btn-square">
-                                {icon('feather/arrow-left.svg')|noescape}
-                            </span>
+                        {icon('feather/arrow-left.svg')|noescape}
+                    </span>
                 {/if}
 
                 {* Page numbers *}

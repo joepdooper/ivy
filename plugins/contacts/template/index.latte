@@ -8,11 +8,11 @@
 
             <div class="flex-1 overflow-x-auto rounded-box border border-base-content/5 shadow shadow-lg shadow-base-300 bg-base-100">
                 <div class="border-b border-base-content/5 p-4 flex justify-between">
-                    <form ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/index' . queryUrl(['page' => 1])}" ts-trigger="input debounce 300ms" ts-target="#index" ts-req-selector="#index" method="GET" enctype="multipart/form-data">
                         {include file('include/search.latte'),
-                        text: text('contacts.contacts.search')
+                        text: text('contacts.contacts.search'),
+                        url: 'admin/plugin/contacts/index',
+                        target: '#index'
                         }
-                    </form>
                     <div>
                         <form ts-req="{path('BASE_PATH') . 'admin/plugin/contacts/sync' . queryUrl()}" method="POST" enctype="multipart/form-data">
                             {csrf()}
@@ -114,9 +114,13 @@
                             </tbody>
                         </table>
                     </form>
-                    <div class="border-t border-base-content/5">
-                        {include file('include/pagination.latte'), pagination: $contacts->pagination()}
-                    </div>
+                    <form class="border-t border-base-content/5">
+                        {include file('include/pagination.latte'),
+                        pagination: $contacts->pagination(),
+                        url: 'admin/plugin/contacts/index',
+                        target: '#index'
+                        }
+                    </form>
                 </div>
                 <div n:else class="text-center p-4">
                     {text('contacts.contacts.none_defined')}

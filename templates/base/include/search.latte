@@ -2,5 +2,10 @@
     <span class="icon text-gray-500">
             {icon("feather/search.svg")|noescape}
         </span>
-    <input type="text" name="search" placeholder="{$text}" value="{$search}" />
+    <input type="text" name="search" placeholder="{$text}" value="{$search}"
+           ts-req="{path('BASE_PATH') . $url .queryUrl(['page' => 1])}"
+           ts-trigger="input debounce 300ms"
+           ts-target="{$target}"
+           ts-req-selector="{$target}"
+    />
 </label>
