@@ -34,7 +34,7 @@ class ContactController extends Controller
         $contacts = Contact::with('profile.user')
             ->search($this->request)
             ->sort($this->request, 'name')
-            ->paged($this->request)
+            ->pages($this->request)
             ->get();
 
         $profiles = Profile::whereNotExists(function ($query) {

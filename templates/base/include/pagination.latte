@@ -1,60 +1,68 @@
 {if $pagination}
-    <div class="flex justify-between">
+    <form method="GET"
+          action="{queryUrl(['per_page', 'page'])}"
+          ts-req=""
+          ts-trigger="change"
+          ts-target="{$target ?? 'main'}"
+          ts-req-selector="{$target ?? 'main'}"
+    >
+        <div class="flex justify-between">
 
-        <div class="flex font-medium text-xs text-base-content/60 items-center">
-            <label class="mr-4">
-                <select name="per_page" class="select select-ghost border border-base-content/5">
-                    {foreach $pagination->perPageOptions as $option}
-                        <option value="{$option}" {if $option == $pagination->perPage}selected{/if}>
-                            {$option}
-                        </option>
-                    {/foreach}
-                </select>
-            </label>
-            {$pagination->from()} {text('misc.to')} {$pagination->to()} {text('misc.of')} {$pagination->total}
-        </div>
-
-        {if $pagination->lastPage > 1}
-            <div class="join justify-self-center bg-base-100">
-                <label class="join-item border border-base-content/5 btn btn-ghost btn-primary shadow-none btn-square">
-                    <input
-                            type="radio"
-                            name="page"
-                            value="{$pagination->currentPage - 1}"
-                            class="hidden"
-                            {if !$pagination->hasPrevious()}disabled{/if}
-                    >
-                    {icon('feather/arrow-left.svg')|noescape}
+            <div class="flex font-medium text-xs text-base-content/60 items-center">
+                <label class="mr-4">
+                    <select name="per_page" class="select select-ghost border border-base-content/5">
+                        {foreach $pagination->perPageOptions as $option}
+                            <option value="{$option}" {if $option == $pagination->perPage}selected{/if}>
+                                {$option}
+                            </option>
+                        {/foreach}
+                    </select>
                 </label>
+                {$pagination->from()} {text('misc.to')} {$pagination->to()} {text('misc.of')} {$pagination->total}
+            </div>
 
-                {foreach $pagination->pages() as $page}
-                    <label class="join-item border border-base-content/5 btn btn-ghost shadow-none btn-square cursor-pointer {if $page === $pagination->currentPage}btn-accent{else}btn-primary{/if}"
+            {if $pagination->lastPage > 1}
+                <div class="join justify-self-center bg-base-100">
+                    <label class="join-item border border-base-content/5 btn btn-ghost btn-primary shadow-none btn-square">
+                        <input
+                                type="radio"
+                                name="page"
+                                value="{$pagination->currentPage - 1}"
+                                class="hidden"
+                                {if !$pagination->hasPrevious()}disabled{/if}
+                        >
+                        {icon('feather/arrow-left.svg')|noescape}
+                    </label>
+
+                    {foreach $pagination->pages() as $page}
+                        <label class="join-item border border-base-content/5 btn btn-ghost shadow-none btn-square cursor-pointer {if $page === $pagination->currentPage}btn-accent{else}btn-primary{/if}"
+                        >
+                            <input
+                                    type="radio"
+                                    name="page"
+                                    value="{$page}"
+                                    class="hidden"
+                                    {if $page === $pagination->currentPage}checked{/if}
+                            >
+                            {$page}
+                        </label>
+                    {/foreach}
+
+                    <label
+                            class="join-item border border-base-content/5 btn btn-ghost btn-primary shadow-none btn-square"
                     >
                         <input
                                 type="radio"
                                 name="page"
-                                value="{$page}"
+                                value="{$pagination->currentPage + 1}"
                                 class="hidden"
-                                {if $page === $pagination->currentPage}checked{/if}
+                                {if !$pagination->hasNext()}disabled{/if}
                         >
-                        {$page}
+                        {icon('feather/arrow-right.svg')|noescape}
                     </label>
-                {/foreach}
+                </div>
+            {/if}
 
-                <label
-                        class="join-item border border-base-content/5 btn btn-ghost btn-primary shadow-none btn-square"
-                >
-                    <input
-                            type="radio"
-                            name="page"
-                            value="{$pagination->currentPage + 1}"
-                            class="hidden"
-                            {if !$pagination->hasNext()}disabled{/if}
-                    >
-                    {icon('feather/arrow-right.svg')|noescape}
-                </label>
-            </div>
-        {/if}
-
-    </div>
+        </div>
+    </form>
 {/if}

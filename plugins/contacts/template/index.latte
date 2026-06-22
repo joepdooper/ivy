@@ -1,7 +1,7 @@
 {extends file('body.latte')}
 
 {block main}
-    <main id="main" class="flex flex-col flex-1 p-4 w-full max-w-5xl mx-auto">
+    <main class="flex flex-col flex-1 p-4 w-full max-w-5xl mx-auto">
         <div class="flex-1 h-full space-y-4">
 
             <h1 class="leading-none text-6xl font-bold">{text('contacts.contacts.contacts')}</h1>
@@ -9,8 +9,7 @@
             <div class="flex-1 overflow-x-auto rounded-box border border-base-content/5 shadow shadow-lg shadow-base-300 bg-base-100">
                 <div class="border-b border-base-content/5 p-4 flex justify-between">
                     {include file('include/search.latte'),
-                    text: text('contacts.contacts.search'),
-                    url: 'admin/plugin/contacts/index',
+                    placeholder: text('contacts.contacts.search'),
                     target: '#index'
                     }
                     <div>
@@ -114,15 +113,9 @@
                             </tbody>
                         </table>
                     </form>
-                    <form class="border-t border-base-content/5" method="GET"
-                          action="{path('BASE_PATH') . 'admin/plugin/contacts/index'}"
-                          ts-req=""
-                          ts-trigger="change"
-                          ts-target="#main"
-                          ts-req-selector="#main"
-                    >
+                    <div class="border-t border-base-content/5">
                         {include file('include/pagination.latte'), pagination: $contacts->pagination()}
-                    </form>
+                    </div>
                 </div>
                 <div n:else class="text-center p-4">
                     {text('contacts.contacts.none_defined')}
