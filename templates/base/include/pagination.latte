@@ -1,6 +1,6 @@
 {if $pagination}
     <form method="GET"
-          action="{queryUrl(['per_page', 'page'])}"
+          action="{route(null,['per_page', 'page'])}"
           ts-req=""
           ts-trigger="change"
           ts-target="{$target ?? 'main'}"

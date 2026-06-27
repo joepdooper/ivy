@@ -3,7 +3,7 @@
             {icon("feather/search.svg")|noescape}
         </span>
     <input type="text" name="search" placeholder="{$placeholder ?? text('placeholder.search')}" value="{$search}"
-           ts-req="{queryUrl(['search','page' => 1])}"
+           ts-req="{route(null,['search','page' => 1])}"
            ts-trigger="input debounce 300ms"
            ts-target="{$target ?? 'main'}"
            ts-req-selector="{$target ?? 'main'}"
