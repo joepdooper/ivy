@@ -7,6 +7,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Ivy\Shared\Base\Controller;
 use Ivy\Shared\Core\Language;
 use Ivy\Shared\Core\Path;
+use Ivy\Shared\Presentation\Listing\PaginationState;
 use Ivy\Template\Presentation\View\View;
 use Ivy\User\Domain\Entity\Profile;
 use Ivy\User\Domain\Exception\AuthorizationException;
@@ -46,7 +47,6 @@ class ContactController extends Controller
             'profiles' => $profiles,
             'sort' => $this->request->query->get('sort', 'name'),
             'direction' => $this->request->query->get('direction', 'asc'),
-            'search' => $this->request->query->get('search', '')
         ]);
     }
 
@@ -160,6 +160,6 @@ class ContactController extends Controller
             $this->flashBag->set('old', $old);
         }
 
-        $this->redirect($this->getRefererPath() ?? 'admin/plugin/contacts/index');
+        $this->redirect->withQuery()->back('admin/plugin/contacts/index');
     }
 }

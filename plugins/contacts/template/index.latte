@@ -10,7 +10,8 @@
                 <div class="border-b border-base-content/5 p-4 flex justify-between">
                     {include file('include/search.latte'),
                     placeholder: text('contacts.contacts.search'),
-                    target: '#index'
+                    target: '#index',
+                    search: $contacts->searchState()
                     }
                     <div>
                         {include 'modal.contact.latte',
@@ -105,7 +106,7 @@
                         </tbody>
                     </table>
                     <div class="border-t border-base-content/5">
-                        {include file('include/pagination.latte'), pagination: $contacts->paginationState()}
+                        {include file('include/pagination.latte'), pagination: !empty($pagination) ? $pagination : $contacts->paginationState()}
                     </div>
                 </div>
                 <div n:else class="text-center p-4">
