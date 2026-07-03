@@ -160,6 +160,6 @@ class ContactController extends Controller
             $this->flashBag->set('old', $old);
         }
 
-        $this->redirect->withQuery()->back('admin/plugin/contacts/index');
+        $this->redirect->back('admin/plugin/contacts/index');
     }
 }
