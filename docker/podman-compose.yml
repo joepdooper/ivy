@@ -45,14 +45,14 @@ services:
       - ivy_mysql_data:/var/lib/mysql:Z
       - ./mysql/ivy.sql:/docker-entrypoint-initdb.d/ivy.sql:Z
 
-  mailcatcher:
-    image: docker.io/dockage/mailcatcher
-    container_name: ivy_mailcatcher
+  mailpit:
+    image: docker.io/axllent/mailpit
+    container_name: ivy_mailpit
     networks:
       - ivy_network
     ports:
-      - "1080:1080"
-      - "${MAIL_PORT:-1025}:1025"
+      - "8025:8025" # Web UI
+      - "${MAIL_PORT:-1025}:1025" # SMTP
 
 volumes:
   ivy_mysql_data:
