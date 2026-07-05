@@ -190,7 +190,7 @@ INSERT INTO `profiles` (`id`, `user_id`, `image`, `last_activity`, `created_at`,
 
 INSERT INTO `settings` (`id`, `name`, `bool`, `value`, `info`, `token`, `plugin_id`, `is_default`, `created_at`, `updated_at`) VALUES
 (1, 'Private', 0, NULL, 'Set website to private', NULL, NULL, 1, NULL, NULL),
-(2, 'Minify CSS', 0, 'sadasda', 'CSS minifier', NULL, NULL, 1, NULL, NULL),
+(2, 'Minify CSS', 0, NULL, 'CSS minifier', NULL, NULL, 1, NULL, NULL),
 (3, 'Minify JS', 0, NULL, 'JS minifier', NULL, NULL, 1, NULL, NULL),
 (4, 'Registration role', 0, 'EDITOR', 'After registration set user role', NULL, NULL, 1, NULL, NULL);
 
