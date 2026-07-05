@@ -15,7 +15,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require-dev": {
-    "joepdooper/ivy-cultivate": "^v0.8.9-alpha",
+    "joepdooper/ivy-cultivate": "^v0.8.10-alpha",
     "kint-php/kint": "dev-master",
     "pestphp/pest": "3.x-dev",
     "phpstan/phpstan": "^2.1",

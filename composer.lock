@@ -4121,16 +4121,16 @@
         },
         {
             "name": "joepdooper/ivy-cultivate",
-            "version": "v0.8.9-alpha",
+            "version": "v0.8.10-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joepdooper/ivy-cultivate.git",
-                "reference": "6fbb67dfe088eca9b2e02632332421d8e046caac"
+                "reference": "a09aef20d79c1422c1daf50dbb317f5de8f20a80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joepdooper/ivy-cultivate/zipball/6fbb67dfe088eca9b2e02632332421d8e046caac",
-                "reference": "6fbb67dfe088eca9b2e02632332421d8e046caac",
+                "url": "https://api.github.com/repos/joepdooper/ivy-cultivate/zipball/a09aef20d79c1422c1daf50dbb317f5de8f20a80",
+                "reference": "a09aef20d79c1422c1daf50dbb317f5de8f20a80",
                 "shasum": ""
             },
             "bin": [
@@ -4149,9 +4149,9 @@
             "description": "A set of CLI tools to build and extend development in ivy",
             "support": {
                 "issues": "https://github.com/joepdooper/ivy-cultivate/issues",
-                "source": "https://github.com/joepdooper/ivy-cultivate/tree/v0.8.9-alpha"
+                "source": "https://github.com/joepdooper/ivy-cultivate/tree/v0.8.10-alpha"
             },
-            "time": "2026-06-14T14:18:25+00:00"
+            "time": "2026-07-05T15:35:17+00:00"
         },
         {
             "name": "kint-php/kint",
