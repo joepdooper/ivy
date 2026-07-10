@@ -48,52 +48,52 @@ class Item extends Model
         return parent::populate($data);
     }
 
-//    public function with(array $relations)
-//    {
-//        if (in_array('plugins', $relations, true)) {
-//            $this->loadPlugins = true;
-//        }
-//
-//        if (in_array('authors', $relations, true)) {
-//            $this->loadAuthors = true;
-//        }
-//
-//        $native = array_diff($relations, ['plugins', 'authors']);
-//        if (! empty($native)) {
-//            parent::with($native);
-//        }
-//
-//        return $this;
-//    }
+    //    public function with(array $relations)
+    //    {
+    //        if (in_array('plugins', $relations, true)) {
+    //            $this->loadPlugins = true;
+    //        }
+    //
+    //        if (in_array('authors', $relations, true)) {
+    //            $this->loadAuthors = true;
+    //        }
+    //
+    //        $native = array_diff($relations, ['plugins', 'authors']);
+    //        if (! empty($native)) {
+    //            parent::with($native);
+    //        }
+    //
+    //        return $this;
+    //    }
 
-//    public function fetchAll(): array
-//    {
-//        $items = parent::fetchAll();
-//
-//        if ($this->loadPlugins || $this->loadAuthors) {
-//            ItemLoader::attach($items, [
-//                'plugins' => $this->loadPlugins,
-//                'authors' => $this->loadAuthors,
-//            ]);
-//        }
-//
-//        return $items;
-//    }
+    //    public function fetchAll(): array
+    //    {
+    //        $items = parent::fetchAll();
+    //
+    //        if ($this->loadPlugins || $this->loadAuthors) {
+    //            ItemLoader::attach($items, [
+    //                'plugins' => $this->loadPlugins,
+    //                'authors' => $this->loadAuthors,
+    //            ]);
+    //        }
+    //
+    //        return $items;
+    //    }
 
-//    public function fetchOne(): ?static
-//    {
-//        $item = parent::fetchOne();
-//
-//        if ($item && ($this->loadPlugins || $this->loadAuthors)) {
-//            $items = [$item];
-//            ItemLoader::attach($items, [
-//                'plugins' => $this->loadPlugins,
-//                'authors' => $this->loadAuthors,
-//            ]);
-//
-//            return $items[0];
-//        }
-//
-//        return $item;
-//    }
+    //    public function fetchOne(): ?static
+    //    {
+    //        $item = parent::fetchOne();
+    //
+    //        if ($item && ($this->loadPlugins || $this->loadAuthors)) {
+    //            $items = [$item];
+    //            ItemLoader::attach($items, [
+    //                'plugins' => $this->loadPlugins,
+    //                'authors' => $this->loadAuthors,
+    //            ]);
+    //
+    //            return $items[0];
+    //        }
+    //
+    //        return $item;
+    //    }
 }

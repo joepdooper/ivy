@@ -10,7 +10,7 @@ if (User::canEditAsSuperAdmin()) {
     DROP COLUMN `birthday`;'
         );
     } catch (Exception $e) {
-        error_log('Failed to remove column `birthday`: ' . $e->getMessage());
+        error_log('Failed to remove column `birthday`: '.$e->getMessage());
     }
 
     try {

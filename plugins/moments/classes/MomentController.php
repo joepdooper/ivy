@@ -10,6 +10,7 @@ use Moment\Collection\MomentLocation\MomentLocation;
 class MomentController extends CollectionController
 {
     private Moment $moment;
+
     private MomentForm $momentForm;
 
     public function __construct()
@@ -26,7 +27,6 @@ class MomentController extends CollectionController
         $result = $this->momentForm->validate($this->request->request->all());
 
         d($result->valid);
-
 
         if ($this->validate($this->rules)) {
             $this->moment->createItemFromRequest($this->request);

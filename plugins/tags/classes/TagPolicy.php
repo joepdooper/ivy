@@ -2,7 +2,6 @@
 
 namespace Tags;
 
-
 use Ivy\Shared\Base\Policy;
 
 class TagPolicy extends Policy
@@ -11,6 +10,7 @@ class TagPolicy extends Policy
     {
         return $this->canEditAsEditor();
     }
+
     public function sync(Tag $tag): bool
     {
         return $this->canEditAsEditor();

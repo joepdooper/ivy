@@ -10,15 +10,17 @@ use Ivy\User\Domain\Exception\AuthorizationException;
 class NextcloudApiController extends Controller
 {
     protected NextcloudApi $nextcloudApi;
+
     protected NextcloudApiManager $nextcloudApiManager;
+
     protected NextcloudApiForm $nextcloudApiForm;
 
     public function __construct()
     {
         parent::__construct();
-        $this->nextcloudApi = new NextcloudApi();
-        $this->nextcloudApiManager = new NextcloudApiManager();
-        $this->nextcloudApiForm = new NextcloudApiForm();
+        $this->nextcloudApi = new NextcloudApi;
+        $this->nextcloudApiManager = new NextcloudApiManager;
+        $this->nextcloudApiForm = new NextcloudApiForm;
     }
 
     /**
@@ -31,13 +33,13 @@ class NextcloudApiController extends Controller
         $data = $this->request->request->all();
         $result = $this->nextcloudApiForm->validate($data);
 
-        if (!$result->valid) {
+        if (! $result->valid) {
             $this->flashBag->set('errors', $result->errors);
             $this->flashBag->set('old', $result->old);
         } else {
-            $nextcloudApi = new NextcloudApi();
+            $nextcloudApi = new NextcloudApi;
             $nextcloudApi->fill($result->data)->save();
-            $this->flashBag->add('success', 'Nextcloud API connection ' . $nextcloudApi->url . ' added successfully.');
+            $this->flashBag->add('success', 'Nextcloud API connection '.$nextcloudApi->url.' added successfully.');
         }
 
         $this->redirect('/admin/plugin/nextcloudapi/index');
@@ -51,19 +53,19 @@ class NextcloudApiController extends Controller
         $this->nextcloudApi->authorize('update');
 
         $data = $this->request->request->all();
-        if(!$data['credentials']){
+        if (! $data['credentials']) {
             unset($data['username']);
             unset($data['password']);
         }
         $result = $this->nextcloudApiForm->validate($data);
 
-        if (!$result->valid) {
+        if (! $result->valid) {
             $this->flashBag->set('errors', $result->errors);
             $this->flashBag->set('old', $result->old);
         } else {
             $nextcloudApi = NextcloudApi::find($data['id']);
             $nextcloudApi->fill($result->data)->save();
-            $this->flashBag->add('success', 'Nextcloud API connection ' . $nextcloudApi->url . ' updated successfully.');
+            $this->flashBag->add('success', 'Nextcloud API connection '.$nextcloudApi->url.' updated successfully.');
         }
 
         $this->redirect('/admin/plugin/nextcloudapi/index');
@@ -76,13 +78,13 @@ class NextcloudApiController extends Controller
     {
         $nextcloudApi = NextcloudApi::find($this->request->request->get('delete'));
 
-        if($nextcloudApi) {
+        if ($nextcloudApi) {
             $nextcloudApi->authorize('delete');
 
             $nextcloudApi->delete();
             $this->flashBag->add(
                 'success',
-                'Nextcloud API connection ' . $nextcloudApi->url . ' deleted successfully.'
+                'Nextcloud API connection '.$nextcloudApi->url.' deleted successfully.'
             );
         }
 
@@ -99,7 +101,7 @@ class NextcloudApiController extends Controller
         $nextcloudApis = NextcloudApi::all();
 
         View::render(Path::get('PLUGINS_PATH').'nextcloudapi/template/index.latte', [
-            'nextcloudApis' => $nextcloudApis
+            'nextcloudApis' => $nextcloudApis,
         ]);
     }
 
@@ -111,7 +113,7 @@ class NextcloudApiController extends Controller
             try {
                 $nextcloudApiClient = $this->nextcloudApiManager->get($nextcloudApi->id);
                 $nextcloudApi->response = $nextcloudApiClient->getStatus();
-                if(isset($nextcloudApi->response->data['installed'])){
+                if (isset($nextcloudApi->response->data['installed'])) {
                     $nextcloudApi->response = $nextcloudApiClient->getServerInfo();
                 }
             } catch (\Throwable $e) {
@@ -124,6 +126,6 @@ class NextcloudApiController extends Controller
 
         View::render(Path::get('PLUGINS_PATH').'nextcloudapi/template/response.latte', [
             'nextcloudApis' => $nextcloudApis,
-        ]);;
+        ]);
     }
 }

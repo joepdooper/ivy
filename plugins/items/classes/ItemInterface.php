@@ -6,7 +6,6 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
 use Ivy\Core\Contracts\PluginInterface;
 use Ivy\Core\Path;
-use Ivy\Manager\AssetManager;
 use Ivy\Routing\Route;
 
 class ItemInterface implements PluginInterface
@@ -28,7 +27,7 @@ class ItemInterface implements PluginInterface
 
     public function install(): void
     {
-        if (!Capsule::schema()->hasTable('items')) {
+        if (! Capsule::schema()->hasTable('items')) {
             Capsule::schema()->create('items', function (Blueprint $table) {
                 $table->increments('id');
                 $table->unsignedInteger('user_id')->nullable()->index('user_id');
@@ -41,18 +40,18 @@ class ItemInterface implements PluginInterface
             });
         }
 
-        $mediaPath = Path::get('MEDIA_PATH') . 'items';
+        $mediaPath = Path::get('MEDIA_PATH').'items';
 
-        if (!is_dir($mediaPath)) {
+        if (! is_dir($mediaPath)) {
             mkdir($mediaPath, 0755, true);
 
             file_put_contents(
-                $mediaPath . '/.htaccess',
+                $mediaPath.'/.htaccess',
                 "Options -Indexes\n<FilesMatch \"\.(php|php5|phtml|js)$\">\nDeny from all\n</FilesMatch>"
             );
 
             file_put_contents(
-                $mediaPath . '/index.php',
+                $mediaPath.'/index.php',
                 '<?php // Silence is golden'
             );
         }
@@ -64,29 +63,29 @@ class ItemInterface implements PluginInterface
             Capsule::schema()->drop('items');
         }
 
-//        $mediaPath = Path::get('MEDIA_PATH') . 'items';
+        //        $mediaPath = Path::get('MEDIA_PATH') . 'items';
 
-//        if (is_dir($mediaPath)) {
-//            deleteDirectory($mediaPath);
-//        }
+        //        if (is_dir($mediaPath)) {
+        //            deleteDirectory($mediaPath);
+        //        }
 
-//        function deleteDirectory(string $dir): void
-//        {
-//            foreach (scandir($dir) as $item) {
-//                if ($item === '.' || $item === '..') {
-//                    continue;
-//                }
-//
-//                $path = $dir . DIRECTORY_SEPARATOR . $item;
-//
-//                if (is_dir($path)) {
-//                    deleteDirectory($path);
-//                } else {
-//                    unlink($path);
-//                }
-//            }
-//
-//            rmdir($dir);
-//        }
+        //        function deleteDirectory(string $dir): void
+        //        {
+        //            foreach (scandir($dir) as $item) {
+        //                if ($item === '.' || $item === '..') {
+        //                    continue;
+        //                }
+        //
+        //                $path = $dir . DIRECTORY_SEPARATOR . $item;
+        //
+        //                if (is_dir($path)) {
+        //                    deleteDirectory($path);
+        //                } else {
+        //                    unlink($path);
+        //                }
+        //            }
+        //
+        //            rmdir($dir);
+        //        }
     }
 }

@@ -2,7 +2,6 @@
 
 namespace NextcloudApi;
 
-
 use Ivy\Shared\Base\Policy;
 
 class NextcloudApiPolicy extends Policy

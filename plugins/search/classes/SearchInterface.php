@@ -8,10 +8,10 @@ class SearchInterface implements PluginInterface
 {
     public function register(): void
     {
-//        Route::mount('/search', function () {
-//            Route::post('/post', '\Search\SearchController@post')
-//                ->before('\Ivy\Controller\AdminController@before');
-//        });
+        //        Route::mount('/search', function () {
+        //            Route::post('/post', '\Search\SearchController@post')
+        //                ->before('\Ivy\Controller\AdminController@before');
+        //        });
     }
 
     public function install(): void

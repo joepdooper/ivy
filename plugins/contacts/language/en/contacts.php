@@ -11,14 +11,14 @@ return [
         'detach_profile_question' => 'Do you really want to detach :username from :name?',
         'no_profile_to_select' => 'No profile to select',
         'add' => 'Add contact',
-        'edit' => 'Edit'
+        'edit' => 'Edit',
     ],
     'label' => [
         'name' => 'Name',
         'username' => 'Username',
         'details' => 'Details',
         'email' => 'user@mail.com',
-        'birthday' => 'Date of birth'
+        'birthday' => 'Date of birth',
     ],
     'added_successfully' => 'Contact :name added successfully',
     'updated_successfully' => 'Contact :name updated successfully',

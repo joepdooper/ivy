@@ -5,14 +5,12 @@ namespace Moments;
 use Contacts\Contact;
 use Items\ItemTrait;
 use Ivy\Abstract\Model;
-use Ivy\Model\Profile;
 use Ivy\Trait\Factory;
 use Ivy\Trait\HasFilters;
 use Moment\Collection\MomentDateTime\MomentDateTime;
 use Moment\Collection\MomentLocation\MomentLocation;
 use Moment\Collection\MomentPeople\MomentPeople;
 use Tags\TagTrait;
-
 
 /**
  * @property ?MomentDateTime $momentDateTime

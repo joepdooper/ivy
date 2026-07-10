@@ -12,7 +12,7 @@ return [
         'error' => 'Error',
         'unknown' => 'Unknown',
         'maintenance' => 'Maintenance',
-        'installed' => 'Installed'
+        'installed' => 'Installed',
     ],
     'block' => [
         'status' => 'Status',
@@ -31,5 +31,5 @@ return [
         'password' => 'Password',
     ],
     'nextcloud_apis' => 'Nextcloud APIs',
-    'empty' => 'No Nextcloud API connections defined'
+    'empty' => 'No Nextcloud API connections defined',
 ];

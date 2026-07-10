@@ -8,7 +8,7 @@ class NextcloudApiManager
 
     public function get(string $id): NextcloudApiClient
     {
-        if (!isset($this->clients[$id])) {
+        if (! isset($this->clients[$id])) {
             $this->clients[$id] = new NextcloudApiClient(NextcloudApi::find($id));
         }
 

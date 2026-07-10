@@ -2,7 +2,6 @@
 
 namespace Contacts;
 
-
 use Ivy\Shared\Base\Policy;
 
 class ContactPolicy extends Policy

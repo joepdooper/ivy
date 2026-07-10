@@ -5,6 +5,6 @@ return [
     'profiles' => 'Profiles',
     'image' => [
         'saved' => 'Image saved successfully',
-        'deleted' => 'Image deleted successfully'
-    ]
+        'deleted' => 'Image deleted successfully',
+    ],
 ];

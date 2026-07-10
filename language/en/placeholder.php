@@ -6,5 +6,5 @@ return [
     'email' => 'Email',
     'password' => 'Password',
     'birthday' => 'Birthday',
-    'search' => 'Search'
+    'search' => 'Search',
 ];

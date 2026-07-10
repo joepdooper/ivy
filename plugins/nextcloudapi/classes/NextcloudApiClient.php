@@ -13,20 +13,20 @@ class NextcloudApiClient
 
     public function __construct(NextcloudApi $nextcloudApi)
     {
-        $this->baseUrl = $nextcloudApi->protocol . '://' . rtrim(
+        $this->baseUrl = $nextcloudApi->protocol.'://'.rtrim(
             $nextcloudApi->url,
             '/'
         );
 
-        if($nextcloudApi->port){
-            $this->baseUrl .= ':' . $nextcloudApi->port;
+        if ($nextcloudApi->port) {
+            $this->baseUrl .= ':'.$nextcloudApi->port;
         }
 
-        $this->curl = new Curl();
+        $this->curl = new Curl;
         $this->curl->setTimeout(15);
         $this->curl->setConnectTimeout(10);
 
-        if($nextcloudApi->username && $nextcloudApi->password) {
+        if ($nextcloudApi->username && $nextcloudApi->password) {
             $this->curl->setBasicAuthentication(
                 $nextcloudApi->username,
                 $nextcloudApi->password
@@ -54,10 +54,9 @@ class NextcloudApiClient
         string $method,
         string $endpoint,
         array $data = []
-    ): NextcloudApiResponse
-    {
+    ): NextcloudApiResponse {
 
-        $url = $this->baseUrl . '/' . ltrim($endpoint, '/');
+        $url = $this->baseUrl.'/'.ltrim($endpoint, '/');
 
         switch (strtoupper($method)) {
 
@@ -105,8 +104,7 @@ class NextcloudApiClient
     public function get(
         string $endpoint,
         array $data = []
-    ): NextcloudApiResponse
-    {
+    ): NextcloudApiResponse {
 
         return $this->request(
             'GET',
@@ -118,8 +116,7 @@ class NextcloudApiClient
     public function post(
         string $endpoint,
         array $data = []
-    ): NextcloudApiResponse
-    {
+    ): NextcloudApiResponse {
 
         return $this->request(
             'POST',
@@ -131,8 +128,7 @@ class NextcloudApiClient
     public function put(
         string $endpoint,
         array $data = []
-    ): NextcloudApiResponse
-    {
+    ): NextcloudApiResponse {
 
         return $this->request(
             'PUT',
@@ -144,8 +140,7 @@ class NextcloudApiClient
     public function delete(
         string $endpoint,
         array $data = []
-    ): NextcloudApiResponse
-    {
+    ): NextcloudApiResponse {
 
         return $this->request(
             'DELETE',
@@ -174,11 +169,10 @@ class NextcloudApiClient
 
     public function getUser(
         string $userId
-    ): NextcloudApiResponse
-    {
+    ): NextcloudApiResponse {
 
         return $this->get(
-            '/ocs/v2.php/cloud/users/' .
+            '/ocs/v2.php/cloud/users/'.
             urlencode($userId)
         );
     }
@@ -187,14 +181,13 @@ class NextcloudApiClient
         string $userId,
         ?string $email = null,
         ?string $password = null
-    ): NextcloudApiResponse
-    {
+    ): NextcloudApiResponse {
 
         return $this->post(
             '/ocs/v2.php/cloud/users',
             [
-                'userid'   => $userId,
-                'email'    => $email,
+                'userid' => $userId,
+                'email' => $email,
                 'password' => $password,
             ]
         );

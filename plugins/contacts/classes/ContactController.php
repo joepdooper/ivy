@@ -2,12 +2,10 @@
 
 namespace Contacts;
 
-
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Ivy\Shared\Base\Controller;
 use Ivy\Shared\Core\Language;
 use Ivy\Shared\Core\Path;
-use Ivy\Shared\Presentation\Listing\PaginationState;
 use Ivy\Template\Presentation\View\View;
 use Ivy\User\Domain\Entity\Profile;
 use Ivy\User\Domain\Exception\AuthorizationException;
@@ -16,13 +14,14 @@ use ReflectionException;
 class ContactController extends Controller
 {
     protected Contact $contact;
+
     protected ContactForm $contactForm;
 
     public function __construct()
     {
         parent::__construct();
         $this->contact = new Contact;
-        $this->contactForm = new ContactForm();
+        $this->contactForm = new ContactForm;
     }
 
     /**
@@ -63,7 +62,7 @@ class ContactController extends Controller
 
         $this->flashBag->add('success',
             Language::translate('contacts.contacts.added_successfully', [
-                'name' => $contact->name
+                'name' => $contact->name,
             ]),
         );
     }
@@ -94,7 +93,7 @@ class ContactController extends Controller
         $this->flashBag->add(
             'success',
             Language::translate('contacts.contacts.updated_successfully', [
-                'name' => $contact->name
+                'name' => $contact->name,
             ])
         );
     }
@@ -119,7 +118,7 @@ class ContactController extends Controller
         $this->flashBag->add(
             'success',
             Language::translate('contacts.contacts.deleted_successfully', [
-                'name' => $contact->name
+                'name' => $contact->name,
             ])
         );
     }
@@ -142,9 +141,9 @@ class ContactController extends Controller
             $result = $this->contactForm->validate($data);
 
             if ($result->valid) {
-                if(empty($result->data['id'])){
+                if (empty($result->data['id'])) {
                     $this->add($result->data);
-                } elseif(isset($data['delete'])) {
+                } elseif (isset($data['delete'])) {
                     $this->delete($result->data['id']);
                 } else {
                     $this->update($result->data['id'], $result->data);
@@ -155,7 +154,7 @@ class ContactController extends Controller
             }
         }
 
-        if (! empty($errors) && !empty($old)) {
+        if (! empty($errors) && ! empty($old)) {
             $this->flashBag->set('errors', $errors);
             $this->flashBag->set('old', $old);
         }

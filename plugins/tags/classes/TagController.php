@@ -7,10 +7,10 @@ use Ivy\Shared\Core\Path;
 use Ivy\Template\Presentation\View\View;
 use Ivy\User\Domain\Exception\AuthorizationException;
 
-
 class TagController extends Controller
 {
     protected Tag $tag;
+
     protected TagForm $tagForm;
 
     public function __construct()
@@ -30,7 +30,7 @@ class TagController extends Controller
         $tags = Tag::all()->sortBy('value');
 
         View::render(Path::get('PLUGINS_PATH').'tags/template/index.latte', [
-            'tags' => $tags
+            'tags' => $tags,
         ]);
     }
 
@@ -39,7 +39,7 @@ class TagController extends Controller
      */
     public function add(mixed $data): void
     {
-        $tag = new Tag();
+        $tag = new Tag;
 
         $tag->authorize('add');
 
@@ -47,7 +47,7 @@ class TagController extends Controller
 
         $this->flashBag->add(
             'success',
-            'Tag ' . $tag->value . ' added successfully.'
+            'Tag '.$tag->value.' added successfully.'
         );
     }
 
@@ -76,7 +76,7 @@ class TagController extends Controller
 
         $this->flashBag->add(
             'success',
-            'Tag ' . $tag->value . ' updated successfully.'
+            'Tag '.$tag->value.' updated successfully.'
         );
     }
 
@@ -96,7 +96,7 @@ class TagController extends Controller
 
             $this->flashBag->add(
                 'success',
-                'Tag ' . $tag->value . ' deleted successfully.'
+                'Tag '.$tag->value.' deleted successfully.'
             );
         }
     }

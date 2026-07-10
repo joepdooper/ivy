@@ -7,6 +7,6 @@ return [
     'admin' => 'Admin',
     'super_admin' => 'Super Admin',
     'username' => [
-        'updated' => 'Username :username updated successfully'
-    ]
+        'updated' => 'Username :username updated successfully',
+    ],
 ];

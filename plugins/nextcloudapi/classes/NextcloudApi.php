@@ -25,18 +25,18 @@ class NextcloudApi extends Entity
         'url',
         'port',
         'username',
-        'password'
+        'password',
     ];
 
     protected $casts = [
-        'password'  => CryptedCast::class,
+        'password' => CryptedCast::class,
     ];
 
     public function href(): string
     {
-        $url = $this->protocol . '://' . $this->url;
-        if($this->port) {
-            $url .= ':' . $this->port;
+        $url = $this->protocol.'://'.$this->url;
+        if ($this->port) {
+            $url .= ':'.$this->port;
         }
 
         return $url;

@@ -7,8 +7,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Items\ItemRegistry;
 use Ivy\Core\Contracts\PluginInterface;
 use Ivy\Manager\AssetManager;
-use Ivy\Routing\Route;
 use Ivy\Model\User;
+use Ivy\Routing\Route;
 
 class AudioInterface implements PluginInterface
 {

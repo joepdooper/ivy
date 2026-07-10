@@ -2,7 +2,6 @@
 
 namespace Moments\Collection\MomentPeople;
 
-use Contacts\Contact;
 use Ivy\Abstract\Controller;
 use Ivy\Core\Path;
 use Ivy\View\View;
@@ -24,7 +23,7 @@ class MomentPeopleController extends Controller
 
         $people = $this->momentPeople->fetchAll();
         View::set(Path::get('PLUGINS_PATH').'moment/template/people.latte', [
-            'people' => $people
+            'people' => $people,
         ]);
     }
 

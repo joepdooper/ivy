@@ -6,20 +6,20 @@ use Ivy\Manager\RouterManager;
 use Ivy\Routing\Route;
 use Moment\Moment;
 
-    RouterManager::router()->before('GET', '/.*', function () {
-        $uri = RouterManager::router()->getCurrentUri();
+RouterManager::router()->before('GET', '/.*', function () {
+    $uri = RouterManager::router()->getCurrentUri();
 
-        $assetMap = [
-            '/' => 'plugins/moment/js/add_moment_admin.js',
-            '/moment/*' => 'plugins/moment/js/add_moment_admin.js',
-        ];
+    $assetMap = [
+        '/' => 'plugins/moment/js/add_moment_admin.js',
+        '/moment/*' => 'plugins/moment/js/add_moment_admin.js',
+    ];
 
-        foreach ($assetMap as $pattern => $asset) {
-            if (fnmatch($pattern, $uri)) {
-                AssetManager::addModule($asset);
-            }
+    foreach ($assetMap as $pattern => $asset) {
+        if (fnmatch($pattern, $uri)) {
+            AssetManager::addModule($asset);
         }
-    });
+    }
+});
 
 Route::mount('/moment', function () {
     Route::get('/([a-z0-9_-]+)', '\Moment\MomentTemplate@page')

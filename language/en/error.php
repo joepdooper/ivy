@@ -15,10 +15,10 @@ return [
     'email' => [
         'invalid' => 'Invalid email address.',
         'exists' => 'Email address already exists.',
-        'unverified' => 'Email address is not verified.'
+        'unverified' => 'Email address is not verified.',
     ],
     'not_logged_in' => 'You are not logged in.',
     'not_authorized' => 'You are not authorized to access this page.',
     'not_found' => 'The page you are looking for does not exist.',
-    'too_many_requests' => 'Too many requests.'
+    'too_many_requests' => 'Too many requests.',
 ];

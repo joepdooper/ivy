@@ -12,7 +12,7 @@ use Ivy\User\Domain\Entity\Profile;
 
 class Contact extends Entity
 {
-    use HasPolicies, HasSorting, HasSearching, HasPagination;
+    use HasPagination, HasPolicies, HasSearching, HasSorting;
 
     protected $fillable = [
         'name',
@@ -31,11 +31,11 @@ class Contact extends Entity
         'name',
         'email',
         'profile.user.username',
-        'profile.user.email'
+        'profile.user.email',
     ];
 
     public function profile(): HasOne
     {
-        return $this->hasOne(Profile::class, 'id','profile_id');
+        return $this->hasOne(Profile::class, 'id', 'profile_id');
     }
 }

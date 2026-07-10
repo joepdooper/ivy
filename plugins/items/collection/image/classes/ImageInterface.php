@@ -20,17 +20,17 @@ class ImageInterface implements PluginInterface
             AssetManager::addJS('plugins/items/collection/image/js/image.admin.js');
         }
 
-// if (User::getAuth()->isLoggedIn()) {
-//    if (User::canEditAsEditor()) {
-//
-//        $router->get('/plugin/image', function () {
-//            $image_sizes = (new \Image\ImageSize)->get()->all();
-//            Template::view(_PLUGINS_PATH . 'image/template/image_sizes.latte', ['image_sizes' => $image_sizes]);
-//        });
-//
-//        $router->post('/image_sizes/post', '\Image\SettingController@post');
-//    }
-// }
+        // if (User::getAuth()->isLoggedIn()) {
+        //    if (User::canEditAsEditor()) {
+        //
+        //        $router->get('/plugin/image', function () {
+        //            $image_sizes = (new \Image\ImageSize)->get()->all();
+        //            Template::view(_PLUGINS_PATH . 'image/template/image_sizes.latte', ['image_sizes' => $image_sizes]);
+        //        });
+        //
+        //        $router->post('/image_sizes/post', '\Image\SettingController@post');
+        //    }
+        // }
 
         Route::mount('/image', function () {
             Route::get('/insert/(\d+)(/\w+)?(/[a-z0-9_-]+)?', '\Items\Collection\Image\ImageController@insert');

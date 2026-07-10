@@ -7,7 +7,6 @@ use Ivy\Abstract\Model;
 use Ivy\Trait\Factory;
 use Moments\Moment;
 
-
 /**
  * @property ?array $contacts
  * @property ?array $moments
