@@ -1,0 +1,19 @@
+<a role="button" class="flex items-center" href="{queryUrl([
+'sort' => $column,
+'direction' => $direction === 'asc' ? 'desc' : 'asc',
+])}">
+    {$text}
+    {if $sort === $column}
+        <div class="ml-2">
+            {if $direction === 'asc'}
+                <span class="btn btn-xs btn-square btn-primary btn-ghost">
+                    {icon('feather/arrow-down.svg')|noescape}
+                </span>
+            {else}
+                <span class="btn btn-xs btn-square btn-primary btn-ghost">
+                    {icon('feather/arrow-up.svg')|noescape}
+                </span>
+            {/if}
+        </div>
+    {/if}
+</a>
