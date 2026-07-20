@@ -10,8 +10,7 @@
   ],
   "require": {
     "php": ">=8.5.6",
-    "joepdooper/ivy-roots": "^0.9.26@alpha",
-    "joepdooper/ivy-sprout": "dev-main"
+    "joepdooper/ivy-roots": "^0.9.26@alpha"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -27,7 +26,6 @@
       "php": "8.5.6"
     },
     "allow-plugins": {
-      "joepdooper/ivy-sprout": true,
       "pestphp/pest-plugin": true
     }
   }
