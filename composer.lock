@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c7559b82d28067a2a61ad84dd68166a1",
+    "content-hash": "53813709a0387cbc3e2c7364ff76602e",
     "packages": [
         {
             "name": "bainternet/php-hooks",
@@ -1453,6 +1453,44 @@
                 "source": "https://github.com/joepdooper/ivy-roots/tree/v0.9.26-alpha"
             },
             "time": "2026-07-17T19:30:09+00:00"
+        },
+        {
+            "name": "joepdooper/ivy-sprout",
+            "version": "v0.1.0-alpha",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joepdooper/ivy-sprout.git",
+                "reference": "7f282a7a7b70d283a5dad81e9a80accf97c7139b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joepdooper/ivy-sprout/zipball/7f282a7a7b70d283a5dad81e9a80accf97c7139b",
+                "reference": "7f282a7a7b70d283a5dad81e9a80accf97c7139b",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^2.0",
+                "php": ">=8.5.6"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Ivy\\Sprout\\IvyInstaller"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ivy\\Sprout\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Composer installer for ivy plugins and templates",
+            "support": {
+                "issues": "https://github.com/joepdooper/ivy-sprout/issues",
+                "source": "https://github.com/joepdooper/ivy-sprout/tree/v0.1.0-alpha"
+            },
+            "time": "2026-07-20T20:56:39+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -7515,6 +7553,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "joepdooper/ivy-roots": 15,
+        "joepdooper/ivy-sprout": 15,
         "kint-php/kint": 20,
         "pestphp/pest": 20
     },
