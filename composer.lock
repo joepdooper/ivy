@@ -1456,16 +1456,16 @@
         },
         {
             "name": "joepdooper/ivy-sprout",
-            "version": "v0.1.0-alpha",
+            "version": "v0.1.1-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joepdooper/ivy-sprout.git",
-                "reference": "7f282a7a7b70d283a5dad81e9a80accf97c7139b"
+                "reference": "0d067089bc8469f70449957c2b5c19dee2a5ef86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joepdooper/ivy-sprout/zipball/7f282a7a7b70d283a5dad81e9a80accf97c7139b",
-                "reference": "7f282a7a7b70d283a5dad81e9a80accf97c7139b",
+                "url": "https://api.github.com/repos/joepdooper/ivy-sprout/zipball/0d067089bc8469f70449957c2b5c19dee2a5ef86",
+                "reference": "0d067089bc8469f70449957c2b5c19dee2a5ef86",
                 "shasum": ""
             },
             "require": {
@@ -1488,9 +1488,9 @@
             "description": "Composer installer for ivy plugins and templates",
             "support": {
                 "issues": "https://github.com/joepdooper/ivy-sprout/issues",
-                "source": "https://github.com/joepdooper/ivy-sprout/tree/v0.1.0-alpha"
+                "source": "https://github.com/joepdooper/ivy-sprout/tree/v0.1.1-alpha"
             },
-            "time": "2026-07-20T20:56:39+00:00"
+            "time": "2026-07-20T21:38:40+00:00"
         },
         {
             "name": "laravel/serializable-closure",
