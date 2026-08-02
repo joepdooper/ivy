@@ -14,8 +14,7 @@
       "url": "../ivy-*",
       "options": {
         "symlink": true
-      },
-      "canonical": false
+      }
     }
   ],
   "require": {
