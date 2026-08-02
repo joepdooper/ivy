@@ -4150,7 +4150,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ivy-cultivate",
-                "reference": "9403ca32ee1762d03ae0e45f5c5049b5df5c8aa7"
+                "reference": "0c6fd4a2508f2c737b6bc6de07c495d17a2d1905"
             },
             "bin": [
                 "bin/cultivate"
