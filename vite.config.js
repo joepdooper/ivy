@@ -31,7 +31,10 @@ export default defineConfig(({ command }) => {
     if (command === 'serve') {
         return {
             plugins: [tailwindcss()],
-            server: { host: true },
+            server: {
+                host: true,
+                allowedHosts: ['localhost'],
+            },
         };
     }
 
