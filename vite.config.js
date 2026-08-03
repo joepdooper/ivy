@@ -33,7 +33,7 @@ export default defineConfig(({ command }) => {
             plugins: [tailwindcss()],
             server: {
                 host: true,
-                allowedHosts: ['localhost'],
+                allowedHosts: [process.env.VITE_ALLOWED_HOSTS]
             },
         };
     }
