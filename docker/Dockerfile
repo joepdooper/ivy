@@ -1,5 +1,7 @@
 FROM php:8.5-apache
 
+STOPSIGNAL SIGWINCH
+
 # System dependencies
 RUN apt-get update && apt-get install -y \
     libicu-dev \
