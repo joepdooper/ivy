@@ -8,15 +8,25 @@
       "name": "Joep Dooper"
     }
   ],
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../ivy-*",
+      "options": {
+        "symlink": true
+      },
+      "canonical": false
+    }
+  ],
   "require": {
     "php": ">=8.5.6",
-    "joepdooper/ivy-roots": "^0.9.26@alpha",
-    "joepdooper/ivy-sprout": "^0.1.0@alpha"
+    "joepdooper/ivy-roots": "dev-plugins-composer",
+    "joepdooper/ivy-sprout": "dev-main"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require-dev": {
-    "joepdooper/ivy-cultivate": "^v0.8.11-alpha",
+    "joepdooper/ivy-cultivate": "dev-main",
     "kint-php/kint": "dev-master",
     "pestphp/pest": "3.x-dev",
     "phpstan/phpstan": "^2.1",

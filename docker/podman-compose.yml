@@ -13,6 +13,9 @@ services:
       - "${SERVER_PORT:-8080}:80"
     volumes:
       - ../:/var/www:Z
+      - ../../ivy-roots:/var/ivy-roots:Z
+      - ../../ivy-sprout:/var/ivy-sprout:Z
+      - ../../ivy-cultivate:/var/ivy-cultivate:Z
       - ./sites-available:/etc/apache2/sites-available:Z
       - ./sites-enabled:/etc/apache2/sites-enabled:Z
       - ./php/custom.ini:/usr/local/etc/php/conf.d/custom.ini:Z
