@@ -40,12 +40,12 @@
                                     <input type="hidden" name="plugin[{$key}][id]"
                                            value="{$plugin->id}">
                                     <div class="join">
-                                        <a n:if="$plugin->active" n:foreach="$plugin->info->actions as $action"
-                                                class="btn btn-square btn-ghost btn-primary shadow-none join-item"
-                                                title="{text($plugin->url.'.'.$action['text'])}"
-                                                href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/' . $action['url']}">
-                                            {icon($action['icon'])|noescape}
-                                        </a>
+{*                                        <a n:if="$plugin->active" n:foreach="$plugin->info->actions as $action"*}
+{*                                                class="btn btn-square btn-ghost btn-primary shadow-none join-item"*}
+{*                                                title="{text($plugin->url.'.'.$action['text'])}"*}
+{*                                                href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/' . $action['url']}">*}
+{*                                            {icon($action['icon'])|noescape}*}
+{*                                        </a>*}
                                         <a n:if="$plugin->active && can('collection', $plugin)"
                                                 class="btn btn-square btn-ghost btn-primary shadow-none join-item"
                                                 title="{text('plugin.collection')}"
@@ -73,19 +73,45 @@
                 </div>
 
                 {if canEditAsSuperAdmin()}
-                    <div n:ifset="$uninstalled_plugins">
-                        <label>
-                            <select class="select w-full" name="plugin[][url]">
-                                <option disabled selected value>{text('plugin.select_to_install')}</option>
-                                {foreach $uninstalled_plugins as $plugin}
-                                    <option value="{$plugin->url}">{$plugin->name . ' (' . $plugin->description . ')'}
-                                    </option>
-                                {/foreach}
-                            </select>
-                        </label>
-                    </div>
-                    <div class="text-center">
-                        {button type:submit, text:text('button.update')}
+{*                    <div n:ifset="$uninstalled_plugins">*}
+{*                        <label>*}
+{*                            <select class="select w-full" name="plugin[][url]">*}
+{*                                <option disabled selected value>{text('plugin.select_to_install')}</option>*}
+{*                                {foreach $uninstalled_plugins as $plugin}*}
+{*                                    <option value="{$plugin->url}">{$plugin->name . ' (' . $plugin->description . ')'}*}
+{*                                    </option>*}
+{*                                {/foreach}*}
+{*                            </select>*}
+{*                        </label>*}
+{*                    </div>*}
+
+{*                    <div class="text-center">*}
+{*                        {button type:submit, text:text('button.update')}*}
+{*                    </div>*}
+
+                    {include file('include/search.latte'),
+                    placeholder: text('plugin.search.catalog'),
+                    target: '#index',
+                    search: null
+                    }
+
+                    <div class="grid md:grid-cols-3 gap-4 sm:grid-cols-2 grid-cols-1">
+                    {foreach $catalog_plugins as $catalog_plugin}
+                        <div class="card bg-base-100 shadow-sm">
+                            <div class="card-body">
+                                <h2 class="card-title">
+                                    {$catalog_plugin['package']} <span class="text-xs">{$catalog_plugin['versions'][0]}</span>
+                                </h2>
+                                <p>{* $catalog_plugin['description'] *}</p>
+                                <div class="card-actions justify-end">
+                                    <div class="badge badge-outline">{* $catalog_plugin['type'] *}</div>
+                                </div>
+                                <div class="mt-6">
+                                    <button class="btn btn-primary btn-block shadow-none leading-none px-4">Download</button>
+                                </div>
+                            </div>
+                        </div>
+                    {/foreach}
                     </div>
                 {/if}
 

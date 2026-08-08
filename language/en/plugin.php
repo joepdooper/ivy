@@ -12,4 +12,8 @@ return [
     'uninstalled_successfully' => 'Plugin :plugin uninstalled successfully',
     'none_installed' => 'No plugins installed',
     'select_to_install' => 'Select plugin to install',
+    'search' => [
+        'plugins' => 'Search plugins',
+        'catalog' => 'Search plugin catalog',
+    ]
 ];
