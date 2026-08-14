@@ -3,6 +3,7 @@
 /.build/
 /vendor/
 /node_modules/
+/public/cache/
 /public/plugins/
 /public/templates/
 /public/media/profile/*
