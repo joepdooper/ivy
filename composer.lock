@@ -1402,7 +1402,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ivy-roots",
-                "reference": "8b2f7f359af44d97c55b91a072955827b03556ec"
+                "reference": "32cdcf8bad0f7b140eb8d70a2ab9b05ca5ffae59"
             },
             "require": {
                 "bainternet/php-hooks": "^1.0",
@@ -1456,7 +1456,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ivy-sprout",
-                "reference": "98214bc14e3d039df1e14c7165815442466abc5c"
+                "reference": "0da1334d5f91558d1b34472762247b589ae25135"
             },
             "require": {
                 "composer-plugin-api": "^2.0",
