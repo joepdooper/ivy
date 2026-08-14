@@ -1398,7 +1398,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ivy-roots",
-                "reference": "42d66a6f5a7acb856229b3f7e4b6ebc48aaedafd"
+                "reference": "8b2f7f359af44d97c55b91a072955827b03556ec"
             },
             "require": {
                 "bainternet/php-hooks": "^1.0",
@@ -1452,7 +1452,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ivy-sprout",
-                "reference": "c10dc8fdd0fa92fb52203f3be2c1dc98a7528888"
+                "reference": "98214bc14e3d039df1e14c7165815442466abc5c"
             },
             "require": {
                 "composer-plugin-api": "^2.0",
@@ -1461,6 +1461,9 @@
             "require-dev": {
                 "composer/composer": "^2.8"
             },
+            "bin": [
+                "bin/require"
+            ],
             "type": "composer-plugin",
             "extra": {
                 "class": "Ivy\\Sprout\\IvyInstaller"

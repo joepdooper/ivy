@@ -23,6 +23,8 @@ Route::mount('/admin', function () {
         ->before('\Ivy\User\Presentation\Controller\AdminController@before');
     Route::get('/plugin(/[a-z0-9_-]+)?(/collection)?', '\Ivy\Plugin\Presentation\Controller\PluginController@index')
         ->before('\Ivy\User\Presentation\Controller\AdminController@before');
+    Route::post('/plugin/download', '\Ivy\Plugin\Presentation\Controller\PluginController@download')
+        ->before('\Ivy\User\Presentation\Controller\AdminController@before');
     // -- TEMPLATE index
     Route::post('/template/sync', '\Ivy\Template\Presentation\Controller\TemplateController@sync')
         ->before('\Ivy\User\Presentation\Controller\AdminController@before');
