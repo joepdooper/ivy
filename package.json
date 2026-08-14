@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "@joepdooper/mini-editor": "^1.0.1",
     "callbackhooks": "^2.0.0",
     "sortablejs": "^1.15.0"
   },
