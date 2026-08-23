@@ -3,12 +3,8 @@
 {block body}
 <div class="flex flex-col min-h-full antialiased bg-base-200">
 
-    {define search}{/define}
-
     {block header}
-        {embed file('include/header.latte')}
-            {block search}{/block}
-        {/embed}
+        {include file('include/header.latte') with blocks}
     {/block}
 
     {block main}{/block}

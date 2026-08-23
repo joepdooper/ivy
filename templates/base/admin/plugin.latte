@@ -1,5 +1,15 @@
 {extends file('body.latte')}
 
+{define search}
+    {if canEditAsSuperAdmin()}
+        {include file('include/search.latte'),
+        placeholder: text('plugin.search'),
+        target: '#index',
+        search: null
+        }
+    {/if}
+{/define}
+
 {block main}
     <main class="grow p-4 w-full max-w-5xl mx-auto">
         <form ts-req="{path('BASE_PATH') . 'admin/plugin/sync'}" ts-target="target" method="POST" enctype="multipart/form-data">
@@ -17,6 +27,7 @@
                             <th>{text('plugin.description')}</th>
                             <th>{text('plugin.version')}</th>
                             <th>{text('plugin.type')}</th>
+                            <th>{text('plugin.status')}</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -34,8 +45,9 @@
                                 </td>
                                 <td><strong>{$plugin->name}</strong></td>
                                 <td>{$plugin->description}</td>
-                                <td>{$plugin->version}</td>
+                                <td>{$plugin->version} <span class="text-neutral-600">{$plugin->version_channel}</span></td>
                                 <td><div class="badge badge-sm badge-soft badge-info font-bold">{$plugin->type}</div></td>
+                                <td>{$plugin->status->value}</td>
                                 <td class="text-right">
                                     <input type="hidden" name="plugin[{$key}][id]"
                                            value="{$plugin->id}">
@@ -72,30 +84,6 @@
                     {text('plugin.none_installed')}
                 </div>
 
-                {if canEditAsSuperAdmin()}
-                    {*                    <div n:ifset="$uninstalled_plugins">*}
-                    {*                        <label>*}
-                    {*                            <select class="select w-full" name="plugin[][url]">*}
-                    {*                                <option disabled selected value>{text('plugin.select_to_install')}</option>*}
-                    {*                                {foreach $uninstalled_plugins as $plugin}*}
-                    {*                                    <option value="{$plugin->url}">{$plugin->name . ' (' . $plugin->description . ')'}*}
-                    {*                                    </option>*}
-                    {*                                {/foreach}*}
-                    {*                            </select>*}
-                    {*                        </label>*}
-                    {*                    </div>*}
-
-                    {*                    <div class="text-center">*}
-                    {*                        {button type:submit, text:text('button.update')}*}
-                    {*                    </div>*}
-
-                    {include file('include/search.latte'),
-                    placeholder: text('plugin.search.catalog'),
-                    target: '#index',
-                    search: null
-                    }
-                {/if}
-
             </div>
         </form>
 
@@ -120,7 +108,7 @@
                                 <p>{$catalog_plugin['description']}</p>
                                 <div class="card-actions justify-end">
                                     <button class="btn btn-primary btn-block shadow-none leading-none px-4">
-                                        {text('button.download')}
+                                        {text('button.install')}
                                     </button>
                                 </div>
                             </div>

@@ -1,7 +1,5 @@
 FROM php:8.5-apache
 
-STOPSIGNAL SIGWINCH
-
 # System dependencies
 RUN apt-get update && apt-get install -y \
     libicu-dev \
@@ -47,4 +45,14 @@ WORKDIR /var/www
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD ["sh", "-c", "\
+    chmod -R a+rwX \
+        /var/www/vendor \
+        /var/www/plugins \
+        /var/www/templates \
+        /var/www/cache/composer \
+    && chmod a+rw \
+        /var/www/composer.json \
+        /var/www/composer.lock \
+    && exec apache2-foreground \
+"]
