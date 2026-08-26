@@ -12,85 +12,83 @@
 
 {block main}
     <main class="grow p-4 w-full max-w-5xl mx-auto">
-        <form ts-req="{path('BASE_PATH') . 'admin/plugin/sync'}" ts-target="target" method="POST" enctype="multipart/form-data">
-            {csrf()}
+        <div class="space-y-4">
+            <h1 class="leading-none text-6xl font-bold">{text('plugin.plugins')}</h1>
 
-            <div class="space-y-4">
-                <h1 class="leading-none text-6xl font-bold">{text('plugin.plugins')}</h1>
-
-                <div n:if="!$installed_plugins->isEmpty()" class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 shadow shadow-lg shadow-base-300">
-                    <table class="table">
-                        <thead>
+            <div n:if="!$installed_plugins->isEmpty()" class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 shadow shadow-lg shadow-base-300">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>{text('plugin.name')}</th>
+                        <th>{text('plugin.description')}</th>
+                        <th>{text('plugin.version')}</th>
+                        <th>{text('plugin.type')}</th>
+                        <th>{text('plugin.status')}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $installed_plugins as $key => $plugin}
                         <tr>
-                            <th></th>
-                            <th>{text('plugin.name')}</th>
-                            <th>{text('plugin.description')}</th>
-                            <th>{text('plugin.version')}</th>
-                            <th>{text('plugin.type')}</th>
-                            <th>{text('plugin.status')}</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {foreach $installed_plugins as $key => $plugin}
-                            <tr>
-                                <td>
-                                    {if canEditAsSuperAdmin()}
-                                        {button type:switch, name:"plugin[$key][active]", value:$plugin->active}
-                                    {else}
-                                        {if $plugin->active}
-                                            <div class="text-success">{icon("feather/check-square.svg")|noescape}</div>
-                                        {/if}
+                            <td>
+                                {if canEditAsSuperAdmin()}
+                                    {button type:switch, name:"plugin[$key][active]", value:$plugin->active}
+                                {else}
+                                    {if $plugin->active}
+                                        <div class="text-success">{icon("feather/check-square.svg")|noescape}</div>
                                     {/if}
-                                </td>
-                                <td><strong>{$plugin->name}</strong></td>
-                                <td>{$plugin->description}</td>
-                                <td>{$plugin->version} <span class="text-neutral-600">{$plugin->version_channel}</span></td>
-                                <td><div class="badge badge-sm badge-soft badge-info font-bold">{$plugin->type}</div></td>
-                                <td>{$plugin->status->value}</td>
-                                <td class="text-right">
-                                    <input type="hidden" name="plugin[{$key}][id]"
-                                           value="{$plugin->id}">
-                                    <div class="join">
-                                        {*                                        <a n:if="$plugin->active" n:foreach="$plugin->info->actions as $action"*}
+                                {/if}
+                            </td>
+                            <td><strong>{$plugin->name}</strong></td>
+                            <td>{$plugin->description}</td>
+                            <td>{$plugin->version} <span class="text-neutral-600">{$plugin->version_channel}</span></td>
+                            <td><div class="badge badge-sm badge-soft badge-info font-bold">{$plugin->type}</div></td>
+                            <td>{$plugin->status->value}</td>
+                            <td class="text-right">
+                                <input type="hidden" name="plugin[{$key}][id]"
+                                       value="{$plugin->id}">
+                                <div class="join">
+                                    {*                                        <a n:if="$plugin->active" n:foreach="$plugin->info->actions as $action"*}
 {*                                                class="btn btn-square btn-ghost btn-primary shadow-none join-item"*}
 {*                                                title="{text($plugin->url.'.'.$action['text'])}"*}
 {*                                                href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/' . $action['url']}">*}
 {*                                            {icon($action['icon'])|noescape}*}
 {*                                        </a>*}
                                         <a n:if="$plugin->active && can('collection', $plugin)"
-                                                class="btn btn-square btn-ghost btn-primary shadow-none join-item"
-                                                title="{text('plugin.collection')}"
-                                                href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/collection'}">
-                                                {icon("feather/package.svg")|noescape}
+                                            class="btn btn-square btn-ghost btn-primary shadow-none join-item"
+                                            title="{text('plugin.collection')}"
+                                            href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/collection'}">
+                                            {icon("feather/package.svg")|noescape}
                                         </a>
                                         <a n:if="$plugin->active && can('settings', $plugin)"
-                                                class="btn btn-square btn-ghost btn-primary shadow-none join-item"
-                                                title="{text('setting.settings')}"
-                                                href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/settings'}">
-                                                {icon("feather/settings.svg")|noescape}
+                                            class="btn btn-square btn-ghost btn-primary shadow-none join-item"
+                                            title="{text('setting.settings')}"
+                                            href="{path('BASE_PATH') . 'admin/plugin/' . $plugin->url . '/settings'}">
+                                            {icon("feather/settings.svg")|noescape}
                                         </a>
                                         {if !$plugin->parent_id && can('uninstall', $plugin)}
-                                            {button type:delete, name:"plugin[$key][delete]", value:"plugin_" . $plugin->id, id:$plugin->id, placeholder:$plugin->name}
+                                            <form ts-req="{path('BASE_PATH') . 'admin/plugin/'.$plugin->id.'/delete'}" ts-target="target" method="POST" enctype="multipart/form-data">
+                                                {csrf()}
+                                                {button type:delete, name:"plugin[$key][delete]", value:$plugin->id, id:$plugin->id, placeholder:$plugin->name}
+                                            </form>
                                         {/if}
-                                    </div>
-                                </td>
-                            </tr>
-                        {/foreach}
-                        </tbody>
-                    </table>
-                </div>
-                <div n:else class="text-center">
-                    {text('plugin.none_installed')}
-                </div>
-
+                                </div>
+                            </td>
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
             </div>
-        </form>
+            <div n:else class="text-center">
+                {text('plugin.none_installed')}
+            </div>
+        </div>
 
         <div class="grid md:grid-cols-3 gap-4 sm:grid-cols-2 grid-cols-1">
             {if canEditAsSuperAdmin()}
                 {foreach $catalog_plugins as $catalog_plugin}
-                    <form method="POST" ts-req="{path('BASE_PATH') . 'admin/plugin/download'}" ts-data="package={$catalog_plugin['package']}" ts-target="target">
+                    <form method="POST" ts-req="{path('BASE_PATH') . 'admin/plugin/add'}" ts-data="package={$catalog_plugin['package']}" ts-target="target">
                         {csrf()}
                         <div class="card bg-base-100 shadow-sm">
                             <div class="card-body">
