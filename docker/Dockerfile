@@ -51,8 +51,13 @@ CMD ["sh", "-c", "\
         /var/www/plugins \
         /var/www/templates \
         /var/www/cache/composer \
+        /var/www/logs \
     && chmod a+rw \
         /var/www/composer.json \
         /var/www/composer.lock \
+    && git config --system --add safe.directory /var/www \
+    && git config --system --add safe.directory /var/ivy-cultivate \
+    && git config --system --add safe.directory /var/ivy-roots \
+    && git config --system --add safe.directory /var/ivy-sprout \
     && exec apache2-foreground \
 "]
