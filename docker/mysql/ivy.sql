@@ -27,14 +27,17 @@ CREATE TABLE `plugins` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` int DEFAULT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
+  `package` varchar(255) NOT NULL DEFAULT '',
   `interface` varchar(255) DEFAULT NULL,
   `version` varchar(11) NOT NULL DEFAULT '',
+  `version_channel` varchar(255) NOT NULL DEFAULT '',
   `description` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `status` varchar(255) NOT NULL DEFAULT '',
   `active` tinyint(1) DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 

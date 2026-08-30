@@ -8,3 +8,4 @@
 /public/templates/
 /public/media/profile/*
 !/public/media/profile/index.html
+/logs/
