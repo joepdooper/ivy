@@ -1402,7 +1402,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ivy-roots",
-                "reference": "bebe351a097119ac96bf26d9e0e45d70d088e016"
+                "reference": "4e4c329c10b4182e0f7a3a76f909dd346e8aff6a"
             },
             "require": {
                 "bainternet/php-hooks": "^1.0",
@@ -1456,7 +1456,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ivy-sprout",
-                "reference": "7d6e6976f3ff3bd4adb88a3c517981911f2d4079"
+                "reference": "c48e12233fa2984ddfc6193f6b9e0eac1333ad4c"
             },
             "require": {
                 "composer-plugin-api": "^2.0",
@@ -1465,9 +1465,6 @@
             "require-dev": {
                 "composer/composer": "^2.8"
             },
-            "bin": [
-                "bin/require"
-            ],
             "type": "composer-plugin",
             "extra": {
                 "class": "Ivy\\Sprout\\IvyInstaller"
@@ -5278,11 +5275,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.9",
+            "version": "2.2.10",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/13d6b4f347bad222da436580c8304fa6f83e6bd0",
-                "reference": "13d6b4f347bad222da436580c8304fa6f83e6bd0",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/36d1509c998b0602811824143526b4a9ee2774e7",
+                "reference": "36d1509c998b0602811824143526b4a9ee2774e7",
                 "shasum": ""
             },
             "require": {
@@ -5338,7 +5335,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-22T07:38:16+00:00"
+            "time": "2026-08-30T12:46:16+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
