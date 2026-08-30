@@ -42,9 +42,17 @@
                             </td>
                             <td><strong>{$plugin->name}</strong></td>
                             <td>{$plugin->description}</td>
-                            <td>{$plugin->version} <span class="text-neutral-600">{$plugin->version_channel}</span></td>
+                            <td>
+                                <span class="badge badge-sm badge-soft badge-accent font-bold">
+                                    {$plugin->version} - {$plugin->version_channel}
+                                </span>
+                            </td>
                             <td><div class="badge badge-sm badge-soft badge-info font-bold">{$plugin->type}</div></td>
-                            <td>{$plugin->status->value}</td>
+                            <td>
+                                <span class="badge badge-sm badge-soft badge-secondary font-bold">
+                                {$plugin->status->value}
+                                </span>
+                            </td>
                             <td class="text-right">
                                 <input type="hidden" name="plugin[{$key}][id]"
                                        value="{$plugin->id}">
@@ -96,7 +104,7 @@
                                     {$catalog_plugin['extra']['ivy']['name'] ?? $catalog_plugin['package']}
                                 </h2>
                                 <div>
-                            <span class="badge badge-sm badge-soft badge-secondary font-bold">
+                            <span class="badge badge-sm badge-soft badge-accent font-bold">
                                 {$catalog_plugin['versions'][0]}
                             </span>
                                     <span class="badge badge-sm badge-soft badge-info font-bold">
