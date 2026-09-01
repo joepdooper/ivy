@@ -1,0 +1,13 @@
+{if $plugin->status != Ivy\Plugin\Domain\Enum\PluginStatus::INSTALLED}
+<div id="plugin-{$plugin->id}-status"
+     ts-req="/admin/plugin/{$plugin->id}/status"
+     ts-trigger="load delay 500"
+     ts-target="target"
+     class="badge badge-sm badge-soft badge-secondary font-bold">
+    {$plugin->status->value}
+</div>
+{else}
+    <div class="badge badge-sm badge-soft badge-secondary font-bold">
+        {$plugin->status->value}
+    </div>
+{/if}

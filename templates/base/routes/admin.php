@@ -19,11 +19,15 @@ Route::mount('/admin', function () {
     // -- PLUGIN index
     Route::get('/plugin/([a-z0-9_-]+)/settings', '\Ivy\Setting\Presentation\Controller\SettingController@index')
         ->before('\Ivy\User\Presentation\Controller\AdminController@before');
+    Route::get('/plugin/catalog', '\Ivy\Plugin\Presentation\Controller\PluginController@catalog')
+        ->before('\Ivy\User\Presentation\Controller\AdminController@before');
     Route::get('/plugin(/[a-z0-9_-]+)?(/collection)?', '\Ivy\Plugin\Presentation\Controller\PluginController@index')
         ->before('\Ivy\User\Presentation\Controller\AdminController@before');
     Route::post('/plugin/add', '\Ivy\Plugin\Presentation\Controller\PluginController@add')
         ->before('\Ivy\User\Presentation\Controller\AdminController@before');
     Route::post('/plugin/([a-z0-9_-]+)/delete', '\Ivy\Plugin\Presentation\Controller\PluginController@delete')
+        ->before('\Ivy\User\Presentation\Controller\AdminController@before');
+    Route::get('/plugin/([a-z0-9_-]+)/status', '\Ivy\Plugin\Presentation\Controller\PluginController@status')
         ->before('\Ivy\User\Presentation\Controller\AdminController@before');
     // -- TEMPLATE index
     Route::post('/template/sync', '\Ivy\Template\Presentation\Controller\TemplateController@sync')

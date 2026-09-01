@@ -1,0 +1,53 @@
+{extends file('body.latte')}
+
+{define search}
+    {if canEditAsSuperAdmin()}
+        {include file('include/search.latte'),
+        placeholder: text('plugin.search'),
+        target: '#index',
+        search: null
+        }
+    {/if}
+{/define}
+
+{block main}
+    <main class="grow p-4 w-full max-w-5xl mx-auto">
+        <div class="space-y-4">
+            <h1 class="leading-none text-6xl font-bold">{text('plugin.catalog')}</h1>
+
+            <div n:if="!empty($catalog)" class="grid md:grid-cols-3 gap-4 sm:grid-cols-2 grid-cols-1">
+                {if canEditAsSuperAdmin()}
+                    {foreach $catalog as $plugin}
+                        <form method="POST" ts-req="{path('BASE_PATH') . 'admin/plugin/add'}" ts-data="package={$plugin['package']}" ts-target="target">
+                            {csrf()}
+                            <div class="card bg-base-100 shadow-sm">
+                                <div class="card-body">
+                                    <h2 class="card-title">
+                                        {$plugin['extra']['ivy']['name'] ?? $plugin['package']}
+                                    </h2>
+                                    <div>
+                            <span class="badge badge-sm badge-soft badge-accent font-bold">
+                                {$plugin['versions'][0]}
+                            </span>
+                                        <span class="badge badge-sm badge-soft badge-info font-bold">
+                                {$plugin['extra']['ivy']['type']}
+                            </span>
+                                    </div>
+                                    <p>{$plugin['description']}</p>
+                                    <div class="card-actions justify-end">
+                                        <button class="btn btn-primary btn-block shadow-none leading-none px-4">
+                                            {text('button.install')}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    {/foreach}
+                {/if}
+            </div>
+            <div n:else class="text-center">
+                {text('plugin.none_available')}
+            </div>
+
+    </main>
+{/block}

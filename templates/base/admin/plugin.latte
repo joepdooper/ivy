@@ -15,7 +15,22 @@
         <div class="space-y-4">
             <h1 class="leading-none text-6xl font-bold">{text('plugin.plugins')}</h1>
 
-            <div n:if="!$installed_plugins->isEmpty()" class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 shadow shadow-lg shadow-base-300">
+            <div class="w-full">
+                <div role="alert" class="alert bg-neutral text-neutral-content alert-vertical sm:alert-horizontal">
+                    <div class="text-accent">
+                        {icon("feather/package.svg")|noescape}
+                    </div>
+                    <div>
+                        <h2 class="bold text-lg">Discover new plugins</h2>
+                        <p>Browse the plugin catalog to discover useful plugins and add new features to your installation.</p>
+                    </div>
+                    <div>
+                        <a href="{path('BASE_PATH') . 'admin/plugin/catalog'}" class="btn btn-primary shadow-none">{text('plugin.catalog')}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div n:if="!$plugins->isEmpty()" class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 shadow shadow-lg shadow-base-300">
                 <table class="table">
                     <thead>
                     <tr>
@@ -29,7 +44,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {foreach $installed_plugins as $key => $plugin}
+                    {foreach $plugins as $key => $plugin}
                         <tr>
                             <td>
                                 {if canEditAsSuperAdmin()}
@@ -49,9 +64,7 @@
                             </td>
                             <td><div class="badge badge-sm badge-soft badge-info font-bold">{$plugin->type}</div></td>
                             <td>
-                                <span class="badge badge-sm badge-soft badge-secondary font-bold">
-                                {$plugin->status->value}
-                                </span>
+                                {include file('include/plugin-status.latte'), plugin: $plugin}
                             </td>
                             <td class="text-right">
                                 <input type="hidden" name="plugin[{$key}][id]"
@@ -76,11 +89,11 @@
                                             {icon("feather/settings.svg")|noescape}
                                         </a>
                                         {if !$plugin->parent_id && can('uninstall', $plugin)}
-                                            <form ts-req="{path('BASE_PATH') . 'admin/plugin/'.$plugin->id.'/delete'}" ts-target="target" method="POST" enctype="multipart/form-data">
-                                                {csrf()}
+                                        <form ts-req="{path('BASE_PATH') . 'admin/plugin/'.$plugin->id.'/delete'}" ts-target="target" method="POST" enctype="multipart/form-data">
+                                            {csrf()}
                                                 {button type:delete, name:"plugin[$key][delete]", value:$plugin->id, id:$plugin->id, placeholder:$plugin->name}
-                                            </form>
-                                        {/if}
+                                        </form>
+                                    {/if}
                                 </div>
                             </td>
                         </tr>
@@ -93,36 +106,36 @@
             </div>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-4 sm:grid-cols-2 grid-cols-1">
-            {if canEditAsSuperAdmin()}
-                {foreach $catalog_plugins as $catalog_plugin}
-                    <form method="POST" ts-req="{path('BASE_PATH') . 'admin/plugin/add'}" ts-data="package={$catalog_plugin['package']}" ts-target="target">
-                        {csrf()}
-                        <div class="card bg-base-100 shadow-sm">
-                            <div class="card-body">
-                                <h2 class="card-title">
-                                    {$catalog_plugin['extra']['ivy']['name'] ?? $catalog_plugin['package']}
-                                </h2>
-                                <div>
-                            <span class="badge badge-sm badge-soft badge-accent font-bold">
-                                {$catalog_plugin['versions'][0]}
-                            </span>
-                                    <span class="badge badge-sm badge-soft badge-info font-bold">
-                                {$catalog_plugin['extra']['ivy']['type']}
-                            </span>
-                                </div>
-                                <p>{$catalog_plugin['description']}</p>
-                                <div class="card-actions justify-end">
-                                    <button class="btn btn-primary btn-block shadow-none leading-none px-4">
-                                        {text('button.install')}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                {/foreach}
-            {/if}
-        </div>
+        {*        <div class="grid md:grid-cols-3 gap-4 sm:grid-cols-2 grid-cols-1">*}
+{*            {if canEditAsSuperAdmin()}*}
+{*                {foreach $catalog_plugins as $catalog_plugin}*}
+{*                    <form method="POST" ts-req="{path('BASE_PATH') . 'admin/plugin/add'}" ts-data="package={$catalog_plugin['package']}" ts-target="target">*}
+{*                        {csrf()}*}
+{*                        <div class="card bg-base-100 shadow-sm">*}
+{*                            <div class="card-body">*}
+{*                                <h2 class="card-title">*}
+{*                                    {$catalog_plugin['extra']['ivy']['name'] ?? $catalog_plugin['package']}*}
+{*                                </h2>*}
+{*                                <div>*}
+{*                            <span class="badge badge-sm badge-soft badge-accent font-bold">*}
+{*                                {$catalog_plugin['versions'][0]}*}
+{*                            </span>*}
+{*                                    <span class="badge badge-sm badge-soft badge-info font-bold">*}
+{*                                {$catalog_plugin['extra']['ivy']['type']}*}
+{*                            </span>*}
+{*                                </div>*}
+{*                                <p>{$catalog_plugin['description']}</p>*}
+{*                                <div class="card-actions justify-end">*}
+{*                                    <button class="btn btn-primary btn-block shadow-none leading-none px-4">*}
+{*                                        {text('button.install')}*}
+{*                                    </button>*}
+{*                                </div>*}
+{*                            </div>*}
+{*                        </div>*}
+{*                    </form>*}
+{*                {/foreach}*}
+{*            {/if}*}
+{*        </div>*}
 
     </main>
 {/block}

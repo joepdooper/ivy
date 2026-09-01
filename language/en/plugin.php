@@ -3,6 +3,7 @@
 return [
     'plugins' => 'Plugins',
     'plugin' => 'Plugin',
+    'catalog' => 'Plugin catalog',
     'name' => 'Name',
     'version' => 'Version',
     'description' => 'Description',
