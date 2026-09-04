@@ -21,7 +21,7 @@
   "require": {
     "php": ">=8.5.6",
     "joepdooper/ivy-roots": "dev-plugins-composer",
-    "joepdooper/ivy-sprout": "dev-main"
+    "mnsami/composer-custom-directory-installer": "^2.2"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -38,7 +38,17 @@
     },
     "allow-plugins": {
       "pestphp/pest-plugin": true,
-      "joepdooper/ivy-sprout": true
+      "mnsami/composer-custom-directory-installer": true
+    }
+  },
+  "extra": {
+    "installer-types": [
+      "ivy-plugin",
+      "ivy-template"
+    ],
+    "installer-paths": {
+      "plugins/{$name}": ["type:ivy-plugin"],
+      "templates/{$name}": ["type:ivy-template"]
     }
   }
 }

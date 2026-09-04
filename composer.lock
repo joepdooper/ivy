@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f3af16fd59afb4f6798ad5b29f4b788a",
+    "content-hash": "7dc6b4ad314b36271e16a6b5fdbe820e",
     "packages": [
         {
             "name": "bainternet/php-hooks",
@@ -1402,7 +1402,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ivy-roots",
-                "reference": "770c3716d49b9ea012641b4bc86dbae3ba4e4fba"
+                "reference": "777639d939e57dafa49155fff5b28704f4816179"
             },
             "require": {
                 "bainternet/php-hooks": "^1.0",
@@ -1445,39 +1445,6 @@
                 }
             ],
             "description": "A set of classes designed to build and extend functionality in ivy",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "joepdooper/ivy-sprout",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "../ivy-sprout",
-                "reference": "c48e12233fa2984ddfc6193f6b9e0eac1333ad4c"
-            },
-            "require": {
-                "composer-plugin-api": "^2.0",
-                "php": ">=8.5.6"
-            },
-            "require-dev": {
-                "composer/composer": "^2.8"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "Ivy\\Sprout\\IvyInstaller"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Ivy\\Sprout\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Composer installer for ivy plugins and templates",
             "transport-options": {
                 "symlink": true,
                 "relative": true
@@ -1757,6 +1724,78 @@
                 "source": "https://github.com/matthiasmullie/path-converter/tree/1.1.3"
             },
             "time": "2019-02-05T23:41:09+00:00"
+        },
+        {
+            "name": "mnsami/composer-custom-directory-installer",
+            "version": "2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mnsami/composer-custom-directory-installer.git",
+                "reference": "23b7039ea7cf18b5846faae2b9f4d9c9445e0039"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mnsami/composer-custom-directory-installer/zipball/23b7039ea7cf18b5846faae2b9f4d9c9445e0039",
+                "reference": "23b7039ea7cf18b5846faae2b9f4d9c9445e0039",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^2.0",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "composer/composer": "^2.0",
+                "friendsofphp/php-cs-fixer": "^3.75",
+                "phpunit/phpunit": "^10.5"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": [
+                    "Composer\\CustomDirectoryInstaller\\LibraryPlugin",
+                    "Composer\\CustomDirectoryInstaller\\PearPlugin",
+                    "Composer\\CustomDirectoryInstaller\\PluginPlugin"
+                ],
+                "branch-alias": {
+                    "dev-master": "2.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\CustomDirectoryInstaller\\": "src/Composer/CustomDirectoryInstaller"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mina Nabil Sami",
+                    "email": "mina.nsami@gmail.com"
+                }
+            ],
+            "description": "A composer plugin, to help install packages of different types in custom paths.",
+            "keywords": [
+                "composer",
+                "composer-installer",
+                "composer-plugin",
+                "custom-path",
+                "drupal",
+                "installer-paths",
+                "monorepo",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/mnsami/composer-custom-directory-installer/issues",
+                "source": "https://github.com/mnsami/composer-custom-directory-installer/tree/2.2.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/mnsami",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-05-20T07:57:55+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -7539,7 +7578,6 @@
     "stability-flags": {
         "joepdooper/ivy-cultivate": 20,
         "joepdooper/ivy-roots": 20,
-        "joepdooper/ivy-sprout": 20,
         "kint-php/kint": 20,
         "pestphp/pest": 20
     },
