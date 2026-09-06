@@ -1,7 +1,0 @@
-{
-  "name": "Article",
-  "version": "1.0.0",
-  "description": "Article item",
-  "type": "item",
-  "interface": "Items\\Collection\\Article\\ArticleInterface"
-}

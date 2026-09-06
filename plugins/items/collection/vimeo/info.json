@@ -1,7 +1,0 @@
-{
-  "name": "Vimeo",
-  "version": "1.0.0",
-  "description": "Vimeo SDK",
-  "type": "item",
-  "interface": "Items\\Collection\\Vimeo\\VimeoInterface"
-}

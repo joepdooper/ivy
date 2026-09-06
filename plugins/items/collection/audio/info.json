@@ -1,7 +1,0 @@
-{
-  "name": "Audio",
-  "version": "1.0.0",
-  "description": "Audio item",
-  "type": "item",
-  "interface": "Items\\Collection\\Audio\\AudioInterface"
-}

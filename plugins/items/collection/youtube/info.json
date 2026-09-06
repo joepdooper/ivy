@@ -1,7 +1,0 @@
-{
-  "name": "Youtube",
-  "version": "1.0.0",
-  "description": "Youtube player",
-  "type": "item",
-  "interface": "Items\\Collection\\Youtube\\YoutubeInterface"
-}

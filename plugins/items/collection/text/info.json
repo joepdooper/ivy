@@ -1,7 +1,0 @@
-{
-  "name": "Text",
-  "version": "1.0.0",
-  "description": "Text item",
-  "type": "item",
-  "interface": "Items\\Collection\\Text\\TextInterface"
-}

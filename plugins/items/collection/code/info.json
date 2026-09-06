@@ -1,7 +1,0 @@
-{
-  "name": "Code",
-  "version": "1.0.0",
-  "description": "Code item",
-  "type": "item",
-  "interface": "Items\\Collection\\Code\\CodeInterface"
-}

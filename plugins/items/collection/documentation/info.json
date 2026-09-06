@@ -1,7 +1,0 @@
-{
-  "name": "Documentation",
-  "version": "1.0.0",
-  "description": "Documentation item",
-  "type": "item",
-  "interface": "Items\\Collection\\Documentation\\DocumentationInterface"
-}

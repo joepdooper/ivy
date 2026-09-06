@@ -1,7 +1,0 @@
-{
-  "name": "Image",
-  "version": "1.0.0",
-  "description": "Image item",
-  "type": "item",
-  "interface": "Items\\Collection\\Image\\ImageInterface"
-}

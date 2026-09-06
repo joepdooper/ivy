@@ -18,30 +18,32 @@
             <div n:if="!empty($catalog)" class="grid md:grid-cols-3 gap-4 sm:grid-cols-2 grid-cols-1">
                 {if canEditAsSuperAdmin()}
                     {foreach $catalog as $plugin}
-                        <form method="POST" ts-req="{path('BASE_PATH') . 'admin/plugin/add'}" ts-data="package={$plugin['package']}" ts-target="target">
-                            {csrf()}
-                            <div class="card bg-base-100 shadow-sm">
-                                <div class="card-body">
-                                    <h2 class="card-title">
-                                        {$plugin['extra']['ivy']['name'] ?? $plugin['package']}
-                                    </h2>
-                                    <div>
-                            <span class="badge badge-sm badge-soft badge-accent font-bold">
-                                {$plugin['versions'][0]}
-                            </span>
-                                        <span class="badge badge-sm badge-soft badge-info font-bold">
-                                {$plugin['extra']['ivy']['type']}
-                            </span>
-                                    </div>
-                                    <p>{$plugin['description']}</p>
-                                    <div class="card-actions justify-end">
+                        <div class="card bg-base-100 shadow-sm">
+                            <div class="card-body">
+                                <h2 class="card-title">
+                                    {$plugin['extra']['ivy']['name'] ?? $plugin['package']}
+                                </h2>
+                                <div>
+                                    <span n:if="!empty($plugin['versions'])" class="badge badge-sm badge-soft badge-accent font-bold">
+                                        {$plugin['versions'][0]}
+                                    </span>
+                                    <span n:if="isset($plugin['extra']['ivy']['type'])" class="badge badge-sm badge-soft badge-info font-bold">
+                                        {$plugin['extra']['ivy']['type']}
+                                    </span>
+                                </div>
+                                <p>
+                                    {isset($plugin['description']) ? $plugin['description'] : ""}
+                                </p>
+                                <div class="card-actions">
+                                    <form class="block w-full" method="POST" ts-req="{path('BASE_PATH') . 'admin/plugin/add'}" ts-data="package={$plugin['package']}" ts-target="target">
+                                        {csrf()}
                                         <button class="btn btn-primary btn-block shadow-none leading-none px-4">
                                             {text('button.install')}
                                         </button>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     {/foreach}
                 {/if}
             </div>
