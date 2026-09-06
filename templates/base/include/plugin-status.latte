@@ -1,5 +1,8 @@
-{if $plugin->status != Ivy\Plugin\Domain\Enum\PluginStatus::INSTALLED}
-<div id="plugin-{$plugin->id}-status"
+{if !in_array($plugin->status, [
+Ivy\Plugin\Domain\Enum\PluginStatus::INSTALLED,
+Ivy\Plugin\Domain\Enum\PluginStatus::FAILED
+])}
+    <div id="plugin-{$plugin->id}-status"
      ts-req="/admin/plugin/{$plugin->id}/status"
      ts-trigger="load delay 500"
      ts-target="target"
