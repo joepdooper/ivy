@@ -8,6 +8,21 @@
             <div class="space-y-4">
                 <h1 class="leading-none text-6xl font-bold">{text('template.templates')}</h1>
 
+                <div class="w-full">
+                    <div role="alert" class="alert bg-neutral text-neutral-content alert-vertical sm:alert-horizontal">
+                        <div class="text-accent">
+                            {icon("feather/package.svg")|noescape}
+                        </div>
+                        <div>
+                            <h2 class="bold text-lg">Discover new templates</h2>
+                            <p>Browse the template catalog to discover beautiful templates.</p>
+                        </div>
+                        <div>
+                            <a href="{path('BASE_PATH') . 'admin/template/catalog'}" class="btn btn-primary shadow-none">{text('template.catalog')}</a>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="overflow-x-auto rounded-box border border-base-content/5">
                     <table class="table">
                         <thead>
