@@ -34,6 +34,8 @@ Route::mount('/admin', function () {
         ->before('\Ivy\User\Presentation\Controller\AdminController@before');
     Route::get('/template/catalog', '\Ivy\Template\Presentation\Controller\TemplateController@catalog')
         ->before('\Ivy\User\Presentation\Controller\AdminController@before');
+    Route::post('/template/add', '\Ivy\Template\Presentation\Controller\TemplateController@add')
+        ->before('\Ivy\User\Presentation\Controller\AdminController@before');
     Route::get('/template', '\Ivy\Template\Presentation\Controller\TemplateController@index')
         ->before('\Ivy\User\Presentation\Controller\AdminController@before');
     // -- SETTING index
