@@ -70,8 +70,14 @@ CREATE TABLE `settings` (
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE `templates` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `package` varchar(255) NOT NULL DEFAULT '',
+  `interface` varchar(255) DEFAULT NULL,
+  `version` varchar(11) NOT NULL DEFAULT '',
+  `version_channel` varchar(255) NOT NULL DEFAULT '',
+  `description` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
-  `value` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `status` varchar(255) NOT NULL DEFAULT '',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
