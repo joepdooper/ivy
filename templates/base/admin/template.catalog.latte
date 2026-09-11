@@ -1,0 +1,55 @@
+{extends file('body.latte')}
+
+{define search}
+    {if canEditAsSuperAdmin()}
+        {include file('include/search.latte'),
+        placeholder: text('template.search'),
+        target: '#index',
+        search: null
+        }
+    {/if}
+{/define}
+
+{block main}
+    <main class="grow p-4 w-full max-w-5xl mx-auto">
+        <div class="space-y-4">
+            <h1 class="leading-none text-6xl font-bold">{text('template.catalog')}</h1>
+
+            <div n:if="!empty($catalog)" class="grid md:grid-cols-3 gap-4 sm:grid-cols-2 grid-cols-1">
+                {if canEditAsSuperAdmin()}
+                    {foreach $catalog as $template}
+                        <div class="card bg-base-100 shadow-sm">
+                            <div class="card-body">
+                                <h2 class="card-title">
+                                    {$template['extra']['ivy']['name'] ?? $template['package']}
+                                </h2>
+                                <div>
+                                    <span n:if="!empty($template['versions'])" class="badge badge-sm badge-soft badge-accent font-bold">
+                                        {$template['versions'][0]}
+                                    </span>
+                                    <span n:if="isset($template['extra']['ivy']['type'])" class="badge badge-sm badge-soft badge-info font-bold">
+                                        {$template['extra']['ivy']['type']}
+                                    </span>
+                                </div>
+                                <p>
+                                    {isset($template['description']) ? $template['description'] : ""}
+                                </p>
+                                <div class="card-actions">
+                                    <form class="block w-full" method="POST" ts-req="{path('BASE_PATH') . 'admin/template/add'}" ts-data="package={$template['package']}" ts-target="target">
+                                        {csrf()}
+                                        <button class="btn btn-primary btn-block shadow-none leading-none px-4">
+                                            {text('button.install')}
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    {/foreach}
+                {/if}
+            </div>
+            <div n:else class="text-center">
+                {text('template.none_available')}
+            </div>
+
+    </main>
+{/block}

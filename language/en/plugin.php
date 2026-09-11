@@ -14,5 +14,6 @@ return [
     'installed_successfully' => 'Plugin :plugin installed successfully',
     'uninstalled_successfully' => 'Plugin :plugin uninstalled successfully',
     'none_installed' => 'No plugins installed',
+    'none_available' => 'No plugins available',
     'search' => 'Search plugins',
 ];
