@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7dc6b4ad314b36271e16a6b5fdbe820e",
+    "content-hash": "522aed9d30c3538717a53447e46fca9c",
     "packages": [
         {
             "name": "bainternet/php-hooks",
@@ -285,6 +285,98 @@
                 }
             ],
             "time": "2026-09-06T14:11:38+00:00"
+        },
+        {
+            "name": "cluys/ivy-base-template",
+            "version": "v0.1.0-alpha",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cluys/ivy-base-template.git",
+                "reference": "c6ece8f1cbdf58b52fdcffe0f2b5977ad1c3ab66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cluys/ivy-base-template/zipball/c6ece8f1cbdf58b52fdcffe0f2b5977ad1c3ab66",
+                "reference": "c6ece8f1cbdf58b52fdcffe0f2b5977ad1c3ab66",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.5.6"
+            },
+            "type": "ivy-template",
+            "extra": {
+                "ivy": {
+                    "name": "Base",
+                    "type": "base",
+                    "interface": "Cluys\\Template\\Base\\BaseTemplate"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Cluys\\Template\\Base\\": "classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joep Dooper"
+                }
+            ],
+            "description": "Base system template for ivy CMS",
+            "support": {
+                "issues": "https://github.com/cluys/ivy-base-template/issues",
+                "source": "https://github.com/cluys/ivy-base-template/tree/v0.1.0-alpha"
+            },
+            "time": "2026-09-11T14:12:52+00:00"
+        },
+        {
+            "name": "cluys/ivy-demo-template",
+            "version": "v0.1.0-alpha",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cluys/ivy-demo-template.git",
+                "reference": "1a49a3965df3b34540b342e2c1fc489daa4f46a3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cluys/ivy-demo-template/zipball/1a49a3965df3b34540b342e2c1fc489daa4f46a3",
+                "reference": "1a49a3965df3b34540b342e2c1fc489daa4f46a3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.5.6"
+            },
+            "type": "ivy-template",
+            "extra": {
+                "ivy": {
+                    "name": "Demo",
+                    "type": "sub",
+                    "interface": "Cluys\\Template\\Demo\\DemoTemplate"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Cluys\\Template\\Demo\\": "classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joep Dooper"
+                }
+            ],
+            "description": "Demo sub template for ivy CMS",
+            "support": {
+                "issues": "https://github.com/cluys/ivy-demo-template/issues",
+                "source": "https://github.com/cluys/ivy-demo-template/tree/v0.1.0-alpha"
+            },
+            "time": "2026-09-11T16:19:39+00:00"
         },
         {
             "name": "delight-im/auth",
@@ -1407,7 +1499,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ivy-roots",
-                "reference": "87e7afc46e16ffd0001bcc105fb6fa619892918a"
+                "reference": "6829774854a38256dc1a7bc18e99095f7c6f0bab"
             },
             "require": {
                 "bainternet/php-hooks": "^1.0",
@@ -7581,6 +7673,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "cluys/ivy-base-template": 15,
+        "cluys/ivy-demo-template": 15,
         "joepdooper/ivy-cultivate": 20,
         "joepdooper/ivy-roots": 20,
         "kint-php/kint": 20,
