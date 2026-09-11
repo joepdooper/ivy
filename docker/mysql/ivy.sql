@@ -204,8 +204,8 @@ INSERT INTO `settings` (`id`, `name`, `bool`, `value`, `info`, `token`, `plugin_
 (4, 'Registration role', 0, 'EDITOR', 'After registration set user role', NULL, NULL, 1, NULL, NULL);
 
 INSERT INTO `templates` (`id`, `package`, `type`, `url`, `created_at`, `updated_at`) VALUES
-(1, 'cluys/ivy-base-template', 'base', 'base', NULL, NULL),
-(2, 'cluys/ivy-demo-template', 'sub', 'DEMO',NULL, NULL);
+(1, 'cluys/ivy-base-template', 'base', 'ivy-base-template', NULL, NULL),
+(2, 'cluys/ivy-demo-template', 'sub', 'ivy-demo-template',NULL, NULL);
 
 INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`) VALUES
 (1, 'admin@localhost.test', '$2y$12$ILvFcrz1kxPnAlwr6fFa4OWTW7EeDK5Uf1KFgdSFCzkXpxL5miV5C', 'ivy', 0, 1, 1, 263169, 1701517536, 1777807753, 0);
