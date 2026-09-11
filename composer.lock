@@ -288,16 +288,16 @@
         },
         {
             "name": "cluys/ivy-base-template",
-            "version": "v0.1.0-alpha",
+            "version": "v0.1.1-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cluys/ivy-base-template.git",
-                "reference": "c6ece8f1cbdf58b52fdcffe0f2b5977ad1c3ab66"
+                "reference": "9432b7c4fea972c66f71716c0c095fd45e95120d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cluys/ivy-base-template/zipball/c6ece8f1cbdf58b52fdcffe0f2b5977ad1c3ab66",
-                "reference": "c6ece8f1cbdf58b52fdcffe0f2b5977ad1c3ab66",
+                "url": "https://api.github.com/repos/cluys/ivy-base-template/zipball/9432b7c4fea972c66f71716c0c095fd45e95120d",
+                "reference": "9432b7c4fea972c66f71716c0c095fd45e95120d",
                 "shasum": ""
             },
             "require": {
@@ -328,9 +328,9 @@
             "description": "Base system template for ivy CMS",
             "support": {
                 "issues": "https://github.com/cluys/ivy-base-template/issues",
-                "source": "https://github.com/cluys/ivy-base-template/tree/v0.1.0-alpha"
+                "source": "https://github.com/cluys/ivy-base-template/tree/v0.1.1-alpha"
             },
-            "time": "2026-09-11T14:12:52+00:00"
+            "time": "2026-09-11T22:25:06+00:00"
         },
         {
             "name": "cluys/ivy-demo-template",
