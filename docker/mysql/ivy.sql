@@ -70,8 +70,9 @@ CREATE TABLE `settings` (
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE `templates` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
   `package` varchar(255) NOT NULL,
-  `interface` varchar(255) NULL DEFAULT NULL,
+  `interface` varchar(255) NOT NULL,
   `version` varchar(11) NULL DEFAULT NULL,
   `version_channel` varchar(255) NULL DEFAULT NULL,
   `description` varchar(255) NULL DEFAULT NULL,
@@ -203,9 +204,9 @@ INSERT INTO `settings` (`id`, `name`, `bool`, `value`, `info`, `token`, `plugin_
 (3, 'Minify JS', 0, NULL, 'JS minifier', NULL, NULL, 1, NULL, NULL),
 (4, 'Registration role', 0, 'EDITOR', 'After registration set user role', NULL, NULL, 1, NULL, NULL);
 
-INSERT INTO `templates` (`id`, `package`, `type`, `url`, `created_at`, `updated_at`) VALUES
-(1, 'cluys/ivy-base-template', 'base', 'ivy-base-template', NULL, NULL),
-(2, 'cluys/ivy-demo-template', 'sub', 'ivy-demo-template',NULL, NULL);
+INSERT INTO `templates` (`id`, `name`, `package`, `interface`, `type`, `url`, `created_at`, `updated_at`) VALUES
+(1, 'Base', 'cluys/ivy-base-template', 'Cluys\Template\Base\BaseTemplate', 'base', 'ivy-base-template', NULL, NULL),
+(2, 'Demo', 'cluys/ivy-demo-template', 'Cluys\Template\Demo\DemoTemplate', 'sub', 'ivy-demo-template',NULL, NULL);
 
 INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`) VALUES
 (1, 'admin@localhost.test', '$2y$12$ILvFcrz1kxPnAlwr6fFa4OWTW7EeDK5Uf1KFgdSFCzkXpxL5miV5C', 'ivy', 0, 1, 1, 263169, 1701517536, 1777807753, 0);
