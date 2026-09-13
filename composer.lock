@@ -1545,7 +1545,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ivy-roots",
-                "reference": "51d13c4b2a0e1fa7756d1cdde8190967bcb1f3da"
+                "reference": "2f06282d3e8d1f9795ed58ca0c121003607dafbd"
             },
             "require": {
                 "bainternet/php-hooks": "^1.0",
