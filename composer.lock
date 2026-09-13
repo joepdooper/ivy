@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72e03e741a0a63c7c8b43ef1935587d8",
+    "content-hash": "2ad35891700666f6fe42be69121da572",
     "packages": [
         {
             "name": "bainternet/php-hooks",
@@ -288,11 +288,17 @@
         },
         {
             "name": "cluys/ivy-base-template",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "../ivy-base-template",
+            "version": "v0.1.1-alpha",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cluys/ivy-base-template.git",
                 "reference": "9432b7c4fea972c66f71716c0c095fd45e95120d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cluys/ivy-base-template/zipball/9432b7c4fea972c66f71716c0c095fd45e95120d",
+                "reference": "9432b7c4fea972c66f71716c0c095fd45e95120d",
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.5.6"
@@ -310,6 +316,7 @@
                     "Cluys\\Template\\Base\\": "classes/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -319,18 +326,71 @@
                 }
             ],
             "description": "Base system template for ivy CMS",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/cluys/ivy-base-template/issues",
+                "source": "https://github.com/cluys/ivy-base-template/tree/v0.1.1-alpha"
+            },
+            "time": "2026-09-11T22:25:06+00:00"
+        },
+        {
+            "name": "cluys/ivy-contacts",
+            "version": "v0.1.2-alpha",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cluys/ivy-contacts.git",
+                "reference": "aba451f6c7b4fd9f8434d7c948e18198a38bb4cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cluys/ivy-contacts/zipball/aba451f6c7b4fd9f8434d7c948e18198a38bb4cb",
+                "reference": "aba451f6c7b4fd9f8434d7c948e18198a38bb4cb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.5.6"
+            },
+            "type": "ivy-plugin",
+            "extra": {
+                "ivy": {
+                    "name": "Contacts",
+                    "type": "module",
+                    "interface": "Cluys\\Plugin\\Contacts\\ContactPlugin"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Cluys\\Plugin\\Contacts\\": "src/classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joep Dooper"
+                }
+            ],
+            "description": "Contacts plugin for ivy CMS",
+            "support": {
+                "issues": "https://github.com/cluys/ivy-contacts/issues",
+                "source": "https://github.com/cluys/ivy-contacts/tree/v0.1.2-alpha"
+            },
+            "time": "2026-09-05T14:35:01+00:00"
         },
         {
             "name": "cluys/ivy-demo-template",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "../ivy-demo-template",
+            "version": "v0.1.0-alpha",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cluys/ivy-demo-template.git",
                 "reference": "1a49a3965df3b34540b342e2c1fc489daa4f46a3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cluys/ivy-demo-template/zipball/1a49a3965df3b34540b342e2c1fc489daa4f46a3",
+                "reference": "1a49a3965df3b34540b342e2c1fc489daa4f46a3",
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.5.6"
@@ -348,6 +408,7 @@
                     "Cluys\\Template\\Demo\\": "classes/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -357,10 +418,11 @@
                 }
             ],
             "description": "Demo sub template for ivy CMS",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/cluys/ivy-demo-template/issues",
+                "source": "https://github.com/cluys/ivy-demo-template/tree/v0.1.0-alpha"
+            },
+            "time": "2026-09-11T16:19:39+00:00"
         },
         {
             "name": "delight-im/auth",
@@ -7657,8 +7719,9 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "cluys/ivy-base-template": 20,
-        "cluys/ivy-demo-template": 20,
+        "cluys/ivy-base-template": 15,
+        "cluys/ivy-contacts": 15,
+        "cluys/ivy-demo-template": 15,
         "joepdooper/ivy-cultivate": 20,
         "joepdooper/ivy-roots": 20,
         "kint-php/kint": 20,
