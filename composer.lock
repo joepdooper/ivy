@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "522aed9d30c3538717a53447e46fca9c",
+    "content-hash": "72e03e741a0a63c7c8b43ef1935587d8",
     "packages": [
         {
             "name": "bainternet/php-hooks",
@@ -288,17 +288,11 @@
         },
         {
             "name": "cluys/ivy-base-template",
-            "version": "v0.1.1-alpha",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cluys/ivy-base-template.git",
-                "reference": "9432b7c4fea972c66f71716c0c095fd45e95120d"
-            },
+            "version": "dev-main",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cluys/ivy-base-template/zipball/9432b7c4fea972c66f71716c0c095fd45e95120d",
-                "reference": "9432b7c4fea972c66f71716c0c095fd45e95120d",
-                "shasum": ""
+                "type": "path",
+                "url": "../ivy-base-template",
+                "reference": "9432b7c4fea972c66f71716c0c095fd45e95120d"
             },
             "require": {
                 "php": ">=8.5.6"
@@ -316,7 +310,6 @@
                     "Cluys\\Template\\Base\\": "classes/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -326,25 +319,18 @@
                 }
             ],
             "description": "Base system template for ivy CMS",
-            "support": {
-                "issues": "https://github.com/cluys/ivy-base-template/issues",
-                "source": "https://github.com/cluys/ivy-base-template/tree/v0.1.1-alpha"
-            },
-            "time": "2026-09-11T22:25:06+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "cluys/ivy-demo-template",
-            "version": "v0.1.0-alpha",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cluys/ivy-demo-template.git",
-                "reference": "1a49a3965df3b34540b342e2c1fc489daa4f46a3"
-            },
+            "version": "dev-main",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cluys/ivy-demo-template/zipball/1a49a3965df3b34540b342e2c1fc489daa4f46a3",
-                "reference": "1a49a3965df3b34540b342e2c1fc489daa4f46a3",
-                "shasum": ""
+                "type": "path",
+                "url": "../ivy-demo-template",
+                "reference": "1a49a3965df3b34540b342e2c1fc489daa4f46a3"
             },
             "require": {
                 "php": ">=8.5.6"
@@ -362,7 +348,6 @@
                     "Cluys\\Template\\Demo\\": "classes/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -372,11 +357,10 @@
                 }
             ],
             "description": "Demo sub template for ivy CMS",
-            "support": {
-                "issues": "https://github.com/cluys/ivy-demo-template/issues",
-                "source": "https://github.com/cluys/ivy-demo-template/tree/v0.1.0-alpha"
-            },
-            "time": "2026-09-11T16:19:39+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "delight-im/auth",
@@ -1499,7 +1483,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ivy-roots",
-                "reference": "6829774854a38256dc1a7bc18e99095f7c6f0bab"
+                "reference": "51d13c4b2a0e1fa7756d1cdde8190967bcb1f3da"
             },
             "require": {
                 "bainternet/php-hooks": "^1.0",
@@ -1896,16 +1880,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "3.13.2",
+            "version": "3.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CarbonPHP/carbon.git",
-                "reference": "a1c54919f5fff9800cd03c32bd01defd5a4061cb"
+                "reference": "0023eaa2c9110e47446dd512a263c69c40cd41f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CarbonPHP/carbon/zipball/a1c54919f5fff9800cd03c32bd01defd5a4061cb",
-                "reference": "a1c54919f5fff9800cd03c32bd01defd5a4061cb",
+                "url": "https://api.github.com/repos/CarbonPHP/carbon/zipball/0023eaa2c9110e47446dd512a263c69c40cd41f2",
+                "reference": "0023eaa2c9110e47446dd512a263c69c40cd41f2",
                 "shasum": ""
             },
             "require": {
@@ -1997,7 +1981,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-08-08T11:40:35+00:00"
+            "time": "2026-09-12T20:45:19+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -5411,11 +5395,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.13",
+            "version": "2.2.14",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9ba9ac76ee9c5cf5b56d58eb5deec6315b7a0260",
-                "reference": "9ba9ac76ee9c5cf5b56d58eb5deec6315b7a0260",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9c672e7a8e791dfc3d30e55f683e73fc0b63a3ac",
+                "reference": "9c672e7a8e791dfc3d30e55f683e73fc0b63a3ac",
                 "shasum": ""
             },
             "require": {
@@ -5471,7 +5455,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-03T20:38:19+00:00"
+            "time": "2026-09-12T21:39:33+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -7673,8 +7657,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "cluys/ivy-base-template": 15,
-        "cluys/ivy-demo-template": 15,
+        "cluys/ivy-base-template": 20,
+        "cluys/ivy-demo-template": 20,
         "joepdooper/ivy-cultivate": 20,
         "joepdooper/ivy-roots": 20,
         "kint-php/kint": 20,

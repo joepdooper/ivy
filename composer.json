@@ -22,8 +22,8 @@
     "php": ">=8.5.6",
     "joepdooper/ivy-roots": "dev-plugins-composer",
     "mnsami/composer-custom-directory-installer": "^2.2",
-    "cluys/ivy-base-template": "^0.1.0@alpha",
-    "cluys/ivy-demo-template": "^0.1.0@alpha"
+    "cluys/ivy-base-template": "dev-main",
+    "cluys/ivy-demo-template": "dev-main"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
