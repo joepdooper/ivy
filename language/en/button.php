@@ -8,4 +8,5 @@ return [
     'save' => 'Save',
     'download' => 'Download',
     'install' => 'Install',
+    'uninstall' => 'Uninstall',
 ];
