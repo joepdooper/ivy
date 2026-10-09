@@ -8,7 +8,7 @@
     "daisyui": "^5.5.19",
     "tailwindcss": "^4.2.1",
     "vite": "^7.1.5",
-    "vite-plugin-live-reload": "^3.0.5"
+    "vite-plugin-live-reload": "^0.1.2"
   },
   "scripts": {
     "dev": "vite",
