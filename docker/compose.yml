@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+
+  apache:
+    build: .
+    container_name: ivy_apache
+    networks:
+      - ivy_network
+    environment:
+      APACHE_DOCUMENT_ROOT: /var/www/public
+    ports:
+      - "${SERVER_PORT:-8080}:80"
+    volumes:
+      - ../:/var/www:Z
+      - ../../ivy-roots:/var/ivy-roots:Z
+      - ../../ivy-cultivate:/var/ivy-cultivate:Z
+      - ../../ivy-base-template:/var/ivy-base-template:Z
+      - ../../ivy-demo-template:/var/ivy-demo-template:Z
+      - ./sites-available:/etc/apache2/sites-available:Z
+      - ./sites-enabled:/etc/apache2/sites-enabled:Z
+      - ./php/custom.ini:/usr/local/etc/php/conf.d/custom.ini:Z
+
+  node:
+    image: docker.io/node:latest
+    container_name: ivy_node
+    networks:
+      - ivy_network
+    working_dir: /var/www
+    ports:
+      - "${VITE_PORT:-5173}:5173"
+    volumes:
+      - ../:/var/www:Z
+    command: tail -f /dev/null
+
+  mysql:
+    image: docker.io/mysql:latest
+    container_name: ivy_mysql
+    networks:
+      - ivy_network
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DB_DATABASE:-ivy_db}
+      MYSQL_USER: ${DB_USERNAME:-ivy_db_username}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-ivy_db_password}
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - ivy_mysql_data:/var/lib/mysql:Z
+      - ./mysql/ivy.sql:/docker-entrypoint-initdb.d/ivy.sql
+
+  mailpit:
+    image: docker.io/axllent/mailpit
+    container_name: ivy_mailpit
+    networks:
+      - ivy_network
+    ports:
+      - "8025:8025" # Web UI
+      - "${MAIL_PORT:-1025}:1025" # SMTP
+
+volumes:
+  ivy_mysql_data:
+    driver: local
+
+networks:
+  ivy_network:

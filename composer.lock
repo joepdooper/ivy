@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cc7546cac372c684da7e4a2dadd70554",
+    "content-hash": "d94ed541ae953237a154f3e2a32300ab",
     "packages": [
         {
             "name": "bainternet/php-hooks",
@@ -1638,7 +1638,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ivy-roots",
-                "reference": "3d19410995bb95f05e603c95899856b6d57b107b"
+                "reference": "ba74011d1f87b09f75e658242b998adc6b7f3d3e"
             },
             "require": {
                 "bainternet/php-hooks": "^1.0",

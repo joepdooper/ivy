@@ -25,8 +25,8 @@
     "cluys/ivy-base-template": "^0.1.0@alpha",
     "cluys/ivy-demo-template": "^0.1.0@alpha",
     "cluys/ivy-contacts": "^0.1.2@alpha",
-    "cluys/ivy-tags": "^0.1.1@alpha",
-    "cluys/ivy-nextcloud-api": "^0.1.2@alpha"
+    "cluys/ivy-nextcloud-api": "^0.1.2@alpha",
+    "cluys/ivy-tags": "^0.1.1@alpha"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
