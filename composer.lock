@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d94ed541ae953237a154f3e2a32300ab",
+    "content-hash": "522aed9d30c3538717a53447e46fca9c",
     "packages": [
         {
             "name": "bainternet/php-hooks",
@@ -334,52 +334,6 @@
             "time": "2026-09-19T21:22:19+00:00"
         },
         {
-            "name": "cluys/ivy-contacts",
-            "version": "v0.1.2-alpha",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cluys/ivy-contacts.git",
-                "reference": "aba451f6c7b4fd9f8434d7c948e18198a38bb4cb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cluys/ivy-contacts/zipball/aba451f6c7b4fd9f8434d7c948e18198a38bb4cb",
-                "reference": "aba451f6c7b4fd9f8434d7c948e18198a38bb4cb",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.5.6"
-            },
-            "type": "ivy-plugin",
-            "extra": {
-                "ivy": {
-                    "name": "Contacts",
-                    "type": "module",
-                    "interface": "Cluys\\Plugin\\Contacts\\ContactPlugin"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Cluys\\Plugin\\Contacts\\": "src/classes/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Joep Dooper"
-                }
-            ],
-            "description": "Contacts plugin for ivy CMS",
-            "support": {
-                "issues": "https://github.com/cluys/ivy-contacts/issues",
-                "source": "https://github.com/cluys/ivy-contacts/tree/v0.1.2-alpha"
-            },
-            "time": "2026-09-05T14:35:01+00:00"
-        },
-        {
             "name": "cluys/ivy-demo-template",
             "version": "v0.1.0-alpha",
             "source": {
@@ -424,98 +378,6 @@
                 "source": "https://github.com/cluys/ivy-demo-template/tree/v0.1.0-alpha"
             },
             "time": "2026-09-11T16:19:39+00:00"
-        },
-        {
-            "name": "cluys/ivy-nextcloud-api",
-            "version": "v0.1.2-alpha",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cluys/ivy-nextcloud-api.git",
-                "reference": "10d922ed5030ec3e3a8c91d9968a8916cfdff421"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cluys/ivy-nextcloud-api/zipball/10d922ed5030ec3e3a8c91d9968a8916cfdff421",
-                "reference": "10d922ed5030ec3e3a8c91d9968a8916cfdff421",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.5.6"
-            },
-            "type": "ivy-plugin",
-            "extra": {
-                "ivy": {
-                    "name": "Nextcloud API",
-                    "type": "integration",
-                    "interface": "Cluys\\Plugin\\NextcloudApi\\NextcloudApiPlugin"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Cluys\\Plugin\\NextcloudApi\\": "src/classes/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Joep Dooper"
-                }
-            ],
-            "description": "Nextcloud API plugin for ivy CMS",
-            "support": {
-                "issues": "https://github.com/cluys/ivy-nextcloud-api/issues",
-                "source": "https://github.com/cluys/ivy-nextcloud-api/tree/v0.1.2-alpha"
-            },
-            "time": "2026-09-05T16:46:01+00:00"
-        },
-        {
-            "name": "cluys/ivy-tags",
-            "version": "v0.1.1-alpha",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cluys/ivy-tags.git",
-                "reference": "d1981f1cb5c7352dde4a145aae5d4bc39cb16d75"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cluys/ivy-tags/zipball/d1981f1cb5c7352dde4a145aae5d4bc39cb16d75",
-                "reference": "d1981f1cb5c7352dde4a145aae5d4bc39cb16d75",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.5.6"
-            },
-            "type": "ivy-plugin",
-            "extra": {
-                "ivy": {
-                    "name": "Tags",
-                    "type": "filter",
-                    "interface": "Cluys\\Plugin\\Tags\\TagInterface"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Cluys\\Plugin\\Tags\\": "src/classes/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Joep Dooper"
-                }
-            ],
-            "description": "Tags plugin for ivy CMS",
-            "support": {
-                "issues": "https://github.com/cluys/ivy-tags/issues",
-                "source": "https://github.com/cluys/ivy-tags/tree/v0.1.1-alpha"
-            },
-            "time": "2026-09-05T11:23:18+00:00"
         },
         {
             "name": "delight-im/auth",
@@ -1638,7 +1500,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ivy-roots",
-                "reference": "ba74011d1f87b09f75e658242b998adc6b7f3d3e"
+                "reference": "20fbd859a131af2f3db986e81bebda0f038a5056"
             },
             "require": {
                 "bainternet/php-hooks": "^1.0",
@@ -7819,10 +7681,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "cluys/ivy-base-template": 15,
-        "cluys/ivy-contacts": 15,
         "cluys/ivy-demo-template": 15,
-        "cluys/ivy-nextcloud-api": 15,
-        "cluys/ivy-tags": 15,
         "joepdooper/ivy-cultivate": 20,
         "joepdooper/ivy-roots": 20,
         "kint-php/kint": 20,
