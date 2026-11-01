@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7fa4b29821caedc56aba1de0c54bc53e",
+    "content-hash": "9619b8b40882ca2b77e1d62c422ad176",
     "packages": [
         {
             "name": "bainternet/php-hooks",
@@ -289,16 +289,16 @@
         },
         {
             "name": "cluys/ivy-base-template",
-            "version": "v0.1.3-alpha",
+            "version": "v0.1.4-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cluys/ivy-base-template.git",
-                "reference": "8eb684a21ede587077ba524eedbc41fc8c688e37"
+                "reference": "c815bdb4ab73eb7be5e8cfe5f65b014816ee0322"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cluys/ivy-base-template/zipball/8eb684a21ede587077ba524eedbc41fc8c688e37",
-                "reference": "8eb684a21ede587077ba524eedbc41fc8c688e37",
+                "url": "https://api.github.com/repos/cluys/ivy-base-template/zipball/c815bdb4ab73eb7be5e8cfe5f65b014816ee0322",
+                "reference": "c815bdb4ab73eb7be5e8cfe5f65b014816ee0322",
                 "shasum": ""
             },
             "require": {
@@ -329,9 +329,10 @@
             "description": "Base system template for ivy CMS",
             "support": {
                 "issues": "https://github.com/cluys/ivy-base-template/issues",
-                "source": "https://github.com/cluys/ivy-base-template/tree/v0.1.3-alpha"
+                "source": "https://github.com/cluys/ivy-base-template/tree/v0.1.4-alpha"
             },
-            "time": "2026-10-09T11:30:53+00:00"
+            "time": "2026-10-10T20:01:19+00:00",
+            "published-time": "2026-11-01T16:13:40+00:00"
         },
         {
             "name": "cluys/ivy-demo-template",
@@ -7781,5 +7782,5 @@
     "platform-overrides": {
         "php": "8.5.12"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }
